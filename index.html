@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Sayyaku/Hajime</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="body">
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">Sayyaku/Hajime</div>
+                <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox">
+                <label for="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <i data-lucide="menu"></i>
+                </label>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="section hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="heading-primary animate-fade-in">Sayyaku/Hajime</h1>
+                <p class="hero-subtitle animate-fade-in">Learning Developer</p>
+                <p class="text-body animate-fade-in">
+                    I do a little bit of programming and I'm still learning the basics. 
+                    Currently focusing on building foundational skills.
+                </p>
+                <div class="hero-buttons animate-fade-in">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section section-alt">
+        <div class="container">
+            <h2 class="heading-secondary">About Me</h2>
+            <div class="grid grid-2-cols">
+                <div>
+                    <h3 class="heading-tertiary">My Journey</h3>
+                    <p class="text-body">
+                        I'm constantly learning and experimenting. I'm still building my foundational skills 
+                        in <span class="text-accent">programming</span> and exploring different 
+                        <span class="text-accent">technologies</span>.
+                    </p>
+                    <p class="text-body">
+                        My focus is on understanding the fundamentals and gradually expanding my knowledge 
+                        in various programming languages and tools. Every day is a learning opportunity 
+                        to grow as a developer.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="heading-tertiary">Quick Facts</h3>
+                    <ul class="facts-list">
+                        <li class="text-body"><strong>Status:</strong> Learning</li>
+                        <li class="text-body"><strong>Focus:</strong> Programming Basics</li>
+                        <li class="text-body"><strong>Languages:</strong> C, C++, Java, JavaScript, Python</li>
+                        <li class="text-body"><strong>Tools:</strong> Neovim, Obsidian, LaTex</li>
+                        <li class="text-body"><strong>Goal:</strong> Building Foundational Skills</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="heading-secondary">Skills & Technologies</h2>
+            <div class="grid grid-4-cols">
+                <div class="skill-item card">
+                    <div class="skill-icon">
+                        <i data-lucide="code"></i>
+                    </div>
+                    <h3 class="heading-tertiary">Programming Languages</h3>
+                    <div class="skill-icons">
+                        <img src="https://skillicons.dev/icons?i=c,cpp,java,js,python" alt="Programming Languages" />
+                    </div>
+                </div>
+                <div class="skill-item card">
+                    <div class="skill-icon">
+                        <i data-lucide="wrench"></i>
+                    </div>
+                    <h3 class="heading-tertiary">Development Tools</h3>
+                    <div class="skill-icons">
+                        <img src="https://skillicons.dev/icons?i=neovim,obsidian,latex,azure,docker" alt="Development Tools" />
+                    </div>
+                </div>
+                <div class="skill-item card">
+                    <div class="skill-icon">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <h3 class="heading-tertiary">Current Focus</h3>
+                    <p class="text-body">Building foundational programming skills and understanding core concepts, expanding mu knowledge in video editing and design</p>
+                </div>
+                <div class="skill-item card">
+                    <div class="skill-icon">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <h3 class="heading-tertiary">Learning Approach</h3>
+                    <p class="text-body">Continuous experimentation and hands-on practice with various technologies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section section-alt">
+        <div class="container">
+            <h2 class="heading-secondary">Featured Projects</h2>
+            <div class="grid grid-1-col">
+                <div class="card project-card">
+                    <div class="project-header">
+                        <h3 class="heading-tertiary">Rush Hour Puzzle Solver</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/SayyakuHajime/Tucil3_13523009" class="btn btn-secondary btn-small" target="_blank">Code</a>
+                        </div>
+                    </div>
+                    <p class="text-body">
+                        Interactive web application for solving Rush Hour puzzles using various pathfinding algorithms 
+                        including Greedy Best First Search, Uniform Cost Search (UCS), and A*. Features visualization 
+                        of solution steps with animations and performance analysis comparing algorithm efficiency.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">A* Algorithm</span>
+                        <span class="tech-tag">UCS</span>
+                        <span class="tech-tag">Greedy Search</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="heading-secondary">Let's Work Together</h2>
+            <p class="text-body contact-intro">
+                I am always open to new opportunities and exciting projects. Please feel free to contact me if you have any ideas or would like to collaborate! 
+            </p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">
+                        <i data-lucide="user"></i>
+                        Name
+                    </label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i data-lucide="mail"></i>
+                        Email
+                    </label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject" class="form-label">
+                        <i data-lucide="message-square"></i>
+                        Subject
+                    </label>
+                    <input type="text" id="subject" name="subject" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">
+                        <i data-lucide="file-text"></i>
+                        Message
+                    </label>
+                    <textarea id="message" name="message" class="form-input form-textarea" required></textarea>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i data-lucide="send"></i>
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p class="text-body">© 2025 Sayyaku/Hajime. Built with love using HTML & CSS</p>
+            <div class="social-links">
+                <a href="mailto:hazimmuhammad28@gmail.com" class="social-link" aria-label="Email">
+                    <i data-lucide="mail"></i>
+                </a>
+                <a href="https://linkedin.com/in/muhammadhazimrp" class="social-link" aria-label="LinkedIn">
+                    <i data-lucide="linkedin"></i>
+                </a>
+                <a href="https://github.com/SayyakuHajime" class="social-link" aria-label="GitHub">
+                    <i data-lucide="github"></i>
+                </a>
+                <a href="https://instagram.com/hazim_dash" class="social-link" aria-label="Instagram">
+                    <i data-lucide="instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
