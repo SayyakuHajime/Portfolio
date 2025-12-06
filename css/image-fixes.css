@@ -1,0 +1,36 @@
+/* Image Fixes - Prevent Distortion and Ensure Proper Display */
+
+/* All profile images must be circular and non-distorted */
+img[src*="pfp.jpg"],
+img[alt*="Profile"],
+.profile-img,
+.profile-avatar,
+.post-avatar {
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1;
+}
+
+/* Banner images should cover properly */
+img[src*="header.jpg"],
+img[alt*="Banner"],
+.profile-banner img {
+    object-fit: cover;
+    object-position: center;
+}
+
+/* General image optimization */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Ensure circular profile images maintain shape on responsive */
+@media (max-width: 767px) {
+    .profile-avatar,
+    img[src*="pfp.jpg"] {
+        object-fit: cover;
+        object-position: center;
+    }
+}

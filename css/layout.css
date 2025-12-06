@@ -1,0 +1,134 @@
+/* Layout Styles */
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+}
+
+/* Left Sidebar */
+.sidebar-left {
+    width: var(--sidebar-width);
+    padding: var(--spacing-md);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    max-width: var(--content-width);
+    border-left: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-border);
+    min-height: 100vh;
+}
+
+/* Right Sidebar */
+.sidebar-right {
+    width: var(--sidebar-right-width);
+    padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* Header */
+.header {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-md);
+    z-index: 10;
+}
+
+/* Mobile Navigation */
+#mobile-nav-container {
+    display: none;
+}
+
+.mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-sm);
+    z-index: 50;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Responsive - Bootstrap Breakpoints */
+
+/* xxl: < 1400px - Hide right sidebar */
+@media (max-width: 1399px) {
+    .sidebar-right {
+        display: none;
+    }
+}
+
+/* lg: < 992px - Collapse left sidebar to icons only */
+@media (max-width: 991px) {
+    .sidebar-left {
+        width: 88px;
+    }
+
+    .sidebar-left .nav-text {
+        display: none;
+    }
+
+    .sidebar-left .mail-me-container {
+        display: none;
+    }
+
+    .sidebar-left .profile-section {
+        display: none;
+    }
+}
+
+/* md: < 768px - Hide left sidebar, show mobile nav */
+@media (max-width: 767px) {
+    .sidebar-left {
+        display: none;
+    }
+
+    #sidebar-left-container {
+        display: none;
+    }
+
+    .main-content {
+        border-left: none;
+        border-right: none;
+        background-color: var(--color-bg);
+    }
+
+    #mobile-nav-container {
+        display: block;
+    }
+
+    body {
+        padding-bottom: 60px;
+    }
+}
+
+/* sm: < 576px - Adjust padding and spacing */
+@media (max-width: 575px) {
+    .header {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .post {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .profile-info {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}

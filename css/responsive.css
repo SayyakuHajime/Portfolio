@@ -1,0 +1,131 @@
+/* Responsive Content Styles - Bootstrap Breakpoints */
+
+/* Ensure consistent background across all viewports */
+body,
+html {
+    background-color: var(--color-bg);
+}
+
+.container {
+    background-color: var(--color-bg);
+}
+
+.main-content {
+    background-color: var(--color-bg);
+}
+
+/* xl: < 1200px */
+@media (max-width: 1199px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+/* lg: < 992px */
+@media (max-width: 991px) {
+    /* Adjust spacing for content when sidebar collapses */
+    .main-content {
+        max-width: 100%;
+    }
+}
+
+/* md: < 768px */
+@media (max-width: 767px) {
+    /* Content padding adjustments */
+    [style*="padding: var(--spacing-xl)"] {
+        padding: var(--spacing-md) !important;
+    }
+
+    /* Grid layouts to single column */
+    [style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Skill icons responsive */
+    img[src*="skillicons.dev"] {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Form max-width adjustment */
+    form[style*="max-width"] {
+        max-width: 100% !important;
+        padding: 0 var(--spacing-md);
+    }
+
+    /* Ensure background consistency */
+    body {
+        background-color: var(--color-bg) !important;
+    }
+
+    .main-content {
+        background-color: var(--color-bg) !important;
+    }
+
+    /* Text alignment for mobile */
+    [style*="text-align: center"] {
+        padding: 0 var(--spacing-md);
+    }
+}
+
+/* sm: < 576px */
+@media (max-width: 575px) {
+    /* Reduce font sizes on very small screens */
+    h1 {
+        font-size: var(--font-lg) !important;
+    }
+
+    h2 {
+        font-size: var(--font-xl) !important;
+    }
+
+    h3 {
+        font-size: var(--font-lg) !important;
+    }
+
+    /* Adjust content spacing */
+    [style*="margin-bottom: var(--spacing-2xl)"] {
+        margin-bottom: var(--spacing-lg) !important;
+    }
+
+    /* Icon size adjustments */
+    [style*="width: 3rem; height: 3rem"] {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    /* Profile stats responsive */
+    .profile-stats {
+        gap: var(--spacing-md);
+        font-size: var(--font-xs);
+    }
+
+    /* Ensure proper spacing from mobile nav */
+    body {
+        padding-bottom: 70px !important;
+    }
+}
+
+/* xs: Very small devices */
+@media (max-width: 400px) {
+    /* Further reduce spacing on very small screens */
+    .header,
+    .post,
+    .profile-info {
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+    }
+
+    /* Make buttons full width on very small screens */
+    .btn {
+        width: 100%;
+    }
+
+    /* Reduce gap in flex layouts */
+    [style*="gap: var(--spacing-xl)"] {
+        gap: var(--spacing-sm) !important;
+    }
+
+    [style*="gap: var(--spacing-lg)"] {
+        gap: var(--spacing-sm) !important;
+    }
+}
