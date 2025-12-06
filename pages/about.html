@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Sayyaku/Hajime</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/browser-compat.css">
+    <link rel="stylesheet" href="../css/image-fixes.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../js/components.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar - Loaded from component -->
+        <div id="sidebar-left-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+                    <a href="home.html" style="padding: var(--spacing-sm); border-radius: var(--radius-full); transition: background-color var(--transition-fast);" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.1)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </a>
+                    <div style="flex: 1;">
+                        <h1 style="font-size: var(--font-xl);">About Me</h1>
+                        <p style="font-size: var(--font-sm); color: var(--color-text-secondary);">My Journey</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Content -->
+            <div style="padding: var(--spacing-xl);">
+                <div style="margin-bottom: var(--spacing-2xl);">
+                    <h2 style="font-size: var(--font-2xl); font-weight: 700; margin-bottom: var(--spacing-md);">My Journey</h2>
+                    <p style="margin-bottom: var(--spacing-md); line-height: 1.6;">
+                        I'm constantly learning and experimenting. I'm still building my foundational skills
+                        in <span style="color: var(--color-primary);">programming</span> and exploring different
+                        <span style="color: var(--color-primary);">technologies</span>.
+                    </p>
+                    <p style="line-height: 1.6;">
+                        My focus is on understanding the fundamentals and gradually expanding my knowledge
+                        in various programming languages and tools. Every day is a learning opportunity
+                        to grow as a developer.
+                    </p>
+                </div>
+
+                <div style="background-color: var(--color-bg-secondary); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-2xl);">
+                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-lg);">Quick Facts</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="font-weight: 700; min-width: 120px;">Status:</div>
+                            <div>Learning</div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="font-weight: 700; min-width: 120px;">Focus:</div>
+                            <div>Programming Basics</div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="font-weight: 700; min-width: 120px;">Languages:</div>
+                            <div>C, C++, Java, JavaScript, Python</div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="font-weight: 700; min-width: 120px;">Tools:</div>
+                            <div>Neovim, Obsidian, LaTeX</div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="font-weight: 700; min-width: 120px;">Goal:</div>
+                            <div>Building Foundational Skills</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: var(--spacing-2xl);">
+                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-md);">What I'm Learning</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                        <div style="background-color: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--spacing-lg);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                                <i data-lucide="code" style="color: var(--color-primary);"></i>
+                                <h4 style="font-weight: 700;">Programming Fundamentals</h4>
+                            </div>
+                            <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                                Understanding core concepts like data structures, algorithms, and object-oriented programming across multiple languages.
+                            </p>
+                        </div>
+
+                        <div style="background-color: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--spacing-lg);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                                <i data-lucide="globe" style="color: var(--color-primary);"></i>
+                                <h4 style="font-weight: 700;">Web Development</h4>
+                            </div>
+                            <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                                Building modern web applications with HTML, CSS, JavaScript, and exploring frameworks like React and Next.js.
+                            </p>
+                        </div>
+
+                        <div style="background-color: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--spacing-lg);">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                                <i data-lucide="book-open" style="color: var(--color-primary);"></i>
+                                <h4 style="font-weight: 700;">Continuous Learning</h4>
+                            </div>
+                            <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                                Committed to learning something new every day through hands-on projects, documentation, and experimentation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-md);">Connect With Me</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                        <a href="https://github.com/SayyakuHajime" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'">
+                            <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com/in/muhammadhazimrp" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'">
+                            <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://instagram.com/hazim_dash" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'">
+                            <i data-lucide="instagram" style="width: 1rem; height: 1rem;"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="mailto:hazimprajoda@protonmail.com" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'">
+                            <i data-lucide="mail" style="width: 1rem; height: 1rem;"></i>
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <!-- Skills Section -->
+            <div class="card">
+                <div class="card-header">Skills</div>
+                <div class="card-body">
+                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
+                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
+                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--color-text);">Programming</div>
+                            <img src="https://skillicons.dev/icons?i=c,cpp,java,js,ts,python,html&perline=7&theme=dark" alt="Programming Languages" style="width: 100%; display: block;" />
+                        </div>
+                    </div>
+                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
+                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
+                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--color-text);">Tools & Database</div>
+                            <img src="https://skillicons.dev/icons?i=neovim,obsidian,latex,docker,azure,postgres,sqlite&perline=7&theme=dark" alt="Tools" style="width: 100%; display: block;" />
+                        </div>
+                    </div>
+                </div>
+                <a href="skills.html" class="card-item text-primary" style="display: block;">
+                    Show more
+                </a>
+            </div>
+
+            <!-- Past Projects Section -->
+            <div class="card">
+                <div class="card-header">Past Projects</div>
+                <div class="card-body">
+                    <a href="projects.html" class="card-item">
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary);">Web Development</div>
+                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--color-text);">Rush Hour Puzzle Solver</div>
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary); margin-top: var(--spacing-xs);">Next.js, A* Algorithm</div>
+                    </a>
+                    <a href="projects.html" class="card-item">
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary);">Programming</div>
+                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--color-text);">Data Structures Practice</div>
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary); margin-top: var(--spacing-xs);">C++, Java</div>
+                    </a>
+                    <a href="projects.html" class="card-item">
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary);">Learning</div>
+                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--color-text);">Algorithm Challenges</div>
+                        <div style="font-size: var(--font-xs); color: var(--color-text-secondary); margin-top: var(--spacing-xs);">Python, JavaScript</div>
+                    </a>
+                </div>
+                <a href="projects.html" class="card-item text-primary" style="display: block;">
+                    Show more
+                </a>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Mobile Navigation - Loaded from component -->
+    <div id="mobile-nav-container"></div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

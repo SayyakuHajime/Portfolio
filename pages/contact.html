@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Sayyaku/Hajime</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/browser-compat.css">
+    <link rel="stylesheet" href="../css/image-fixes.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../js/components.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar - Loaded from component -->
+        <div id="sidebar-left-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+                    <a href="home.html" style="padding: var(--spacing-sm); border-radius: var(--radius-full); transition: background-color var(--transition-fast);" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.1)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </a>
+                    <div style="flex: 1;">
+                        <h1 style="font-size: var(--font-xl);">Let's Work Together</h1>
+                        <p style="font-size: var(--font-sm); color: var(--color-text-secondary);">Get In Touch</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Content -->
+            <div style="padding: var(--spacing-md) var(--spacing-xl);">
+                <p style="text-align: center; font-size: var(--font-base); margin-bottom: var(--spacing-xl); line-height: 1.6; color: var(--color-text-secondary); max-width: 480px; margin-left: auto; margin-right: auto;">
+                    I am always open to new opportunities and exciting projects. Please feel free to contact me if you have any ideas or would like to collaborate!
+                </p>
+
+                <!-- Contact Form -->
+                <form id="contact-form" action="https://formspree.io/f/xvgobjjd" method="POST" style="max-width: 480px; margin: 0 auto var(--spacing-xl);">
+                    <div id="form-status" style="display: none; padding: var(--spacing-md); border-radius: var(--radius-md); margin-bottom: var(--spacing-md); text-align: center; font-weight: 500;"></div>
+
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <label style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); font-weight: 500; font-size: var(--font-sm); color: var(--color-text);">
+                            <i data-lucide="user" style="width: 1rem; height: 1rem;"></i>
+                            Name
+                        </label>
+                        <input type="text" name="name" required style="width: 100%; background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-sm) var(--spacing-md); color: var(--color-text); outline: none; transition: border-color var(--transition-fast);" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <label style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); font-weight: 500; font-size: var(--font-sm); color: var(--color-text);">
+                            <i data-lucide="mail" style="width: 1rem; height: 1rem;"></i>
+                            Email
+                        </label>
+                        <input type="email" name="email" required style="width: 100%; background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-sm) var(--spacing-md); color: var(--color-text); outline: none; transition: border-color var(--transition-fast);" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <label style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); font-weight: 500; font-size: var(--font-sm); color: var(--color-text);">
+                            <i data-lucide="message-square" style="width: 1rem; height: 1rem;"></i>
+                            Subject
+                        </label>
+                        <input type="text" name="_subject" required style="width: 100%; background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-sm) var(--spacing-md); color: var(--color-text); outline: none; transition: border-color var(--transition-fast);" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); font-weight: 500; font-size: var(--font-sm); color: var(--color-text);">
+                            <i data-lucide="file-text" style="width: 1rem; height: 1rem;"></i>
+                            Message
+                        </label>
+                        <textarea name="message" required rows="5" style="width: 100%; background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-sm) var(--spacing-md); color: var(--color-text); outline: none; resize: vertical; transition: border-color var(--transition-fast); font-family: inherit; font-size: var(--font-sm);" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'"></textarea>
+                    </div>
+
+                    <input type="hidden" name="_replyto" value="hazimprajoda@protonmail.com">
+                    <input type="hidden" name="_next" value="contact.html">
+
+                    <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-lg);">
+                        <i data-lucide="send" style="width: 1rem; height: 1rem;"></i>
+                        <span id="submit-text">Send Message</span>
+                    </button>
+                </form>
+
+                <!-- Social Links -->
+                <div style="max-width: 480px; margin: 0 auto;">
+                    <h3 style="font-size: var(--font-lg); font-weight: 700; text-align: center; margin-bottom: var(--spacing-md);">Connect With Me</h3>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-sm);">
+                        <a href="mailto:hazimprajoda@protonmail.com" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-md); min-width: 100px; transition: all var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'; this.style.transform='translateY(0)'">
+                            <i data-lucide="mail" style="width: 1.5rem; height: 1.5rem; color: var(--color-primary);"></i>
+                            <span style="font-weight: 500;">Email</span>
+                        </a>
+
+                        <a href="https://linkedin.com/in/muhammadhazimrp" target="_blank" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-md); min-width: 100px; transition: all var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'; this.style.transform='translateY(0)'">
+                            <i data-lucide="linkedin" style="width: 1.5rem; height: 1.5rem; color: var(--color-primary);"></i>
+                            <span style="font-weight: 500;">LinkedIn</span>
+                        </a>
+
+                        <a href="https://github.com/SayyakuHajime" target="_blank" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-md); min-width: 100px; transition: all var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'; this.style.transform='translateY(0)'">
+                            <i data-lucide="github" style="width: 1.5rem; height: 1.5rem; color: var(--color-primary);"></i>
+                            <span style="font-weight: 500;">GitHub</span>
+                        </a>
+
+                        <a href="https://instagram.com/hazim_dash" target="_blank" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-md); background-color: var(--color-bg-secondary); border-radius: var(--radius-md); min-width: 100px; transition: all var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--color-bg-tertiary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--color-bg-secondary)'; this.style.transform='translateY(0)'">
+                            <i data-lucide="instagram" style="width: 1.5rem; height: 1.5rem; color: var(--color-primary);"></i>
+                            <span style="font-weight: 500;">Instagram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="padding: var(--spacing-xl); text-align: center; color: var(--color-text-secondary); border-top: 1px solid var(--color-border); margin-top: var(--spacing-2xl);">
+                <p>© 2025 Sayyaku/Hajime</p>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <!-- Quick Info -->
+            <div class="card">
+                <div class="card-header">Quick Info</div>
+                <div class="card-body">
+                    <div class="card-item">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <i data-lucide="map-pin" style="color: var(--color-primary);"></i>
+                            <div>
+                                <div style="font-size: var(--font-sm); font-weight: 500;">Location</div>
+                                <div style="font-size: var(--font-sm); color: var(--color-text-secondary);">Indonesia</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <i data-lucide="briefcase" style="color: var(--color-primary);"></i>
+                            <div>
+                                <div style="font-size: var(--font-sm); font-weight: 500;">Status</div>
+                                <div style="font-size: var(--font-sm); color: var(--color-text-secondary);">Learning Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                            <i data-lucide="graduation-cap" style="color: var(--color-primary);"></i>
+                            <div>
+                                <div style="font-size: var(--font-sm); font-weight: 500;">Education</div>
+                                <div style="font-size: var(--font-sm); color: var(--color-text-secondary);">Computer Science</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- Mobile Navigation - Loaded from component -->
+    <div id="mobile-nav-container"></div>
+
+    <script>
+        lucide.createIcons();
+
+        // Contact form submission handling
+        const form = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submit-btn');
+        const submitText = document.getElementById('submit-text');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitText.textContent = 'Sending...';
+            formStatus.style.display = 'none';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success
+                    formStatus.style.display = 'block';
+                    formStatus.style.backgroundColor = 'rgba(0, 186, 124, 0.2)';
+                    formStatus.style.color = '#00ba7c';
+                    formStatus.style.border = '1px solid #00ba7c';
+                    formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                    form.reset();
+                    lucide.createIcons();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error
+                formStatus.style.display = 'block';
+                formStatus.style.backgroundColor = 'rgba(244, 33, 46, 0.2)';
+                formStatus.style.color = '#f4212e';
+                formStatus.style.border = '1px solid #f4212e';
+                formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitText.textContent = 'Send Message';
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
