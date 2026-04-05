@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IF3210 — Mobile App Development Midterm Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  /* ── COLOR PALETTE ──────────────────────────────────────── */
+  :root{
+    --ink:#1a1814;
+    --ink-soft:#3d3a35;
+    --ink-faint:#6e6a62;
+    --paper:#faf8f4;
+    --paper-warm:#f3f0e8;
+    --paper-cream:#ede9de;
+    --rule:#d5d0c5;
+    --rule-light:#e8e4d8;
+    --accent-p:#5c3fa0;
+    --accent-p-bg:#f0ecfa;
+    --accent-p-mid:#9b85d4;
+    --accent-n:#1a6b4a;
+    --accent-n-bg:#edf7f2;
+    --accent-n-mid:#5aa882;
+    --accent-b:#174e87;
+    --accent-b-bg:#eaf2fb;
+    --accent-b-mid:#6699cc;
+    --accent-r:#912b2b;
+    --accent-r-bg:#fdf0f0;
+    --accent-r-mid:#cc7777;
+    --accent-o:#7a4a10;
+    --accent-o-bg:#fdf5e8;
+    --accent-o-mid:#d4961f;
+    --tag-bg:#eae6dc;
+  }
+
+  /* ── RESET / BASE ─────────────────────────────────────────── */
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Source Serif 4',Georgia,serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:16px;
+  }
+
+  /* ── PAGE LAYOUT ───────────────────────────────────────────– */
+  .page-content{
+    max-width:1440px;
+    margin:0 auto;
+    padding:0 48px 80px;
+    display:flex;
+    align-items:flex-start;
+    gap:28px;
+  }
+
+  .toc-column{
+    position:sticky;
+    top:18px;
+    flex:0 0 230px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-self:flex-start;
+  }
+
+  .toc{
+    max-height:calc(100vh - 36px);
+    overflow:auto;
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    align-items:stretch;
+  }
+  .toc::-webkit-scrollbar{width:4px;}
+  .toc::-webkit-scrollbar-track{background:transparent;}
+  .toc::-webkit-scrollbar-thumb{background:var(--rule);border-radius:2px;}
+
+  .toc-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .toc a{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:6px 10px;
+    border:1px solid var(--rule);
+    border-radius:2px;
+    background:var(--paper);
+    transition:all .15s;
+  }
+  .toc a:hover,.toc a.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .toc a.sub{
+    font-size:10px;
+    padding:4px 10px 4px 20px;
+    border-color:transparent;
+    background:transparent;
+    color:var(--ink-faint);
+  }
+  .toc a.sub:hover{
+    background:var(--paper);
+    color:var(--ink);
+    border-color:var(--rule);
+  }
+  .toc a.sub.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+
+  /* ── SIDEBAR (RENAMED FROM NAV-GROUP) ──────────────────────– */
+  .sidebar{
+    padding:0;
+    background:transparent;
+    border:none;
+    position:static;
+    height:auto;
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .logo{
+    padding:0;
+    border:none;
+  }
+  .logo .course{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:4px;
+  }
+  .logo h1{
+    font-family:'Playfair Display',serif;
+    font-size:15px;
+    line-height:1.3;
+    color:var(--ink);
+    font-weight:700;
+    margin:0;
+    display:none;
+  }
+
+  .nav-group{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .nav-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .nav-link{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:6px 10px;
+    border:1px solid var(--rule);
+    border-radius:2px;
+    background:var(--paper);
+    transition:all .15s;
+  }
+  .nav-link:hover{
+    background:var(--paper-cream);
+    color:var(--ink);
+  }
+  .nav-link .dot{
+    display:none;
+  }
+
+  /* ── MAIN CONTENT ─────────────────────────────────────────── */
+  .main{
+    flex:1;
+    min-width:0;
+    padding:0;
+  }
+
+  .content{
+    padding:0;
+    max-width:100%;
+  }
+
+  /* ── cover / COVER BANNER ──────────────────────────────────── */
+  .cover{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 48px 52px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cover::before{
+    content:'';
+    position:absolute;
+    top:-60px;
+    right:-60px;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.07);
+  
+  }
+  .cover::after{
+    content:'';
+    position:absolute;
+    bottom:-80px;
+    left:30%;
+    width:480px;
+    height:480px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.05);
+  }
+
+  .cover-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.45);
+    margin-bottom:20px;
+  }
+
+  .cover h1{
+    font-family:'Playfair Display',serif;
+    font-size:42px;
+    font-weight:700;
+    line-height:1.15;
+    margin-bottom:14px;
+  }
+  .cover-sub{
+    font-size:15px;
+    color:rgba(255,255,255,.6);
+    font-style:italic;
+    margin-bottom:32px;
+  }
+  .cover-topics{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .topic-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    padding:5px 14px;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:2px;
+    letter-spacing:.08em;
+    color:rgba(255,255,255,.75);
+  }
+
+
+  /* ── TOPIC HEADERS ──────────────────────────────────────── */
+  .topic{margin-bottom:56px;}
+  .topic-header{
+    margin:56px 0 24px;
+    padding:28px 32px;
+    border-left:4px solid var(--accent-p);
+    background:var(--accent-p-bg);
+    border-radius:0 4px 4px 0;
+  }
+  .topic-header.b1{border-color:var(--accent-p);background:var(--accent-p-bg);}
+  .topic-header.b2{border-color:var(--accent-n);background:var(--accent-n-bg);}
+  .topic-header.b3{border-color:var(--accent-o);background:var(--accent-o-bg);}
+  .topic-header.b4{border-color:var(--accent-b);background:var(--accent-b-bg);}
+  .topic-header.b5{border-color:var(--accent-p);background:var(--accent-p-bg);}
+  .topic-header.b6{border-color:var(--accent-n);background:var(--accent-n-bg);}
+  .topic-header.b7{border-color:var(--accent-b);background:var(--accent-b-bg);}
+
+  .topic-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    margin-bottom:6px;
+    display:block;
+  }
+  .topic-title{
+    font-family:'Playfair Display',serif;
+    font-size:30px;
+    font-weight:700;
+    line-height:1.2;
+    color:var(--ink);
+  }
+  .topic-badge{
+    display:none;
+  }
+
+  /* ── TYPOGRAPHY ───────────────────────────────────────────── */
+  h3{
+    font-family:'Playfair Display',serif;
+    font-size:20px;
+    font-weight:600;
+    margin:40px 0 12px;
+    color:var(--ink);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:8px;
+  }
+  h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:24px 0 8px;
+  }
+  p{
+    margin-bottom:14px;
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+  a{
+    color:var(--accent-b);
+    text-decoration:none;
+  }
+  a:hover{
+    text-decoration:underline;
+  }
+  strong{font-weight:600;color:var(--ink);}
+  em{font-style:italic;}
+
+  /* ── CARDS ────────────────────────────────────────────────── */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin:20px 0;
+  }
+  .card{
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:var(--paper);
+    padding:16px;
+  }
+  .card.c-blue{border-top:3px solid var(--accent-b);}
+  .card.c-green{border-top:3px solid var(--accent-n);}
+  .card.c-orange{border-top:3px solid var(--accent-o);}
+  .card.c-purple{border-top:3px solid var(--accent-p);}
+  .card.c-yellow{border-top:3px solid var(--accent-r);}
+  .card-title{
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .card p{
+    font-size:13px;
+    margin-bottom:0;
+    color:var(--ink-soft);
+  }
+
+  /* ── DEFINITION LIST ──────────────────────────────────────── */
+  .def-list{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    overflow-x:auto;
+    margin:20px 0;
+  }
+  .def-list::-webkit-scrollbar{height:6px;}
+  .def-list::-webkit-scrollbar-track{background:transparent;}
+  .def-list::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px;}
+  .def-item{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    border-bottom:1px solid var(--rule);
+    min-width:max-content;
+  }
+  .def-item:last-child{border-bottom:none;}
+  .def-term{
+    padding:12px 16px;
+    background:var(--paper-cream);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    color:var(--ink);
+    border-right:1px solid var(--rule);
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+  }
+  .def-desc{
+    padding:12px 16px;
+    font-size:13px;
+    color:var(--ink-soft);
+    background:var(--paper);
+  }
+
+  /* ── TABLES ─────────────────────────────────────────────── */
+  .table-wrap{
+    border:1px solid var(--rule);
+    border-radius:4px;
+    overflow-x:auto;
+    margin:20px 0;
+    background:var(--paper);
+  }
+  .table-wrap::-webkit-scrollbar{height:6px;}
+  .table-wrap::-webkit-scrollbar-track{background:transparent;}
+  .table-wrap::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px;}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+    min-width:500px;
+  }
+  thead th{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    background:var(--paper-cream);
+    border:1px solid var(--rule);
+    padding:10px 14px;
+    text-align:left;
+    color:var(--ink);
+    font-weight:500;
+  }
+  tbody td{
+    border:1px solid var(--rule);
+    padding:10px 14px;
+    color:var(--ink-soft);
+    vertical-align:top;
+    font-size:13px;
+  }
+  tbody tr:nth-child(even) td{
+    background:var(--paper-warm);
+  }
+  .td-key{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .green{color:var(--accent-n);}
+  .orange{color:var(--accent-o);}
+  .blue{color:var(--accent-b);}
+  .purple{color:var(--accent-p);}
+  .yellow{color:var(--accent-r);}
+
+  /* ── CALLOUT BOXES ────────────────────────────────────────– */
+  .callout{
+    margin:20px 0;
+    padding:16px 20px;
+    border-radius:4px;
+    border:1px solid;
+    font-size:14px;
+    line-height:1.7;
+  }
+  .callout.info{
+    background:var(--accent-b-bg);
+    border-color:var(--accent-b-mid);
+    color:var(--accent-b);
+  }
+  .callout.tip{
+    background:var(--accent-n-bg);
+    border-color:var(--accent-n-mid);
+    color:var(--accent-n);
+  }
+  .callout.warn{
+    background:var(--accent-o-bg);
+    border-color:var(--accent-o-mid);
+    color:var(--accent-o);
+  }
+  .callout.danger{
+    background:var(--accent-r-bg);
+    border-color:var(--accent-r-mid);
+    color:var(--accent-r);
+  }
+  .callout-icon{display:none;}
+  .callout-title{
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:4px;
+  }
+  .callout-text{
+    font-size:13px;
+    margin-bottom:0;
+  }
+
+  /* ── CODE BLOCKS ──────────────────────────────────────────– */
+  pre{
+    background:var(--paper-cream);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--ink);
+    border-radius:0 4px 4px 0;
+    padding:14px 16px;
+    overflow-x:auto;
+    margin:14px 0;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+  pre::-webkit-scrollbar{height:6px;}
+  pre::-webkit-scrollbar-track{background:transparent;}
+  pre::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px;}
+  code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    background:var(--paper-cream);
+    border:1px solid var(--rule);
+    padding:1px 6px;
+    border-radius:3px;
+    color:var(--ink);
+  }
+  pre code{
+    background:none;
+    border:none;
+    padding:0;
+  }
+
+  /* ── FORMULA BOX ──────────────────────────────────────────– */
+  .formula{
+    margin:20px 0;
+    background:var(--paper-cream);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--accent-p);
+    border-radius:0 4px 4px 0;
+    padding:18px 24px;
+    overflow-x:auto;
+  }
+  .formula-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:6px;
+    display:block;
+  }
+  .formula-desc{
+    font-size:13px;
+    color:var(--ink-faint);
+    margin-top:8px;
+    font-style:italic;
+  }
+
+  /* ── BULLET LISTS ─────────────────────────────────────────– */
+  ul.notes{
+    list-style:none;
+    margin:15px 0 20px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  ul.notes li{
+    padding-left:22px;
+    position:relative;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  ul.notes li::before{
+    content:'›';
+    position:absolute;
+    left:0;
+    color:var(--accent-b);
+    font-weight:700;
+    font-size:16px;
+  }
+  ul.notes li.green::before{color:var(--accent-n);}
+  ul.notes li.orange::before{color:var(--accent-o);}
+  ul.notes li.purple::before{color:var(--accent-p);}
+
+  /* ── TIMELINE ─────────────────────────────────────────────– */
+  .timeline{
+    border-left:2px solid var(--rule);
+    margin-left:12px;
+    padding-left:24px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .t-item{
+    position:relative;
+    padding:12px 0;
+    border-bottom:1px solid var(--rule-light);
+    font-size:14px;
+  }
+  .t-item:last-child{border-bottom:none;}
+  .t-item::before{
+    content:'';
+    position:absolute;
+    left:-29px;
+    top:18px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--accent-p);
+    border:2px solid var(--paper);
+  }
+  .t-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent-p);
+    margin-bottom:2px;
+  }
+  .t-desc{
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  /* ── OPERATOR BOX ─────────────────────────────────────────– */
+  .op-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin:20px 0;
+  }
+  .op-box{
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:14px;
+    background:var(--paper);
+  }
+  .op-name{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent-p);
+    margin-bottom:6px;
+  }
+  .op-syntax{
+    background:var(--paper-cream);
+    border-radius:3px;
+    padding:8px 12px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink);
+    margin:8px 0;
+  }
+  .op-desc{
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  /* ── TWO-COLUMN LAYOUT ──────────────────────────────────– */
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:20px 0;
+  }
+  .col-box{
+    background:var(--paper-cream);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:14px 16px;
+  }
+  .col-title{
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:8px;
+    color:var(--ink);
+  }
+
+  /* ── DIVIDERS ─────────────────────────────────────────────– */
+  .divider{
+    border:none;
+    border-top:1px solid var(--rule);
+    margin:40px 0;
+  }
+
+  /* ── ANIMATIONS ───────────────────────────────────────────– */
+  .topic{opacity:1;}
+
+  /* ── RESPONSIVE ───────────────────────────────────────────– */
+  @media(max-width:1024px){
+    .page-content{
+      padding:0 40px 60px;
+      gap:20px;
+    }
+  }
+
+  @media(max-width:980px){
+    .page-content{
+      display:block;
+      padding:0 20px 60px;
+    }
+    .toc-column{
+      position:static;
+      display:block;
+      flex:none;
+    }
+    .toc{
+      max-height:none;
+      overflow:visible;
+      border-radius:0;
+      border-left:none;
+      border-right:none;
+      border-top:none;
+      padding:16px 0;
+      margin-bottom:2px;
+      flex-direction:row;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:6px;
+    }
+    .toc a.sub{
+      display:none;
+    }
+    .logo h1{
+      display:block;
+    }
+    .main{
+      padding:0;
+    }
+  }
+
+  @media(max-width:900px){
+    .cover{
+      padding:32px 28px;
+      margin:0 -20px 0 -20px;
+    }
+    .cover h2{font-size:32px;}
+    .page-content{
+      gap:0;
+    }
+  }
+
+  @media(max-width:640px){
+    .page-content{padding:0 16px 60px;}
+    .cover{
+      padding:24px 20px;
+      margin:0 -16px 0 -16px;
+    }
+    .cover h2{font-size:24px;line-height:1.25;}
+    .cover-label{font-size:10px;}
+    .cover-sub{font-size:13px;margin-bottom:16px;}
+    .cover-topics{gap:6px;}
+    .topic-chip{font-size:9px;padding:4px 10px;}
+    
+    .toc{
+      padding:12px 0;
+    }
+    .toc a{
+      font-size:10px;
+      padding:5px 8px;
+    }
+    .toc-label{font-size:9px;}
+    
+    .logo h1{font-size:13px;}
+    .nav-label{font-size:9px;}
+    .nav-link{
+      font-size:10px;
+      padding:5px 8px;
+    }
+  }
+
+  @media(max-width:480px){
+    .page-content{padding:0 12px 50px;}
+    .cover{
+      padding:20px 16px;
+      margin:0 -12px 0 -12px;
+    }
+    .cover h2{font-size:20px;line-height:1.2;}
+    .cover-sub{font-size:12px;}
+    
+    .toc{padding:8px 0;}
+    .toc a{
+      font-size:9px;
+      padding:4px 6px;
+    }
+    .toc-label{font-size:8px;}
+  }
+
+  @media(max-height:500px) and (orientation:landscape){
+    .cover{padding:16px 20px;}
+    .cover h2{font-size:18px;line-height:1.2;}
+    .page-content{padding:0 20px 40px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── COVER ──────────────────────────────────────────────── -->
+<div class="cover">
+  <div class="cover-label">IF3210 Mobile Application Development &middot; Midterm Study Notes</div>
+  <h1>Mobile Application <br> Development</h1>
+  <p class="cover-sub">Comprehensive notes covering all 7 midterm topics · STEI ITB · Semester II 2025/2026</p>
+  <div class="cover-topics">
+    <span class="topic-chip">Mobile Platform Architecture</span>
+    <span class="topic-chip">SDLC &amp; Agile</span>
+    <span class="topic-chip">React Native &amp; Flutter</span>
+    <span class="topic-chip">Android SDK</span>
+    <span class="topic-chip">ConstraintLayout</span>
+    <span class="topic-chip">Material Design</span>
+    <span class="topic-chip">Kotlin Null Safety</span>
+  </div>
+</div>
+
+<!-- ─── PAGE CONTENT WITH TOC + MAIN ───────────────────────── -->
+<div class="page-content">
+  <div class="toc-column">
+    <aside class="toc">
+      <span class="toc-label">Jump to</span>
+      <a href="#topic1">01. Arsitektur Mobile Platform</a>
+      <a href="#topic2">02. Model Proses</a>
+      <a href="#topic3">03. Cross Platform</a>
+      <a href="#topic4">04. Intro to Android</a>
+      <a href="#topic5">05. Layouts</a>
+      <a href="#topic6">06. MD vs HIG</a>
+      <a href="#topic7">07. Non-Nullability</a>
+    </aside>
+  </div>
+
+  <!-- ─── MAIN ARTICLE ───────────────────────────────────────── -->
+  <article class="main">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 1 — ARSITEKTUR MOBILE PLATFORM
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic1">
+    <div class="topic-header">
+      <span class="topic-num">01</span>
+      <h2 class="topic-title">Arsitektur Mobile Platform</h2>
+      <span class="topic-badge b1">Architecture</span>
+    </div>
+
+    <h3>What is Mobile Computing?</h3>
+    <p><strong>Mobile Computing System</strong> = computing systems that can be easily moved physically <em>and</em> whose computing can be used while being moved.</p>
+
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Examples</span><span class="def-desc">Laptops, PDAs, mobile phones, wearables</span></div>
+      <div class="def-item"><span class="def-term">Key Question</span><span class="def-desc">How do we develop mobile apps that are extensible, flexible, and scalable?</span></div>
+    </div>
+
+    <h3>Distinguishing Aspects of Mobile vs Stationary Computing</h3>
+    <div class="card-grid">
+      <div class="card c-blue">
+        <div class="card-title">📡 Wireless Connectivity</div>
+        <p>Prevalent wireless network use — mobility and wireless connectivity are orthogonal (independent) concepts.</p>
+      </div>
+      <div class="card c-green">
+        <div class="card-title">📐 Small Size</div>
+        <p>Constrained screen real estate, limited input methods, smaller physical form factor.</p>
+      </div>
+      <div class="card c-orange">
+        <div class="card-title">⚡ Power Sources</div>
+        <p>Battery-powered; performance must balance power consumption.</p>
+      </div>
+      <div class="card c-purple">
+        <div class="card-title">🚶 Mobile Nature</div>
+        <p>Used while moving — context-based, task-oriented, situational usage.</p>
+      </div>
+    </div>
+
+    <h3>Four Pieces of the Mobile Problem</h3>
+    <ul class="notes">
+      <li><strong>Mobile User</strong> — moving, context-switching, not focused on computing task</li>
+      <li><strong>Mobile Device</strong> — hardware with limited capabilities</li>
+      <li><strong>Mobile Application</strong> — software optimized for mobile settings</li>
+      <li><strong>Mobile Network</strong> — wireless, variable, potentially unreliable</li>
+    </ul>
+
+    <h3>Wireless Communication Generations</h3>
+    <div class="timeline">
+      <div class="t-item"><div class="t-label">0G (1946–1980s)</div><div class="t-desc">Early mobile phones in cars/trucks. Voice only, analog, expensive.</div></div>
+      <div class="t-item"><div class="t-label">1G (1980s→)</div><div class="t-desc">Speed up to 2.4 kbps. Analog signal. Technologies: AMPS/DataTac.</div></div>
+      <div class="t-item"><div class="t-label">2G (1990s→)</div><div class="t-desc">GSM (Finland, 1991). Speed up to 64 kbps. Digital voice + SMS + data. Tech: GSM, CDMA, TDMA.</div></div>
+      <div class="t-item"><div class="t-label">2.5G</div><div class="t-desc">Marketing term. 2G + GPRS. Speed: 64–144 kbps. Tech: GPRS, EDGE.</div></div>
+      <div class="t-item"><div class="t-label">3G (2000s→)</div><div class="t-desc">Speed: 114 kbps – 2 Mbps. Broadband, streaming, video. Tech: W-CDMA (UMTS).</div></div>
+      <div class="t-item"><div class="t-label">4G (late 2000s→)</div><div class="t-desc">Speed: 100 Mbps – 1 Gbps. <strong>MAGIC</strong>: Mobile Multimedia, Anytime Anywhere, Global Mobility, Integrated Wireless, Customized Personal Services. Tech: LTE, WiMAX.</div></div>
+      <div class="t-item"><div class="t-label">5G (2010s→)</div><div class="t-desc">Higher speed &amp; capacity. Supports IoT/CPS, edge computing. Network slicing.</div></div>
+    </div>
+
+    <h3>Mobile Application Types</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Examples</th><th>Pros / Cons</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Text-based App</td><td>Content provider, SMS alerts, USSD codes</td><td>SMS alerts</td><td>Simple, low-tech</td></tr>
+          <tr><td class="td-key">Mobile Website</td><td>Focus on content, simple interaction</td><td>News sites on browser</td><td>No install needed</td></tr>
+          <tr><td class="td-key">Mobile Web App</td><td>Web-based with application-like experience. HTML, CSS, JS.</td><td>Gmail, Facebook web</td><td class="green">+ Single code base, no App Store dependency<br><span class="orange">− Limited device feature access</span></td></tr>
+          <tr><td class="td-key">Native App</td><td>Platform-specific: iOS (Swift/ObjC), Android (Kotlin/Java)</td><td>Instagram native iOS</td><td class="green">+ Faster, full device API access<br><span class="orange">− Multiple code bases</span></td></tr>
+          <tr><td class="td-key">Games</td><td>Usually native, graphics-heavy, often bypass Java API framework</td><td>PUBG Mobile</td><td>High performance needed</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Application Context Types</h3>
+    <div class="card-grid">
+      <div class="card c-blue"><div class="card-title">Utility Context</div><p>Short task-based. Minimal UI. e.g., Timer, Calculator, Weather.</p></div>
+      <div class="card c-green"><div class="card-title">Locale Context</div><p>Location-based. Maps, navigation, location-aware discounts.</p></div>
+      <div class="card c-orange"><div class="card-title">Informative</div><p>Provides information. News, directory, marketing site.</p></div>
+      <div class="card c-purple"><div class="card-title">Productivity</div><p>Task-based, priority-ordered. Address book, shopping.</p></div>
+      <div class="card c-yellow"><div class="card-title">Immersive Fullscreen</div><p>Focuses user on app. Games. Full-screen experience.</p></div>
+    </div>
+
+    <h3>Mobile Platform Architecture Layers</h3>
+    <p>A mobile platform consists of multiple layers from hardware up to developer tools:</p>
+
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Hardware</span><span class="def-desc">Physical components — CPU, sensors, screen, radios</span></div>
+      <div class="def-item"><span class="def-term">OS / Kernel</span><span class="def-desc">Core OS. Linux kernel (Android), XNU (iOS)</span></div>
+      <div class="def-item"><span class="def-term">Low-level Libraries</span><span class="def-desc">Networking, file systems, multithreading, graphic rendering</span></div>
+      <div class="def-item"><span class="def-term">Runtime</span><span class="def-desc">Executes code. Android Runtime (ART) replaces Dalvik.</span></div>
+      <div class="def-item"><span class="def-term">Native Libraries</span><span class="def-desc">C/C++ libraries (e.g., OpenGL ES, WebKit, SQLite)</span></div>
+      <div class="def-item"><span class="def-term">Java/Kotlin API Framework</span><span class="def-desc">High-level UI toolkit, Activity Manager, Content Providers, etc.</span></div>
+      <div class="def-item"><span class="def-term">System / User Apps</span><span class="def-desc">Apps installed on device, including system defaults</span></div>
+      <div class="def-item"><span class="def-term">Developer Tools</span><span class="def-desc">IDE (Android Studio), emulator, language (Kotlin), build tools (Gradle)</span></div>
+    </div>
+
+    <h3>Architectural Styles for Mobile Apps</h3>
+    <ul class="notes">
+      <li><strong>Thin-client wireless client-server</strong> — logic on server, thin UI on device</li>
+      <li><strong>Thick-client wireless client-server</strong> — significant logic on device too</li>
+      <li><strong>Stand-alone applications</strong> — works fully offline, no server needed</li>
+    </ul>
+
+    <div class="callout info">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <div class="callout-title">Virtual Machine Abstraction</div>
+        <p class="callout-text">A VM (like ART on Android) abstracts hardware specificity, enabling code portability. However, performance considerations are more critical on mobile than desktop due to resource constraints.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 2 — MODEL PROSES
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic2">
+    <div class="topic-header">
+      <span class="topic-num">02</span>
+      <h2 class="topic-title">Model Proses</h2>
+      <span class="topic-badge b2">Process Model</span>
+    </div>
+
+    <h3>What is SDLC?</h3>
+    <p><strong>Software Development Life Cycle (SDLC)</strong> = a structured series of steps to design, develop, test, and maintain software. Goal: ensure software meets user needs and works correctly.</p>
+
+    <h4>Benefits of SDLC</h4>
+    <ul class="notes">
+      <li>Ensures quality and consistency</li>
+      <li class="green">Efficiency in time and cost</li>
+      <li>Easier maintenance and updates</li>
+      <li>Better team collaboration</li>
+      <li>Adaptability to changes</li>
+    </ul>
+
+    <h3>Core Software Development Activities</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Activity</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Komunikasi</td><td>Project initiation, requirement gathering</td></tr>
+          <tr><td class="td-key">Perencanaan</td><td>Estimation, scheduling, tracking</td></tr>
+          <tr><td class="td-key">Pemodelan</td><td>Analysis and Design</td></tr>
+          <tr><td class="td-key">Konstruksi</td><td>Programming and Testing</td></tr>
+          <tr><td class="td-key">Deployment</td><td>Delivery, support, feedback</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Process Flow Types</h3>
+    <div class="card-grid">
+      <div class="card c-blue"><div class="card-title">Linear Flow</div><p>Sequential — each phase completes before the next starts.</p></div>
+      <div class="card c-green"><div class="card-title">Iterative Flow</div><p>Phases repeat in cycles, refining the product each time.</p></div>
+      <div class="card c-orange"><div class="card-title">Parallel Flow</div><p>Multiple activities run simultaneously in different streams.</p></div>
+      <div class="card c-purple"><div class="card-title">Evolutionary Flow</div><p>Product evolves through releases (v1 → v2 → vN).</p></div>
+    </div>
+
+    <h3>Waterfall Model</h3>
+    <p>The classic linear process model. Each phase must <em>fully complete</em> before moving to the next. You cannot skip two phases back.</p>
+
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Phase 1</span><span class="def-desc">Rekayasa Kebutuhan (Requirements Engineering)</span></div>
+      <div class="def-item"><span class="def-term">Phase 2</span><span class="def-desc">Analisa Kebutuhan (Requirements Analysis)</span></div>
+      <div class="def-item"><span class="def-term">Phase 3</span><span class="def-desc">Perancangan Umum/Rinci (General/Detailed Design)</span></div>
+      <div class="def-item"><span class="def-term">Phase 4</span><span class="def-desc">Pemrograman dan Pengujian (Programming &amp; Testing)</span></div>
+      <div class="def-item"><span class="def-term">Phase 5</span><span class="def-desc">Deployment</span></div>
+      <div class="def-item"><span class="def-term">Phase 6</span><span class="def-desc">Perawatan (Maintenance)</span></div>
+    </div>
+
+    <div class="callout danger">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <div class="callout-title">Waterfall Problems</div>
+        <p class="callout-text">Requirements almost always change — Waterfall can't handle this well. Users wait until the end to see the product. Blocking states occur where team members idle waiting for others. Not suited for complex systems with many stakeholders.</p>
+      </div>
+    </div>
+
+    <h3>Agile Methodology</h3>
+    <p>Agile collects requirements <strong>iteratively and evolutionarily</strong>. A functionality is completed fully (requirements → code → unit tests) before starting the next.</p>
+
+    <h4>The Agile Manifesto (4 Values)</h4>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title green">✅ Agile Values</div>
+        <ul class="notes">
+          <li class="green">Individuals and interactions</li>
+          <li class="green">Working software</li>
+          <li class="green">Customer collaboration</li>
+          <li class="green">Responding to change</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title orange">📄 Over Traditional</div>
+        <ul class="notes">
+          <li class="orange">…over processes and tools</li>
+          <li class="orange">…over comprehensive documentation</li>
+          <li class="orange">…over contract negotiation</li>
+          <li class="orange">…over following a plan</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>Agile Variants</h4>
+    <ul class="notes">
+      <li>Scrum (sprint-based, 2-week cycles)</li>
+      <li>Kanban (flow-based, continuous)</li>
+      <li>Extreme Programming (XP)</li>
+      <li>Feature Driven Development (FDD)</li>
+      <li>Dynamic Systems Development Method (DSDM)</li>
+      <li>Agile Unified Process (AUP)</li>
+    </ul>
+
+    <h3>SDLC for Mobile Apps — 6 Phases</h3>
+    <div class="timeline">
+      <div class="t-item"><div class="t-label">1. Planning &amp; Requirement Analysis</div><div class="t-desc">Identify user needs, business goals, technical feasibility. Define key features, UI/UX expectations, monetization models. Research target audience and competition.</div></div>
+      <div class="t-item"><div class="t-label">2. UI/UX Design</div><div class="t-desc">Wireframing &amp; prototyping (Figma, Adobe XD). User journey mapping. Focus on mobile constraints: screen sizes, touch interactions.</div></div>
+      <div class="t-item"><div class="t-label">3. Development</div><div class="t-desc">Frontend (UI, animations) + backend (APIs, databases) in parallel. Frameworks: Flutter, React Native, or native (Swift/Kotlin). Implement modular code.</div></div>
+      <div class="t-item"><div class="t-label">4. Testing &amp; QA</div><div class="t-desc">Device and platform testing. Automated &amp; manual tests. Beta testing via TestFlight (iOS) or Firebase App Distribution (Android).</div></div>
+      <div class="t-item"><div class="t-label">5. Deployment &amp; App Store Submission</div><div class="t-desc">Comply with Google Play Store &amp; Apple App Store policies. ASO (App Store Optimization). Prepare for approval delays.</div></div>
+      <div class="t-item"><div class="t-label">6. Maintenance &amp; Update</div><div class="t-desc">Collect feedback via Firebase / Sentry. Regular updates for bugs and new features. Ensure OS version compatibility.</div></div>
+    </div>
+
+    <h3>Adapted Agile for Mobile — 5 Practices</h3>
+    <div class="card-grid">
+      <div class="card c-green"><div class="card-title">Scrum / Kanban</div><p>Scrum: 2-week sprints. Kanban: continuous flow-based delivery.</p></div>
+      <div class="card c-blue"><div class="card-title">Sprint Planning</div><p>User Stories &amp; Epics. Prioritize by business value. Define MVP early.</p></div>
+      <div class="card c-orange"><div class="card-title">CI/CD</div><p>Automate builds (GitHub Actions, Jenkins, Bitrise). Feature toggling for phased rollouts.</p></div>
+      <div class="card c-purple"><div class="card-title">User Feedback</div><p>Analytics (Mixpanel, Firebase). A/B testing. Adapt backlog based on user needs.</p></div>
+      <div class="card c-yellow"><div class="card-title">Cross-functional Teams</div><p>PM, devs, designers, QA collaborate. Daily stand-ups, sprint reviews, retrospectives.</p></div>
+    </div>
+
+    <h4>Key Terms</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">MVP</span><span class="def-desc">Minimum Viable Product — the smallest feature set that delivers value to users</span></div>
+      <div class="def-item"><span class="def-term">Sprint</span><span class="def-desc">A fixed time-box (typically 2 weeks) for delivering a working increment</span></div>
+      <div class="def-item"><span class="def-term">Backlog</span><span class="def-desc">A prioritized list of features/tasks to be completed</span></div>
+      <div class="def-item"><span class="def-term">User Story</span><span class="def-desc">"As a [user], I want [feature] so that [benefit]" — a requirement in user language</span></div>
+      <div class="def-item"><span class="def-term">ASO</span><span class="def-desc">App Store Optimization — improving metadata for discoverability in app stores</span></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 3 — CROSS PLATFORM
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic3">
+    <div class="topic-header">
+      <span class="topic-num">03</span>
+      <h2 class="topic-title">Cross Platform</h2>
+      <span class="topic-badge b3">Technology</span>
+    </div>
+
+    <h3>The Key Challenge: Fragmentation</h3>
+    <p>Each mobile platform has different interfaces, standards, programming languages, APIs, capabilities, and SDKs. Even within the same platform, devices differ in memory, screen resolution, etc.</p>
+
+    <h3>3 Mobile Development Approaches</h3>
+    <div class="card-grid">
+      <div class="card c-blue">
+        <div class="card-title">Native</div>
+        <p>Use platform-specific languages and tools.</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--accent1);">Android: Kotlin/Java + Android Studio<br>iOS: Swift/ObjC + Xcode</p>
+      </div>
+      <div class="card c-green">
+        <div class="card-title">Mobile Web</div>
+        <p>Web technologies running in mobile browser. JS, HTML, CSS. Tools: React, Vue, Angular.</p>
+      </div>
+      <div class="card c-orange">
+        <div class="card-title">Cross-Platform</div>
+        <p>Single code base targeting multiple platforms. Top tools: React Native, Flutter.</p>
+      </div>
+    </div>
+
+    <h3>Why Use Cross-Platform?</h3>
+    <ul class="notes">
+      <li class="green">Reusable code across platforms</li>
+      <li class="green">Rapid time to market</li>
+      <li class="green">Robust performance</li>
+      <li class="green">Close-to-native UX</li>
+      <li class="green">Broad audience reach (Android + iOS simultaneously)</li>
+      <li class="green">Greater cost efficiencies</li>
+    </ul>
+
+    <h3>React Native (by Meta/Facebook)</h3>
+    <p>Open-source framework using <strong>JavaScript + React</strong> to build native apps for Android, iOS, and more. First developed in 2013 internally at Facebook, public release in 2015.</p>
+
+    <h4>React Native Architecture Components</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">JSI</span><span class="def-desc">JavaScript Interface — allows JS to hold a reference to C++ objects and vice-versa. Direct method invocation without serialization costs.</span></div>
+      <div class="def-item"><span class="def-term">Fabric</span><span class="def-desc">New rendering system (evolution of legacy renderer). Unifies render logic in C++, uses JSI to control UI directly on native side.</span></div>
+      <div class="def-item"><span class="def-term">TurboModules</span><span class="def-desc">Let React Native interact with native platform APIs not provided by RN. Uses JSI to access native modules.</span></div>
+      <div class="def-item"><span class="def-term">Yoga</span><span class="def-desc">Embeddable layout system supporting a subset of CSS (mostly Flexbox). Used by Fabric to position UI elements. Enables code sharing between native and browser.</span></div>
+    </div>
+
+    <h4>React Native Render Pipeline</h4>
+    <pre><code><span class="cm">// The 3-step pipeline:</span>
+<span class="hl-blue">Render</span>  →  <span class="hl-green">Commit</span>  →  <span class="hl-orange">Mount</span>
+
+<span class="cm">// View Flattening: optimization to avoid deep layout trees</span>
+<span class="cm">// Views (2) and (3) merged into (1) via diffing algorithm</span></code></pre>
+
+    <h4>Core Components (Native Components wrapped for JS)</h4>
+    <ul class="notes">
+      <li>View — basic rectangular container</li>
+      <li>Text — displays text</li>
+      <li>Image — displays images</li>
+      <li>TextInput — text input field</li>
+      <li>ScrollView — scrollable container</li>
+      <li>FlatList — optimized list rendering</li>
+    </ul>
+
+    <h3>Flutter (by Google)</h3>
+    <p>Open-source framework for building <strong>natively compiled, multi-platform apps from a single codebase</strong>. Uses Dart language. Released as open source in 2017.</p>
+
+    <h4>Flutter Architecture (Layered)</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Dart App</span><span class="def-desc">Composes Widgets into UI. Implements business logic. Owned by developer.</span></div>
+      <div class="def-item"><span class="def-term">Framework</span><span class="def-desc">Higher-level API: widgets, hit-testing, gestures, accessibility, text input.</span></div>
+      <div class="def-item"><span class="def-term">Engine</span><span class="def-desc">Rasterizes composited scenes. Low-level: graphics (Skia/Impeller), text layout, Dart runtime. Exposes dart:ui API.</span></div>
+      <div class="def-item"><span class="def-term">Embedder</span><span class="def-desc">Coordinates with OS (rendering surfaces, input, accessibility). Manages event loop.</span></div>
+      <div class="def-item"><span class="def-term">Runner</span><span class="def-desc">Composes embedder pieces into an app package. Generated by <code>flutter create</code>.</span></div>
+    </div>
+
+    <h4>Flutter Rendering Process (Widget → Pixels)</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Widget Tree</span><span class="def-desc">Everything is a Widget. Stored hierarchically. May be stateless or stateful.</span></div>
+      <div class="def-item"><span class="def-term">Reconciliation</span><span class="def-desc">Linear reconciliation (not tree-diff like React) to find which widgets need updating.</span></div>
+      <div class="def-item"><span class="def-term">Layout</span><span class="def-desc">Determines size and position of each widget.</span></div>
+      <div class="def-item"><span class="def-term">Painting</span><span class="def-desc">Assigns colors, gradients, other visual attributes onto canvas.</span></div>
+      <div class="def-item"><span class="def-term">Compositing</span><span class="def-desc">Combines painted widgets into final image (transparency, overlapping, layering).</span></div>
+      <div class="def-item"><span class="def-term">Rendering</span><span class="def-desc">Converts composite image to platform-specific GPU instructions.</span></div>
+    </div>
+
+    <h3>React Native vs Flutter Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>React Native</th><th>Flutter</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Language</td><td>JavaScript</td><td>Dart</td></tr>
+          <tr><td class="td-key">By</td><td>Meta (Facebook)</td><td>Google</td></tr>
+          <tr><td class="td-key">UI Approach</td><td>Uses native components via bridge/JSI</td><td>Custom renderer (Impeller/Skia) — draws own widgets</td></tr>
+          <tr><td class="td-key">Community</td><td>Very large (JS ecosystem)</td><td>Rapidly growing</td></tr>
+          <tr><td class="td-key">CI/CD</td><td>EAS (Expo) or third parties</td><td>Rich default CLI</td></tr>
+          <tr><td class="td-key">Best For</td><td>Teams with strong JS/Web background</td><td>Teams with budget for Dart learning; pixel-perfect UI</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Framework Choice Guidelines</h3>
+    <div class="callout tip">
+      <span class="callout-icon">🟢</span>
+      <div class="callout-body">
+        <div class="callout-title">Choose React Native if…</div>
+        <p class="callout-text">Your team has strong JavaScript or web background. Easier to reuse existing skills, reduces cost and development time.</p>
+      </div>
+    </div>
+    <div class="callout info">
+      <span class="callout-icon">🔵</span>
+      <div class="callout-body">
+        <div class="callout-title">Choose Flutter if…</div>
+        <p class="callout-text">You have enough budget and resources. Dart is not widely used, so learning curve is higher — but the result is consistent pixel-perfect UI across platforms.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 4 — INTRO TO ANDROID
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic4">
+    <div class="topic-header">
+      <span class="topic-num">04</span>
+      <h2 class="topic-title">Intro to Android</h2>
+      <span class="topic-badge b1">Android SDK</span>
+    </div>
+
+    <h3>What is Android?</h3>
+    <ul class="notes">
+      <li>Mobile OS based on <strong>Linux kernel</strong></li>
+      <li>UI designed for touch screens</li>
+      <li>Used on over <strong>80% of all smartphones</strong></li>
+      <li>Powers watches, TVs, cars, and more</li>
+      <li>Open-source. 3+ billion monthly active devices.</li>
+      <li>2.5+ billion monthly active Google Play users. 2M+ apps.</li>
+    </ul>
+
+    <h3>Android Software Developer Kit (SDK)</h3>
+    <ul class="notes">
+      <li>Development tools: debugger, monitors, editors</li>
+      <li>Libraries: maps, wearables, ML</li>
+      <li>Virtual devices (emulators/AVDs)</li>
+      <li>Documentation at developer.android.com</li>
+      <li>Sample code</li>
+    </ul>
+
+    <h3>Kotlin — The Language for Android</h3>
+    <div class="card-grid">
+      <div class="card c-green"><div class="card-title">Expressive &amp; Concise</div><p>Less boilerplate than Java. Modern language features.</p></div>
+      <div class="card c-blue"><div class="card-title">Safer Code</div><p>Null safety built-in. Eliminates NullPointerExceptions by default.</p></div>
+      <div class="card c-orange"><div class="card-title">Interoperable</div><p>100% compatible with Java. Can call Java libraries from Kotlin.</p></div>
+      <div class="card c-purple"><div class="card-title">Structured Concurrency</div><p>Coroutines for async code without callback hell.</p></div>
+    </div>
+
+    <h3>API Levels — Three Key SDK Versions</h3>
+    <div class="formula">
+      <span class="formula-label">SDK Version Hierarchy</span>
+      minSdkVersion ≤ targetSdkVersion ≤ compileSdkVersion
+    </div>
+
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">minSdkVersion</span><span class="def-desc">Device needs <em>at least</em> this API level to install the app.</span></div>
+      <div class="def-item"><span class="def-term">targetSdkVersion</span><span class="def-desc">The API version the app was designed and tested for.</span></div>
+      <div class="def-item"><span class="def-term">compileSdkVersion</span><span class="def-desc">The Android OS library version compiled <em>with</em> (usually latest).</span></div>
+    </div>
+
+    <h3>4 Types of Application Components</h3>
+    <div class="card-grid">
+      <div class="card c-blue">
+        <div class="card-title">Activity</div>
+        <p>A single screen with a user interface. Entry point for user interaction.</p>
+        <p style="font-size:12px;margin-top:6px;color:var(--muted);">Hotel analogy: the registration desk</p>
+      </div>
+      <div class="card c-green">
+        <div class="card-title">Service</div>
+        <p>Performs long-running tasks in the background (no UI).</p>
+        <p style="font-size:12px;margin-top:6px;color:var(--muted);">Hotel analogy: laundry service</p>
+      </div>
+      <div class="card c-orange">
+        <div class="card-title">Broadcast Receiver</div>
+        <p>Responds to system-wide announcements (battery low, SMS received).</p>
+        <p style="font-size:12px;margin-top:6px;color:var(--muted);">Hotel analogy: package arrival notification</p>
+      </div>
+      <div class="card c-purple">
+        <div class="card-title">Content Provider</div>
+        <p>Manages a shared set of app data (contacts, media).</p>
+        <p style="font-size:12px;margin-top:6px;color:var(--muted);">Hotel analogy: city tour companies</p>
+      </div>
+    </div>
+
+    <h3>App Building Blocks</h3>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Resources (res/)</span><span class="def-desc">Static content: layout files, images, audio files, strings, colors as XML. Stored separately from code for easy localization and updates.</span></div>
+      <div class="def-item"><span class="def-term">AndroidManifest.xml</span><span class="def-desc">Metadata about the app. Lists all activities, services, receivers, providers. Declares permissions and hardware requirements.</span></div>
+      <div class="def-item"><span class="def-term">Gradle build files</span><span class="def-desc">Build automation. <code>build.gradle (Module)</code>: dependencies, SDK versions. <code>build.gradle (Project)</code>: repositories, global config.</span></div>
+    </div>
+
+    <h3>Views — Building Blocks of UI</h3>
+    <p><em>"Everything you see is a View."</em> Views are Android's basic UI building blocks — rectangular elements on screen.</p>
+
+    <h4>Common View Classes</h4>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title">Display Views</div>
+        <ul class="notes">
+          <li>TextView — displays text</li>
+          <li>ImageView — displays images</li>
+          <li>ScrollView — scrollable container</li>
+          <li>RecyclerView — efficient lists</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title">Input Views</div>
+        <ul class="notes">
+          <li>Button — clickable button</li>
+          <li>EditText — editable text field</li>
+          <li>CheckBox — on/off toggle</li>
+          <li>RadioButton — single selection</li>
+          <li>SeekBar — range slider</li>
+          <li>Switch — toggle switch</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>View Size Options</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">wrap_content</span><span class="def-desc">View is only as big as its content needs to be.</span></div>
+      <div class="def-item"><span class="def-term">match_parent</span><span class="def-desc">View expands to fill its parent container.</span></div>
+      <div class="def-item"><span class="def-term">Fixed dp value</span><span class="def-desc">Exact size, e.g., <code>48dp</code>. Use dp not px.</span></div>
+    </div>
+
+    <h3>ViewGroups — Layout Containers</h3>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">FrameLayout</span><span class="def-desc">Holds generally a single child View. Stacked on top of each other.</span></div>
+      <div class="def-item"><span class="def-term">LinearLayout</span><span class="def-desc">Aligns children in a single row or column. Set <code>android:orientation</code> to horizontal or vertical.</span></div>
+      <div class="def-item"><span class="def-term">ConstraintLayout</span><span class="def-desc">Recommended default. Positions views using constraints. Avoids deep nesting.</span></div>
+    </div>
+
+    <h3>Event Handling</h3>
+    <pre><code><span class="cm">// SAM (Single Abstract Method) — concise click listener</span>
+button.<span class="fn">setOnClickListener</span> { view <span class="op">-></span>
+    <span class="cm">/* handle click */</span>
+}
+
+<span class="cm">// Modify a View dynamically</span>
+<span class="kw">val</span> resultTextView: TextView = <span class="fn">findViewById</span>(R.id.textView)
+resultTextView.text = <span class="str">"Goodbye!"</span>
+
+<span class="cm">// Event flow: User interacts → Event fired → Check callback → Execute or ignore</span></code></pre>
+
+    <h3>Gradle — Build System</h3>
+    <ul class="notes">
+      <li>Build automation system</li>
+      <li>Manages the build cycle via a series of tasks (compile Kotlin, run tests, install APK)</li>
+      <li>Determines proper task order and manages dependencies</li>
+    </ul>
+
+    <h3>Accessibility Best Practices</h3>
+    <div class="formula">
+      <span class="formula-label">Contrast Ratio Requirements</span>
+      Small text: ≥ 4.5:1 contrast | Large text: ≥ 3.0:1 contrast
+    </div>
+    <ul class="notes">
+      <li>Touch target size: at least <strong>48dp × 48dp</strong></li>
+      <li>Set <code>contentDescription</code> on images and controls for screen readers</li>
+      <li>Use <strong>TalkBack</strong> — Google's screen reader for Android</li>
+      <li>Use <strong>Switch Access</strong> for users who cannot use touch</li>
+    </ul>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 5 — LAYOUTS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic5">
+    <div class="topic-header">
+      <span class="topic-num">05</span>
+      <h2 class="topic-title">Layouts</h2>
+      <span class="topic-badge b2">Android UI</span>
+    </div>
+
+    <h3>Size Units in Android</h3>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">sp (scale-independent px)</span><span class="def-desc">Use for <strong>text size</strong>. Scaled by the user's font size preference.</span></div>
+      <div class="def-item"><span class="def-term">dp (density-independent px)</span><span class="def-desc">Use for <strong>everything else</strong> (width, height, margin, padding). Consistent across screen densities.</span></div>
+      <div class="def-item"><span class="def-term">px (pixels)</span><span class="def-desc">Actual screen pixels. <strong>Not recommended</strong> — results in different sizes on different devices.</span></div>
+    </div>
+
+    <h4>DP Formula</h4>
+    <div class="formula">
+      <span class="formula-label">Density-Independent Pixel Calculation</span>
+      dp = (width in pixels × 160) ÷ screen density (dpi)
+    </div>
+
+    <h3>Screen Density Buckets</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Qualifier</th><th>Description</th><th>DPI Estimate</th><th>Scale Factor</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">ldpi</td><td>Low density (mostly unused)</td><td>~120 dpi</td><td>0.75×</td></tr>
+          <tr><td class="td-key">mdpi</td><td>Medium density (baseline)</td><td>~160 dpi</td><td>1×</td></tr>
+          <tr><td class="td-key">hdpi</td><td>High density</td><td>~240 dpi</td><td>1.5×</td></tr>
+          <tr><td class="td-key">xhdpi</td><td>Extra-high density</td><td>~320 dpi</td><td>2×</td></tr>
+          <tr><td class="td-key">xxhdpi</td><td>Extra-extra-high density</td><td>~480 dpi</td><td>3×</td></tr>
+          <tr><td class="td-key">xxxhdpi</td><td>Extra-extra-extra-high density</td><td>~640 dpi</td><td>4×</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>View Rendering Cycle</h3>
+    <div class="card-grid">
+      <div class="card c-blue"><div class="card-title">1. Measure</div><p>Determine the size of each view based on constraints and content.</p></div>
+      <div class="card c-green"><div class="card-title">2. Layout</div><p>Position each view within its parent container.</p></div>
+      <div class="card c-orange"><div class="card-title">3. Draw</div><p>Render the views onto the screen.</p></div>
+    </div>
+
+    <h3>View Spacing</h3>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title">Margin</div>
+        <p style="font-size:13px;">Space <em>outside</em> the view's border — pushes the view away from other elements.</p>
+        <pre><code>android:layout_margin="16dp"
+android:layout_marginTop="8dp"</code></pre>
+      </div>
+      <div class="col-box">
+        <div class="col-title">Padding</div>
+        <p style="font-size:13px;">Space <em>inside</em> the view's border — pushes content away from the edge.</p>
+        <pre><code>android:padding="16dp"
+android:paddingStart="8dp"</code></pre>
+      </div>
+    </div>
+
+    <h3>ConstraintLayout</h3>
+    <p><strong>Recommended default layout for Android.</strong> Solves the costly issue of too many nested layouts while allowing complex behavior. Positions and sizes views using <em>constraints</em>.</p>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚡</span>
+      <div class="callout-body">
+        <div class="callout-title">Why avoid deep nesting?</div>
+        <p class="callout-text">Deeply nested ViewGroups require more computation. Views may be measured multiple times. This causes UI slowdown and lack of responsiveness. ConstraintLayout solves this with a flat hierarchy.</p>
+      </div>
+    </div>
+
+    <h4>Constraint Format</h4>
+    <div class="formula">
+      <span class="formula-label">Constraint Attribute Format</span>
+      app:layout_constraint&lt;Source&gt;_to&lt;Target&gt;Of="parent | @id/view"
+    </div>
+
+    <h4>Example Constraints</h4>
+    <pre><code><span class="kw">&lt;TextView</span>
+    app:layout_constraintTop_toTopOf=<span class="str">"parent"</span>
+    app:layout_constraintBottom_toBottomOf=<span class="str">"parent"</span>
+    app:layout_constraintStart_toStartOf=<span class="str">"parent"</span>
+    app:layout_constraintEnd_toEndOf=<span class="str">"parent"</span> <span class="cm">/&gt;  ← centers the view</span></code></pre>
+
+    <h4>Constraint Widget Sizes</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">Fixed</span><span class="def-desc">Explicit size value in dp.</span></div>
+      <div class="def-item"><span class="def-term">Wrap content</span><span class="def-desc">Size is just large enough to fit content.</span></div>
+      <div class="def-item"><span class="def-term">Match constraints (0dp)</span><span class="def-desc">Expands to fill available space between constraints. Use <strong>instead of</strong> <code>match_parent</code> in ConstraintLayout children.</span></div>
+    </div>
+
+    <h3>Chains in ConstraintLayout</h3>
+    <p>Chains let you position views in relation to each other (horizontally or vertically). Provide much of LinearLayout functionality.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Chain Style</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Spread Chain</td><td>Views spread evenly across available space (default).</td></tr>
+          <tr><td class="td-key">Spread Inside</td><td>First and last views at edges; space distributed between remaining views.</td></tr>
+          <tr><td class="td-key">Weighted Chain</td><td>Views take up space proportional to their weights.</td></tr>
+          <tr><td class="td-key">Packed Chain</td><td>Views packed together at center of available space.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Guidelines</h3>
+    <p>Invisible layout helpers that let you position multiple views relative to a single guide. Can be vertical or horizontal. Not drawn on device.</p>
+    <pre><code><span class="kw">&lt;Guideline</span>
+    android:orientation=<span class="str">"vertical"</span>
+    app:layout_constraintGuide_begin=<span class="str">"16dp"</span> <span class="cm">/&gt;</span>
+
+<span class="cm">&lt;!-- Specify one of these: --&gt;</span>
+<span class="cm">layout_constraintGuide_begin   ← from start</span>
+<span class="cm">layout_constraintGuide_end     ← from end</span>
+<span class="cm">layout_constraintGuide_percent ← percentage of parent (0.0–1.0)</span></code></pre>
+
+    <h3>Groups</h3>
+    <p>Control the visibility of a set of widgets as a group.</p>
+    <pre><code><span class="cm">// Toggle group visibility</span>
+<span class="kw">if</span> (group.visibility == View.GONE) {
+    group.visibility = View.VISIBLE
+} <span class="kw">else</span> {
+    group.visibility = View.GONE
+}
+<span class="cm">// Visibility constants:</span>
+<span class="cm">// VISIBLE   → shown</span>
+<span class="cm">// INVISIBLE → not shown but TAKES space</span>
+<span class="cm">// GONE      → not shown and does NOT take space</span></code></pre>
+
+    <h3>Data Binding</h3>
+    <p>Bind UI components in layouts directly to data sources — replaces repetitive <code>findViewById()</code> calls.</p>
+
+    <h4>Setup</h4>
+    <pre><code><span class="cm">// 1. Enable in build.gradle</span>
+android {
+    buildFeatures { dataBinding <span class="op">=</span> <span class="kw">true</span> }
+}
+
+<span class="cm">// 2. Wrap layout in &lt;layout&gt; tag</span>
+<span class="kw">&lt;layout&gt;</span>
+    <span class="kw">&lt;data&gt;</span>
+        <span class="kw">&lt;variable</span> name=<span class="str">"name"</span> type=<span class="str">"String"</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/data&gt;</span>
+    <span class="kw">&lt;ConstraintLayout&gt;</span>
+        <span class="kw">&lt;TextView</span> android:text=<span class="str">"@{name}"</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;/ConstraintLayout&gt;</span>
+<span class="kw">&lt;/layout&gt;</span>
+
+<span class="cm">// 3. Use binding in Activity</span>
+<span class="kw">val</span> binding: ActivityMainBinding = DataBindingUtil.<span class="fn">setContentView</span>(<span class="kw">this</span>, R.layout.activity_main)
+binding.name = <span class="str">"John"</span></code></pre>
+
+    <div class="callout info">
+      <span class="callout-icon">📌</span>
+      <div class="callout-body">
+        <div class="callout-title">ViewBinding vs Data Binding</div>
+        <p class="callout-text"><strong>ViewBinding</strong>: Ties View to a Binding Class, providing static access to views — but does NOT tie variables/data to views. <strong>Data Binding</strong>: Does both. For reactive two-way binding, use Data Binding with LiveData or Observable objects. With Jetpack Compose, binding is not needed as it provides its own reactive framework.</p>
+      </div>
+    </div>
+
+    <h3>RecyclerView</h3>
+    <p>Widget for displaying lists of data. "Recycles" (reuses) item views when they scroll off-screen to make scrolling more performant.</p>
+
+    <h4>RecyclerView Key Parts</h4>
+    <div class="def-list">
+      <div class="def-item"><span class="def-term">RecyclerView.Adapter</span><span class="def-desc">Supplies data and layouts. Must override <code>getItemCount</code>, <code>onCreateViewHolder</code>, <code>onBindViewHolder</code>.</span></div>
+      <div class="def-item"><span class="def-term">ViewHolder</span><span class="def-desc">Holds references to the views for one item. Reused as items scroll in/out.</span></div>
+      <div class="def-item"><span class="def-term">LayoutManager</span><span class="def-desc">Controls how items are arranged. LinearLayoutManager (list), GridLayoutManager (grid).</span></div>
+    </div>
+
+    <pre><code><span class="kw">class</span> <span class="fn">MyAdapter</span>(<span class="kw">val</span> data: List&lt;Int&gt;) : RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt;() {
+
+    <span class="kw">class</span> <span class="fn">MyViewHolder</span>(<span class="kw">val</span> row: View) : RecyclerView.ViewHolder(row) {
+        <span class="kw">val</span> textView = row.<span class="fn">findViewById</span>&lt;TextView&gt;(R.id.number)
+    }
+
+    <span class="kw">override fun</span> <span class="fn">onCreateViewHolder</span>(parent: ViewGroup, viewType: Int): MyViewHolder {
+        <span class="kw">val</span> layout = LayoutInflater.<span class="fn">from</span>(parent.context).<span class="fn">inflate</span>(R.layout.item_view, parent, <span class="kw">false</span>)
+        <span class="kw">return</span> <span class="fn">MyViewHolder</span>(layout)
+    }
+
+    <span class="kw">override fun</span> <span class="fn">onBindViewHolder</span>(holder: MyViewHolder, position: Int) {
+        holder.textView.text = data.<span class="fn">get</span>(position).<span class="fn">toString</span>()
+    }
+
+    <span class="kw">override fun</span> <span class="fn">getItemCount</span>(): Int = data.size
+}</code></pre>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 6 — MD vs HIG
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic6">
+    <div class="topic-header">
+      <span class="topic-num">06</span>
+      <h2 class="topic-title">MD vs HIG</h2>
+      <span class="topic-badge b3">UI/UX Design</span>
+    </div>
+
+    <h3>Overview</h3>
+    <div class="two-col">
+      <div class="col-box" style="border-top:3px solid var(--accent2);">
+        <div class="col-title green">Material Design (MD)</div>
+        <p style="font-size:13px;">Google's design standard for Android. Based on the "material metaphor" concept — digital surfaces with real-world physics, shadows, and movement.</p>
+      </div>
+      <div class="col-box" style="border-top:3px solid var(--accent1);">
+        <div class="col-title blue">Human Interface Guidelines (HIG)</div>
+        <p style="font-size:13px;">Apple's design standard for iOS. Focuses on simplicity, clarity, and deference to user content. Transparency and layering for depth.</p>
+      </div>
+    </div>
+
+    <h3>Core Design Principles</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th class="green">Material Design</th><th class="blue">Human Interface Guidelines</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-key">Philosophy</td>
+            <td>Material metaphor — digital surfaces with real-world properties (shadows, depth)</td>
+            <td>Simplicity, clarity, and deference to user content</td>
+          </tr>
+          <tr>
+            <td class="td-key">Core Principle 1</td>
+            <td class="green">Material as Metaphor: realistic shadows and movement</td>
+            <td class="blue">Clarity: legible and visually distinct interface</td>
+          </tr>
+          <tr>
+            <td class="td-key">Core Principle 2</td>
+            <td class="green">Bold Graphics &amp; Intentional Colors: vibrant palettes, strong contrast</td>
+            <td class="blue">Deference: UI elements support content, don't overshadow it</td>
+          </tr>
+          <tr>
+            <td class="td-key">Core Principle 3</td>
+            <td class="green">Meaningful Motion: animation provides visual cues for understanding</td>
+            <td class="blue">Depth through Transparency: blur and layering for hierarchy</td>
+          </tr>
+          <tr>
+            <td class="td-key">Core Principle 4</td>
+            <td class="green">Adaptive Design: optimized for different screen sizes and orientations</td>
+            <td class="blue">Intuitive Navigation: familiar interactions, smooth transitions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Navigation Patterns</h3>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title green">Material Design Navigation</div>
+        <ul class="notes">
+          <li class="green"><strong>Navigation Drawer</strong> — side menu for quick access to app sections</li>
+          <li class="green"><strong>Top Tabs</strong> — tabs at top of screen</li>
+          <li class="green"><strong>Back Button</strong> — physical or on-screen button for backward navigation</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">HIG Navigation</div>
+        <ul class="notes">
+          <li class="blue"><strong>Bottom Navigation Bar</strong> — quick access to primary sections</li>
+          <li class="blue"><strong>Hierarchical Navigation</strong> — back button in top-left corner</li>
+          <li class="blue"><strong>Swipe Gestures</strong> — swipe left/right for navigation</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Visual Elements: Icons, Colors, Animations</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th class="green">Material Design</th><th class="blue">HIG (iOS)</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Icons</td><td class="green">Colorful, bright, detailed, expressive</td><td class="blue">Flat &amp; monochromatic, minimalistic, simple</td></tr>
+          <tr><td class="td-key">Depth</td><td class="green">Shadows &amp; elevation create hierarchy</td><td class="blue">Transparency &amp; blur (no heavy shadows)</td></tr>
+          <tr><td class="td-key">Animation</td><td class="green">Explicit, smooth, meaningful movement</td><td class="blue">Natural, seamless, fluid transitions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Layout Approach</h3>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title green">Material Design</div>
+        <ul class="notes">
+          <li class="green"><strong>Grid-Based Layout</strong>: responsive grid system with columns, gutters, margins</li>
+          <li class="green"><strong>Responsive Design</strong>: adapts to various screen sizes and orientations</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">HIG</div>
+        <ul class="notes">
+          <li class="blue"><strong>Alignment and Spacing</strong>: precise alignment enhances readability</li>
+          <li class="blue"><strong>Consistency</strong>: elements with similar functions have uniform appearance</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>UI Components Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component Type</th><th class="green">Material Design</th><th class="blue">HIG (iOS)</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key">Buttons</td><td>Text, Elevated, Filled, Outlined (varying emphasis)</td><td>System, Detail Disclosure, Info buttons</td></tr>
+          <tr><td class="td-key">List/Card</td><td>Cards — encapsulate related info (image, text, actions)</td><td>Collection Views — similar function, different pattern</td></tr>
+          <tr><td class="td-key">Text Input</td><td>Text Fields — labels, helper text, floating hints</td><td>Text Fields — built-in auto-correction, search capabilities</td></tr>
+          <tr><td class="td-key">Navigation</td><td>Navigation Drawer — hidden side menu</td><td>Tab Bar — persistent bottom navigation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Apple Liquid Glass (2025 — new in HIG)</h3>
+    <div class="card-grid">
+      <div class="card c-blue"><div class="card-title">Glass-like Translucency</div><p>Semi-transparent surfaces that reveal layers beneath.</p></div>
+      <div class="card c-purple"><div class="card-title">Fluidity</div><p>Smooth, liquid-like animations and transitions.</p></div>
+      <div class="card c-green"><div class="card-title">Light Bending</div><p>Material that appears to refract and bend light realistically.</p></div>
+    </div>
+
+    <h3>Impact on UX</h3>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title green">Android (MD)</div>
+        <p style="font-size:13px;">More flexibility and customization. Android offers diverse UX possibilities but at the cost of potential inconsistency across apps.</p>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">iOS (HIG)</div>
+        <p style="font-size:13px;">More consistent and structured experience. Uniform patterns across all iOS apps create predictable UX.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">✅</span>
+      <div class="callout-body">
+        <div class="callout-title">Best Practice for Developers</div>
+        <p class="callout-text">Follow official guidelines for each platform. Cross-platform apps must consider both UI/UX paradigms. Don't just port an Android design to iOS or vice versa — adapt to each platform's conventions.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOPIC 7 — NON-NULLABILITY
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="topic" id="topic7">
+    <div class="topic-header">
+      <span class="topic-num">07</span>
+      <h2 class="topic-title">Non-Nullability (Kotlin Null Safety)</h2>
+      <span class="topic-badge b4">Kotlin</span>
+    </div>
+
+    <h3>The Problem: The Billion-Dollar Mistake</h3>
+    <div class="callout danger">
+      <span class="callout-icon">💸</span>
+      <div class="callout-body">
+        <div class="callout-title">Tony Hoare's "Billion-Dollar Mistake" (1965)</div>
+        <p class="callout-text">Tony Hoare invented the null reference in 1965 for ALGOL W. He later called it his "billion-dollar mistake" — it has led to innumerable errors, vulnerabilities, and system crashes. In Java: <code>NullPointerException (NPE)</code>.</p>
+      </div>
+    </div>
+
+    <h3>Kotlin's Solution: Non-Nullable by Default</h3>
+    <p>In Kotlin, <strong>all reference variables are non-nullable by default</strong>. If you want a nullable reference, you must explicitly declare it with the <code>?</code> suffix (nullability marker).</p>
+
+    <pre><code><span class="cm">// Non-nullable (default) — cannot be null</span>
+<span class="kw">var</span> name: String = <span class="str">"Alice"</span>
+name = <span class="kw">null</span>  <span class="cm">// ❌ COMPILE ERROR</span>
+
+<span class="cm">// Nullable — must use ? suffix</span>
+<span class="kw">var</span> name: String? = <span class="str">"Alice"</span>
+name = <span class="kw">null</span>  <span class="cm">// ✅ OK</span></code></pre>
+
+    <h3>Null Safety Operators</h3>
+
+    <div class="op-grid">
+      <div class="op-box">
+        <div class="op-name">Safe Call Operator</div>
+        <div class="op-syntax">A?.B</div>
+        <div class="op-desc">Returns <code>A.B</code> if A is not null. Returns <code>null</code> if A is null — <em>never throws NPE</em>. Great for chaining: if any part is null, entire chain returns null.</div>
+        <pre style="margin-top:10px;"><code><span class="kw">val</span> len = name?.<span class="fn">length</span>  <span class="cm">// Int? (nullable)</span>
+<span class="cm">// Chaining:</span>
+user?.address?.city?.name</code></pre>
+      </div>
+
+      <div class="op-box">
+        <div class="op-name">Elvis Operator</div>
+        <div class="op-syntax">A ?: B</div>
+        <div class="op-desc">If A is not null, return A. If A is null, return B (default value). "Converts" nullable to non-nullable. The return value is typically non-nullable.</div>
+        <pre style="margin-top:10px;"><code><span class="kw">val</span> name = nullableName ?: <span class="str">""</span>
+<span class="cm">// Equivalent to:</span>
+<span class="kw">val</span> l: Int = <span class="kw">if</span> (b != <span class="kw">null</span>) b.length <span class="kw">else</span> <span class="num">0</span>
+<span class="cm">// Elvis version:</span>
+<span class="kw">val</span> l: Int = b?.<span class="fn">length</span> ?: <span class="num">0</span></code></pre>
+      </div>
+
+      <div class="op-box">
+        <div class="op-name">Not-Null Assertion Operator</div>
+        <div class="op-syntax">A!!</div>
+        <div class="op-desc">Forces a nullable value to non-nullable. <strong>If the value IS null, throws NPE at runtime.</strong> Use only when you are 100% certain the value is not null and the compiler cannot infer this.</div>
+        <pre style="margin-top:10px;"><code><span class="kw">val</span> b = a<span class="op">!!</span>  <span class="cm">// Throws NPE if a is null</span>
+<span class="cm">// Use sparingly — defeats null safety purpose</span></code></pre>
+      </div>
+
+      <div class="op-box">
+        <div class="op-name">lateinit vars</div>
+        <div class="op-syntax">lateinit var x: Type</div>
+        <div class="op-desc">Marks a non-nullable property that will be initialized later (e.g., in dependency injection or Activity.onCreate). Still null at construction, but guaranteed non-null eventually. Throws <code>UninitializedPropertyAccessException</code> if accessed before init.</div>
+        <pre style="margin-top:10px;"><code><span class="kw">lateinit var</span> result: TextView
+
+<span class="kw">override fun</span> <span class="fn">onCreate</span>(...) {
+    result = <span class="fn">findViewById</span>(R.id.result)
+}</code></pre>
+      </div>
+    </div>
+
+    <h3>Summary: Null Handling Decision Tree</h3>
+    <div class="formula">
+      <span class="formula-label">Quick Reference</span>
+      Non-nullable default → <strong>A?</strong> to allow null → <strong>A?.</strong> for safe access → <strong>?:</strong> for default → <strong>!!</strong> when certain (dangerous)
+    </div>
+
+    <h3>Language Null Safety Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Language</th><th>Null Concept</th><th>Default Non-null?</th><th>Compile-time?</th><th>"Trust Me" Escape</th></tr></thead>
+        <tbody>
+          <tr><td class="td-key green">Kotlin</td><td><code>null</code> / <code>T?</code></td><td class="green">✅ Yes</td><td class="green">✅ Yes</td><td><code>!!</code> — throws NPE if null</td></tr>
+          <tr><td class="td-key green">Rust</td><td><code>None</code> / <code>Option&lt;T&gt;</code></td><td class="green">✅ Yes</td><td class="green">✅ Yes</td><td><code>.unwrap()</code> — panics if None</td></tr>
+          <tr><td class="td-key green">Dart</td><td><code>null</code> / <code>T?</code></td><td class="green">✅ Yes (since 2.12)</td><td class="green">✅ Yes</td><td><code>!</code> suffix — throws if null</td></tr>
+          <tr><td class="td-key yellow">TypeScript</td><td><code>null</code> / <code>T | null</code></td><td class="yellow">Opt-in</td><td class="yellow">✅ Yes (with strictNullChecks)</td><td>Type assertions <code>as T</code></td></tr>
+          <tr><td class="td-key orange">Java</td><td><code>@Nullable / @NonNull</code></td><td class="orange">❌ No</td><td class="orange">Tools only</td><td>Any reference is nullable by default</td></tr>
+          <tr><td class="td-key orange">Python</td><td><code>None</code> / <code>Optional[T]</code></td><td class="orange">❌ No</td><td class="orange">Tools only</td><td>Type hints ignored at runtime</td></tr>
+          <tr><td class="td-key orange">JavaScript</td><td><code>null + undefined</code></td><td class="orange">❌ No</td><td class="orange">❌ No</td><td>Everything nullable, no enforcement</td></tr>
+          <tr><td class="td-key orange">C++</td><td><code>nullptr</code></td><td class="orange">❌ No</td><td class="orange">❌ No</td><td>Raw nullptr dereference = undefined behavior (silent crash)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">🔑</span>
+      <div class="callout-body">
+        <div class="callout-title">Key Insight: Why Kotlin's Approach is Better</div>
+        <p class="callout-text">By making non-null the default, the compiler warns you at the point of assignment (not at runtime crash). If you need null, you explicitly opt-in with <code>?</code>, which forces you to handle the null case. This moves NPE bugs from <em>runtime crashes</em> to <em>compile-time errors</em>.</p>
+      </div>
+    </div>
+  </section>
+
+  </article>
+</div>
+
+<script>
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('.topic');
+  const tocLinks = document.querySelectorAll('.toc a:not(.sub)');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const match = document.querySelector(`.toc a[href="#${id}"]`);
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {threshold: 0.3});
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

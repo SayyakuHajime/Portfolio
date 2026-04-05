@@ -3,15 +3,15 @@
 /* Ensure consistent background across all viewports */
 body,
 html {
-    background-color: var(--color-bg);
+    background-color: var(--paper);
 }
 
 .container {
-    background-color: var(--color-bg);
+    background-color: var(--paper);
 }
 
 .main-content {
-    background-color: var(--color-bg);
+    background-color: var(--paper);
 }
 
 /* xl: < 1200px */
@@ -55,11 +55,11 @@ html {
 
     /* Ensure background consistency */
     body {
-        background-color: var(--color-bg) !important;
+        background-color: var(--paper) !important;
     }
 
     .main-content {
-        background-color: var(--color-bg) !important;
+        background-color: var(--paper) !important;
     }
 
     /* Text alignment for mobile */
