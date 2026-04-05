@@ -11,32 +11,32 @@
   <link rel="stylesheet" href="../css/style.css" />
   <style>
 .notes-scope {
-  --ink: var(--text-primary);
-  --ink-soft: var(--text-secondary);
-  --ink-faint: var(--text-muted);
+  --ink:#1a1814;
+  --ink-soft:#3d3a35;
+  --ink-faint:#6e6a62;
   --muted: var(--ink-faint);
-  --paper: var(--bg-base);
-  --paper-warm: var(--bg-surface);
-  --paper-cream: var(--bg-elevated);
-  --rule: var(--border-default);
-  --rule-light: var(--border-subtle);
+  --paper:#faf8f4;
+  --paper-warm:#f3f0e8;
+  --paper-cream:#ede9de;
+  --rule:#d5d0c5;
+  --rule-light:#e8e4d8;
 
   --accent-p:#5c3fa0;
-  --accent-p-bg:rgba(92,63,160,0.10);
-  --accent-p-mid:rgba(92,63,160,0.38);
+  --accent-p-bg:#f0ecfa;
+  --accent-p-mid:#9b85d4;
   --accent-n:#1a6b4a;
-  --accent-n-bg:rgba(26,107,74,0.10);
-  --accent-n-mid:rgba(26,107,74,0.38);
+  --accent-n-bg:#edf7f2;
+  --accent-n-mid:#5aa882;
   --accent-b:#174e87;
-  --accent-b-bg:rgba(23,78,135,0.10);
-  --accent-b-mid:rgba(23,78,135,0.38);
+  --accent-b-bg:#eaf2fb;
+  --accent-b-mid:#6699cc;
   --accent1: var(--accent-b);
   --accent-r:#912b2b;
-  --accent-r-bg:rgba(145,43,43,0.10);
-  --accent-r-mid:rgba(145,43,43,0.38);
+  --accent-r-bg:#fdf0f0;
+  --accent-r-mid:#cc7777;
   --accent-o:#7a4a10;
-  --accent-o-bg:rgba(122,74,16,0.12);
-  --accent-o-mid:rgba(122,74,16,0.40);
+  --accent-o-bg:#fdf5e8;
+  --accent-o-mid:#d4961f;
   --accent2: var(--accent-n);
 
   --code-bg:#f2ede4;
@@ -54,92 +54,69 @@
   --code-highlight-orange:#8e4c09;
 }
 
-body.theme-dark .notes-scope {
-  --paper-warm: #171612;
-  --paper-cream: #1f1d19;
-  --rule: #3a352d;
-  --rule-light: #2f2b24;
-
-  --accent-p-bg:rgba(155,133,212,0.18);
-  --accent-p-mid:rgba(155,133,212,0.44);
-  --accent-n-bg:rgba(90,168,130,0.18);
-  --accent-n-mid:rgba(90,168,130,0.42);
-  --accent-b-bg:rgba(102,153,204,0.18);
-  --accent-b-mid:rgba(102,153,204,0.42);
-  --accent-r-bg:rgba(204,119,119,0.18);
-  --accent-r-mid:rgba(204,119,119,0.42);
-  --accent-o-bg:rgba(212,150,31,0.18);
-  --accent-o-mid:rgba(212,150,31,0.42);
-
-  --code-bg:#1b1a17;
-  --code-bg-inline:#26231e;
-  --code-border:#4b4338;
-  --code-ink:#f3efe8;
-  --code-comment:#b4aa98;
-  --code-keyword:#d7b6ff;
-  --code-function:#8dc6ff;
-  --code-operator:#ffbe75;
-  --code-string:#9ce5b5;
-  --code-number:#ff9e9e;
-  --code-highlight-blue:#9bc9ff;
-  --code-highlight-green:#b5efcc;
-  --code-highlight-orange:#ffd295;
-}
-
 .notes-cover {
-  background: var(--paper-warm);
-  color: var(--ink);
-  padding: 40px 32px 36px;
+  background: #1a1814;
+  color: #faf8f4;
+  padding: 64px 48px 52px;
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--rule-light);
 }
 .notes-cover::before {
   content: '';
   position: absolute;
   top: -60px;
   right: -60px;
-  width: 300px;
-  height: 300px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
-  border: 1px solid var(--rule);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.notes-cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: 30%;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 .notes-cover .cover-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 14px;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 20px;
 }
 .notes-cover h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 42px;
   font-weight: 700;
   line-height: 1.15;
-  margin-bottom: 10px;
-  color: var(--ink);
+  margin-bottom: 14px;
+  color: #faf8f4;
 }
 .notes-cover .cover-sub {
-  font-size: 13px;
-  color: var(--ink-soft);
+  font-size: 15px;
+  color: rgba(255,255,255,.6);
   font-style: italic;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 .notes-cover .cover-topics {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 .notes-cover .topic-chip {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  padding: 4px 12px;
-  border: 1px solid var(--rule);
+  font-size: 11px;
+  padding: 5px 14px;
+  border: 1px solid rgba(255,255,255,.25);
   border-radius: 2px;
-  letter-spacing: .07em;
-  color: var(--ink-soft);
-  background: var(--paper);
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.75);
+  background: transparent;
 }
 
 .notes-scope * { box-sizing: border-box; }
@@ -222,8 +199,8 @@ body.theme-dark .notes-scope {
 
 .notes-scope .table-wrap { border: 1px solid var(--rule); border-radius: 4px; overflow-x: auto; margin: 16px 0; background: var(--paper); }
 .notes-scope table { width: 100%; border-collapse: collapse; margin: 0; font-size: 13px; min-width: 560px; }
-.notes-scope thead th { background: var(--paper-cream); font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px; border: 1px solid var(--rule); text-align: left; color: var(--ink-faint); }
-.notes-scope td { padding: 10px 14px; border: 1px solid var(--rule-light); color: var(--ink-soft); vertical-align: top; }
+.notes-scope thead th { background: var(--paper-cream); font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 10px 14px; border: 1px solid var(--rule); text-align: left; color: var(--ink); }
+.notes-scope td { padding: 10px 14px; border: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
 .notes-scope tr:nth-child(even) td { background: var(--paper-warm); }
 
 .notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--code-ink); }
