@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Learning &mdash; Midterm Notes</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"
-      rel="stylesheet">
-    <script>
-  MathJax = {
-    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
-    chtml: { scale: 1.05, matchFontHeight: false }
-  };
-</script>
-    <script id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    <style>
-:root{
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Midterm Notes — Sayyaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Portfolio fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Notes fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      chtml: { scale: 1.05, matchFontHeight: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <!-- Portfolio styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Notes styles (scoped to .notes-scope) -->
+  <style>
+/* ── NOTES SCOPE: all original notes CSS prefixed ───────── */
+.notes-scope {
+  /* carry notes root vars inside scope */
   --ink:#1a1814;
   --ink-soft:#3d3a35;
   --ink-faint:#6e6a62;
@@ -43,330 +53,279 @@
   --tag-bg:#eae6dc;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+/* Notes cover area */
+.notes-cover {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #252320;
+}
+.notes-cover::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.notes-cover .cover-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 14px;
+}
+.notes-cover h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: var(--paper, #faf8f4);
+}
+.notes-cover .cover-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.notes-cover .cover-topics {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.notes-cover .topic-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 2px;
+  letter-spacing: .07em;
+  color: rgba(255,255,255,.7);
+}
+.notes-cover .refs-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,.28);
+  margin-top: 20px;
+  letter-spacing: .04em;
 }
 
-html{scroll-behavior:smooth;}
-
-body{
-  font-family:'Source Serif 4',Georgia,serif;
-  background:var(--paper);
-  color:var(--ink);
-  line-height:1.75;
-  font-size:16px;
+/* Notes body content */
+.notes-scope * {
+  box-sizing: border-box;
+}
+.notes-scope {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  padding: 32px;
+}
+.notes-scope h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.notes-scope h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; margin: 36px 0 10px; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 7px; }
+.notes-scope h4 { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin: 20px 0 7px; }
+.notes-scope p { margin-bottom: 12px; color: var(--ink-soft); }
+.notes-scope a { color: var(--accent-b); }
+.notes-scope strong { color: var(--ink); }
+.notes-scope em { font-style: italic; }
+.notes-scope .part-header { margin: 48px 0 0; padding: 24px 28px; border-left: 4px solid var(--ink); background: var(--paper-warm); border-radius: 0 4px 4px 0; }
+.notes-scope .part-header.purple { border-color: var(--accent-p); background: var(--accent-p-bg); }
+.notes-scope .part-header.green { border-color: var(--accent-n); background: var(--accent-n-bg); }
+.notes-scope .part-header.blue { border-color: var(--accent-b); background: var(--accent-b-bg); }
+.notes-scope .part-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 5px; }
+.notes-scope .formula-block { margin: 18px 0; background: var(--paper-cream); border: 1px solid var(--rule); border-left: 3px solid var(--ink); border-radius: 0 4px 4px 0; padding: 16px 20px; overflow-x: auto; }
+.notes-scope .formula-block.purple { border-left-color: var(--accent-p); }
+.notes-scope .formula-block.green { border-left-color: var(--accent-n); }
+.notes-scope .formula-block.blue { border-left-color: var(--accent-b); }
+.notes-scope .formula-block.orange { border-left-color: var(--accent-o); }
+.notes-scope .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; }
+.notes-scope .formula-desc { font-size: 12px; color: var(--ink-faint); margin-top: 7px; font-style: italic; }
+.notes-scope .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+.notes-scope .term-card { border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); padding: 12px 14px; }
+.notes-scope .term-name { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink); margin-bottom: 4px; letter-spacing: .04em; }
+.notes-scope .term-def { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.notes-scope .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; }
+.notes-scope .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
+.notes-scope .callout.warn { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
+.notes-scope .callout.note { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
+.notes-scope .callout.success { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
+.notes-scope table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.notes-scope th { background: var(--paper-warm); font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px; border: 1px solid var(--rule); text-align: left; color: var(--ink-faint); }
+.notes-scope td { padding: 10px 14px; border: 1px solid var(--rule-light); color: var(--ink-soft); vertical-align: top; }
+.notes-scope tr:nth-child(even) td { background: var(--paper-warm); }
+.notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.notes-scope pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 18px; overflow-x: auto; line-height: 1.6; }
+.notes-scope .algo-box { margin: 18px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.notes-scope .algo-header { background: var(--paper-warm); padding: 10px 18px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); border-bottom: 1px solid var(--rule); }
+.notes-scope .algo-body { padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.9; background: var(--paper); color: var(--ink-soft); }
+.notes-scope .algo-body span.kw { color: var(--accent-p); font-weight: 500; }
+.notes-scope .algo-body span.label { color: var(--ink-faint); font-size: 10px; letter-spacing: .06em; }
+.notes-scope .algo-body span.math { color: var(--ink); }
+.notes-scope .compare-box { margin: 18px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.notes-scope .compare-box .compare-col { padding: 16px 18px; }
+.notes-scope .compare-box .compare-col:first-child { border-right: 1px solid var(--rule); }
+.notes-scope .compare-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+.notes-scope .compare-col.purple { background: var(--accent-p-bg); }
+.notes-scope .compare-col.purple .compare-label { color: var(--accent-p); }
+.notes-scope .compare-col.green { background: var(--accent-n-bg); }
+.notes-scope .compare-col.green .compare-label { color: var(--accent-n); }
+.notes-scope .compare-col.blue { background: var(--accent-b-bg); }
+.notes-scope .compare-col.blue .compare-label { color: var(--accent-b); }
+.notes-scope ul, .notes-scope ol { padding-left: 20px; margin-bottom: 12px; color: var(--ink-soft); }
+.notes-scope li { margin-bottom: 6px; font-size: 14px; line-height: 1.7; }
+.notes-scope .diagram-container { margin: 18px 0; padding: 20px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 4px; text-align: center; overflow-x: auto; }
+.notes-scope svg text { font-family: 'IBM Plex Mono', monospace !important; }
+.notes-scope .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: var(--tag-bg); padding: 2px 8px; border-radius: 2px; color: var(--ink-faint); letter-spacing: .06em; }
+.notes-scope .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; margin-top: 20px; }
+.notes-scope .gterm { border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; background: var(--paper); }
+.notes-scope .gterm-name { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.notes-scope .gterm-def { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.notes-scope .gterm-tags { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+table { overflow-x: auto; display: block; }
+@media(max-width: 820px) {
+  .notes-scope .formula-block, .notes-scope .algo-box, .notes-scope .compare-box { overflow-x: auto; }
+  .notes-scope .compare-box { grid-template-columns: 1fr; }
 }
 
-.cover{
-  background:var(--ink);
-  color:var(--paper);
-  padding:64px 48px 52px;
-  position:relative;
-  overflow:hidden;
+/* ── RIGHT RAIL TOC (dark style) ─────────────────────────── */
+.notes-toc-list {
+  padding: 0 var(--sp-sm, 8px) var(--sp-md, 16px);
 }
-.cover::before{
-  content:'';
-  position:absolute;
-  top:-60px;
-  right:-60px;
-  width:360px;
-  height:360px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,0.07);
+.notes-toc-item {
+  display: block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #a09a90;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  margin-bottom: 2px;
 }
-
-.cover::after{
-  content:'';
-  position:absolute;
-  bottom:-80px;
-  left:30%;
-  width:480px;
-  height:480px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,0.05);
+.notes-toc-item:hover, .notes-toc-item.active {
+  color: #d4a843;
+  background: rgba(212,168,67,0.08);
 }
-
-.cover-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.45);
-  margin-bottom:20px;
+.notes-toc-item.sub {
+  padding-left: 22px;
+  font-size: 0.67rem;
+  color: #5c5852;
 }
-
-.cover h1{
-  font-family:'Playfair Display',serif;
-  font-size:42px;
-  font-weight:700;
-  line-height:1.15;
-  margin-bottom:14px;
+.notes-toc-item.sub:hover, .notes-toc-item.sub.active {
+  color: #d4a843;
+  background: rgba(212,168,67,0.06);
 }
-.cover-sub{
-  font-size:15px;
-  color:rgba(255,255,255,.6);
-  font-style:italic;
-  margin-bottom:32px;
+.progress-bar-wrap {
+  height: 2px;
+  background: #252320;
+  margin: 0 12px var(--sp-md, 16px);
+  border-radius: 2px;
+  overflow: hidden;
 }
-.cover-topics{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.topic-chip{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  padding:5px 14px;
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:2px;
-  letter-spacing:.08em;
-  color:rgba(255,255,255,.75);
+.progress-bar-fill {
+  height: 100%;
+  background: #d4a843;
+  width: 0%;
+  transition: width 0.1s;
+  border-radius: 2px;
 }
 
-.refs-note{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;
-  color:rgba(255,255,255,.3);
-  margin-top:28px;
-  letter-spacing:.05em;
-}
+/* ── CURSOR EFFECTS (from original notes) ───────────────── */
+body.cursor-mode-on, body.cursor-mode-on * { cursor: none !important; }
+.cursor-trail-canvas { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9998; opacity: 0; transition: opacity .15s; }
+.cursor-pointer { position: fixed; left: 0; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #ff1a1a; pointer-events: none; z-index: 9999; opacity: 0; transform: translate(-50%, -50%); box-shadow: 0 0 4px rgba(255,30,30,.95), 0 0 10px rgba(255,20,20,.65); transition: opacity .15s; }
+.cursor-pointer::after { content: ''; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; border: 1px solid rgba(255,70,70,.9); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 6px rgba(255,35,35,.5); }
+body.cursor-mode-on .cursor-trail-canvas, body.cursor-mode-on .cursor-pointer { opacity: 1; }
 
-.page-content{
-  max-width:1440px;
-  margin:0 auto;
-  padding:0 48px 80px;
-  display:flex;
-  align-items:flex-start;
-  gap:28px;
+/* Cursor toggle btn in right rail */
+.cursor-toggle-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid #252320;
+  background: transparent;
+  color: #5c5852;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  margin: 0 12px;
+  display: block;
+  width: calc(100% - 24px);
+  text-align: center;
 }
-.toc-column{
-  position:sticky;
-  top:18px;
-  flex:0 0 230px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  align-self:flex-start;
-}
-.toc{
-  max-height:calc(100vh - 36px);
-  overflow:auto;
-  background:var(--paper-warm);
-  border:1px solid var(--rule);
-  border-radius:4px;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  align-items:stretch;
-}
-.toc-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;
-  letter-spacing:.12em;
-  color:var(--ink-faint);
-  text-transform:uppercase;
-  margin-bottom:4px;
-}
-.toc a{
-  display:block;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  color:var(--ink-soft);
-  text-decoration:none;
-  padding:6px 10px;
-  border:1px solid var(--rule);
-  border-radius:2px;
-  background:var(--paper);
-  transition:all .15s;
-}
-.toc a:hover,.toc a.active{
-  background:var(--ink);
-  color:var(--paper);
-}
-
-.toc a.sub{
-  font-size:10px;
-  padding:4px 10px 4px 20px;
-  border-color:transparent;
-  background:transparent;
-  color:var(--ink-faint);
-}
-
-.toc a.sub:hover{
-  background:var(--paper);
-  color:var(--ink);
-  border-color:var(--rule);
-}
-
-.toc a.sub.active{
-  background:var(--ink);
-  color:var(--paper);
-  border-color:var(--ink);
-}
-
-.cursor-toggle-btn{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  border:none;
-  background:transparent;
-  color:var(--ink-faint);
-  padding:4px 0;cursor:pointer;
-  text-align:left;
-  transition:color .15s, text-shadow .15s;
-}
-
-.cursor-toggle-btn:hover{
-  color:#a71616;
-  text-shadow:0 0 6px rgba(255,40,40,.35);
-}
-
-.cursor-toggle-btn.is-on{
-  color:#d21414;
-  text-shadow:0 0 10px rgba(255,25,25,.55);
-}
-
-.main{
-  flex:1;
-  min-width:0;
-  padding:0;
-}
-
-@media(max-width:980px){
-  .page-content{
-    display:block;
-    padding:0 20px 60px;
-  }
-  .toc-column{
-    position:static;
-    display:block;
-  }
-  .toc{
-    max-height:none;
-    overflow:visible;
-    border-radius:0;
-    border-left:none;
-    border-right:none;
-    border-top:none;
-    padding:16px 0;
-    margin-bottom:2px;
-    flex-direction:row;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:6px;
-  }
-  .toc 
-  a.sub{display:none;}
-  .cursor-toggle-btn{margin-bottom:12px;}
-  .main{padding:0;}
-}
-
-.part-header{
-  margin:60px 0 0;
-  padding:28px 32px;
-  border-left:4px solid var(--ink);
-  background:var(--paper-warm);
-  border-radius:0 4px 4px 0;
-  }
-  
-.part-header.purple{
-  border-color:var(--accent-p);
-  background:var(--accent-p-bg);
-}
-
-.part-header.green{border-color:var(--accent-n);background:var(--accent-n-bg);}
-.part-header.blue{border-color:var(--accent-b);background:var(--accent-b-bg);}
-.part-num{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:6px;}
-.part-header h2{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;line-height:1.2;color:var(--ink);}
-.part-header p{font-size:14px;color:var(--ink-soft);margin-top:8px;font-style:italic;}
-h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin:40px 0 12px;color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:8px;}
-h4{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin:24px 0 8px;}
-p{margin-bottom:14px;color:var(--ink-soft);}
-.formula-block{margin:20px 0;background:var(--paper-cream);border:1px solid var(--rule);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:18px 24px;overflow-x:auto;}
-.formula-block.purple{border-left-color:var(--accent-p);}
-.formula-block.green{border-left-color:var(--accent-n);}
-.formula-block.blue{border-left-color:var(--accent-b);}
-.formula-block.orange{border-left-color:var(--accent-o);}
-.formula-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;}
-.formula-desc{font-size:13px;color:var(--ink-faint);margin-top:8px;font-style:italic;}
-mjx-container[display="true"]{margin:8px 0!important;}
-.term-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:20px 0;}
-.term-card{border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:14px 16px;}
-.term-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--ink);margin-bottom:5px;letter-spacing:.04em;}
-.term-def{font-size:13px;color:var(--ink-soft);line-height:1.6;}
-.callout{margin:20px 0;padding:16px 20px;border-radius:4px;border:1px solid;font-size:14px;line-height:1.7;}
-.callout.insight{background:var(--accent-p-bg);border-color:var(--accent-p-mid);color:var(--accent-p);}
-.callout.warn{background:var(--accent-o-bg);border-color:var(--accent-o-mid);color:var(--accent-o);}
-.callout.note{background:var(--accent-b-bg);border-color:var(--accent-b-mid);color:var(--accent-b);}
-.callout.success{background:var(--accent-n-bg);border-color:var(--accent-n-mid);color:var(--accent-n);}
-.callout strong{font-weight:600;}
-table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0;}
-th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--paper-cream);border:1px solid var(--rule);padding:10px 14px;text-align:left;color:var(--ink);}
-td{border:1px solid var(--rule);padding:10px 14px;color:var(--ink-soft);vertical-align:top;}
-tr:nth-child(even) td{background:var(--paper-warm);}
-code{font-family:'IBM Plex Mono',monospace;font-size:13px;background:var(--paper-cream);border:1px solid var(--rule);padding:1px 6px;border-radius:3px;color:var(--ink);}
-ul,ol{padding-left:22px;margin-bottom:14px;color:var(--ink-soft);}
-li{margin-bottom:5px;font-size:15px;}
-li strong{color:var(--ink);}
-.algo-box{margin:20px 0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;}
-.algo-header{background:var(--paper-cream);padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--rule);}
-.algo-step{display:flex;align-items:flex-start;padding:10px 18px;border-bottom:1px solid var(--rule-light);gap:14px;font-size:14px;color:var(--ink-soft);}
-.algo-step:last-child{border-bottom:none;}
-.step-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;min-width:32px;color:var(--ink-faint);padding-top:3px;flex-shrink:0;}
-.act-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px;margin:20px 0;}
-.act-card{border:1px solid var(--rule);border-radius:4px;padding:14px;background:var(--paper);}
-.act-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--ink);margin-bottom:6px;}
-.act-range{font-size:12px;color:var(--ink-faint);margin-top:4px;}
-.act-note{font-size:12px;color:var(--ink-faint);margin-top:4px;line-height:1.5;}
-.diagram-container{margin:24px 0;border:1px solid var(--rule);border-radius:4px;padding:24px;background:var(--paper-warm);text-align:center;}
-.diagram-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;}
-svg text{font-family:'IBM Plex Mono',monospace;}
-.divider{border:none;border-top:1px solid var(--rule);margin:40px 0;}
-.tag{display:inline-block;background:var(--tag-bg);border-radius:2px;padding:1px 7px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);margin:2px 2px;}
-.glossary-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:12px 14px;margin:14px 0 28px;}
-.glossary-item{border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:12px 14px;color:var(--ink-soft);line-height:1.6;}
-.glossary-item .tag{display:inline-block;margin:0 0 8px 0;}
-@media(min-width:640px){.glossary-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(min-width:980px){.glossary-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(min-width:1320px){.glossary-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
-.cnn-arch{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;margin:20px 0;row-gap:12px;}
-.layer-box{text-align:center;padding:0 3px;}
-.layer-rect{border:1.5px solid;border-radius:4px;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.05em;min-width:66px;margin:0 auto 4px;}
-.layer-rect.input{border-color:var(--rule);color:var(--ink-faint);background:var(--paper-warm);}
-.layer-rect.conv{border-color:var(--accent-p);color:var(--accent-p);background:var(--accent-p-bg);}
-.layer-rect.pool{border-color:var(--accent-n);color:var(--accent-n);background:var(--accent-n-bg);}
-.layer-rect.fc{border-color:var(--accent-b);color:var(--accent-b);background:var(--accent-b-bg);}
-.layer-rect.out{border-color:var(--accent-r);color:var(--accent-r);background:var(--accent-r-bg);}
-.layer-label{font-size:10px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;}
-.arrow{color:var(--rule);font-size:18px;padding:0 2px;align-self:center;margin-bottom:12px;}
-.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
-.compare-box{background:var(--paper-cream);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;}
-.compare-box h5{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;}
-@media(max-width:600px){.compare-row{grid-template-columns:1fr;}}
-@media(max-width:820px){
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;}
-  .formula-block,.algo-box,.compare-box,.diagram-container,pre{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-}
-
-body.cursor-mode-on,body.cursor-mode-on *{cursor:none!important;}
-.cursor-trail-canvas{position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:9998;opacity:0;transition:opacity .15s;}
-.cursor-pointer{position:fixed;left:0;top:0;width:9px;height:9px;border-radius:50%;background:#ff1a1a;pointer-events:none;z-index:9999;opacity:0;transform:translate(-50%,-50%);box-shadow:0 0 4px rgba(255,30,30,.95),0 0 10px rgba(255,20,20,.65);transition:opacity .15s;}
-.cursor-pointer::after{content:'';position:absolute;left:50%;top:50%;width:18px;height:18px;border:1px solid rgba(255,70,70,.9);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 6px rgba(255,35,35,.5);}
-body.cursor-mode-on .cursor-trail-canvas,body.cursor-mode-on .cursor-pointer{opacity:1;}
+.cursor-toggle-btn:hover { border-color: rgba(192,82,74,.4); color: #c0524a; }
+.cursor-toggle-btn.is-on { border-color: rgba(192,82,74,.5); color: #c0524a; background: rgba(192,82,74,.08); text-shadow: 0 0 8px rgba(255,40,40,.4); }
 </style>
-  </head>
+</head>
+<body>
 
-  <body>
-    <div class="cover">
-      <div class="cover-label">IF3270 Pembelajaran Mesin &middot; Midterm Study
-        Notes</div>
+<!-- Cursor effects (from original notes) -->
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<div class="site-wrapper">
+
+  <!-- ── LEFT SIDEBAR (portfolio nav) ── -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="writings.html" class="nav-item active" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="projects.html" class="nav-item" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="about.html" class="nav-item" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="brand.html" class="nav-item" data-page="brand.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M13 9v3M8.5 16.5l4-2M17.5 16.5l-4-2"/></svg>
+        <span class="nav-label">Brand</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT (notes) ── -->
+  <main class="main-content" style="max-width: none; flex: 1; min-width: 0;">
+
+    <!-- Sticky page header -->
+    <div class="page-header">
+      <span class="page-title">ML Midterm Notes</span>
+      <span class="header-meta">IF3270 &middot; Study Notes</span>
+    </div>
+
+    <!-- Notes cover (preserves original dark cover) -->
+    <div class="notes-cover">
+      <div class="cover-label">IF3270 Pembelajaran Mesin &middot; Midterm Study Notes</div>
       <h1>Neural Networks<br>from Scratch</h1>
-      <div class="cover-sub">Perceptron &middot; Feedforward Neural Network
-        &middot; Convolutional Neural Network</div>
+      <div class="cover-sub">Perceptron &middot; Feedforward Neural Network &middot; Convolutional Neural Network</div>
       <div class="cover-topics">
         <span class="topic-chip">Perceptron</span>
         <span class="topic-chip">Delta Rule / Adaline</span>
@@ -379,32 +338,12 @@ body.cursor-mode-on .cursor-trail-canvas,body.cursor-mode-on .cursor-pointer{opa
         <span class="topic-chip">Pooling</span>
         <span class="topic-chip">LeNet-5</span>
       </div>
-      <div class="refs-note">References: Goodfellow et al. (2016) Deep Learning
-        &middot; LeCun et al. (1989, 1998) &middot; Mitchell (1997) &middot;
-        Raschka et al. (2022)</div>
+      <div class="refs-note">References: Goodfellow et al. (2016) Deep Learning &middot; LeCun et al. (1989, 1998) &middot; Mitchell (1997) &middot; Raschka et al. (2022)</div>
     </div>
 
-    <div class="page-content">
-      <div class="toc-column">
-        <aside class="toc">
-          <span class="toc-label">Jump to</span>
-          <a href="#perceptron">01. Perceptron</a>
-          <a href="#ffnn">02. FFNN</a>
-          <a href="#activations">03. Activations</a>
-          <a href="#backprop">04. Backpropagation</a>
-          <a href="#cnn">05. CNN</a>
-          <a href="#cnn-motivation" class="sub">&rarr; Motivation</a>
-          <a href="#cnn-convolution" class="sub">&rarr; Convolution Op.</a>
-          <a href="#cnn-stages" class="sub">&rarr; Three Stages</a>
-          <a href="#cnn-params" class="sub">&rarr; Parameter Count</a>
-          <a href="#cnn-lenet" class="sub">&rarr; LeNet-5</a>
-          <a href="#glossary">Glossary</a>
-        </aside>
-        <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button"
-          aria-pressed="false">pointer</button>
-      </div>
-
-      <article class="main">
+    <!-- Notes content (scoped) -->
+    <div class="notes-scope">
+      
 
         <!-- ══════════════ PART 1 — PERCEPTRON ══════════════ -->
         <div id="perceptron" class="part-header purple">
@@ -1655,14 +1594,105 @@ body.cursor-mode-on .cursor-trail-canvas,body.cursor-mode-on .cursor-pointer{opa
           Excluded: Ensemble &middot; CNN Backpropagation
         </p>
 
-      </article>
+      
     </div>
 
-    <canvas id="cursorTrailCanvas" class="cursor-trail-canvas"
-      aria-hidden="true"></canvas>
-    <div id="cursorPointer" class="cursor-pointer" aria-hidden="true"></div>
+  </main>
 
-    <script>
+  <!-- ── RIGHT RAIL (notes TOC, dark styled) ── -->
+  <aside class="sidebar-right" style="width: 240px;">
+    <div style="position: sticky; top: 0; padding-top: var(--sp-lg);">
+
+      <!-- Reading progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">Contents</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div class="notes-toc-list" style="padding-top: 8px;">
+          <a href="#perceptron" class="notes-toc-item">01. Perceptron</a>
+          <a href="#ffnn" class="notes-toc-item">02. FFNN</a>
+          <a href="#activations" class="notes-toc-item">03. Activations</a>
+          <a href="#backprop" class="notes-toc-item">04. Backpropagation</a>
+          <a href="#cnn" class="notes-toc-item">05. CNN</a>
+          <a href="#cnn-motivation" class="notes-toc-item sub">&rarr; Motivation</a>
+          <a href="#cnn-convolution" class="notes-toc-item sub">&rarr; Convolution Op.</a>
+          <a href="#cnn-stages" class="notes-toc-item sub">&rarr; Three Stages</a>
+          <a href="#cnn-params" class="notes-toc-item sub">&rarr; Parameter Count</a>
+          <a href="#cnn-lenet" class="notes-toc-item sub">&rarr; LeNet-5</a>
+          <a href="#glossary" class="notes-toc-item">Glossary</a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">About this note</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Course</span><span style="color: var(--text-secondary);">IF3270</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Topic</span><span style="color: var(--text-secondary);">Neural Networks</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Version</span><span style="color: var(--text-secondary);">v5</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Read time</span><span style="color: var(--text-secondary);">~25 min</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+
+    </div>
+  </aside>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+// ── TOC active state (adapted for .notes-toc-item) ──────────
+(function(){
+  const links = Array.from(document.querySelectorAll('.notes-toc-item[href^="#"]'));
+  const getEl = id => document.getElementById(id);
+  const sections = links.map(l => getEl(l.getAttribute('href').slice(1))).filter(Boolean);
+  if(!links.length || !sections.length) return;
+  const setActive = id => {
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+  };
+  const obs = new IntersectionObserver(entries => {
+    const vis = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+    if(vis.length) setActive(vis[0].target.id);
+  }, {root:null, rootMargin:'-20% 0px -60% 0px', threshold:[0.1,0.25,0.5,0.75]});
+  sections.forEach(s=>obs.observe(s));
+  ['cnn-motivation','cnn-convolution','cnn-stages','cnn-params','cnn-lenet'].forEach(id=>{
+    const el = getEl(id); if(el) obs.observe(el);
+  });
+  if(sections[0]) setActive(sections[0].id);
+})();
+
+// ── Reading progress bar ─────────────────────────────────────
+(function(){
+  const bar = document.getElementById('readingProgress');
+  if(!bar) return;
+  const update = () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  };
+  window.addEventListener('scroll', update, {passive: true});
+  update();
+})();
+
+// ── Cursor trail (from original notes) ──────────────────────
+
 (function(){
   const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
   const getEl = id => document.getElementById(id);
@@ -1787,6 +1817,7 @@ body.cursor-mode-on .cursor-trail-canvas,body.cursor-mode-on .cursor-pointer{opa
   updateToggleUI();
   draw();
 })();
+
 </script>
-  </body>
+</body>
 </html>
