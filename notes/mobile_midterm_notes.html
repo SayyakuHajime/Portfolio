@@ -14,6 +14,7 @@
   --ink: var(--text-primary);
   --ink-soft: var(--text-secondary);
   --ink-faint: var(--text-muted);
+  --muted: var(--ink-faint);
   --paper: var(--bg-base);
   --paper-warm: var(--bg-surface);
   --paper-cream: var(--bg-elevated);
@@ -29,12 +30,28 @@
   --accent-b:#174e87;
   --accent-b-bg:rgba(23,78,135,0.10);
   --accent-b-mid:rgba(23,78,135,0.38);
+  --accent1: var(--accent-b);
   --accent-r:#912b2b;
   --accent-r-bg:rgba(145,43,43,0.10);
   --accent-r-mid:rgba(145,43,43,0.38);
   --accent-o:#7a4a10;
   --accent-o-bg:rgba(122,74,16,0.12);
   --accent-o-mid:rgba(122,74,16,0.40);
+  --accent2: var(--accent-n);
+
+  --code-bg:#f2ede4;
+  --code-bg-inline:#ebe4d8;
+  --code-border:#c7b9a2;
+  --code-ink:#20170f;
+  --code-comment:#6f6252;
+  --code-keyword:#6f2da8;
+  --code-function:#12528a;
+  --code-operator:#8f4d06;
+  --code-string:#1f6d40;
+  --code-number:#8c2222;
+  --code-highlight-blue:#0f4d84;
+  --code-highlight-green:#1e6a41;
+  --code-highlight-orange:#8e4c09;
 }
 
 body.theme-dark .notes-scope {
@@ -53,6 +70,20 @@ body.theme-dark .notes-scope {
   --accent-r-mid:rgba(204,119,119,0.42);
   --accent-o-bg:rgba(212,150,31,0.18);
   --accent-o-mid:rgba(212,150,31,0.42);
+
+  --code-bg:#1b1a17;
+  --code-bg-inline:#26231e;
+  --code-border:#4b4338;
+  --code-ink:#f3efe8;
+  --code-comment:#b4aa98;
+  --code-keyword:#d7b6ff;
+  --code-function:#8dc6ff;
+  --code-operator:#ffbe75;
+  --code-string:#9ce5b5;
+  --code-number:#ff9e9e;
+  --code-highlight-blue:#9bc9ff;
+  --code-highlight-green:#b5efcc;
+  --code-highlight-orange:#ffd295;
 }
 
 .notes-cover {
@@ -195,23 +226,30 @@ body.theme-dark .notes-scope {
 .notes-scope td { padding: 10px 14px; border: 1px solid var(--rule-light); color: var(--ink-soft); vertical-align: top; }
 .notes-scope tr:nth-child(even) td { background: var(--paper-warm); }
 
-.notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
-.notes-scope pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-x: auto; line-height: 1.6; }
-.notes-scope code { background: var(--paper-cream); border: 1px solid var(--rule); padding: 1px 6px; border-radius: 3px; }
-.notes-scope pre code { background: none; border: none; padding: 0; }
+.notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--code-ink); }
+.notes-scope pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 4px; padding: 14px 16px; overflow-x: auto; line-height: 1.6; }
+.notes-scope code { background: var(--code-bg-inline); border: 1px solid var(--code-border); padding: 1px 6px; border-radius: 3px; color: var(--code-ink); }
+.notes-scope pre code { background: none; border: none; padding: 0; color: inherit; }
 
 .notes-scope .formula { margin: 16px 0; background: var(--paper-cream); border: 1px solid var(--rule); border-left: 3px solid var(--accent-p); border-radius: 0 4px 4px 0; padding: 16px 20px; overflow-x: auto; }
 .notes-scope .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; display: block; }
 .notes-scope .formula-desc { font-size: 12px; color: var(--ink-faint); margin-top: 7px; font-style: italic; }
 
-.notes-scope .callout { margin: 16px 0; padding: 14px 16px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; }
+.notes-scope .callout { margin: 16px 0; padding: 14px 16px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; display: flex; gap: 10px; align-items: flex-start; }
 .notes-scope .callout.info { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
 .notes-scope .callout.tip { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
 .notes-scope .callout.warn { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
 .notes-scope .callout.danger { background: var(--accent-r-bg); border-color: var(--accent-r-mid); color: var(--accent-r); }
 .notes-scope .callout-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
 .notes-scope .callout-text { font-size: 13px; margin-bottom: 0; }
-.notes-scope .callout-icon { display: none; }
+.notes-scope .callout-body { min-width: 0; }
+.notes-scope .callout-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; }
+.notes-scope .callout-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+.notes-scope .icon-inline { display: inline-flex; width: 15px; height: 15px; margin-right: 6px; vertical-align: -2px; align-items: center; justify-content: center; }
+.notes-scope .icon-inline svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.notes-scope .status-pill { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.notes-scope .status-pill .icon-inline { width: 13px; height: 13px; margin-right: 0; }
 
 .notes-scope ul.notes { list-style: none; padding-left: 0; margin: 12px 0 16px; }
 .notes-scope ul.notes li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 14px; color: var(--ink-soft); }
@@ -244,15 +282,15 @@ body.theme-dark .notes-scope {
 .notes-scope .purple { color: var(--accent-p); }
 .notes-scope .yellow { color: var(--accent-r); }
 
-.notes-scope .kw { color: var(--accent-p); }
-.notes-scope .fn { color: var(--accent-b); }
-.notes-scope .op { color: var(--accent-o); }
-.notes-scope .str { color: var(--accent-n); }
-.notes-scope .num { color: var(--accent-r); }
-.notes-scope .cm { color: var(--ink-faint); font-style: italic; }
-.notes-scope .hl-blue { color: var(--accent-b); }
-.notes-scope .hl-green { color: var(--accent-n); }
-.notes-scope .hl-orange { color: var(--accent-o); }
+.notes-scope .kw { color: var(--code-keyword); }
+.notes-scope .fn { color: var(--code-function); }
+.notes-scope .op { color: var(--code-operator); }
+.notes-scope .str { color: var(--code-string); }
+.notes-scope .num { color: var(--code-number); }
+.notes-scope .cm { color: var(--code-comment); font-style: italic; }
+.notes-scope .hl-blue { color: var(--code-highlight-blue); }
+.notes-scope .hl-green { color: var(--code-highlight-green); }
+.notes-scope .hl-orange { color: var(--code-highlight-orange); }
 
 .notes-toc-list { padding: 0 var(--sp-sm, 8px) var(--sp-md, 16px); }
 .notes-toc-item {
@@ -392,19 +430,19 @@ body.theme-dark .notes-scope {
     <h3>Distinguishing Aspects of Mobile vs Stationary Computing</h3>
     <div class="card-grid">
       <div class="card c-blue">
-        <div class="card-title">📡 Wireless Connectivity</div>
+        <div class="card-title"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M1.5 9a16 16 0 0 1 21 0"/><path d="M5 12.5a11 11 0 0 1 14 0"/><path d="M8.5 16a6 6 0 0 1 7 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></span>Wireless Connectivity</div>
         <p>Prevalent wireless network use — mobility and wireless connectivity are orthogonal (independent) concepts.</p>
       </div>
       <div class="card c-green">
-        <div class="card-title">📐 Small Size</div>
+        <div class="card-title"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><line x1="11" y1="18.5" x2="13" y2="18.5"/></svg></span>Small Size</div>
         <p>Constrained screen real estate, limited input methods, smaller physical form factor.</p>
       </div>
       <div class="card c-orange">
-        <div class="card-title">⚡ Power Sources</div>
+        <div class="card-title"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Power Sources</div>
         <p>Battery-powered; performance must balance power consumption.</p>
       </div>
       <div class="card c-purple">
-        <div class="card-title">🚶 Mobile Nature</div>
+        <div class="card-title"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span>Mobile Nature</div>
         <p>Used while moving — context-based, task-oriented, situational usage.</p>
       </div>
     </div>
@@ -473,7 +511,7 @@ body.theme-dark .notes-scope {
     </ul>
 
     <div class="callout info">
-      <span class="callout-icon">💡</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Virtual Machine Abstraction</div>
         <p class="callout-text">A VM (like ART on Android) abstracts hardware specificity, enabling code portability. However, performance considerations are more critical on mobile than desktop due to resource constraints.</p>
@@ -539,7 +577,7 @@ body.theme-dark .notes-scope {
     </div>
 
     <div class="callout danger">
-      <span class="callout-icon">⚠️</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Waterfall Problems</div>
         <p class="callout-text">Requirements almost always change — Waterfall can't handle this well. Users wait until the end to see the product. Blocking states occur where team members idle waiting for others. Not suited for complex systems with many stakeholders.</p>
@@ -552,7 +590,7 @@ body.theme-dark .notes-scope {
     <h4>The Agile Manifesto (4 Values)</h4>
     <div class="two-col">
       <div class="col-box">
-        <div class="col-title green">✅ Agile Values</div>
+        <div class="col-title green"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Agile Values</div>
         <ul class="notes">
           <li class="green">Individuals and interactions</li>
           <li class="green">Working software</li>
@@ -561,7 +599,7 @@ body.theme-dark .notes-scope {
         </ul>
       </div>
       <div class="col-box">
-        <div class="col-title orange">📄 Over Traditional</div>
+        <div class="col-title orange"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></span>Over Traditional</div>
         <ul class="notes">
           <li class="orange">…over processes and tools</li>
           <li class="orange">…over comprehensive documentation</li>
@@ -718,14 +756,14 @@ body.theme-dark .notes-scope {
 
     <h3>Framework Choice Guidelines</h3>
     <div class="callout tip">
-      <span class="callout-icon">🟢</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Choose React Native if…</div>
         <p class="callout-text">Your team has strong JavaScript or web background. Easier to reuse existing skills, reduces cost and development time.</p>
       </div>
     </div>
     <div class="callout info">
-      <span class="callout-icon">🔵</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Choose Flutter if…</div>
         <p class="callout-text">You have enough budget and resources. Dart is not widely used, so learning curve is higher — but the result is consistent pixel-perfect UI across platforms.</p>
@@ -953,7 +991,7 @@ android:paddingStart="8dp"</code></pre>
     <p><strong>Recommended default layout for Android.</strong> Solves the costly issue of too many nested layouts while allowing complex behavior. Positions and sizes views using <em>constraints</em>.</p>
 
     <div class="callout warn">
-      <span class="callout-icon">⚡</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Why avoid deep nesting?</div>
         <p class="callout-text">Deeply nested ViewGroups require more computation. Views may be measured multiple times. This causes UI slowdown and lack of responsiveness. ConstraintLayout solves this with a flat hierarchy.</p>
@@ -1043,7 +1081,7 @@ android {
 binding.name = <span class="str">"John"</span></code></pre>
 
     <div class="callout info">
-      <span class="callout-icon">📌</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">ViewBinding vs Data Binding</div>
         <p class="callout-text"><strong>ViewBinding</strong>: Ties View to a Binding Class, providing static access to views — but does NOT tie variables/data to views. <strong>Data Binding</strong>: Does both. For reactive two-way binding, use Data Binding with LiveData or Observable objects. With Jetpack Compose, binding is not needed as it provides its own reactive framework.</p>
@@ -1219,7 +1257,7 @@ binding.name = <span class="str">"John"</span></code></pre>
     </div>
 
     <div class="callout tip">
-      <span class="callout-icon">✅</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Best Practice for Developers</div>
         <p class="callout-text">Follow official guidelines for each platform. Cross-platform apps must consider both UI/UX paradigms. Don't just port an Android design to iOS or vice versa — adapt to each platform's conventions.</p>
@@ -1240,7 +1278,7 @@ binding.name = <span class="str">"John"</span></code></pre>
 
     <h3>The Problem: The Billion-Dollar Mistake</h3>
     <div class="callout danger">
-      <span class="callout-icon">💸</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Tony Hoare's "Billion-Dollar Mistake" (1965)</div>
         <p class="callout-text">Tony Hoare invented the null reference in 1965 for ALGOL W. He later called it his "billion-dollar mistake" — it has led to innumerable errors, vulnerabilities, and system crashes. In Java: <code>NullPointerException (NPE)</code>.</p>
@@ -1252,11 +1290,11 @@ binding.name = <span class="str">"John"</span></code></pre>
 
     <pre><code><span class="cm">// Non-nullable (default) — cannot be null</span>
 <span class="kw">var</span> name: String = <span class="str">"Alice"</span>
-name = <span class="kw">null</span>  <span class="cm">// ❌ COMPILE ERROR</span>
+    name = <span class="kw">null</span>  <span class="cm">// COMPILE ERROR</span>
 
 <span class="cm">// Nullable — must use ? suffix</span>
 <span class="kw">var</span> name: String? = <span class="str">"Alice"</span>
-name = <span class="kw">null</span>  <span class="cm">// ✅ OK</span></code></pre>
+    name = <span class="kw">null</span>  <span class="cm">// OK</span></code></pre>
 
     <h3>Null Safety Operators</h3>
 
@@ -1312,20 +1350,20 @@ user?.address?.city?.name</code></pre>
       <table>
         <thead><tr><th>Language</th><th>Null Concept</th><th>Default Non-null?</th><th>Compile-time?</th><th>"Trust Me" Escape</th></tr></thead>
         <tbody>
-          <tr><td class="td-key green">Kotlin</td><td><code>null</code> / <code>T?</code></td><td class="green">✅ Yes</td><td class="green">✅ Yes</td><td><code>!!</code> — throws NPE if null</td></tr>
-          <tr><td class="td-key green">Rust</td><td><code>None</code> / <code>Option&lt;T&gt;</code></td><td class="green">✅ Yes</td><td class="green">✅ Yes</td><td><code>.unwrap()</code> — panics if None</td></tr>
-          <tr><td class="td-key green">Dart</td><td><code>null</code> / <code>T?</code></td><td class="green">✅ Yes (since 2.12)</td><td class="green">✅ Yes</td><td><code>!</code> suffix — throws if null</td></tr>
-          <tr><td class="td-key yellow">TypeScript</td><td><code>null</code> / <code>T | null</code></td><td class="yellow">Opt-in</td><td class="yellow">✅ Yes (with strictNullChecks)</td><td>Type assertions <code>as T</code></td></tr>
-          <tr><td class="td-key orange">Java</td><td><code>@Nullable / @NonNull</code></td><td class="orange">❌ No</td><td class="orange">Tools only</td><td>Any reference is nullable by default</td></tr>
-          <tr><td class="td-key orange">Python</td><td><code>None</code> / <code>Optional[T]</code></td><td class="orange">❌ No</td><td class="orange">Tools only</td><td>Type hints ignored at runtime</td></tr>
-          <tr><td class="td-key orange">JavaScript</td><td><code>null + undefined</code></td><td class="orange">❌ No</td><td class="orange">❌ No</td><td>Everything nullable, no enforcement</td></tr>
-          <tr><td class="td-key orange">C++</td><td><code>nullptr</code></td><td class="orange">❌ No</td><td class="orange">❌ No</td><td>Raw nullptr dereference = undefined behavior (silent crash)</td></tr>
+          <tr><td class="td-key green">Kotlin</td><td><code>null</code> / <code>T?</code></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes</span></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes</span></td><td><code>!!</code> — throws NPE if null</td></tr>
+          <tr><td class="td-key green">Rust</td><td><code>None</code> / <code>Option&lt;T&gt;</code></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes</span></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes</span></td><td><code>.unwrap()</code> — panics if None</td></tr>
+          <tr><td class="td-key green">Dart</td><td><code>null</code> / <code>T?</code></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes (since 2.12)</span></td><td class="green"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes</span></td><td><code>!</code> suffix — throws if null</td></tr>
+          <tr><td class="td-key yellow">TypeScript</td><td><code>null</code> / <code>T | null</code></td><td class="yellow">Opt-in</td><td class="yellow"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>Yes (with strictNullChecks)</span></td><td>Type assertions <code>as T</code></td></tr>
+          <tr><td class="td-key orange">Java</td><td><code>@Nullable / @NonNull</code></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td class="orange">Tools only</td><td>Any reference is nullable by default</td></tr>
+          <tr><td class="td-key orange">Python</td><td><code>None</code> / <code>Optional[T]</code></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td class="orange">Tools only</td><td>Type hints ignored at runtime</td></tr>
+          <tr><td class="td-key orange">JavaScript</td><td><code>null + undefined</code></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td>Everything nullable, no enforcement</td></tr>
+          <tr><td class="td-key orange">C++</td><td><code>nullptr</code></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td class="orange"><span class="status-pill"><span class="icon-inline" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></span>No</span></td><td>Raw nullptr dereference = undefined behavior (silent crash)</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="callout tip">
-      <span class="callout-icon">🔑</span>
+      <span class="callout-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M12 15.5h9"/><path d="M18 12.5v6"/><path d="M15 13.5v4"/></svg></span>
       <div class="callout-body">
         <div class="callout-title">Key Insight: Why Kotlin's Approach is Better</div>
         <p class="callout-text">By making non-null the default, the compiler warns you at the point of assignment (not at runtime crash). If you need null, you explicitly opt-in with <code>?</code>, which forces you to handle the null case. This moves NPE bugs from <em>runtime crashes</em> to <em>compile-time errors</em>.</p>
