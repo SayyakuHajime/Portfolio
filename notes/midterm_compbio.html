@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IF3211 Midterm Notes — Computational Biology</title>
+  <meta name="description" content="Comprehensive midterm notes: Intro to Computational Biology, Macromolecules, Genetics, Cell Transport, Metabolism." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/notes/notes.css" />
+  <style>
+    /* ── extra utility styles not in notes.css ── */
+    .notes-scope .formula-math {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      color: var(--ink);
+      display: block;
+      margin-top: 4px;
+    }
+    .notes-scope .step-list {
+      counter-reset: step;
+      padding-left: 0;
+      list-style: none;
+      margin: 14px 0 18px;
+    }
+    .notes-scope .step-list li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+    .notes-scope .step-list li::before {
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-p);
+      color: #fff;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .notes-scope .big-formula {
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 16px;
+      letter-spacing: .04em;
+      color: var(--ink);
+      padding: 8px 0;
+    }
+    .notes-scope .mono-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .notes-scope .tag-purple { color: var(--accent-p); }
+    .notes-scope .tag-green  { color: var(--accent-n); }
+    .notes-scope .tag-blue   { color: var(--accent-b); }
+    .notes-scope .tag-orange { color: var(--accent-o); }
+    .notes-scope .tag-red    { color: var(--accent-r); }
+
+    .notes-scope .compact-list {
+      padding-left: 18px;
+      margin: 10px 0 14px;
+    }
+    .notes-scope .compact-list li {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin-bottom: 5px;
+      line-height: 1.6;
+    }
+    .notes-scope .compact-list li strong { color: var(--ink); }
+    .notes-scope .pathway-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 14px 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+    .notes-scope .p-box {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--rule);
+      background: var(--paper-warm);
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .notes-scope .p-arr {
+      color: var(--ink-faint);
+      font-size: 14px;
+    }
+    .notes-scope .three-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    @media (max-width: 680px) {
+      .notes-scope .three-col { grid-template-columns: 1fr; }
+    }
+    .notes-scope .sub-h {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 22px 0 6px;
+    }
+  </style>
+</head>
+<body class="notes-layout-modular">
+
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<div class="site-wrapper">
+
+  <!-- ═══════════════ LEFT SIDEBAR ═══════════════ -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="../pages/writings.html" class="nav-item" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="../pages/projects.html" class="nav-item" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="../pages/notes.html" class="nav-item active" data-page="notes">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <span class="nav-label">Notes</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+  <main class="main-content">
+    <div class="page-header">
+      <span class="page-title">IF3211 Midterm Notes</span>
+      <span class="header-meta">Computational Biology</span>
+    </div>
+
+    <!-- COVER -->
+    <div class="notes-cover">
+      <span class="cover-label">IF3211 · Domain Specific Computation · STEI ITB</span>
+      <h1>Computational Biology<br>Midterm Study Guide</h1>
+      <p class="cover-sub">Campbell Biology (2014) · Jones &amp; Pevzner (2004) · Suraishkumar (2019)</p>
+      <div class="cover-topics">
+        <span class="topic-chip">Intro to CompBio</span>
+        <span class="topic-chip">Macromolecules</span>
+        <span class="topic-chip">Genetics</span>
+        <span class="topic-chip">Cell Transport</span>
+        <span class="topic-chip">Metabolism</span>
+      </div>
+    </div>
+
+    <!-- MOBILE TOC TRIGGER -->
+    <button class="notes-toc-trigger" id="tocTriggerBtn" type="button" aria-label="Open table of contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
+      <span class="notes-toc-trigger-label">Contents</span>
+    </button>
+    <div class="notes-toc-overlay" id="tocOverlay"></div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="notes-scope">
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- TOPIC 1 — INTRODUCTION TO COMPUTATIONAL BIOLOGY -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t1">
+        <div class="topic-header b1">
+          <span class="topic-num">Topic 01</span>
+          <span class="topic-title">Introduction to Computational Biology</span>
+        </div>
+
+        <h3 id="t1-def">What Is Computational Biology?</h3>
+        <p>
+          <strong>Computational biology</strong> refers to the use of techniques in
+          <em>computer science, data analysis, mathematical modeling, and computational simulations</em>
+          to understand biological systems and their relationships (NIH BISTI, 2000). It sits at the
+          intersection of computer science, biology, data science, applied mathematics, chemistry, and genetics.
+        </p>
+
+        <div class="callout info">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">Course clarification</p>
+            <p class="callout-text">In IF3211, <strong>Bioinformatics ≈ Computational Biology</strong>. The course focuses on applying computational techniques to solve biological problems, not purely wet-lab biology.</p>
+          </div>
+        </div>
+
+        <h3 id="t1-fields">Five Related Fields — Know the Difference</h3>
+        <div class="card-grid">
+          <div class="card c-green">
+            <p class="card-title">Computational Biology</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Using CS, math &amp; statistics to <em>understand</em> biology. Broad umbrella term.</p>
+          </div>
+          <div class="card c-purple">
+            <p class="card-title">Bioinformatics</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Using tech to analyze DNA, RNA, proteins &amp; big data in biology. Often used synonymously here.</p>
+          </div>
+          <div class="card c-orange">
+            <p class="card-title">Bio-inspired Computing</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Using <em>models of biology</em> to solve CS problems — e.g., genetic algorithms, neural networks, swarm intelligence.</p>
+          </div>
+          <div class="card c-blue">
+            <p class="card-title">Biomedical Engineering</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Using engineering &amp; computing to treat disease. Retinal prosthetics, biosensors, biochips.</p>
+          </div>
+          <div class="card c-yellow">
+            <p class="card-title">Biological Computing</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Using biologically derived molecules (DNA, proteins) to <em>perform</em> computations — DNA computing.</p>
+          </div>
+        </div>
+
+        <h3 id="t1-apps">Applications of Computational Biology in Genetics</h3>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Genome Assembly</span><span class="def-desc">Reconstructing full genome sequences from short sequencing reads (fragment assembly problem).</span></div>
+          <div class="def-item"><span class="def-term">Variant Calling</span><span class="def-desc">Identifying SNPs, indels, and structural variants from sequencing data versus a reference genome.</span></div>
+          <div class="def-item"><span class="def-term">Phylogenetics</span><span class="def-desc">Building evolutionary trees from sequence data to infer relationships between organisms.</span></div>
+          <div class="def-item"><span class="def-term">Functional Genomics</span><span class="def-desc">Studying gene expression patterns, regulatory networks, and gene–function relationships at scale.</span></div>
+          <div class="def-item"><span class="def-term">Structural Bioinformatics</span><span class="def-desc">Predicting 3D structure of proteins and other macromolecules from sequence (e.g., AlphaFold).</span></div>
+          <div class="def-item"><span class="def-term">Systems Biology</span><span class="def-desc">Modeling entire biological pathways and networks as mathematical/computational systems.</span></div>
+          <div class="def-item"><span class="def-term">Personalized Medicine</span><span class="def-desc">Tailoring treatments to individual genomic profiles using computational analysis.</span></div>
+          <div class="def-item"><span class="def-term">Population Genetics</span><span class="def-desc">Analyzing genetic variation across populations to study demography, selection, and migration.</span></div>
+        </div>
+
+        <h3 id="t1-bio">Biology vs Mathematics — Why Biology Is Different</h3>
+        <p>
+          Biology is <strong>dominated by observations</strong>; its rules are not yet fully universal, and mathematical
+          representations are still evolving. Unlike math (where operations are precisely defined) or physics
+          (where observations map cleanly to equations), biology requires pattern recognition across messy,
+          context-dependent data. This is exactly why computational methods are so valuable.
+        </p>
+
+        <h3 id="t1-bioinspired">Bio-Inspired Algorithms — CS from Biology</h3>
+        <div class="card-grid">
+          <div class="card c-purple">
+            <p class="card-title">Genetic Algorithms (GA)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Population of candidate solutions (chromosomes of bits). Uses selection, crossover, mutation to evolve better solutions over generations.</p>
+          </div>
+          <div class="card c-blue">
+            <p class="card-title">Artificial Neural Networks</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Inspired by biological neurons: weighted inputs → summation → activation function → output. Basis of modern deep learning.</p>
+          </div>
+          <div class="card c-green">
+            <p class="card-title">Swarm Intelligence</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Ant colony optimization, particle swarm — emergent intelligent behavior from simple agents following local rules.</p>
+          </div>
+        </div>
+
+        <h3 id="t1-levels">Levels of Biological Organization</h3>
+        <div class="pathway-row">
+          <span class="p-box">Atom</span><span class="p-arr">→</span>
+          <span class="p-box">Molecule</span><span class="p-arr">→</span>
+          <span class="p-box">Organelle</span><span class="p-arr">→</span>
+          <span class="p-box">Cell</span><span class="p-arr">→</span>
+          <span class="p-box">Tissue</span><span class="p-arr">→</span>
+          <span class="p-box">Organ</span><span class="p-arr">→</span>
+          <span class="p-box">Organism</span><span class="p-arr">→</span>
+          <span class="p-box">Population</span><span class="p-arr">→</span>
+          <span class="p-box">Ecosystem</span>
+        </div>
+
+        <h3 id="t1-themes">Unifying Themes in Biology (Campbell Ch. 1)</h3>
+        <ul class="notes">
+          <li class="purple"><strong>Evolution</strong> — the overarching framework; natural selection drives diversity.</li>
+          <li class="blue"><strong>Information flow</strong> — DNA → RNA → Protein (Central Dogma).</li>
+          <li class="green"><strong>Energy transformation</strong> — all life transforms energy; photosynthesis captures it, cellular respiration releases it.</li>
+          <li class="orange"><strong>Structure &amp; function</strong> — form at every level correlates with function (e.g., enzyme active sites, membrane phospholipids).</li>
+          <li class="purple"><strong>Emergent properties</strong> — life arises from interaction of non-living components; the whole is greater than the sum of its parts.</li>
+          <li class="blue"><strong>Cell theory</strong> — the cell is the fundamental unit of life; all cells come from pre-existing cells.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">Exam tip — Sequence Analysis Problem</p>
+            <p class="callout-text">Many CompBio problems come from biology to CS (fragment assembly, phylogenetic trees, sequence alignment) and from CS to biology (sequencing by hybridization, DNA computing). Know which direction each flows.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- TOPIC 2 — MACROMOLECULES -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t2">
+        <div class="topic-header b2">
+          <span class="topic-num">Topic 02</span>
+          <span class="topic-title">Macromolecules — Carbohydrates, Lipids, Proteins &amp; Nucleic Acids</span>
+        </div>
+
+        <p>
+          All living organisms are built from chemicals based mostly on <strong>carbon</strong>. A compound containing
+          carbon is an <strong>organic compound</strong>. Carbon's unique ability to form four covalent bonds allows
+          it to build large, complex, varied molecules. The four classes of biological macromolecules are
+          carbohydrates, lipids, proteins, and nucleic acids.
+        </p>
+
+        <h3 id="t2-polymer">Polymers and Monomers — The Core Concept</h3>
+        <div class="two-col">
+          <div class="col-box">
+            <p class="col-title">Dehydration Synthesis (Condensation)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Monomers are joined by <strong>removing a water molecule</strong> from between them, forming a covalent bond. This builds polymers.</p>
+            <div class="formula">
+              <span class="formula-label">Reaction</span>
+              <span class="formula-math">Monomer–OH + H–Monomer → Monomer–Monomer + H₂O</span>
+            </div>
+          </div>
+          <div class="col-box">
+            <p class="col-title">Hydrolysis</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Polymers are broken apart by <strong>adding a water molecule</strong> across a bond, splitting monomers apart. Digestion uses hydrolysis.</p>
+            <div class="formula">
+              <span class="formula-label">Reaction</span>
+              <span class="formula-math">Monomer–Monomer + H₂O → Monomer–OH + H–Monomer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARBOHYDRATES -->
+        <h3 id="t2-carbs">1. Carbohydrates (CH₂O)ₙ</h3>
+        <p>
+          Carbohydrates serve as <strong>fuel and building materials</strong>. Their molecular formula is generally
+          multiples of CH₂O. They are classified by size into monosaccharides, disaccharides, and polysaccharides.
+        </p>
+
+        <p class="sub-h">Key Terms</p>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Monosaccharide</span><span class="def-desc">Single sugar unit. Formula (CH₂O)ₙ where n = 3–7. Classified by carbon count (triose=3C, pentose=5C, hexose=6C) and carbonyl position (aldose=end, ketose=middle).</span></div>
+          <div class="def-item"><span class="def-term">Glucose</span><span class="def-desc">C₆H₁₂O₆ — the most common monosaccharide; primary cellular fuel. Ring form dominant in solution (α-glucose or β-glucose differ in –OH orientation at C1).</span></div>
+          <div class="def-item"><span class="def-term">Fructose</span><span class="def-desc">C₆H₁₂O₆ — isomer of glucose; a ketose sugar found in fruit.</span></div>
+          <div class="def-item"><span class="def-term">Ribose / Deoxyribose</span><span class="def-desc">5-carbon sugars. Ribose is in RNA; deoxyribose (missing –OH at C2) is in DNA.</span></div>
+          <div class="def-item"><span class="def-term">Disaccharide</span><span class="def-desc">Two monosaccharides joined by a glycosidic linkage via dehydration. Sucrose = glucose + fructose; Lactose = glucose + galactose; Maltose = glucose + glucose.</span></div>
+          <div class="def-item"><span class="def-term">Glycosidic linkage</span><span class="def-desc">Covalent bond between two sugar monomers. The position (α or β, 1–4 or 1–6) determines polymer properties.</span></div>
+          <div class="def-item"><span class="def-term">Polysaccharide</span><span class="def-desc">Polymer of hundreds to thousands of monosaccharides. Function depends on monomer type and linkage geometry.</span></div>
+        </div>
+
+        <p class="sub-h">Important Polysaccharides</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Monomer</th><th>Linkage</th><th>Function</th><th>Found in</th></tr></thead>
+            <tbody>
+              <tr><td>Starch (amylose/amylopectin)</td><td>α-glucose</td><td>α-1,4 + α-1,6 (branched)</td><td>Energy storage</td><td>Plants</td></tr>
+              <tr><td>Glycogen</td><td>α-glucose</td><td>α-1,4 + α-1,6 (highly branched)</td><td>Energy storage</td><td>Animals, fungi</td></tr>
+              <tr><td>Cellulose</td><td>β-glucose</td><td>β-1,4</td><td>Structural support</td><td>Plant cell walls</td></tr>
+              <tr><td>Chitin</td><td>N-acetylglucosamine</td><td>β-1,4</td><td>Structural support</td><td>Arthropod exoskeletons, fungal walls</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">α vs β linkage — a critical distinction</p>
+            <p class="callout-text">α-linkages (starch, glycogen) form helical, digestible chains. β-linkages (cellulose, chitin) form straight, hydrogen-bonded sheets that are much stronger and indigestible by most animals. Humans lack cellulase.</p>
+          </div>
+        </div>
+
+        <!-- LIPIDS -->
+        <h3 id="t2-lipids">2. Lipids</h3>
+        <p>
+          Lipids are <strong>hydrophobic</strong> (water-fearing) molecules. Unlike the other three macromolecules,
+          lipids are <em>not</em> true polymers — they don't form long repetitive chains of identical monomers.
+          They are unified by being mostly nonpolar hydrocarbons that do not mix with water.
+        </p>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Fatty acid</span><span class="def-desc">Long hydrocarbon chain (typically 14–20 carbons) with a carboxyl group (–COOH) at one end. The backbone of most lipids.</span></div>
+          <div class="def-item"><span class="def-term">Saturated fatty acid</span><span class="def-desc">No C=C double bonds; all carbons carry the maximum number of hydrogens. Straight chain → solid at room temperature (e.g., palmitic acid). Found in animal fats.</span></div>
+          <div class="def-item"><span class="def-term">Unsaturated fatty acid</span><span class="def-desc">One or more C=C double bonds; each introduces a "kink" in the chain → liquid at room temperature (oils). Found in plants and fish. Polyunsaturated = multiple double bonds.</span></div>
+          <div class="def-item"><span class="def-term">Triacylglycerol (fat)</span><span class="def-desc">Glycerol + 3 fatty acid chains joined by ester linkages. Primary long-term energy storage; yields more than twice the energy per gram compared to carbohydrates (9 kcal/g vs 4 kcal/g).</span></div>
+          <div class="def-item"><span class="def-term">Phospholipid</span><span class="def-desc">Glycerol + 2 fatty acids + phosphate group + polar head. Amphipathic (hydrophilic head + hydrophobic tails). Spontaneously forms bilayers → the structural basis of all cell membranes.</span></div>
+          <div class="def-item"><span class="def-term">Steroid</span><span class="def-desc">Four fused carbon rings. Cholesterol is the foundational steroid in animal membranes — it modulates membrane fluidity. Steroid hormones (testosterone, estrogen, cortisol) are all cholesterol derivatives.</span></div>
+          <div class="def-item"><span class="def-term">Wax</span><span class="def-desc">Long fatty acid + long alcohol chain. Highly hydrophobic; protective coating on plant cuticles, bird feathers, insect exoskeletons.</span></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Ester linkage in fat formation (dehydration)</span>
+          <span class="formula-math">Glycerol–OH + HOOC–Fatty acid → Glycerol–OOC–Fatty acid + H₂O</span>
+        </div>
+
+        <!-- PROTEINS -->
+        <h3 id="t2-proteins">3. Proteins</h3>
+        <p>
+          Proteins are the most structurally and functionally diverse macromolecules. They are polymers of
+          <strong>amino acids</strong> joined by <strong>peptide bonds</strong>. A protein's specific shape determines
+          its specific function. Proteins carry out virtually every process in a cell.
+        </p>
+
+        <p class="sub-h">Functions of Proteins</p>
+        <ul class="notes">
+          <li class="blue"><strong>Enzymes</strong> — biological catalysts that speed up reactions (e.g., amylase, DNA polymerase, ATP synthase).</li>
+          <li class="green"><strong>Structural</strong> — collagen (connective tissue), keratin (hair, nails), actin &amp; myosin (muscle).</li>
+          <li class="purple"><strong>Transport</strong> — hemoglobin (O₂), membrane transport proteins, channel proteins.</li>
+          <li class="orange"><strong>Signaling</strong> — hormones (insulin), receptors, second-messenger proteins.</li>
+          <li class="blue"><strong>Defense</strong> — antibodies (immunoglobulins) bind to foreign antigens.</li>
+          <li class="green"><strong>Gene regulation</strong> — transcription factors bind DNA to turn genes on/off.</li>
+          <li class="purple"><strong>Motor proteins</strong> — kinesin, dynein move along cytoskeletal tracks.</li>
+        </ul>
+
+        <p class="sub-h">Amino Acid Structure</p>
+        <p>All 20 amino acids share a central α-carbon bonded to: an <strong>amino group (–NH₂)</strong>,
+           a <strong>carboxyl group (–COOH)</strong>, a <strong>hydrogen (–H)</strong>, and a variable
+           <strong>R group (side chain)</strong>. The R group determines the amino acid's chemical properties.</p>
+
+        <div class="three-col">
+          <div class="card c-blue"><p class="card-title">Nonpolar / Hydrophobic R</p><p style="font-size:12px;color:var(--ink-soft)">Glycine, Alanine, Valine, Leucine, Isoleucine, Proline, Phenylalanine, Methionine, Tryptophan</p></div>
+          <div class="card c-green"><p class="card-title">Polar / Uncharged R</p><p style="font-size:12px;color:var(--ink-soft)">Serine, Threonine, Cysteine, Asparagine, Glutamine, Tyrosine</p></div>
+          <div class="card c-orange"><p class="card-title">Charged R (ionized)</p><p style="font-size:12px;color:var(--ink-soft)">Positive: Lysine, Arginine, Histidine.<br>Negative: Aspartate, Glutamate.</p></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Peptide bond formation (dehydration)</span>
+          <span class="formula-math">–COOH (aa₁) + H₂N– (aa₂) → –CO–NH– (peptide bond) + H₂O</span>
+        </div>
+
+        <p class="sub-h">Four Levels of Protein Structure</p>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Primary (1°)</span><span class="def-desc">The specific sequence of amino acids in the polypeptide chain. Encoded directly by the gene. All higher-order structure follows from this.</span></div>
+          <div class="def-item"><span class="def-term">Secondary (2°)</span><span class="def-desc">Local folding patterns stabilized by hydrogen bonds between backbone –C=O and –N–H groups. Main forms: α-helix (right-handed coil) and β-pleated sheet (zigzag strands).</span></div>
+          <div class="def-item"><span class="def-term">Tertiary (3°)</span><span class="def-desc">Overall 3D shape of a single polypeptide chain. Stabilized by interactions among R groups: disulfide bridges (–S–S–), hydrogen bonds, ionic bonds, hydrophobic interactions, van der Waals forces.</span></div>
+          <div class="def-item"><span class="def-term">Quaternary (4°)</span><span class="def-desc">Association of two or more polypeptide chains (subunits) into a multi-subunit protein. Example: hemoglobin = 4 subunits (2α + 2β). Not all proteins have quaternary structure.</span></div>
+        </div>
+
+        <div class="callout danger">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">Denaturation</p>
+            <p class="callout-text">Disruption of a protein's structure (secondary and beyond) by heat, extreme pH, or chemicals. The primary structure remains intact, but function is lost. Some proteins can renature (e.g., ribonuclease); most cannot in vivo.</p>
+          </div>
+        </div>
+
+        <!-- NUCLEIC ACIDS -->
+        <h3 id="t2-nucleic">4. Nucleic Acids — DNA &amp; RNA</h3>
+        <p>
+          Nucleic acids store, transmit, and help express genetic information. They are polymers of
+          <strong>nucleotides</strong>. Each nucleotide has three components: a <strong>5-carbon sugar</strong>
+          (deoxyribose in DNA, ribose in RNA), a <strong>nitrogenous base</strong>, and a
+          <strong>phosphate group</strong>. Nucleotides are joined by <strong>phosphodiester bonds</strong>
+          between the 3'-OH of one sugar and the 5'-phosphate of the next.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Property</th><th>DNA</th><th>RNA</th></tr></thead>
+            <tbody>
+              <tr><td>Sugar</td><td>Deoxyribose (–H at 2')</td><td>Ribose (–OH at 2')</td></tr>
+              <tr><td>Bases</td><td>A, T, G, C</td><td>A, U, G, C (Uracil replaces Thymine)</td></tr>
+              <tr><td>Strands</td><td>Double-stranded (double helix)</td><td>Single-stranded (can fold)</td></tr>
+              <tr><td>Location</td><td>Nucleus, mitochondria, chloroplasts</td><td>Nucleus, cytoplasm, ribosomes</td></tr>
+              <tr><td>Function</td><td>Long-term genetic information storage</td><td>Protein synthesis (mRNA, tRNA, rRNA), regulation (miRNA, siRNA)</td></tr>
+              <tr><td>Stability</td><td>Very stable (deoxyribose + double-stranded)</td><td>Less stable (2'-OH is reactive)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="sub-h">Nitrogenous Bases — Base-Pairing Rules</p>
+        <div class="two-col">
+          <div class="col-box">
+            <p class="col-title">Purines (double ring)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Adenine (A) and Guanine (G)</p>
+          </div>
+          <div class="col-box">
+            <p class="col-title">Pyrimidines (single ring)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Cytosine (C), Thymine (T/DNA only), Uracil (U/RNA only)</p>
+          </div>
+        </div>
+        <div class="formula">
+          <span class="formula-label">Chargaff's Rules (DNA complementary base pairing)</span>
+          <span class="formula-math">A pairs with T (2 H-bonds)  |  G pairs with C (3 H-bonds)</span>
+          <p class="formula-desc">In any double-stranded DNA: %A = %T and %G = %C. Therefore A+T ≠ G+C (varies by organism).</p>
+        </div>
+
+        <h3 id="t2-atp">ATP — The Cell's Energy Currency</h3>
+        <p>
+          <strong>Adenosine triphosphate (ATP)</strong> is a nucleotide (adenine + ribose + 3 phosphates)
+          that is the direct energy currency of all cells. The bond between the second and third phosphate
+          is a <em>high-energy phosphoanhydride bond</em>. Hydrolysis of this bond releases ~7.3 kcal/mol
+          of free energy under standard conditions.
+        </p>
+        <div class="formula">
+          <span class="formula-label">ATP Hydrolysis</span>
+          <span class="formula-math">ATP + H₂O → ADP + Pᵢ + energy (~7.3 kcal/mol)</span>
+          <p class="formula-desc">This exergonic reaction is coupled to endergonic cellular work (biosynthesis, transport, movement). ATP regenerated by cellular respiration and photosynthesis.</p>
+        </div>
+
+        <!-- MACROMOLECULE SUMMARY TABLE -->
+        <h3 id="t2-summary">Macromolecule Quick-Reference</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Macromolecule</th><th>Monomer</th><th>Bond</th><th>Key Functions</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Carbohydrate</td><td>Monosaccharide</td><td>Glycosidic</td><td>Energy, structure</td><td>Glucose → starch / cellulose</td></tr>
+              <tr><td>Lipid (fat)</td><td>Glycerol + fatty acids</td><td>Ester</td><td>Energy storage, insulation</td><td>Triacylglycerol</td></tr>
+              <tr><td>Lipid (membrane)</td><td>Glycerol + 2 FA + phosphate</td><td>Ester</td><td>Membrane bilayer</td><td>Phosphatidylcholine</td></tr>
+              <tr><td>Protein</td><td>Amino acid</td><td>Peptide</td><td>Catalysis, structure, signaling, transport</td><td>Hemoglobin, collagen, insulin</td></tr>
+              <tr><td>DNA</td><td>Deoxyribonucleotide</td><td>Phosphodiester</td><td>Genetic information storage</td><td>Chromosome</td></tr>
+              <tr><td>RNA</td><td>Ribonucleotide</td><td>Phosphodiester</td><td>Gene expression, catalysis</td><td>mRNA, tRNA, rRNA, ribozyme</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- TOPIC 3 — GENETICS -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t3">
+        <div class="topic-header b4">
+          <span class="topic-num">Topic 03</span>
+          <span class="topic-title">Genetics — Molecular Basis of Inheritance &amp; Gene Expression</span>
+        </div>
+
+        <p>
+          Genetics at the molecular level explains <em>how</em> information is stored in DNA, copied faithfully
+          during cell division, and converted into functional proteins. This section covers DNA replication,
+          the Central Dogma (transcription + translation), gene regulation, and mutations — all relevant
+          computational biology targets.
+        </p>
+
+        <!-- DNA STRUCTURE -->
+        <h3 id="t3-dna">DNA Double Helix — Structure</h3>
+        <ul class="notes">
+          <li class="blue"><strong>Watson-Crick model (1953)</strong>: Two antiparallel polynucleotide strands coiled around a common axis. One strand runs 5'→3', the other 3'→5'.</li>
+          <li class="green"><strong>Sugar-phosphate backbones</strong> on the outside; nitrogenous bases stacked on the inside, perpendicular to the helix axis (~0.34 nm apart; one full turn = 10 base pairs = 3.4 nm).</li>
+          <li class="purple"><strong>Base pairs</strong> stabilized by hydrogen bonds (A=T via 2; G≡C via 3) and by hydrophobic stacking interactions between adjacent base pairs.</li>
+          <li class="orange"><strong>Major and minor grooves</strong>: Proteins that interact with DNA (transcription factors, restriction enzymes) typically bind the major groove where base-specific contacts are possible.</li>
+        </ul>
+
+        <!-- DNA REPLICATION -->
+        <h3 id="t3-replication">DNA Replication — Semiconservative Model</h3>
+        <p>
+          Each new DNA molecule consists of one <strong>original (template) strand</strong> and one
+          <strong>newly synthesized strand</strong> — the semiconservative model (confirmed by
+          Meselson-Stahl experiment, 1958).
+        </p>
+
+        <p class="sub-h">Key Enzymes &amp; Proteins</p>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Helicase</span><span class="def-desc">Unwinds the double helix by breaking H-bonds between bases at the replication fork. Creates positive supercoiling ahead of the fork.</span></div>
+          <div class="def-item"><span class="def-term">Topoisomerase</span><span class="def-desc">Relieves torsional stress ahead of the replication fork by cutting, rotating, and rejoining DNA. DNA gyrase (a topoisomerase II) in bacteria is the target of fluoroquinolone antibiotics.</span></div>
+          <div class="def-item"><span class="def-term">Primase</span><span class="def-desc">Synthesizes short RNA primers (~10 nt) providing a 3'-OH start point, since DNA polymerase cannot initiate new strands.</span></div>
+          <div class="def-item"><span class="def-term">DNA Polymerase III (bacteria)</span><span class="def-desc">Adds deoxyribonucleotides to the 3'-OH end of the growing strand (5'→3' direction). Also has 3'→5' proofreading exonuclease activity (~1 error per 10⁷ bases).</span></div>
+          <div class="def-item"><span class="def-term">DNA Polymerase I</span><span class="def-desc">Removes RNA primers and replaces them with DNA.</span></div>
+          <div class="def-item"><span class="def-term">DNA Ligase</span><span class="def-desc">Seals the nick between Okazaki fragments (lagging strand) by forming phosphodiester bonds.</span></div>
+          <div class="def-item"><span class="def-term">Single-Strand Binding Proteins (SSBPs)</span><span class="def-desc">Stabilize single-stranded DNA at the replication fork, preventing re-annealing.</span></div>
+        </div>
+
+        <p class="sub-h">Leading vs Lagging Strand</p>
+        <div class="two-col">
+          <div class="col-box">
+            <p class="col-title">Leading Strand</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Synthesized <strong>continuously</strong> in the 5'→3' direction toward the replication fork. Requires one RNA primer.</p>
+          </div>
+          <div class="col-box">
+            <p class="col-title">Lagging Strand</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Synthesized <strong>discontinuously</strong> (away from fork) as <strong>Okazaki fragments</strong> (100–200 nt in eukaryotes, 1000–2000 in prokaryotes). Each fragment needs its own RNA primer.</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">End Replication Problem &amp; Telomeres</p>
+            <p class="callout-text">Eukaryotic chromosomes shorten with each replication at the 3' end of the lagging strand template. <strong>Telomeres</strong> (TTAGGG repeats) cap chromosome ends. <strong>Telomerase</strong> (reverse transcriptase carrying its own RNA template) extends telomeres in germline cells and stem cells. Cancer cells often reactivate telomerase for immortality.</p>
+          </div>
+        </div>
+
+        <!-- GENE EXPRESSION -->
+        <h3 id="t3-central">The Central Dogma of Molecular Biology</h3>
+        <div class="formula">
+          <span class="formula-label">Information flow (Crick, 1958)</span>
+          <span class="big-formula">DNA →(Replication)→ DNA →(Transcription)→ RNA →(Translation)→ Protein</span>
+          <p class="formula-desc">Reverse transcription (RNA→DNA, by retroviruses) and RNA replication (RNA→RNA, by RNA viruses) are special exceptions.</p>
+        </div>
+
+        <!-- TRANSCRIPTION -->
+        <h3 id="t3-transcription">Transcription (DNA → mRNA)</h3>
+        <p>
+          Transcription produces an RNA molecule complementary to the DNA <strong>template strand</strong>
+          (read 3'→5'), building mRNA 5'→3'. It occurs in the nucleus in eukaryotes. The resulting mRNA
+          is the same sequence as the <strong>coding strand</strong> (except T→U).
+        </p>
+
+        <ol class="step-list">
+          <li><strong>Initiation</strong>: RNA polymerase binds the <strong>promoter</strong> (in bacteria: –10 and –35 sequences; in eukaryotes: TATA box ~25 bp upstream, recognized by transcription factors). The double helix unwinds locally.</li>
+          <li><strong>Elongation</strong>: RNA polymerase moves along template strand 3'→5', synthesizing mRNA 5'→3' at ~40 nt/s. No proofreading mechanism. Ribonucleotides (ATP, UTP, GTP, CTP) are incorporated.</li>
+          <li><strong>Termination</strong>: In bacteria: rho-independent (hairpin in mRNA) or rho-dependent termination. In eukaryotes: polyadenylation signal (AAUAAA) followed by cleavage and poly-A addition.</li>
+        </ol>
+
+        <p class="sub-h">Eukaryotic Pre-mRNA Processing</p>
+        <ul class="notes">
+          <li class="blue"><strong>5' Capping</strong>: Modified guanosine cap added to 5' end (protects from degradation; aids ribosome recognition).</li>
+          <li class="green"><strong>3' Poly-A Tail</strong>: ~200 adenine nucleotides added to 3' end (stability; nuclear export signal).</li>
+          <li class="purple"><strong>RNA Splicing</strong>: <strong>Introns</strong> (non-coding intervening sequences) are removed by the <strong>spliceosome</strong>. <strong>Exons</strong> (expressed sequences) are joined together. Alternative splicing of the same pre-mRNA can produce different protein isoforms.</li>
+        </ul>
+
+        <!-- TRANSLATION -->
+        <h3 id="t3-translation">Translation (mRNA → Protein)</h3>
+        <p>
+          Translation occurs at the <strong>ribosome</strong> (large + small subunit). It reads mRNA in the
+          5'→3' direction, in triplets called <strong>codons</strong>, to assemble a polypeptide from
+          amino acids delivered by <strong>tRNA</strong> molecules. The <strong>genetic code</strong>
+          is redundant (degenerative), universal (with minor exceptions), and unambiguous.
+        </p>
+
+        <div class="formula">
+          <span class="formula-label">Reading Frame Rule</span>
+          <span class="formula-math">4³ = 64 possible codons → 20 amino acids + 3 stop codons + 1 start codon</span>
+          <p class="formula-desc">Start codon: AUG (methionine). Stop codons: UAA, UAG, UGA. Multiple codons per amino acid = degeneracy (wobble at 3rd position).</p>
+        </div>
+
+        <ol class="step-list">
+          <li><strong>Initiation</strong>: Small ribosomal subunit binds mRNA at the 5' cap (eukaryotes) or Shine-Dalgarno sequence (bacteria). Initiator tRNA (Met-tRNA) pairs with AUG start codon in the P site. Large subunit joins. GTP hydrolysis used.</li>
+          <li><strong>Elongation</strong>: Aminoacyl-tRNA enters the A site; peptide bond forms (peptidyl transferase activity of 23S/28S rRNA is a ribozyme!); ribosome translocates 3 nt in 5'→3' direction; empty tRNA exits via E site.</li>
+          <li><strong>Termination</strong>: Stop codon (UAA, UAG, UGA) enters A site; release factor (not tRNA) binds; polypeptide released; ribosome dissociates. Polyribosomes (polysomes) = multiple ribosomes on one mRNA.</li>
+        </ol>
+
+        <p class="sub-h">tRNA — The Adapter Molecule</p>
+        <p>tRNA has a cloverleaf secondary structure folded into an L-shape in 3D. The <strong>anticodon loop</strong>
+           (3 nucleotides) base-pairs with the mRNA codon. The <strong>3' CCA-OH end</strong> carries the
+           specific amino acid, attached by aminoacyl-tRNA synthetase (one per amino acid).</p>
+
+        <!-- MUTATIONS -->
+        <h3 id="t3-mutation">Mutations — Types &amp; Consequences</h3>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Point mutation</span><span class="def-desc">Single nucleotide change. Can be a transition (purine↔purine or pyrimidine↔pyrimidine) or transversion (purine↔pyrimidine).</span></div>
+          <div class="def-item"><span class="def-term">Silent (synonymous)</span><span class="def-desc">Codon changes but still encodes the same amino acid (due to degeneracy). No phenotypic effect.</span></div>
+          <div class="def-item"><span class="def-term">Missense</span><span class="def-desc">Codon changes to a different amino acid. May or may not affect function. Example: HbS (sickle-cell) — Glu→Val at position 6 of β-globin.</span></div>
+          <div class="def-item"><span class="def-term">Nonsense</span><span class="def-desc">Codon changes to a stop codon. Truncated protein usually nonfunctional.</span></div>
+          <div class="def-item"><span class="def-term">Frameshift</span><span class="def-desc">Insertion or deletion of nucleotides not in multiples of 3. Shifts the reading frame of all downstream codons → garbled protein usually.</span></div>
+          <div class="def-item"><span class="def-term">Insertion/Deletion (Indel)</span><span class="def-desc">One or more nucleotides inserted or deleted. If n ≠ multiple of 3, causes frameshift.</span></div>
+          <div class="def-item"><span class="def-term">Chromosomal mutation</span><span class="def-desc">Large-scale changes: deletion, duplication, inversion, translocation of chromosome segments.</span></div>
+        </div>
+
+        <!-- GENE REGULATION -->
+        <h3 id="t3-regulation">Gene Regulation</h3>
+        <p>Not all genes are expressed at all times in all cells. Gene regulation occurs at multiple levels:</p>
+        <div class="timeline">
+          <div class="t-item">
+            <span class="t-label">Chromatin remodeling</span>
+            <p class="t-desc">Histones acetylated (decondense chromatin → accessible) or methylated (condense → silenced). Epigenetic control — heritable but not encoded in DNA sequence.</p>
+          </div>
+          <div class="t-item">
+            <span class="t-label">Transcriptional</span>
+            <p class="t-desc">Transcription factors (activators and repressors) bind enhancers/silencers (sometimes thousands of bp away, looping to promoter) to control RNA polymerase. Operons in bacteria (lac operon: lacZ, lacY, lacA genes repressed by lac repressor; induced by allolactose).</p>
+          </div>
+          <div class="t-item">
+            <span class="t-label">Post-transcriptional</span>
+            <p class="t-desc">Alternative splicing; mRNA stability (AU-rich elements in 3'UTR target mRNA for degradation); miRNA/siRNA (small ~22 nt RNAs guide RISC complex to complementary mRNA for cleavage or translational repression).</p>
+          </div>
+          <div class="t-item">
+            <span class="t-label">Translational</span>
+            <p class="t-desc">Control of ribosome binding; iron-responsive elements (IREs) in ferritin mRNA — IRP protein blocks translation when iron is low.</p>
+          </div>
+          <div class="t-item">
+            <span class="t-label">Post-translational</span>
+            <p class="t-desc">Protein folding (chaperones), cleavage (zymogen activation), chemical modification (phosphorylation, glycosylation, ubiquitination → proteasomal degradation).</p>
+          </div>
+        </div>
+
+        <!-- COMPUTATIONAL ANGLE -->
+        <h3 id="t3-comp">Computational Approaches to Genetics</h3>
+        <div class="card-grid">
+          <div class="card c-purple">
+            <p class="card-title">Sequence Alignment</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Finding regions of similarity between DNA/protein sequences. Pairwise (BLAST, Smith-Waterman) and multiple sequence alignment (ClustalW, MUSCLE). Dynamic programming is the basis of optimal alignment.</p>
+          </div>
+          <div class="card c-blue">
+            <p class="card-title">Fragment Assembly</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Reconstructing a genome from millions of short reads (shotgun sequencing). Overlap-layout-consensus or De Bruijn graph approaches. Hamiltonian/Eulerian path problems.</p>
+          </div>
+          <div class="card c-green">
+            <p class="card-title">Gene Finding</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Identifying ORFs (open reading frames), promoter sequences, splice sites in genomic DNA. Hidden Markov Models (HMMs) widely used.</p>
+          </div>
+          <div class="card c-orange">
+            <p class="card-title">Motif Finding</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Identifying short recurring patterns (transcription factor binding sites) in a set of sequences. Gibbs sampling, expectation-maximization (EM) methods.</p>
+          </div>
+        </div>
+
+        <p class="sub-h">Sequence Alignment — Key Concepts (Jones &amp; Pevzner)</p>
+        <div class="formula">
+          <span class="formula-label">Hamming Distance (same-length strings)</span>
+          <span class="formula-math">d_H(v, w) = number of positions where v and w differ</span>
+          <p class="formula-desc">e.g. d_H("ATGC", "AAGC") = 1</p>
+        </div>
+        <div class="formula">
+          <span class="formula-label">Edit (Levenshtein) Distance</span>
+          <span class="formula-math">d(v,w) = min insertions + deletions + substitutions to convert v → w</span>
+        </div>
+        <pre><code><span class="cm"># Smith-Waterman local alignment (pseudocode)</span>
+<span class="kw">def</span> <span class="fn">smith_waterman</span>(seq1, seq2, match, mismatch, gap):
+    H = [[0]*(len(seq2)+1) <span class="kw">for</span> _ <span class="kw">in</span> range(len(seq1)+1)]
+    <span class="kw">for</span> i <span class="kw">in</span> range(1, len(seq1)+1):
+        <span class="kw">for</span> j <span class="kw">in</span> range(1, len(seq2)+1):
+            score = match <span class="kw">if</span> seq1[i-1]==seq2[j-1] <span class="kw">else</span> mismatch
+            H[i][j] = max(
+                0,
+                H[i-1][j-1] + score,   <span class="cm"># diagonal (match/mismatch)</span>
+                H[i-1][j]   + gap,      <span class="cm"># gap in seq2</span>
+                H[i][j-1]   + gap       <span class="cm"># gap in seq1</span>
+            )
+    <span class="kw">return</span> H</code></pre>
+
+        <pre><code><span class="cm"># De Bruijn graph for genome assembly</span>
+<span class="cm"># k-mer decomposition of a read</span>
+<span class="kw">def</span> <span class="fn">kmer_decomp</span>(seq, k):
+    <span class="kw">return</span> [seq[i:i+k] <span class="kw">for</span> i <span class="kw">in</span> range(len(seq)-k+1)]
+
+<span class="cm"># Build De Bruijn graph: nodes=(k-1)-mers, edges=k-mers</span>
+<span class="kw">def</span> <span class="fn">de_bruijn</span>(kmers):
+    graph = {}
+    <span class="kw">for</span> kmer <span class="kw">in</span> kmers:
+        prefix = kmer[:-1]
+        suffix = kmer[1:]
+        graph.setdefault(prefix, []).append(suffix)
+    <span class="kw">return</span> graph</code></pre>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- TOPIC 4 — CELL TRANSPORT -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t4">
+        <div class="topic-header b1">
+          <span class="topic-num">Topic 04</span>
+          <span class="topic-title">Cell Transport — Membrane Structure &amp; Transport</span>
+        </div>
+
+        <p>
+          The plasma membrane is a <strong>selectively permeable</strong> barrier that regulates the
+          passage of substances in and out of the cell. Its structure is described by the
+          <strong>Fluid Mosaic Model</strong> (Singer &amp; Nicolson, 1972): a fluid phospholipid bilayer
+          with embedded proteins that can move laterally.
+        </p>
+
+        <!-- MEMBRANE STRUCTURE -->
+        <h3 id="t4-membrane">Membrane Structure</h3>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Phospholipid bilayer</span><span class="def-desc">Two layers of phospholipids arranged with hydrophilic heads facing aqueous environments (inside and outside) and hydrophobic tails facing inward. Forms a stable self-sealing barrier.</span></div>
+          <div class="def-item"><span class="def-term">Membrane fluidity</span><span class="def-desc">Membrane must stay fluid for function. Unsaturated fatty acids (kinked tails prevent packing) and cholesterol (at moderate temperatures, prevents phospholipids from packing too closely or becoming too rigid) both maintain fluidity.</span></div>
+          <div class="def-item"><span class="def-term">Integral proteins</span><span class="def-desc">Embedded within the bilayer, often spanning it (transmembrane proteins). Nonpolar transmembrane α-helices interact with the hydrophobic core. Functions: channels, carriers, receptors, enzymes.</span></div>
+          <div class="def-item"><span class="def-term">Peripheral proteins</span><span class="def-desc">Loosely associated with membrane surfaces (not embedded). Often associated with integral proteins. Examples: cytoskeletal attachment proteins, some enzymes.</span></div>
+          <div class="def-item"><span class="def-term">Glycoproteins/Glycolipids</span><span class="def-desc">Carbohydrate chains attached to proteins/lipids on the extracellular surface. Form the "glycocalyx" — used in cell-cell recognition, blood type antigens, immune signaling.</span></div>
+        </div>
+
+        <!-- PASSIVE TRANSPORT -->
+        <h3 id="t4-passive">Passive Transport — No Energy Required</h3>
+        <p>
+          Passive transport moves substances <strong>down their concentration (or electrochemical) gradient</strong>
+          — from high to low concentration. No ATP needed; driven by thermodynamics (entropy increase).
+        </p>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Simple diffusion</span><span class="def-desc">Nonpolar, small molecules (O₂, CO₂, N₂) and small nonpolar molecules (ethanol) cross the lipid bilayer directly. Rate proportional to concentration gradient.</span></div>
+          <div class="def-item"><span class="def-term">Osmosis</span><span class="def-desc">Diffusion of water across a selectively permeable membrane from hypotonic (lower solute concentration, higher water concentration) to hypertonic (higher solute concentration, lower water concentration). Water moves down its own concentration gradient.</span></div>
+          <div class="def-item"><span class="def-term">Facilitated diffusion</span><span class="def-desc">Polar or large molecules cross with the help of membrane proteins (channel proteins or carrier proteins). Still no ATP required — driven by concentration gradient.</span></div>
+          <div class="def-item"><span class="def-term">Channel proteins</span><span class="def-desc">Form hydrophilic pores. Ion channels are gated (ligand-gated, voltage-gated, mechanically-gated) or always open (leak channels). Aquaporins are specialized water channels.</span></div>
+          <div class="def-item"><span class="def-term">Carrier proteins</span><span class="def-desc">Bind specific solute, undergo conformational change to release it on the other side. More selective, slower than channels. GLUT transporters carry glucose.</span></div>
+        </div>
+
+        <p class="sub-h">Osmotic Terminology</p>
+        <div class="three-col">
+          <div class="card c-blue">
+            <p class="card-title">Hypotonic Solution</p>
+            <p style="font-size:12px;color:var(--ink-soft)">Solute concentration <em>lower</em> than cell interior. Water flows <em>into</em> cell → cell swells (animal: lysis; plant: turgid/healthy).</p>
+          </div>
+          <div class="card c-orange">
+            <p class="card-title">Hypertonic Solution</p>
+            <p style="font-size:12px;color:var(--ink-soft)">Solute concentration <em>higher</em> than cell interior. Water flows <em>out</em> → cell shrinks (animal: crenation; plant: plasmolysis).</p>
+          </div>
+          <div class="card c-green">
+            <p class="card-title">Isotonic Solution</p>
+            <p style="font-size:12px;color:var(--ink-soft)">Solute concentration <em>equal</em> to cell interior. No net movement of water. Cell maintains normal volume.</p>
+          </div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Osmotic Pressure (van 't Hoff equation)</span>
+          <span class="formula-math">π = iMRT</span>
+          <p class="formula-desc">π = osmotic pressure, i = van 't Hoff factor (ionization), M = molarity, R = gas constant (0.0821 L·atm/mol·K), T = temperature (Kelvin). Critical for biomedical IV solutions.</p>
+        </div>
+
+        <!-- ACTIVE TRANSPORT -->
+        <h3 id="t4-active">Active Transport — Energy Required</h3>
+        <p>
+          Active transport moves substances <strong>against</strong> their concentration gradient — from
+          low to high concentration. Requires ATP (primary active transport) or an ion gradient
+          (secondary active transport).
+        </p>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Primary active transport</span><span class="def-desc">Protein pumps use ATP hydrolysis directly to transport ions/molecules against gradient. Classic example: Na⁺/K⁺ ATPase — pumps 3 Na⁺ out and 2 K⁺ in per ATP hydrolyzed. Maintains resting membrane potential and cell volume.</span></div>
+          <div class="def-item"><span class="def-term">Na⁺/K⁺ ATPase</span><span class="def-desc">Electrogenic pump (net transfer of charge = 1 positive charge out per cycle), maintaining −70 mV resting potential in neurons. Constitutes ~25% of total ATP usage in the human body.</span></div>
+          <div class="def-item"><span class="def-term">Proton pump (H⁺ ATPase)</span><span class="def-desc">In plants, fungi, bacteria. Pumps H⁺ out, generating proton gradient used to drive secondary active transport (e.g., sucrose uptake in plant phloem).</span></div>
+          <div class="def-item"><span class="def-term">Secondary active transport (cotransport)</span><span class="def-desc">Uses the gradient of one ion (usually Na⁺, established by primary pump) to move another substance against its gradient. Symporter: both molecules same direction. Antiporter: opposite directions. SGLT1 (intestine): Na⁺ symport with glucose.</span></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Na⁺/K⁺ ATPase Summary</span>
+          <span class="formula-math">3 Na⁺(in) + 2 K⁺(out) + ATP → 3 Na⁺(out) + 2 K⁺(in) + ADP + Pᵢ</span>
+          <p class="formula-desc">Net result: cytoplasm negative relative to outside. High K⁺ inside; high Na⁺ outside. Exploited by every excitable cell.</p>
+        </div>
+
+        <!-- BULK TRANSPORT -->
+        <h3 id="t4-bulk">Bulk Transport — Moving Large Molecules</h3>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Endocytosis</span><span class="def-desc">Cell engulfs material by membrane invagination forming a vesicle. Three types:</span></div>
+          <div class="def-item"><span class="def-term">— Phagocytosis</span><span class="def-desc">"Cell eating" — large particles (bacteria, dead cells) engulfed as pseudopods surround them. Vesicle → phagosome → fuses with lysosome.</span></div>
+          <div class="def-item"><span class="def-term">— Pinocytosis</span><span class="def-desc">"Cell drinking" — small droplets of extracellular fluid engulfed non-specifically. Constitutive (always occurring).</span></div>
+          <div class="def-item"><span class="def-term">— Receptor-mediated endocytosis</span><span class="def-desc">Specific ligands bind receptors in coated pits (clathrin-coated); vesicle formed. Very selective uptake. LDL (cholesterol) uptake is a classic example; defect causes familial hypercholesterolemia.</span></div>
+          <div class="def-item"><span class="def-term">Exocytosis</span><span class="def-desc">Vesicles from Golgi apparatus or secretory vesicles fuse with plasma membrane, releasing contents outside. Used for secretion (neurotransmitters, hormones, digestive enzymes, mucus).</span></div>
+        </div>
+
+        <!-- TRANSPORT PROTEINS COMPARISON -->
+        <h3 id="t4-compare">Transport Comparison Table</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Type</th><th>Direction</th><th>Energy</th><th>Protein needed?</th><th>Examples</th></tr></thead>
+            <tbody>
+              <tr><td>Simple diffusion</td><td>High → Low</td><td>None</td><td>No</td><td>O₂, CO₂, ethanol</td></tr>
+              <tr><td>Osmosis</td><td>High [H₂O] → Low [H₂O]</td><td>None</td><td>No (or aquaporin)</td><td>Water across all membranes</td></tr>
+              <tr><td>Facilitated diffusion (channel)</td><td>High → Low</td><td>None</td><td>Yes (channel)</td><td>Ion channels, aquaporins</td></tr>
+              <tr><td>Facilitated diffusion (carrier)</td><td>High → Low</td><td>None</td><td>Yes (carrier)</td><td>GLUT1 (glucose), uniporters</td></tr>
+              <tr><td>Primary active</td><td>Low → High</td><td>ATP</td><td>Yes (pump)</td><td>Na⁺/K⁺ ATPase, H⁺ pump, Ca²⁺ pump</td></tr>
+              <tr><td>Secondary active (symport)</td><td>Low → High (solute)</td><td>Ion gradient</td><td>Yes</td><td>SGLT1 (Na⁺/glucose), NKCC</td></tr>
+              <tr><td>Secondary active (antiport)</td><td>Low → High (solute)</td><td>Ion gradient</td><td>Yes</td><td>Na⁺/H⁺ exchanger, Na⁺/Ca²⁺ exchanger</td></tr>
+              <tr><td>Endocytosis/Exocytosis</td><td>In/Out</td><td>ATP</td><td>Yes (vesicle machinery)</td><td>LDL uptake, neurotransmitter release</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- TOPIC 5 — METABOLISM -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t5">
+        <div class="topic-header b3">
+          <span class="topic-num">Topic 05</span>
+          <span class="topic-title">Metabolism — Energy, Enzymes &amp; Cellular Respiration</span>
+        </div>
+
+        <p>
+          <strong>Metabolism</strong> is the totality of an organism's chemical reactions. It is organized
+          into metabolic pathways: ordered sequences of reactions, each catalyzed by a specific enzyme,
+          transforming substrates into products. Metabolic pathways are either <strong>catabolic</strong>
+          (degradation, releasing energy) or <strong>anabolic</strong> (biosynthesis, requiring energy).
+        </p>
+
+        <!-- THERMODYNAMICS -->
+        <h3 id="t5-thermo">Thermodynamic Foundations</h3>
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Free energy (G)</span><span class="def-desc">Gibbs free energy — the portion of a system's energy available to do work at constant temperature and pressure. Predicts spontaneity of reactions.</span></div>
+          <div class="def-item"><span class="def-term">ΔG (free energy change)</span><span class="def-desc">ΔG = G_products − G_reactants. If ΔG &lt; 0: exergonic (spontaneous, releases energy). If ΔG &gt; 0: endergonic (non-spontaneous, requires energy input). If ΔG = 0: at equilibrium.</span></div>
+          <div class="def-item"><span class="def-term">Exergonic reaction</span><span class="def-desc">ΔG &lt; 0; energy released to surroundings; proceeds spontaneously. Cellular respiration (glucose oxidation): ΔG = −686 kcal/mol.</span></div>
+          <div class="def-item"><span class="def-term">Endergonic reaction</span><span class="def-desc">ΔG &gt; 0; energy absorbed from surroundings; not spontaneous; requires energy coupling (e.g., from ATP hydrolysis). Protein synthesis, active transport, photosynthesis.</span></div>
+          <div class="def-item"><span class="def-term">Energy coupling</span><span class="def-desc">Exergonic reactions (ATP hydrolysis) are coupled to endergonic reactions, making them thermodynamically favorable. The cell's economy: ATP is the coupling agent.</span></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Gibbs Free Energy Equation</span>
+          <span class="formula-math">ΔG = ΔH − TΔS</span>
+          <p class="formula-desc">ΔH = enthalpy change (heat), T = absolute temperature (K), ΔS = entropy change. Also: ΔG° = −RT ln Keq (standard free energy and equilibrium constant).</p>
+        </div>
+
+        <!-- ENZYMES -->
+        <h3 id="t5-enzymes">Enzymes — Biological Catalysts</h3>
+        <p>
+          Enzymes are proteins (or ribozymes) that lower the <strong>activation energy (Eₐ)</strong> of
+          reactions without being consumed. They do <em>not</em> change ΔG or the equilibrium; they only
+          speed the rate at which equilibrium is reached.
+        </p>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Active site</span><span class="def-desc">The specific pocket or cleft where substrate binds. Shaped to complement the substrate (induced fit model: active site changes shape slightly upon substrate binding, improving catalysis).</span></div>
+          <div class="def-item"><span class="def-term">Substrate</span><span class="def-desc">The reactant molecule that binds the enzyme's active site. Enzyme-substrate complex forms, lowering Eₐ, then products released.</span></div>
+          <div class="def-item"><span class="def-term">Cofactor</span><span class="def-desc">Non-protein molecule required for enzyme activity. Inorganic: metal ions (Zn²⁺, Fe²⁺, Mg²⁺). Organic cofactors = coenzymes (e.g., NAD⁺, FAD, coenzyme A — often vitamins or vitamin derivatives).</span></div>
+          <div class="def-item"><span class="def-term">Competitive inhibition</span><span class="def-desc">Inhibitor resembles substrate and competes for the active site. Effect overcome by increasing [substrate]. Increases apparent Kₘ; Vₘₐₓ unchanged. Example: statins compete with HMG-CoA reductase substrate.</span></div>
+          <div class="def-item"><span class="def-term">Noncompetitive inhibition</span><span class="def-desc">Inhibitor binds allosteric site (not active site), changing enzyme shape. Reduces Vₘₐₓ; Kₘ unchanged. Cannot be overcome by adding more substrate.</span></div>
+          <div class="def-item"><span class="def-term">Allosteric regulation</span><span class="def-desc">Regulatory molecule binds away from active site. Activators stabilize active form; inhibitors stabilize inactive form. Cooperativity in allosteric enzymes (sigmoidal kinetics). Key for metabolic pathway control.</span></div>
+          <div class="def-item"><span class="def-term">Feedback inhibition</span><span class="def-desc">End-product of a pathway inhibits an early enzyme in that pathway. Prevents overproduction. Classic: isoleucine inhibits threonine deaminase (first enzyme in its own biosynthesis pathway).</span></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Michaelis-Menten Kinetics</span>
+          <span class="formula-math">v = (Vₘₐₓ × [S]) / (Kₘ + [S])</span>
+          <p class="formula-desc">v = reaction rate, Vₘₐₓ = maximum rate, [S] = substrate concentration, Kₘ = Michaelis constant (substrate concentration at ½Vₘₐₓ). Low Kₘ = high affinity for substrate.</p>
+        </div>
+
+        <!-- CELLULAR RESPIRATION -->
+        <h3 id="t5-respiration">Cellular Respiration — Overview</h3>
+        <p>
+          Cellular respiration is the controlled release of chemical energy from organic molecules to
+          produce ATP. In the presence of oxygen (aerobic respiration), glucose is completely oxidized.
+        </p>
+
+        <div class="formula">
+          <span class="formula-label">Overall Aerobic Respiration</span>
+          <span class="big-formula">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~30–32 ATP</span>
+          <p class="formula-desc">ΔG° = −686 kcal/mol. Energy is harvested gradually through redox reactions. NAD⁺ and FAD act as electron carriers (reduced to NADH and FADH₂).</p>
+        </div>
+
+        <div class="pathway-row">
+          <span class="p-box" style="border-color:var(--accent-p);color:var(--accent-p)">Glycolysis<br><span style="font-size:10px">(Cytoplasm)</span></span>
+          <span class="p-arr">→</span>
+          <span class="p-box" style="border-color:var(--accent-o);color:var(--accent-o)">Pyruvate Oxidation<br><span style="font-size:10px">(Mitochondrial matrix)</span></span>
+          <span class="p-arr">→</span>
+          <span class="p-box" style="border-color:var(--accent-n);color:var(--accent-n)">Citric Acid Cycle<br><span style="font-size:10px">(Mitochondrial matrix)</span></span>
+          <span class="p-arr">→</span>
+          <span class="p-box" style="border-color:var(--accent-b);color:var(--accent-b)">Oxidative Phosphorylation<br><span style="font-size:10px">(Inner mitochondrial membrane)</span></span>
+        </div>
+
+        <p class="sub-h">Stage 1: Glycolysis (Cytoplasm)</p>
+        <p>Glucose (6C) is split into two pyruvate (3C) molecules through 10 enzymatic steps. Occurs in cytosol.
+           Requires no oxygen (anaerobic-capable).</p>
+        <div class="formula">
+          <span class="formula-label">Glycolysis Net Equation</span>
+          <span class="formula-math">Glucose + 2 NAD⁺ + 2 ADP + 2 Pᵢ → 2 Pyruvate + 2 NADH + 2 ATP + 2 H₂O</span>
+          <p class="formula-desc">Investment phase (steps 1–5): 2 ATP consumed. Payoff phase (steps 6–10): 4 ATP + 2 NADH produced. Net: 2 ATP, 2 NADH per glucose.</p>
+        </div>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Key glycolytic enzymes</span><span class="def-desc">Hexokinase (step 1); Phosphofructokinase-1/PFK-1 (step 3, main regulatory enzyme, inhibited by ATP, citrate; activated by AMP); Pyruvate kinase (step 10).</span></div>
+          <div class="def-item"><span class="def-term">Substrate-level phosphorylation</span><span class="def-desc">ATP produced by direct transfer of a phosphate group from a phosphorylated substrate to ADP. Occurs in glycolysis (steps 7 &amp; 10) and citric acid cycle (step 5).</span></div>
+        </div>
+
+        <p class="sub-h">Stage 2: Pyruvate Oxidation (Pyruvate Dehydrogenase Complex)</p>
+        <div class="formula">
+          <span class="formula-label">Per pyruvate</span>
+          <span class="formula-math">Pyruvate + CoA + NAD⁺ → Acetyl-CoA + CO₂ + NADH</span>
+          <p class="formula-desc">2 pyruvates per glucose → 2 Acetyl-CoA + 2 CO₂ + 2 NADH. Occurs in mitochondrial matrix. Pyruvate dehydrogenase complex contains three enzymes and five cofactors (including thiamine pyrophosphate, lipoic acid, CoA, FAD, NAD⁺).</p>
+        </div>
+
+        <p class="sub-h">Stage 3: Citric Acid Cycle (Krebs Cycle) — per Acetyl-CoA</p>
+        <div class="formula">
+          <span class="formula-label">Net per Acetyl-CoA (one turn)</span>
+          <span class="formula-math">Acetyl-CoA + 3 NAD⁺ + FAD + ADP + Pᵢ + 2H₂O → 2 CO₂ + 3 NADH + FADH₂ + ATP + CoA</span>
+          <p class="formula-desc">Per glucose (×2): 6 NADH, 2 FADH₂, 2 ATP (substrate-level), 4 CO₂. Key intermediates: citrate (6C), isocitrate, α-ketoglutarate (5C), succinyl-CoA (4C), succinate, fumarate, malate, oxaloacetate (regenerated).</p>
+        </div>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Key CAC enzymes</span><span class="def-desc">Citrate synthase (regulated), Isocitrate dehydrogenase (produces first CO₂; inhibited by NADH/ATP), α-Ketoglutarate dehydrogenase (produces second CO₂; similar to pyruvate DH complex).</span></div>
+        </div>
+
+        <p class="sub-h">Stage 4: Oxidative Phosphorylation (Inner Mitochondrial Membrane)</p>
+        <p>
+          NADH and FADH₂ donate electrons to the <strong>electron transport chain (ETC)</strong>. Energy
+          released is used to pump H⁺ across the inner mitochondrial membrane, creating a <strong>proton
+          gradient (proton motive force)</strong>. H⁺ flows back through <strong>ATP synthase</strong>
+          (chemiosmosis), driving ATP synthesis.
+        </p>
+
+        <div class="def-list">
+          <div class="def-item"><span class="def-term">Complex I (NADH dehydrogenase)</span><span class="def-desc">Accepts 2e⁻ from NADH; pumps 4 H⁺ across membrane. Transfers electrons to ubiquinone (CoQ).</span></div>
+          <div class="def-item"><span class="def-term">Complex II (Succinate dehydrogenase)</span><span class="def-desc">Accepts 2e⁻ from FADH₂; does NOT pump H⁺. Transfers electrons to CoQ. Part of both CAC and ETC.</span></div>
+          <div class="def-item"><span class="def-term">Complex III (Cytochrome bc₁)</span><span class="def-desc">Accepts electrons from CoQH₂; pumps 4 H⁺. Transfers electrons to cytochrome c.</span></div>
+          <div class="def-item"><span class="def-term">Complex IV (Cytochrome c oxidase)</span><span class="def-desc">Accepts electrons from cytochrome c; pumps 2 H⁺; transfers electrons to O₂ (final electron acceptor), forming H₂O. O₂ must be present for ETC to continue.</span></div>
+          <div class="def-item"><span class="def-term">ATP synthase (Complex V)</span><span class="def-desc">H⁺ flows through it (down gradient) from intermembrane space to matrix. Rotational catalysis: the F₀ subunit rotates, driving conformational changes in F₁ subunit that catalyze ATP synthesis from ADP + Pᵢ. ~2.5 ATP per NADH; ~1.5 ATP per FADH₂.</span></div>
+        </div>
+
+        <div class="formula">
+          <span class="formula-label">Chemiosmosis (Mitchell's Hypothesis, 1961)</span>
+          <span class="formula-math">Proton motive force = ΔΨ (membrane potential) + ΔpH (chemical gradient)</span>
+          <p class="formula-desc">Inhibited by: DNP (uncoupler — dissipates H⁺ gradient without ATP synthesis, releasing heat); oligomycin (ATP synthase blocker); cyanide/CO (Complex IV blocker — no final electron acceptor).</p>
+        </div>
+
+        <p class="sub-h">ATP Yield Summary (per glucose)</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Stage</th><th>Location</th><th>Direct ATP</th><th>NADH</th><th>FADH₂</th><th>ATP equiv.</th></tr></thead>
+            <tbody>
+              <tr><td>Glycolysis</td><td>Cytoplasm</td><td>2</td><td>2</td><td>—</td><td>2 + 5 = 7</td></tr>
+              <tr><td>Pyruvate oxidation</td><td>Matrix</td><td>0</td><td>2</td><td>—</td><td>5</td></tr>
+              <tr><td>Citric acid cycle</td><td>Matrix</td><td>2</td><td>6</td><td>2</td><td>2 + 15 + 3 = 20</td></tr>
+              <tr><td><strong>Total (approx.)</strong></td><td></td><td><strong>4</strong></td><td><strong>10</strong></td><td><strong>2</strong></td><td><strong>~30–32 ATP</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- FERMENTATION -->
+        <h3 id="t5-fermentation">Anaerobic Respiration &amp; Fermentation</h3>
+        <p>
+          When O₂ is absent or insufficient, cells regenerate NAD⁺ from NADH via fermentation — allowing
+          glycolysis to continue producing 2 ATP per glucose.
+        </p>
+        <div class="two-col">
+          <div class="col-box">
+            <p class="col-title">Lactic Acid Fermentation</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Pyruvate + NADH → Lactate + NAD⁺. Occurs in muscle cells during intense exercise, and in bacteria used to make yogurt &amp; cheese.</p>
+          </div>
+          <div class="col-box">
+            <p class="col-title">Alcohol Fermentation</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Pyruvate → Acetaldehyde (CO₂ released) → Ethanol + NAD⁺. Yeast and some bacteria. Basis of brewing and baking (CO₂ makes dough rise).</p>
+          </div>
+        </div>
+
+        <!-- PHOTOSYNTHESIS BRIEF -->
+        <h3 id="t5-photosynthesis">Photosynthesis — Capturing Light Energy</h3>
+        <p>Photosynthesis converts light energy into chemical energy stored in glucose. Occurs in chloroplasts.</p>
+        <div class="formula">
+          <span class="formula-label">Overall equation</span>
+          <span class="big-formula">6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂</span>
+          <p class="formula-desc">Reverse of aerobic respiration in terms of atoms, but mechanistically very different.</p>
+        </div>
+        <div class="two-col">
+          <div class="col-box">
+            <p class="col-title">Light-dependent reactions (thylakoid membrane)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Chlorophyll absorbs light (mainly red ~680 nm and blue ~430 nm). Photosystem II splits H₂O → O₂ + 2H⁺ + 2e⁻. Electrons flow through ETC (producing NADPH). ATP synthesized by chemiosmosis. Photosystem I reduces NADP⁺ → NADPH.</p>
+          </div>
+          <div class="col-box">
+            <p class="col-title">Calvin Cycle / Light-independent (stroma)</p>
+            <p style="font-size:13px;color:var(--ink-soft)">Uses ATP + NADPH from light reactions to fix CO₂ into sugar. 3 turns to produce one G3P. RuBisCO catalyzes CO₂ fixation (most abundant enzyme on Earth). Net: 3 CO₂ → 1 G3P (requires 9 ATP + 6 NADPH).</p>
+          </div>
+        </div>
+
+        <!-- COMPUTATIONAL METABOLISM -->
+        <h3 id="t5-comp">Metabolic Networks &amp; Computational Biology</h3>
+        <p>
+          Metabolism can be modeled as a <strong>directed graph</strong> where nodes are metabolites and
+          edges are reactions (enzyme-catalyzed). This is the basis of <strong>flux balance analysis (FBA)</strong>
+          and systems biology tools used to predict metabolic phenotypes.
+        </p>
+
+        <pre><code><span class="cm"># Simplified metabolic pathway graph (glycolysis key nodes)</span>
+glycolysis = {
+    <span class="str">'Glucose'</span>:     [(<span class="str">'G6P'</span>, <span class="str">'Hexokinase'</span>)],
+    <span class="str">'G6P'</span>:         [(<span class="str">'F6P'</span>, <span class="str">'Phosphoglucose isomerase'</span>)],
+    <span class="str">'F6P'</span>:         [(<span class="str">'F1,6BP'</span>, <span class="str">'PFK-1'</span>)],   <span class="cm"># rate-limiting step</span>
+    <span class="str">'F1,6BP'</span>:      [(<span class="str">'DHAP'</span>, <span class="str">'Aldolase'</span>), (<span class="str">'G3P'</span>, <span class="str">'Aldolase'</span>)],
+    <span class="str">'G3P'</span>:         [(<span class="str">'1,3-BPG'</span>, <span class="str">'GAPDH'</span>)],  <span class="cm"># NADH produced here</span>
+    <span class="str">'1,3-BPG'</span>:     [(<span class="str">'3PG'</span>, <span class="str">'Phosphoglycerate kinase'</span>)],  <span class="cm"># ATP</span>
+    <span class="str">'3PG'</span>:         [(<span class="str">'2PG'</span>, <span class="str">'Phosphoglycerate mutase'</span>)],
+    <span class="str">'2PG'</span>:         [(<span class="str">'PEP'</span>, <span class="str">'Enolase'</span>)],
+    <span class="str">'PEP'</span>:         [(<span class="str">'Pyruvate'</span>, <span class="str">'Pyruvate kinase'</span>)],  <span class="cm"># ATP</span>
+}
+
+<span class="kw">def</span> <span class="fn">trace_pathway</span>(graph, start, end, path=[]):
+    path = path + [start]
+    <span class="kw">if</span> start == end: <span class="kw">return</span> path
+    <span class="kw">for</span> (neighbor, enzyme) <span class="kw">in</span> graph.get(start, []):
+        result = trace_pathway(graph, neighbor, end, path)
+        <span class="kw">if</span> result: <span class="kw">return</span> result
+    <span class="kw">return</span> None
+
+print(trace_pathway(glycolysis, <span class="str">'Glucose'</span>, <span class="str">'Pyruvate'</span>))</code></pre>
+
+        <div class="callout tip">
+          <span class="callout-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div class="callout-body">
+            <p class="callout-title">Key formula to remember for PFK-1 regulation</p>
+            <p class="callout-text">PFK-1 is the <em>committed step</em> of glycolysis and the most important regulatory enzyme. Inhibited by high ATP (energy surplus) and citrate (plenty of CAC intermediates). Activated by AMP (energy deficit) and F2,6BP. This is classic feedback inhibition in a catabolic pathway.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <!-- MASTER TERM GLOSSARY -->
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="topic" id="t6">
+        <div class="topic-header b1">
+          <span class="topic-num">Glossary</span>
+          <span class="topic-title">All Key Terms — Alphabetical Reference</span>
+        </div>
+
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="tag">CompBio</span><strong>Bioinformatics</strong> — Applying CS and stats to analyze biological data (sequences, structures, pathways).</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Active site</strong> — Region of enzyme that binds substrate; shape complementary to substrate (induced fit).</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Amino acid</strong> — Monomer of proteins; central C bonded to –NH₂, –COOH, –H, and R group. 20 standard types.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>ATP</strong> — Adenosine triphosphate; universal cellular energy currency. Hydrolysis releases ~7.3 kcal/mol.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Base pairing</strong> — A=T (2 H-bonds), G≡C (3 H-bonds) in DNA; A=U in RNA.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Calvin Cycle</strong> — Light-independent reactions in chloroplast stroma; CO₂ fixed to G3P via RuBisCO; uses ATP + NADPH.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Carbohydrate</strong> — (CH₂O)ₙ; energy and structural role. Monosaccharides → disaccharides → polysaccharides.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>CAC / Krebs cycle</strong> — Citric acid cycle; 8-step cycle in matrix; produces NADH, FADH₂, ATP, CO₂ per Acetyl-CoA turn.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Cellulose</strong> — β-1,4-linked glucose polymer; plant cell wall; structural, not digestible by animals.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Channel protein</strong> — Integral membrane protein forming aqueous pore; allows specific ions/molecules through by facilitated diffusion.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Chemiosmosis</strong> — ATP synthesis powered by H⁺ flowing through ATP synthase down proton gradient (Mitchell hypothesis).</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Cholesterol</strong> — Steroid lipid; membrane fluidity regulator; precursor to steroid hormones, bile acids, vitamin D.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Codon</strong> — 3-nucleotide mRNA sequence specifying one amino acid (or stop). 64 possible codons.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Central Dogma</strong> — DNA → RNA → Protein; information flow direction in all living cells.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>CRISPR-Cas9</strong> — Bacterial adaptive immune system repurposed as precise gene-editing tool; guide RNA directs Cas9 nuclease to target DNA sequence.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Cotransport</strong> — Secondary active transport; one ion's gradient drives another molecule against its gradient. Symport or antiport.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Denaturation</strong> — Loss of protein 3D structure (not primary) due to heat, pH, chemicals. Usually destroys function.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Dehydration synthesis</strong> — Bond formation between monomers by removing H₂O. Builds all polymers.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Deoxyribose</strong> — 5C sugar in DNA backbone; –H at 2' position (ribose has –OH).</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>DNA ligase</strong> — Seals nicks in DNA backbone; joins Okazaki fragments; used in cloning.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>DNA polymerase</strong> — Synthesizes DNA 5'→3'; requires primer; has proofreading exonuclease; uses dNTPs.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>ETC</strong> — Electron transport chain; Complexes I–IV in inner mitochondrial membrane; transfers electrons ultimately to O₂.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Exergonic / Endergonic</strong> — ΔG &lt; 0: releases energy (spontaneous). ΔG &gt; 0: absorbs energy (requires coupling).</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Exon / Intron</strong> — Exons = coding sequences retained in mRNA. Introns = non-coding sequences removed by splicing.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Feedback inhibition</strong> — End-product inhibits early enzyme in its biosynthesis pathway; prevents overproduction.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Fatty acid</strong> — Carboxyl group + hydrocarbon tail; saturated (no double bonds) or unsaturated (one or more C=C).</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Fermentation</strong> — Anaerobic oxidation of glucose; regenerates NAD⁺ via pyruvate reduction. Net: 2 ATP/glucose.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Fluid mosaic model</strong> — Membrane = fluid phospholipid bilayer with mobile embedded proteins (1972, Singer &amp; Nicolson).</div>
+          <div class="glossary-item"><span class="tag">CompBio</span><strong>Genetic algorithm</strong> — Evolutionary computation; population of solutions evolves via selection + crossover + mutation.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Genetic code</strong> — Triplet codons map to 20 amino acids; redundant, unambiguous, nearly universal.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Glycolysis</strong> — 10-step pathway; glucose (6C) → 2 pyruvate (3C); net 2 ATP + 2 NADH; cytoplasm; anaerobic.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Glycogen</strong> — Highly branched α-1,4/1,6 glucose polymer; animal energy storage; liver and muscle.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Hypo/Hypertonic</strong> — Solute concentration relative to cell. Hypotonic: water enters. Hypertonic: water leaves.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Hydrolysis</strong> — Bond cleavage by adding H₂O; breaks all biological polymers. Digestion.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>mRNA</strong> — Messenger RNA; carries genetic information from DNA in nucleus to ribosomes in cytoplasm.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Mutation</strong> — Permanent change in DNA sequence. Types: silent, missense, nonsense, frameshift.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>NAD⁺/NADH</strong> — Nicotinamide adenine dinucleotide; electron carrier. NAD⁺ (oxidized) accepts electrons → NADH (reduced); used in ETC.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Nucleotide</strong> — Monomer of nucleic acids: nitrogenous base + 5C sugar + phosphate group(s).</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Osmosis</strong> — Diffusion of water across semipermeable membrane from low [solute] to high [solute] side.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Okazaki fragment</strong> — Short DNA fragments on lagging strand; each needs RNA primer; joined by DNA ligase.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Phospholipid</strong> — Amphipathic membrane lipid; glycerol + 2 FA + phosphate head; forms bilayer.</div>
+          <div class="glossary-item"><span class="tag">Metabolism</span><strong>Photosynthesis</strong> — 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Light reactions (thylakoid) + Calvin cycle (stroma).</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Polymer / Monomer</strong> — Polymer = long chain of identical/similar subunits (monomers) linked by covalent bonds.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Promoter</strong> — DNA sequence upstream of a gene where RNA polymerase binds to initiate transcription.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Protein structure</strong> — 1° (aa sequence) → 2° (α-helix/β-sheet) → 3° (3D fold) → 4° (multi-subunit).</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Ribosome</strong> — Large + small subunit; site of translation; rRNA + protein. 70S (prokaryote), 80S (eukaryote).</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Starch</strong> — α-1,4/1,6-linked glucose; plant energy storage. Amylose (linear) + amylopectin (branched).</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Telomere</strong> — Repetitive DNA (TTAGGG) at chromosome ends; prevents shortening. Maintained by telomerase.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Transcription</strong> — DNA → mRNA; catalyzed by RNA polymerase; reads template 3'→5'; synthesizes mRNA 5'→3'.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>Translation</strong> — mRNA → protein at ribosome; codons decoded by tRNA anticodons; initiation-elongation-termination.</div>
+          <div class="glossary-item"><span class="tag">Genetics</span><strong>tRNA</strong> — Transfer RNA; cloverleaf structure; carries amino acid at 3' CCA end; anticodon pairs with mRNA codon.</div>
+          <div class="glossary-item"><span class="tag">Transport</span><strong>Na⁺/K⁺ ATPase</strong> — Primary active transporter; 3 Na⁺ out / 2 K⁺ in per ATP; maintains resting membrane potential.</div>
+          <div class="glossary-item"><span class="tag">Macro</span><strong>Nucleic acid</strong> — DNA or RNA; polymer of nucleotides; stores and expresses genetic information.</div>
+          <div class="glossary-item"><span class="tag">CompBio</span><strong>De Bruijn graph</strong> — Graph representation of overlapping k-mers; used for genome assembly. Eulerian path solves assembly.</div>
+          <div class="glossary-item"><span class="tag">CompBio</span><strong>Smith-Waterman</strong> — Dynamic programming algorithm for optimal local sequence alignment. Time: O(mn).</div>
+        </div>
+
+        <!-- QUICK RECAP -->
+        <h3 id="t6-recap">Quick Recap — 5 Big Ideas</h3>
+        <ul class="notes">
+          <li class="purple"><strong>CompBio is an intersection</strong>: CS + math + statistics applied to biological systems. Bioinformatics ≈ using computers to analyze DNA, RNA, proteins and big biological data.</li>
+          <li class="blue"><strong>Four macromolecules</strong>: Carbohydrates (CH₂O; energy &amp; structure), Lipids (hydrophobic; membrane &amp; energy storage), Proteins (amino acid polymers; catalysis &amp; structure), Nucleic acids (nucleotide polymers; information). All built by dehydration, broken by hydrolysis.</li>
+          <li class="green"><strong>Central Dogma</strong>: DNA (replication &amp; template) → mRNA (transcription) → Protein (translation). Mutations change sequence; regulation controls when/where/how much.</li>
+          <li class="orange"><strong>Membrane transport</strong>: Passive (down gradient: diffusion, osmosis, facilitated diffusion — no ATP) vs. Active (against gradient — requires ATP or ion gradient). Phospholipid bilayer is selectively permeable.</li>
+          <li class="purple"><strong>Metabolism = energy transformation</strong>: Glycolysis (2 ATP, cytoplasm, anaerobic) → Pyruvate oxidation → CAC (2 ATP, NADH, FADH₂) → Oxidative phosphorylation (~26–28 ATP via chemiosmosis, inner mitochondrial membrane). Total: ~30–32 ATP/glucose.</li>
+        </ul>
+      </div>
+
+    </div><!-- end notes-scope -->
+  </main>
+
+  <!-- ═══════════════ RIGHT SIDEBAR (TOC) ═══════════════ -->
+  <aside class="sidebar-right">
+    <div style="position:sticky;top:20px;">
+      <div class="card animate-in">
+        <div class="card-section">
+          <p class="card-title">Contents</p>
+        </div>
+        <div class="divider"></div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="readingProgress"></div>
+        </div>
+        <nav class="notes-toc-list">
+          <a class="notes-toc-item" href="#t1">1. Intro to CompBio</a>
+          <a class="notes-toc-item sub" href="#t1-def">What is CompBio?</a>
+          <a class="notes-toc-item sub" href="#t1-fields">Five Related Fields</a>
+          <a class="notes-toc-item sub" href="#t1-apps">Applications</a>
+          <a class="notes-toc-item sub" href="#t1-bioinspired">Bio-Inspired Algorithms</a>
+          <a class="notes-toc-item" href="#t2">2. Macromolecules</a>
+          <a class="notes-toc-item sub" href="#t2-polymer">Polymers &amp; Monomers</a>
+          <a class="notes-toc-item sub" href="#t2-carbs">Carbohydrates</a>
+          <a class="notes-toc-item sub" href="#t2-lipids">Lipids</a>
+          <a class="notes-toc-item sub" href="#t2-proteins">Proteins</a>
+          <a class="notes-toc-item sub" href="#t2-nucleic">Nucleic Acids &amp; ATP</a>
+          <a class="notes-toc-item" href="#t3">3. Genetics</a>
+          <a class="notes-toc-item sub" href="#t3-dna">DNA Structure</a>
+          <a class="notes-toc-item sub" href="#t3-replication">DNA Replication</a>
+          <a class="notes-toc-item sub" href="#t3-central">Central Dogma</a>
+          <a class="notes-toc-item sub" href="#t3-transcription">Transcription</a>
+          <a class="notes-toc-item sub" href="#t3-translation">Translation</a>
+          <a class="notes-toc-item sub" href="#t3-mutation">Mutations</a>
+          <a class="notes-toc-item sub" href="#t3-comp">Computational Genetics</a>
+          <a class="notes-toc-item" href="#t4">4. Cell Transport</a>
+          <a class="notes-toc-item sub" href="#t4-membrane">Membrane Structure</a>
+          <a class="notes-toc-item sub" href="#t4-passive">Passive Transport</a>
+          <a class="notes-toc-item sub" href="#t4-active">Active Transport</a>
+          <a class="notes-toc-item sub" href="#t4-bulk">Bulk Transport</a>
+          <a class="notes-toc-item" href="#t5">5. Metabolism</a>
+          <a class="notes-toc-item sub" href="#t5-thermo">Thermodynamics</a>
+          <a class="notes-toc-item sub" href="#t5-enzymes">Enzymes</a>
+          <a class="notes-toc-item sub" href="#t5-respiration">Cellular Respiration</a>
+          <a class="notes-toc-item sub" href="#t5-fermentation">Fermentation</a>
+          <a class="notes-toc-item sub" href="#t5-photosynthesis">Photosynthesis</a>
+          <a class="notes-toc-item sub" href="#t5-comp">Metabolic Computation</a>
+          <a class="notes-toc-item" href="#t6">Glossary &amp; Recap</a>
+        </nav>
+      </div>
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+    </div>
+  </aside>
+
+</div><!-- end site-wrapper -->
+
+<script src="../js/app.js"></script>
+<script src="../js/notes-common.js"></script>
+<script>
+  /* ── Reading Progress Bar ── */
+  const bar = document.getElementById('readingProgress');
+  if (bar) {
+    window.addEventListener('scroll', () => {
+      const docH = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      bar.style.width = (window.scrollY / docH * 100) + '%';
+    });
+  }
+
+  /* ── Mobile TOC Drawer ── */
+  const tocBtn = document.getElementById('tocTriggerBtn');
+  const tocOverlay = document.getElementById('tocOverlay');
+  if (tocBtn && tocOverlay) {
+    tocBtn.addEventListener('click', () => document.body.classList.toggle('toc-drawer-open'));
+    tocOverlay.addEventListener('click', () => document.body.classList.remove('toc-drawer-open'));
+    document.querySelectorAll('.notes-toc-item').forEach(link => {
+      link.addEventListener('click', () => document.body.classList.remove('toc-drawer-open'));
+    });
+  }
+
+  /* ── Active TOC Highlight on Scroll ── */
+  const sections = document.querySelectorAll('[id]');
+  const tocLinks = document.querySelectorAll('.notes-toc-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.notes-toc-item[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0% -80% 0%' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

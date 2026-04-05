@@ -6,6 +6,7 @@ This folder stores long-form notes in standalone files so content stays modular.
 
 - notes/ml_midterm_notes.html: IF3270 machine learning midterm note.
 - notes/mobile_midterm_notes.html: IF3210 mobile app development midterm note.
+- notes/midterm_compbio.html: IF3211 computational biology midterm note.
 - notes/templates/note-template.html: reusable template for new notes.
 
 ## Add a New Note
