@@ -38,7 +38,15 @@
     .status-wip .status-dot { background: var(--accent-gold); }
     .status-wip { color: var(--accent-gold); }
 
-    .project-links { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
+    .project-title-link {
+      color: inherit;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .project-title-link:hover {
+      color: var(--accent-warm);
+      border-color: rgba(160, 111, 31, 0.35);
+    }
 
     /* stat row */
     .project-stats {
@@ -117,12 +125,9 @@
     <article class="project-item animate-in">
       <div class="project-header">
         <div>
-          <h2 class="project-name">IF2150 Signance</h2>
+          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/IF2150-2024-K01-G12-Signance" class="project-title-link" target="_blank" rel="noopener noreferrer">IF2150 Signance</a></h2>
           <div style="margin-top: 4px;"><span class="project-status status-active"><span class="status-dot"></span>Active</span></div>
         </div>
-        <a href="https://github.com/SayyakuHajime/IF2150-2024-K01-G12-Signance" class="project-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
       </div>
       <p class="project-desc">Software engineering implementation project for IF2150. The repository contains the complete team build of Signance and its supporting project structure.</p>
       <div class="project-stack">
@@ -140,12 +145,9 @@
     <article class="project-item animate-in">
       <div class="project-header">
         <div>
-          <h2 class="project-name">Rush Hour Solver</h2>
+          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Tucil3_13523009" class="project-title-link" target="_blank" rel="noopener noreferrer">Rush Hour Solver</a></h2>
           <div style="margin-top: 4px;"><span class="project-status status-wip"><span class="status-dot"></span>In Progress</span></div>
         </div>
-        <a href="https://github.com/SayyakuHajime/Tucil3_13523009" class="project-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
       </div>
       <p class="project-desc">Tugas Kecil 3 IF2211 Strategi Algoritma. A puzzle Rush Hour solver project implemented as a public JavaScript repository.</p>
       <div class="project-stack">
@@ -158,12 +160,9 @@
     <article class="project-item animate-in">
       <div class="project-header">
         <div>
-          <h2 class="project-name">TSP Solver (Dynamic Programming)</h2>
+          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Tugas-IF2211-TSPSolver-13523009" class="project-title-link" target="_blank" rel="noopener noreferrer">TSP Solver (Dynamic Programming)</a></h2>
           <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Complete</span></div>
         </div>
-        <a href="https://github.com/SayyakuHajime/Tugas-IF2211-TSPSolver-13523009" class="project-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        </a>
       </div>
       <p class="project-desc">Additional IF2211 assignment repository focused on solving Travelling Salesman Problem variants using dynamic programming strategies.</p>
       <div class="project-stack">
@@ -176,12 +175,9 @@
     <article class="project-item animate-in">
       <div class="project-header">
         <div>
-          <h2 class="project-name">Portfolio Website</h2>
+          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Portfolio" class="project-title-link" target="_blank" rel="noopener noreferrer">Portfolio Website</a></h2>
           <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Deprecated</span></div>
         </div>
-        <a href="https://github.com/SayyakuHajime/Portfolio" class="project-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
       </div>
       <p class="project-desc">Public portfolio repository and deployment source. This is the live web identity base linked from the GitHub profile website field.</p>
       <div class="project-stack">
