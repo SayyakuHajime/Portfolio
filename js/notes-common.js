@@ -78,6 +78,82 @@
     update();
   }
 
+  function initTocDrawer() {
+    var sidebar = document.querySelector('.sidebar-right');
+    var tocList = document.querySelector('.notes-toc-list');
+
+    if (!sidebar || !tocList) {
+      return;
+    }
+
+    var existingTrigger = document.querySelector('.notes-toc-trigger');
+    var trigger = existingTrigger || document.createElement('button');
+    if (!existingTrigger) {
+      trigger.className = 'notes-toc-trigger';
+      trigger.type = 'button';
+      trigger.setAttribute('aria-label', 'Open table of contents');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg><span class="notes-toc-trigger-label">Contents</span>';
+      document.body.appendChild(trigger);
+    }
+
+    var existingOverlay = document.querySelector('.notes-toc-overlay');
+    var overlay = existingOverlay || document.createElement('div');
+    if (!existingOverlay) {
+      overlay.className = 'notes-toc-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(overlay);
+    }
+
+    var mobileQuery = window.matchMedia('(max-width: 1100px)');
+
+    var closeDrawer = function () {
+      document.body.classList.remove('toc-drawer-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    var openDrawer = function () {
+      if (!mobileQuery.matches) {
+        return;
+      }
+      document.body.classList.remove('drawer-open');
+      document.body.classList.add('toc-drawer-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+
+    trigger.addEventListener('click', function () {
+      if (document.body.classList.contains('toc-drawer-open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeDrawer();
+      }
+    });
+
+    tocList.querySelectorAll('.notes-toc-item').forEach(function (link) {
+      link.addEventListener('click', closeDrawer);
+    });
+
+    var handleMediaChange = function () {
+      if (!mobileQuery.matches) {
+        closeDrawer();
+      }
+    };
+
+    if (typeof mobileQuery.addEventListener === 'function') {
+      mobileQuery.addEventListener('change', handleMediaChange);
+    } else if (typeof mobileQuery.addListener === 'function') {
+      mobileQuery.addListener(handleMediaChange);
+    }
+  }
+
   function initPointerTrail() {
     var toggleBtn = document.getElementById('cursorToggleBtn');
     var pointer = document.getElementById('cursorPointer');
@@ -188,6 +264,7 @@
   }
 
   initNotesToc();
+  initTocDrawer();
   initReadingProgress();
   initPointerTrail();
 })();
