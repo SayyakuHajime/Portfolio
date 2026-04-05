@@ -19,44 +19,112 @@
       font-style: italic;
       margin-bottom: var(--sp-sm);
     }
-    .projects-intro p { font-size: 0.9rem; color: var(--text-secondary); max-width: 420px; line-height: 1.7; }
+    .projects-intro p { font-size: 0.9rem; color: var(--text-secondary); max-width: 460px; line-height: 1.7; }
 
-    .project-status {
+    .wip-wrap {
+      padding: var(--sp-xl) var(--sp-lg);
+      display: grid;
+      gap: var(--sp-md);
+    }
+    .wip-card {
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, var(--bg-surface), var(--bg-elevated));
+      padding: var(--sp-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    .wip-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 12%, var(--accent-glow), transparent 55%);
+      pointer-events: none;
+    }
+    .wip-chip {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      border: 1px solid rgba(160, 111, 31, 0.35);
+      background: var(--accent-glow);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: var(--sp-md);
+    }
+    .wip-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 0 4px rgba(160, 111, 31, 0.18);
+    }
+    .wip-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.15;
+      margin-bottom: var(--sp-sm);
+      color: var(--text-primary);
+    }
+    .wip-text {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: var(--sp-lg);
+    }
+    .wip-kitty {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-size: 0.76rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      margin-top: var(--sp-sm);
     }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .status-active .status-dot { background: #4ade80; box-shadow: 0 0 6px #4ade8080; }
-    .status-active { color: #4ade80; }
-    .status-done .status-dot { background: var(--text-muted); }
-    .status-done { color: var(--text-muted); }
-    .status-wip .status-dot { background: var(--accent-gold); }
-    .status-wip { color: var(--accent-gold); }
+    .wip-actions {
+      display: flex;
+      gap: var(--sp-sm);
+      flex-wrap: wrap;
+    }
+    .wip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--r-sm);
+      padding: 7px 12px;
+      transition: all 0.15s;
+    }
+    .wip-link:hover {
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+      background: var(--accent-glow);
+    }
+    .wip-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
 
-    .project-title-link {
-      color: inherit;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
+    .wip-side-note {
+      padding: var(--sp-md) var(--sp-lg);
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
     }
-    .project-title-link:hover {
-      color: var(--accent-warm);
-      border-color: rgba(160, 111, 31, 0.35);
+    .wip-side-note strong {
+      color: var(--text-primary);
+      font-weight: 500;
     }
-
-    /* stat row */
-    .project-stats {
-      display: flex; gap: var(--sp-lg); margin-top: var(--sp-md);
-      padding-top: var(--sp-md);
-      border-top: 1px solid var(--border-subtle);
-    }
-    .pstat { display: flex; flex-direction: column; gap: 2px; }
-    .pstat-value { font-family: var(--font-display); font-size: 1.3rem; color: var(--text-primary); }
-    .pstat-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -107,120 +175,55 @@
   <main class="main-content">
     <div class="page-header">
       <span class="page-title">Projects</span>
-      <span class="header-meta">11 public repos</span>
+      <span class="header-meta">work in progress</span>
     </div>
 
     <div class="projects-intro animate-in">
-      <h2>Things I've built,<br>am building.</h2>
-      <p>A mix of research tools, experiments, and personal utilities. Some are polished, some are proofs of concept. All of them taught me something.</p>
+      <h2>Project garden is sleeping,<br>for now.</h2>
+      <p>This page is being rebuilt. I will publish projects here once I finish curating the list and writing proper notes for each build.</p>
     </div>
 
-    <div class="tabs">
-      <div class="tab active" data-tab="all">All</div>
-      <div class="tab" data-tab="ml">ML / AI</div>
-      <div class="tab" data-tab="web">Web</div>
-      <div class="tab" data-tab="tools">Tools</div>
-    </div>
-
-    <article class="project-item animate-in">
-      <div class="project-header">
-        <div>
-          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/IF2150-2024-K01-G12-Signance" class="project-title-link" target="_blank" rel="noopener noreferrer">IF2150 Signance</a></h2>
-          <div style="margin-top: 4px;"><span class="project-status status-active"><span class="status-dot"></span>Active</span></div>
+    <section class="wip-wrap animate-in">
+      <article class="wip-card">
+        <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
+        <h2 class="wip-title">Projects section is under construction.</h2>
+        <p class="wip-text">I am currently preparing cleaner writeups and project summaries. No public project cards are shown yet on this page.</p>
+        <div class="wip-actions">
+          <a href="../index.html" class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Home
+          </a>
+          <a href="https://github.com/SayyakuHajime" class="wip-link" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub profile
+          </a>
         </div>
-      </div>
-      <p class="project-desc">Software engineering implementation project for IF2150. The repository contains the complete team build of Signance and its supporting project structure.</p>
-      <div class="project-stack">
-        <span class="tag tag-accent">Python</span>
-        <span class="tag">Software Engineering</span>
-        <span class="tag">Team Project</span>
-      </div>
-      <div class="project-stats">
-        <div class="pstat"><span class="pstat-value">IF2150</span><span class="pstat-label">Course</span></div>
-        <div class="pstat"><span class="pstat-value">2024</span><span class="pstat-label">Academic year</span></div>
-        <div class="pstat"><span class="pstat-value">Repo</span><span class="pstat-label">Public on GitHub</span></div>
-      </div>
-    </article>
-
-    <article class="project-item animate-in">
-      <div class="project-header">
-        <div>
-          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Tucil3_13523009" class="project-title-link" target="_blank" rel="noopener noreferrer">Rush Hour Solver</a></h2>
-          <div style="margin-top: 4px;"><span class="project-status status-wip"><span class="status-dot"></span>In Progress</span></div>
-        </div>
-      </div>
-      <p class="project-desc">Tugas Kecil 3 IF2211 Strategi Algoritma. A puzzle Rush Hour solver project implemented as a public JavaScript repository.</p>
-      <div class="project-stack">
-        <span class="tag tag-accent">JavaScript</span>
-        <span class="tag">Algorithmic Search</span>
-        <span class="tag">IF2211</span>
-      </div>
-    </article>
-
-    <article class="project-item animate-in">
-      <div class="project-header">
-        <div>
-          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Tugas-IF2211-TSPSolver-13523009" class="project-title-link" target="_blank" rel="noopener noreferrer">TSP Solver (Dynamic Programming)</a></h2>
-          <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Complete</span></div>
-        </div>
-      </div>
-      <p class="project-desc">Additional IF2211 assignment repository focused on solving Travelling Salesman Problem variants using dynamic programming strategies.</p>
-      <div class="project-stack">
-        <span class="tag tag-accent">Scala</span>
-        <span class="tag">Dynamic Programming</span>
-        <span class="tag">IF2211</span>
-      </div>
-    </article>
-
-    <article class="project-item animate-in">
-      <div class="project-header">
-        <div>
-          <h2 class="project-name"><a href="https://github.com/SayyakuHajime/Portfolio" class="project-title-link" target="_blank" rel="noopener noreferrer">Portfolio Website</a></h2>
-          <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Deprecated</span></div>
-        </div>
-      </div>
-      <p class="project-desc">Public portfolio repository and deployment source. This is the live web identity base linked from the GitHub profile website field.</p>
-      <div class="project-stack">
-        <span class="tag">HTML</span>
-        <span class="tag">CSS</span>
-        <span class="tag">Vanilla JS</span>
-      </div>
-    </article>
+        <p class="wip-kitty">tiny workshop noises in progress</p>
+      </article>
+    </section>
   </main>
 
   <!-- RIGHT RAIL -->
   <aside class="sidebar-right">
-    <div class="search-bar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Search projects…" />
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">Project board</p>
+      </div>
+      <div class="divider"></div>
+      <div class="wip-side-note">
+        <p><strong>Status:</strong> in progress.</p>
+        <p>I am curating what to showcase first.</p>
+      </div>
     </div>
 
     <div class="card animate-in">
       <div class="card-section">
-        <p class="card-title">At a glance</p>
+        <p class="card-title">Soon</p>
       </div>
       <div class="divider"></div>
-      <div class="skills-grid">
-        <span class="skill-chip">11 Public Repos</span>
-        <span class="skill-chip">9 Followers</span>
-        <span class="skill-chip">16 Following</span>
+      <div class="wip-side-note">
+        <p>Expect concise cards with links, stack, and short build notes.</p>
       </div>
-      <div style="height: var(--sp-sm)"></div>
-    </div>
-
-    <div class="card animate-in">
-      <div class="card-section">
-        <p class="card-title">Languages used</p>
-      </div>
-      <div class="divider"></div>
-      <div class="skills-grid">
-        <span class="skill-chip">Python</span>
-        <span class="skill-chip">JavaScript</span>
-        <span class="skill-chip">Java</span>
-        <span class="skill-chip">C++</span>
-        <span class="skill-chip">Scala</span>
-      </div>
-      <div style="height: var(--sp-sm)"></div>
     </div>
   </aside>
 </div>
