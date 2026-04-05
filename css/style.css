@@ -48,9 +48,8 @@
   --r-lg: 20px;
 
   /* Layout */
-  --sidebar-w:  260px;
-  --rightrail-w: 300px;
-  --content-w:  600px;
+  --sidebar-w:  clamp(220px, 18vw, 320px);
+  --rightrail-w: clamp(240px, 22vw, 360px);
 
   /* Transition */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -101,7 +100,7 @@ ul { list-style: none; }
 /* ── LAYOUT SHELL ───────────────────────────────────────── */
 .site-wrapper {
   display: flex;
-  max-width: 2160px;
+  width: 100%;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
@@ -316,10 +315,10 @@ ul { list-style: none; }
 
 /* ── MAIN CONTENT ───────────────────────────────────────── */
 .main-content {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   border-right: 1px solid var(--border-subtle);
-  max-width: var(--content-w);
+  max-width: none;
 }
 
 .page-header {
@@ -634,14 +633,6 @@ ul { list-style: none; }
   transition: color 0.15s;
 }
 .project-item:hover .project-name { color: var(--accent-warm); }
-
-.project-link {
-  color: var(--text-muted);
-  transition: color 0.15s;
-  flex-shrink: 0;
-}
-.project-link:hover { color: var(--accent-gold); }
-.project-link svg { width: 16px; height: 16px; }
 
 .project-desc {
   font-size: 0.875rem;
