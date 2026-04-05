@@ -57,32 +57,6 @@
       max-width: 420px;
       line-height: 1.7;
     }
-    /* Featured writing */
-    .writing-featured {
-      padding: var(--sp-xl) var(--sp-lg);
-      border-bottom: 1px solid var(--border-default);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .writing-featured:hover { background: var(--bg-surface); }
-    .writing-featured::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: var(--accent-gold);
-    }
-    .featured-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: var(--sp-sm);
-    }
-    .writing-featured .writing-title { font-size: 1.7rem; }
     /* Right rail for writings */
     .toc-list { padding: var(--sp-sm) var(--sp-lg) var(--sp-md); }
     .toc-item {
@@ -100,6 +74,15 @@
       font-size: 0.65rem;
       color: var(--text-muted);
       margin-right: var(--sp-xs);
+    }
+    .writing-title-link {
+      color: inherit;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .writing-title-link:hover {
+      color: var(--accent-warm);
+      border-color: rgba(160, 111, 31, 0.35);
     }
   </style>
 </head>
@@ -151,7 +134,7 @@
   <main class="main-content">
     <div class="page-header">
       <span class="page-title">Writings</span>
-      <span class="header-meta">12 essays</span>
+      <span class="header-meta">2 linked notes</span>
     </div>
 
     <div class="writings-intro animate-in">
@@ -169,23 +152,10 @@
       <span class="filter-chip" data-filter="notes">Study Notes</span>
     </div>
 
-    <!-- Featured -->
-    <article class="writing-featured animate-in" data-category="ml">
-      <div class="featured-label">★ Featured</div>
-      <div class="writing-number">No. 12</div>
-      <h2 class="writing-title">The Geometry of Attention: Why Transformers Think in Subspaces</h2>
-      <p class="writing-subtitle">A geometric intuition for multi-head self-attention</p>
-      <div class="writing-meta-row">
-        <span class="tag tag-accent">ML Theory</span>
-        <span class="read-time">8 min read</span>
-        <span class="feed-date">June 2025</span>
-      </div>
-    </article>
-
     <!-- Writing list -->
-    <article class="writing-item animate-in" data-category="notes" onclick="window.location.href='../notes/ml_midterm_notes.html'">
+    <article class="writing-item animate-in" data-category="notes">
       <div class="writing-number">No. 9</div>
-      <h2 class="writing-title">Midterm Study Notes: ML Fundamentals</h2>
+      <h2 class="writing-title"><a href="../notes/ml_midterm_notes.html" class="writing-title-link">Midterm Study Notes: ML Fundamentals</a></h2>
       <p class="writing-subtitle">A complete reference for regression, classification, ensemble methods, and neural networks</p>
       <div class="writing-meta-row">
         <span class="tag">Study Notes</span>
@@ -194,9 +164,9 @@
       </div>
     </article>
 
-    <article class="writing-item animate-in" data-category="notes" onclick="window.location.href='../notes/mobile_midterm_notes.html'">
+    <article class="writing-item animate-in" data-category="notes">
       <div class="writing-number">No. 10</div>
-      <h2 class="writing-title">Midterm Study Notes: Mobile App Development</h2>
+      <h2 class="writing-title"><a href="../notes/mobile_midterm_notes.html" class="writing-title-link">Midterm Study Notes: Mobile App Development</a></h2>
       <p class="writing-subtitle">IF3210 notes on platform architecture, SDLC, Android, design systems, and Kotlin null safety</p>
       <div class="writing-meta-row">
         <span class="tag">Study Notes</span>
@@ -230,10 +200,8 @@
       </div>
       <div class="divider"></div>
       <div class="toc-list">
-        <div class="toc-item"><span class="toc-num">01.</span> Geometry of Attention</div>
-        <div class="toc-item"><span class="toc-num">02.</span> Tokenization is a Moral Choice</div>
-        <div class="toc-item"><span class="toc-num">03.</span> Backprop & Chain Rule</div>
-        <div class="toc-item"><span class="toc-num">04.</span> Distributed Systems & Philosophy</div>
+        <a href="../notes/ml_midterm_notes.html" class="toc-item"><span class="toc-num">01.</span> ML Midterm Notes</a>
+        <a href="../notes/mobile_midterm_notes.html" class="toc-item"><span class="toc-num">02.</span> Mobile App Midterm Notes</a>
       </div>
     </div>
 
@@ -258,7 +226,7 @@
 <script>
   // Filter writings by category
   const chips = document.querySelectorAll('.filter-chip');
-  const items = document.querySelectorAll('.writing-item, .writing-featured');
+  const items = document.querySelectorAll('.writing-item');
 
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
