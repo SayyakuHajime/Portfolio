@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <meta http-equiv="refresh" content="0; url=pages/home.html">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -13,21 +14,30 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(circle at 82% -20%, #eaf2fb 0%, transparent 40%), #faf8f4;
+            color: #1a1814;
+            font-family: "Source Serif 4", Georgia, serif;
         }
         .loader {
             text-align: center;
+            border: 1px solid #d5d0c5;
+            background: #f3f0e8;
+            border-radius: 4px;
+            padding: 1.8rem 2rem;
         }
         .spinner {
-            border: 3px solid rgba(29, 155, 240, 0.3);
+            border: 3px solid rgba(23, 78, 135, 0.2);
             border-radius: 50%;
-            border-top: 3px solid #1d9bf0;
+            border-top: 3px solid #174e87;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
+        }
+        .loader p:first-of-type {
+            margin: 0;
+            font-family: "Playfair Display", serif;
+            font-size: 1.2rem;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -39,8 +49,8 @@
     <div class="loader">
         <div class="spinner"></div>
         <p>Redirecting to portfolio...</p>
-        <p style="font-size: 0.875rem; color: #71767b; margin-top: 0.5rem;">
-            If you are not redirected, <a href="pages/home.html" style="color: #1d9bf0; text-decoration: none;">click here</a>
+        <p style="font-size: 0.875rem; color: #6e6a62; margin-top: 0.5rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase;">
+            If you are not redirected, <a href="pages/home.html" style="color: #174e87; text-decoration: none;">click here</a>
         </p>
     </div>
     <script>

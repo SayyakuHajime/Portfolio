@@ -1,19 +1,36 @@
-/* CSS Variables */
-:root {
-    /* Colors */
-    --color-bg: #000000;
-    --color-bg-secondary: #16181c;
-    --color-bg-tertiary: #202327;
-    --color-text: #ffffff;
-    --color-text-secondary: #71767b;
-    --color-border: #2f3336;
-    --color-primary: #1d9bf0;
-    --color-primary-hover: #1a8cd8;
-    --color-success: #00ba7c;
-    --color-danger: #f4212e;
-    --color-warning: #ffd400;
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap");
 
-    /* Spacing */
+/* Global design tokens based on ml_midterm_notes_v5 */
+:root {
+    --ink: #1a1814;
+    --ink-soft: #3d3a35;
+    --ink-faint: #6e6a62;
+    --paper: #faf8f4;
+    --paper-warm: #f3f0e8;
+    --paper-cream: #ede9de;
+    --rule: #d5d0c5;
+    --rule-light: #e8e4d8;
+    --accent-p: #5c3fa0;
+    --accent-p-bg: #f0ecfa;
+    --accent-p-mid: #9b85d4;
+    --accent-n: #1a6b4a;
+    --accent-n-bg: #edf7f2;
+    --accent-n-mid: #5aa882;
+    --accent-b: #174e87;
+    --accent-b-bg: #eaf2fb;
+    --accent-b-mid: #6699cc;
+    --accent-r: #912b2b;
+    --accent-r-bg: #fdf0f0;
+    --accent-r-mid: #cc7777;
+    --accent-o: #7a4a10;
+    --accent-o-bg: #fdf5e8;
+    --accent-o-mid: #d4961f;
+    --tag-bg: #eae6dc;
+
+    --font-serif: "Source Serif 4", Georgia, serif;
+    --font-display: "Playfair Display", "Times New Roman", serif;
+    --font-mono: "IBM Plex Mono", "Fira Code", monospace;
+
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
@@ -21,32 +38,32 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
 
-    /* Font sizes */
     --font-xs: 0.75rem;
     --font-sm: 0.875rem;
     --font-base: 1rem;
     --font-lg: 1.125rem;
     --font-xl: 1.25rem;
     --font-2xl: 1.5rem;
+    --font-3xl: 2rem;
 
-    /* Border radius */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+    --radius-xl: 16px;
     --radius-full: 9999px;
 
-    /* Transitions */
     --transition-fast: 150ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 300ms ease;
+    --transition-base: 220ms ease;
+    --transition-slow: 320ms ease;
 
-    /* Layout */
-    --max-width: 1280px;
+    --shadow-soft: 0 10px 30px rgba(26, 24, 20, 0.06);
+    --shadow-card: 0 6px 20px rgba(26, 24, 20, 0.08);
+
+    --max-width: 1400px;
     --sidebar-width: 275px;
     --sidebar-right-width: 350px;
-    --content-width: 600px;
+    --content-width: 680px;
 
-    /* Bootstrap-style Breakpoints */
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;

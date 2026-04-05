@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writings - Sayyaku/Hajime</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/writings.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/browser-compat.css">
+    <link rel="stylesheet" href="../css/image-fixes.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../js/components.js"></script>
+</head>
+<body class="writings-page">
+    <div class="container">
+        <div id="sidebar-left-container"></div>
+
+        <main class="main-content">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+                    <a href="home.html" style="padding: var(--spacing-sm); border-radius: var(--radius-full); transition: background-color var(--transition-fast);" onmouseover="this.style.backgroundColor='rgba(26, 24, 20, 0.08)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </a>
+                    <div style="flex: 1;">
+                        <h1 style="font-size: var(--font-xl);">Writings</h1>
+                        <p style="font-size: var(--font-sm); color: var(--ink-faint);">Long-form Notes and Study Archives</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="writings-cover">
+                <div class="writings-cover-label">Portfolio Archive · Structured Learning Notes</div>
+                <h2>Writings &<br>Study Notes</h2>
+                <p class="writings-cover-sub">Curated midterm notes and technical summaries written with the same visual language as my ML notes pages.</p>
+                <div class="writings-cover-topics">
+                    <span class="writings-chip">Machine Learning</span>
+                    <span class="writings-chip">Mobile Development</span>
+                    <span class="writings-chip">Exam Preparation</span>
+                    <span class="writings-chip">Concept Summaries</span>
+                </div>
+            </section>
+
+            <div class="writings-page-content">
+                <div class="writings-toc-column">
+                    <nav class="writings-toc">
+                        <span class="writings-toc-label">Jump to</span>
+                        <a href="#featured">01. Featured Notes</a>
+                        <a href="#design-system">02. Writing System</a>
+                        <a href="#upcoming">03. Upcoming Topics</a>
+                    </nav>
+                </div>
+
+                <article class="writings-main">
+                    <section class="writing-topic" id="featured">
+                        <div class="writing-header">
+                            <span class="writing-num">01 · Featured Notes</span>
+                            <h2 class="writing-title">Published Notes</h2>
+                            <p class="writing-sub">Direct links to complete long-form notes using the dedicated midterm layout.</p>
+                        </div>
+
+                        <div class="writing-card-grid">
+                            <a href="../ml_midterm_notes_v5.html" class="writing-card">
+                                <span class="writing-tag">Machine Learning</span>
+                                <h3>Neural Networks from Scratch</h3>
+                                <p>A deep midterm study reference for Perceptron, FFNN, backpropagation, activation functions, and CNN architecture.</p>
+                                <span class="writing-meta">IF3270 · Midterm Notes · Math-heavy</span>
+                            </a>
+
+                            <a href="../mobile_midterm_notes.html" class="writing-card">
+                                <span class="writing-tag">Mobile Development</span>
+                                <h3>Mobile App Development Midterm Notes</h3>
+                                <p>Comprehensive notes on mobile architecture, SDLC, cross-platform frameworks, Android fundamentals, layouts, and Kotlin null safety.</p>
+                                <span class="writing-meta">IF3210 · Midterm Notes · Practical focus</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="writing-topic" id="design-system">
+                        <div class="writing-header purple">
+                            <span class="writing-num">02 · Writing System</span>
+                            <h2 class="writing-title">Layout Principles</h2>
+                            <p class="writing-sub">This section mirrors the same writing structure used in the ML note pages.</p>
+                        </div>
+
+                        <div class="writing-note-list">
+                            <div class="writing-note">
+                                <h4>Typography Stack</h4>
+                                <p>Playfair Display for section headers, Source Serif for body text, and IBM Plex Mono for metadata, tags, and compact labels.</p>
+                            </div>
+                            <div class="writing-note">
+                                <h4>Palette System</h4>
+                                <p>Paper-based backgrounds with structured accent families: blue for references, green for tips, orange for warnings, and purple for conceptual blocks.</p>
+                            </div>
+                            <div class="writing-note">
+                                <h4>Information Rhythm</h4>
+                                <p>Cover header, sticky TOC, section-numbered blocks, and card-based references for easier scanning during revision sessions.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="writing-topic" id="upcoming">
+                        <div class="writing-header green">
+                            <span class="writing-num">03 · Upcoming Topics</span>
+                            <h2 class="writing-title">What I Plan to Add Next</h2>
+                            <p class="writing-sub">A short backlog for future writing entries in the same format.</p>
+                        </div>
+
+                        <div class="writing-card-grid">
+                            <div class="writing-card">
+                                <span class="writing-tag">Planned</span>
+                                <h3>Algorithm Analysis Notes</h3>
+                                <p>Complexity intuition, recurrence patterns, and common proof templates for algorithm courses.</p>
+                                <span class="writing-meta">Drafting phase</span>
+                            </div>
+                            <div class="writing-card">
+                                <span class="writing-tag">Planned</span>
+                                <h3>Software Engineering Patterns</h3>
+                                <p>Pragmatic summaries for lifecycle models, requirement practices, and architecture decision trade-offs.</p>
+                                <span class="writing-meta">Outline ready</span>
+                            </div>
+                        </div>
+
+                        <div class="writing-callout">
+                            <strong>Note</strong>
+                            New entries will follow this exact naming, palette, and layout style for consistency across all writing pages.
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </main>
+    </div>
+
+    <div id="mobile-nav-container"></div>
+
+    <script>
+        lucide.createIcons();
+
+        const sections = document.querySelectorAll('.writing-topic');
+        const tocLinks = document.querySelectorAll('.writings-toc a');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                tocLinks.forEach((link) => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.writings-toc a[href="#${entry.target.id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            });
+        }, { threshold: 0.35 });
+
+        sections.forEach((section) => observer.observe(section));
+    </script>
+</body>
+</html>
