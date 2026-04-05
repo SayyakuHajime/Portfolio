@@ -8,6 +8,23 @@ body {
     min-height: 100vh;
 }
 
+/* Original portfolio pages: wider canvas + tuned warm palette */
+body:not(.writings-page) {
+    --paper: #f6f1e7;
+    --paper-warm: #ece4d6;
+    --paper-cream: #e3dac9;
+    --rule: #c9bdab;
+    --rule-light: #d9cfbf;
+    --max-width: 1520px;
+    --content-width: 760px;
+    --sidebar-right-width: 370px;
+
+    background:
+        radial-gradient(circle at 90% -22%, var(--accent-o-bg) 0%, transparent 40%),
+        radial-gradient(circle at -8% 18%, var(--accent-b-bg) 0%, transparent 30%),
+        var(--paper);
+}
+
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -102,8 +119,8 @@ body {
 
 /* Responsive - Bootstrap Breakpoints */
 
-/* xxl: < 1400px - Hide right sidebar */
-@media (max-width: 1399px) {
+/* xl: < 1280px - Hide right sidebar */
+@media (max-width: 1279px) {
     .sidebar-right {
         display: none;
     }
