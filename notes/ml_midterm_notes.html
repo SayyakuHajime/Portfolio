@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Midterm Notes — Sayyaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Portfolio fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Notes fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      chtml: { scale: 1.05, matchFontHeight: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <!-- Portfolio styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Notes styles (scoped to .notes-scope) -->
+  <style>
+/* ── NOTES SCOPE: all original notes CSS prefixed ───────── */
+.notes-scope {
+  /* derive base note tones from global theme tokens */
+  --ink: var(--text-primary);
+  --ink-soft: var(--text-secondary);
+  --ink-faint: var(--text-muted);
+  --paper: var(--bg-base);
+  --paper-warm: var(--bg-surface);
+  --paper-cream: var(--bg-elevated);
+  --rule: var(--border-default);
+  --rule-light: var(--border-subtle);
+
+  --accent-p:#5c3fa0;
+  --accent-p-bg:rgba(92,63,160,0.10);
+  --accent-p-mid:rgba(92,63,160,0.38);
+  --accent-n:#1a6b4a;
+  --accent-n-bg:rgba(26,107,74,0.10);
+  --accent-n-mid:rgba(26,107,74,0.38);
+  --accent-b:#174e87;
+  --accent-b-bg:rgba(23,78,135,0.10);
+  --accent-b-mid:rgba(23,78,135,0.38);
+  --accent-r:#912b2b;
+  --accent-r-bg:rgba(145,43,43,0.10);
+  --accent-r-mid:rgba(145,43,43,0.38);
+  --accent-o:#7a4a10;
+  --accent-o-bg:rgba(122,74,16,0.12);
+  --accent-o-mid:rgba(122,74,16,0.40);
+  --tag-bg: var(--bg-elevated);
+}
+
+body.theme-dark .notes-scope {
+  --paper-warm: #171612;
+  --paper-cream: #1f1d19;
+  --rule: #3a352d;
+  --rule-light: #2f2b24;
+
+  --accent-p-bg:rgba(155,133,212,0.18);
+  --accent-p-mid:rgba(155,133,212,0.44);
+  --accent-n-bg:rgba(90,168,130,0.18);
+  --accent-n-mid:rgba(90,168,130,0.42);
+  --accent-b-bg:rgba(102,153,204,0.18);
+  --accent-b-mid:rgba(102,153,204,0.42);
+  --accent-r-bg:rgba(204,119,119,0.18);
+  --accent-r-mid:rgba(204,119,119,0.42);
+  --accent-o-bg:rgba(212,150,31,0.18);
+  --accent-o-mid:rgba(212,150,31,0.42);
+}
+
+/* Notes cover area */
+.notes-cover {
+  background: var(--paper-warm);
+  color: var(--ink);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--rule-light);
+}
+.notes-cover::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+}
+.notes-cover .cover-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+}
+.notes-cover h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.notes-cover .cover-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.notes-cover .cover-topics {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.notes-cover .topic-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 4px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  letter-spacing: .07em;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+.notes-cover .refs-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 20px;
+  letter-spacing: .04em;
+}
+
+/* Notes body content */
+.notes-scope * {
+  box-sizing: border-box;
+}
+.notes-scope {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  padding: 32px;
+}
+.notes-scope h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.notes-scope h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; margin: 36px 0 10px; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 7px; }
+.notes-scope h4 { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin: 20px 0 7px; }
+.notes-scope p { margin-bottom: 12px; color: var(--ink-soft); }
+.notes-scope a { color: var(--accent-b); }
+.notes-scope strong { color: var(--ink); }
+.notes-scope em { font-style: italic; }
+.notes-scope .part-header { margin: 48px 0 0; padding: 24px 28px; border-left: 4px solid var(--ink); background: var(--paper-warm); border-radius: 0 4px 4px 0; }
+.notes-scope .part-header.purple { border-color: var(--accent-p); background: var(--accent-p-bg); }
+.notes-scope .part-header.green { border-color: var(--accent-n); background: var(--accent-n-bg); }
+.notes-scope .part-header.blue { border-color: var(--accent-b); background: var(--accent-b-bg); }
+.notes-scope .part-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 5px; }
+.notes-scope .formula-block { margin: 18px 0; background: var(--paper-cream); border: 1px solid var(--rule); border-left: 3px solid var(--ink); border-radius: 0 4px 4px 0; padding: 16px 20px; overflow-x: auto; }
+.notes-scope .formula-block.purple { border-left-color: var(--accent-p); }
+.notes-scope .formula-block.green { border-left-color: var(--accent-n); }
+.notes-scope .formula-block.blue { border-left-color: var(--accent-b); }
+.notes-scope .formula-block.orange { border-left-color: var(--accent-o); }
+.notes-scope .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; }
+.notes-scope .formula-desc { font-size: 12px; color: var(--ink-faint); margin-top: 7px; font-style: italic; }
+.notes-scope .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+.notes-scope .term-card { border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); padding: 12px 14px; }
+.notes-scope .term-name { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink); margin-bottom: 4px; letter-spacing: .04em; }
+.notes-scope .term-def { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.notes-scope .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; }
+.notes-scope .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
+.notes-scope .callout.warn { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
+.notes-scope .callout.note { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
+.notes-scope .callout.success { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
+.notes-scope table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.notes-scope th { background: var(--paper-warm); font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px; border: 1px solid var(--rule); text-align: left; color: var(--ink-faint); }
+.notes-scope td { padding: 10px 14px; border: 1px solid var(--rule-light); color: var(--ink-soft); vertical-align: top; }
+.notes-scope tr:nth-child(even) td { background: var(--paper-warm); }
+.notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.notes-scope pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 18px; overflow-x: auto; line-height: 1.6; }
+.notes-scope .algo-box { margin: 18px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.notes-scope .algo-header { background: var(--paper-warm); padding: 10px 18px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); border-bottom: 1px solid var(--rule); }
+.notes-scope .algo-body { padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.9; background: var(--paper); color: var(--ink-soft); }
+.notes-scope .algo-body span.kw { color: var(--accent-p); font-weight: 500; }
+.notes-scope .algo-body span.label { color: var(--ink-faint); font-size: 10px; letter-spacing: .06em; }
+.notes-scope .algo-body span.math { color: var(--ink); }
+.notes-scope .compare-box { margin: 18px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.notes-scope .compare-box .compare-col { padding: 16px 18px; }
+.notes-scope .compare-box .compare-col:first-child { border-right: 1px solid var(--rule); }
+.notes-scope .compare-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+.notes-scope .compare-col.purple { background: var(--accent-p-bg); }
+.notes-scope .compare-col.purple .compare-label { color: var(--accent-p); }
+.notes-scope .compare-col.green { background: var(--accent-n-bg); }
+.notes-scope .compare-col.green .compare-label { color: var(--accent-n); }
+.notes-scope .compare-col.blue { background: var(--accent-b-bg); }
+.notes-scope .compare-col.blue .compare-label { color: var(--accent-b); }
+.notes-scope ul, .notes-scope ol { padding-left: 20px; margin-bottom: 12px; color: var(--ink-soft); }
+.notes-scope li { margin-bottom: 6px; font-size: 14px; line-height: 1.7; }
+.notes-scope .diagram-container { margin: 18px 0; padding: 20px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 4px; text-align: center; overflow-x: auto; }
+.notes-scope svg text { font-family: 'IBM Plex Mono', monospace !important; }
+.notes-scope .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: var(--tag-bg); padding: 2px 8px; border-radius: 2px; color: var(--ink-faint); letter-spacing: .06em; }
+.notes-scope .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; margin-top: 20px; }
+.notes-scope .gterm { border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; background: var(--paper); }
+.notes-scope .gterm-name { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.notes-scope .gterm-def { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.notes-scope .gterm-tags { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+table { overflow-x: auto; display: block; }
+@media(max-width: 820px) {
+  .notes-scope .formula-block, .notes-scope .algo-box, .notes-scope .compare-box { overflow-x: auto; }
+  .notes-scope .compare-box { grid-template-columns: 1fr; }
+}
+
+/* ── RIGHT RAIL TOC (dark style) ─────────────────────────── */
+.notes-toc-list {
+  padding: 0 var(--sp-sm, 8px) var(--sp-md, 16px);
+}
+.notes-toc-item {
+  display: block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.notes-toc-item:hover, .notes-toc-item.active {
+  color: var(--accent-gold);
+  background: var(--accent-glow);
+}
+.notes-toc-item.sub {
+  padding-left: 22px;
+  font-size: 0.67rem;
+  color: var(--text-muted);
+}
+.notes-toc-item.sub:hover, .notes-toc-item.sub.active {
+  color: var(--accent-gold);
+  background: var(--accent-glow);
+}
+.progress-bar-wrap {
+  height: 2px;
+  background: var(--border-subtle);
+  margin: 0 12px var(--sp-md, 16px);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-gold);
+  width: 0%;
+  transition: width 0.1s;
+  border-radius: 2px;
+}
+
+/* ── CURSOR EFFECTS (from original notes) ───────────────── */
+body.cursor-mode-on, body.cursor-mode-on * { cursor: none !important; }
+.cursor-trail-canvas { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9998; opacity: 0; transition: opacity .15s; }
+.cursor-pointer { position: fixed; left: 0; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #ff1a1a; pointer-events: none; z-index: 9999; opacity: 0; transform: translate(-50%, -50%); box-shadow: 0 0 4px rgba(255,30,30,.95), 0 0 10px rgba(255,20,20,.65); transition: opacity .15s; }
+.cursor-pointer::after { content: ''; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; border: 1px solid rgba(255,70,70,.9); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 6px rgba(255,35,35,.5); }
+body.cursor-mode-on .cursor-trail-canvas, body.cursor-mode-on .cursor-pointer { opacity: 1; }
+
+/* Cursor toggle btn in right rail */
+.cursor-toggle-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  margin: 0 12px;
+  display: block;
+  width: calc(100% - 24px);
+  text-align: center;
+}
+.cursor-toggle-btn:hover { border-color: rgba(192,82,74,.4); color: var(--danger); }
+.cursor-toggle-btn.is-on { border-color: rgba(192,82,74,.5); color: var(--danger); background: rgba(192,82,74,.10); text-shadow: 0 0 8px rgba(255,40,40,.35); }
+</style>
+</head>
+<body>
+
+<!-- Cursor effects (from original notes) -->
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<div class="site-wrapper">
+
+  <!-- ── LEFT SIDEBAR (portfolio nav) ── -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="../pages/writings.html" class="nav-item" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="../pages/projects.html" class="nav-item" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="../pages/notes.html" class="nav-item" data-page="notes">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <span class="nav-label">Notes</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT (notes) ── -->
+  <main class="main-content" style="max-width: none; flex: 1; min-width: 0;">
+
+    <!-- Sticky page header -->
+    <div class="page-header">
+      <span class="page-title">ML Midterm Notes</span>
+      <span class="header-meta">IF3270 &middot; Study Notes</span>
+    </div>
+
+    <!-- Notes cover (preserves original dark cover) -->
+    <div class="notes-cover">
+      <div class="cover-label">IF3270 Pembelajaran Mesin &middot; Midterm Study Notes</div>
+      <h1>Neural Networks<br>from Scratch</h1>
+      <div class="cover-sub">Perceptron &middot; Feedforward Neural Network &middot; Convolutional Neural Network</div>
+      <div class="cover-topics">
+        <span class="topic-chip">Perceptron</span>
+        <span class="topic-chip">Delta Rule / Adaline</span>
+        <span class="topic-chip">Gradient Descent</span>
+        <span class="topic-chip">FFNN / MLP</span>
+        <span class="topic-chip">Backpropagation</span>
+        <span class="topic-chip">Activation Functions</span>
+        <span class="topic-chip">CNN</span>
+        <span class="topic-chip">Convolution</span>
+        <span class="topic-chip">Pooling</span>
+        <span class="topic-chip">LeNet-5</span>
+      </div>
+      <div class="refs-note">References: Goodfellow et al. (2016) Deep Learning &middot; LeCun et al. (1989, 1998) &middot; Mitchell (1997) &middot; Raschka et al. (2022)</div>
+    </div>
+
+    <!-- Notes content (scoped) -->
+    <div class="notes-scope">
+      
+
+        <!-- ══════════════ PART 1 — PERCEPTRON ══════════════ -->
+        <div id="perceptron" class="part-header purple">
+          <div class="part-num">01 &middot; Perceptron</div>
+          <h2>The Perceptron</h2>
+          <p>The foundation of all neural networks &mdash; a single artificial
+            neuron that learns to classify linearly separable data. (Rosenblatt
+            1958; Mitchell 1997, Ch. 4; Raschka 2022, Ch. 11)</p>
+        </div>
+
+        <h3>1.1 Biological Motivation</h3>
+        <p>McCulloch and Pitts (1943) described a neuron as a simple logic gate
+          with binary outputs: multiple signals arrive at the
+          <strong>dendrites</strong>, are integrated in the <strong>cell
+            body</strong>, and if the accumulated signal exceeds a threshold, an
+          output signal is generated along the <strong>axon</strong>.</p>
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">Dendrites &rarr;
+              x</div><div class="term-def">Receive input signals. Analogous to
+              input features \(x_1,x_2,\ldots,x_m\).</div></div>
+          <div class="term-card"><div class="term-name">Synapse strength &rarr;
+              w</div><div class="term-def">Connection strength. Analogous to
+              weights \(w_i\) &mdash; the importance / contribution of each
+              input.</div></div>
+          <div class="term-card"><div class="term-name">Cell body &rarr;
+              &Sigma;</div><div class="term-def">Integrates all incoming
+              signals. Analogous to the weighted sum
+              \(\mathbf{w}^T\mathbf{x}\).</div></div>
+          <div class="term-card"><div class="term-name">Axon firing &rarr;
+              f(net)</div><div class="term-def">Fires (outputs signal) only when
+              the threshold is exceeded. Analogous to the activation
+              function.</div></div>
+        </div>
+
+        <h3>1.2 Formal Definition of a Neuron</h3>
+        <p>Given real-valued input \(\mathbf{x}=(x_1,\ldots,x_m)\), weight
+          vector \(\mathbf{w}=(w_1,\ldots,w_m)\), and bias \(w_0\) (also written
+          \(b\) or \(\theta\)). The <strong>hypothesis space</strong> is \(H =
+          \{\mathbf{w}\mid\mathbf{w}\in\mathbb{R}^{d+1}\}\).</p>
+
+        <div class="formula-block purple">
+          <div class="formula-label">Net Input (Linear Combination)</div>
+          \[ z = w_0 + w_1 x_1 + w_2 x_2 + \cdots + w_m x_m =
+          \mathbf{w}^T\mathbf{x} \]
+          <div class="formula-desc">\(w_0\) is the bias/threshold weight; the
+            bias input \(x_0 = +1\) always.</div>
+        </div>
+
+        <div class="formula-block purple">
+          <div class="formula-label">Sign Function (output &plusmn;1) &mdash;
+            Perceptron Training Rule</div>
+          \[ \hat{y} = \sigma(z) = \begin{cases} +1 & z > 0 \\ -1 &
+          \text{otherwise} \end{cases} \]
+        </div>
+
+        <div class="formula-block purple">
+          <div class="formula-label">Step Function (output 0/1) &mdash;
+            Alternative Notation</div>
+          \[ \hat{y} = \sigma(z) = \begin{cases} 1 & z \geq 0 \\ 0 &
+          \text{otherwise} \end{cases} \]
+          <div class="formula-desc">Both produce a <em>discrete-valued</em>
+            output. The perceptron represents a <strong>hyperplane decision
+              surface</strong> in \(\mathbb{R}^n\): a line in \(\mathbb{R}^2\),
+            a plane in \(\mathbb{R}^3\), and an \((n-1)\)-dimensional subspace
+            in \(\mathbb{R}^n\).</div>
+        </div>
+
+        <h3>1.3 m-of-n Functions</h3>
+        <p>A perceptron easily represents <strong>m-of-n functions</strong>:
+          functions where at least \(m\) of the \(n\) inputs must be true.
+          Strategy: set all input weights to the same value (e.g., 0.5) then set
+          the threshold \(w_0\).</p>
+
+        <div class="formula-block purple">
+          <div class="formula-label">Perceptron Representations</div>
+          \[ \text{AND } (m=n): \quad \hat{y} = \text{sign}(x_1 + x_2 - 1) \]
+          \[ \text{OR } (m=1): \quad \hat{y} = \text{sign}(2x_1 + 2x_2 - 1) \]
+          <div class="formula-desc">Example: AND with \(w_0=-0.8,\;
+            w_1=w_2=0.5\). Compute \(\Sigma = -0.8 + 0.5x_1 + 0.5x_2\) and apply
+            sign. Only when \(x_1=x_2=1\) gives \(\Sigma = 0.2 > 0 \Rightarrow
+            +1\).</div>
+        </div>
+
+        <div class="callout warn"><strong>The XOR Problem (Minsky &amp; Papert,
+            1969):</strong> A single perceptron can only solve <em>linearly
+            separable</em> problems. XOR cannot be separated by any hyperplane
+          &mdash; no single perceptron can learn it. This drove the development
+          of multi-layer networks.</div>
+
+        <h3>1.4 Perceptron Training (Learning) Rule</h3>
+        <p>Uses the <strong>thresholded</strong> output for the update signal.
+          Proven to converge if training data is linearly separable and learning
+          rate \(\eta\) is sufficiently small.</p>
+
+        <div class="algo-box">
+          <div class="algo-header">Perceptron Training Rule &mdash; Mitchell
+            (1997)</div>
+          <div class="algo-step"><span
+              class="step-num">Input</span><span>Training data \(D =
+              \{\langle\mathbf{x}_i, y_i\rangle\}\),&ensp; learning rate
+              \(\eta\),&ensp; activation: sign or step</span></div>
+          <div class="algo-step"><span class="step-num">Init</span><span>Set
+              each \(w_k \leftarrow 0\) or small random value. Set \(E
+              \leftarrow 0\).</span></div>
+          <div class="algo-step"><span
+              class="step-num">Repeat</span><span><strong>For each</strong>
+              example \(\langle\mathbf{x}_i, y_i\rangle\):</span></div>
+          <div class="algo-step"><span class="step-num">3a.</span><span>Compute
+              prediction: \(o_i \leftarrow
+              \text{sign}(\mathbf{w}^T\mathbf{x}_i)\)</span></div>
+          <div class="algo-step"><span class="step-num">3b.</span><span>If \(o_i
+              \neq y_i\): &ensp;\(w_j \leftarrow w_j + \Delta w_j\)
+              &ensp;where&ensp; \(\Delta w_j = \eta(y_i -
+              o_i)x_{ij}\)</span></div>
+          <div class="algo-step"><span class="step-num">3c.</span><span>Update
+              error: \(E \leftarrow E + (y_i - o_i)\)</span></div>
+          <div class="algo-step"><span class="step-num">Until</span><span>All
+              examples correctly classified (E=0), or max epochs reached. Return
+              \(\mathbf{w}\).</span></div>
+        </div>
+
+        <div class="formula-block purple">
+          <div class="formula-label">Perceptron Weight Update Rule</div>
+          \[ w_j \leftarrow w_j + \Delta w_j, \qquad \Delta w_j = \eta\,(y_i -
+          o_i)\,x_{ij} \]
+          <div class="formula-desc">\(\eta\) = learning rate &middot; \(y_i\) =
+            true label (&plusmn;1) &middot; \(o_i\) = predicted label
+            (thresholded) &middot; \(x_{ij}\) = \(j\)-th feature of example
+            \(i\). If correct prediction: \(y_i = o_i \Rightarrow \Delta w_j =
+            0\) (no update).</div>
+        </div>
+
+        <div class="callout insight"><strong>Convergence Theorem:</strong> The
+          Perceptron Training Rule is guaranteed to converge in a finite number
+          of steps if the training data is linearly separable and \(\eta\) is
+          sufficiently small. It does NOT converge if data is not linearly
+          separable.</div>
+
+        <h3>1.5 Batch Gradient Descent &mdash; The Delta Rule</h3>
+        <p>When data is NOT linearly separable, the Perceptron rule fails. The
+          <strong>Delta Rule</strong> (= Widrow-Hoff rule = LMS rule = Adaline
+          rule) uses the <em>unthresholded linear output</em> and minimizes SSE
+          &mdash; always converges to best-fit approximation.</p>
+
+        <div class="formula-block orange">
+          <div class="formula-label">Error Function &mdash; Sum of Squared
+            Errors (SSE)</div>
+          \[ E(\mathbf{w}) = \frac{1}{2}\sum_{d \in D}(y_d - o_d)^2 \]
+          <div class="formula-desc">\(o_d = \mathbf{w}^T\mathbf{x}_d\) is the
+            <em>linear (unthresholded)</em> output. The \(\frac{1}{2}\) factor
+            simplifies the derivative.</div>
+        </div>
+
+        <div class="formula-block orange">
+          <div class="formula-label">Gradient Vector (Partial Derivatives)</div>
+          \[ \nabla E(\mathbf{w}) = \left[\frac{\partial E}{\partial
+          w_0},\;\frac{\partial E}{\partial w_1},\;\ldots,\;\frac{\partial
+          E}{\partial w_d}\right] \]
+          \[ \frac{\partial E}{\partial w_k} = \frac{\partial}{\partial
+          w_k}\frac{1}{2}\sum_{d\in D}(y_d - o_d)^2 = \sum_{d\in D}(y_d -
+          o_d)(-x_{dk}) \]
+          <div class="formula-desc">The gradient gives the magnitude and
+            direction of steepest ascent in the error landscape. We subtract it
+            to descend.</div>
+        </div>
+
+        <div class="formula-block orange">
+          <div class="formula-label">Training Rule: Batch Gradient Descent</div>
+          \[ \mathbf{w} \leftarrow \mathbf{w} + \Delta\mathbf{w}, \qquad
+          \Delta\mathbf{w} = -\eta\,\nabla E(\mathbf{w}) \]
+          \[ \Delta w_k = -\eta\,\frac{\partial E}{\partial w_k} = \eta\sum_{d
+          \in D}(y_d - o_d)(x_{dk}) \]
+          <div class="formula-desc">Weights updated <em>once per epoch</em>
+            after accumulating \(\Delta w_k\) over all \(D\). \(\eta\) =
+            gradient descent step size.</div>
+        </div>
+
+        <h3>1.6 Stochastic &amp; Mini-Batch Gradient Descent</h3>
+        <p>Stochastic GD (SGD) updates weights after each individual example
+          &mdash; an incremental update.</p>
+
+        <div class="compare-row">
+          <div class="compare-box">
+            <h5>Batch GD</h5>
+            \[ \Delta w_k = \eta\sum_{d \in D}(y_d - o_d)(x_{dk}) \]
+            <p style="font-size:13px;margin-top:8px;color:var(--ink-faint)">One
+              weight update per epoch. Stable, but slow for large datasets. Can
+              get stuck in local minima.</p>
+          </div>
+          <div class="compare-box">
+            <h5>Stochastic (Incremental) GD</h5>
+            \[ \Delta w_k = \eta\,(y_d - o_d)(x_{dk}) \]
+            <p style="font-size:13px;margin-top:8px;color:var(--ink-faint)">One
+              update per example. Faster, noisier gradient &mdash; can escape
+              local minima. Both Batch and SGD use the linear function and give
+              best-fit approximation.</p>
+          </div>
+        </div>
+
+        <div class="term-grid" style="margin-top:16px">
+          <div class="term-card"><div class="term-name">Epoch</div><div
+              class="term-def">One full pass through all training data (or all
+              mini-batches). Features and labels processed once.</div></div>
+          <div class="term-card"><div class="term-name">Batch Size</div><div
+              class="term-def">Number of samples per mini-batch split. If = 1
+              &rarr; true SGD. If = |D| &rarr; Batch GD. If 1 &lt; b &lt; |D|
+              &rarr; Mini-batch SGD.</div></div>
+          <div class="term-card"><div class="term-name">Step</div><div
+              class="term-def">Processing one mini-batch, ending with one weight
+              update. Steps per epoch = |D| / batch_size.</div></div>
+        </div>
+
+        <div class="callout note"><strong>Key Distinction:</strong> Perceptron
+          Training Rule uses <em>thresholded</em> output (sign/step) for updates
+          &mdash; only converges if linearly separable. Delta Rule / Batch GD
+          uses <em>unthresholded linear</em> output &mdash; converges to
+          best-fit regardless of separability.</div>
+
+        <!-- ══════════════ PART 2 — FFNN ══════════════ -->
+        <div id="ffnn" class="part-header green">
+          <div class="part-num">02 &middot; Feedforward Neural Network</div>
+          <h2>Feedforward Neural Network (FFNN)</h2>
+          <p>Also called Multi-Layer Perceptron (MLP) &mdash; stacks layers of
+            neurons with non-linear activations to learn complex mappings.
+            Connections flow only forward: a directed acyclic graph. (Raschka
+            2022 Ch.11; Goodfellow et al. 2016)</p>
+        </div>
+
+        <h3>2.1 From Adaline to FFNN</h3>
+        <p>The <strong>Adaline</strong> (ADAptive LInear NEuron) is a
+          single-layer neural network and the direct bridge from the Perceptron
+          to FFNN. It uses the <em>identity</em> activation for weight updates,
+          and applies a threshold only at inference time.</p>
+
+        <div class="formula-block green">
+          <div class="formula-label">Adaline = Delta Rule = LMS = Widrow-Hoff
+            (Raschka 2022)</div>
+          \[ w = w + \Delta w, \quad b = b + \Delta b \qquad (b = w_0) \]
+          \[ \Delta w_j = -\eta\,\frac{\partial E}{\partial w_j}, \quad \Delta b
+          = -\eta\,\frac{\partial E}{\partial b} \]
+          \[ E = \frac{1}{2}(y_i - o_i)^2, \qquad \hat{y} = o = f\!\left(\sum_j
+          w_j x_j + b\right) \]
+          <div class="formula-desc">The activation function \(f\) here is the
+            identity (linear). A threshold is applied only at inference to
+            produce the class label 0 or 1. Multiple names, same
+            algorithm.</div>
+        </div>
+
+        <h3>2.2 FFNN Architecture</h3>
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">Input Layer
+              (l=0)</div><div class="term-def">Receives feature vector
+              \(\mathbf{x}\). No computation &mdash; values passed forward.
+              Width = number of features. Convention: \(x_0 = +1\)
+              (bias).</div></div>
+          <div class="term-card"><div class="term-name">Hidden Layers</div><div
+              class="term-def">Learn internal representations. One or more
+              layers. Written \(H_1, H_2, \ldots, H_h\) in compact style.
+              Non-linear activation required.</div></div>
+          <div class="term-card"><div class="term-name">Output Layer</div><div
+              class="term-def">Produces \(\hat{\mathbf{y}}\). Width = number of
+              classes (classification) or 1 (regression). Appropriate activation
+              (sigmoid/softmax/linear).</div></div>
+          <div class="term-card"><div class="term-name">Depth</div><div
+              class="term-def">Number of layers (hidden + output). Deeper &rarr;
+              learns more abstract, hierarchical features.</div></div>
+          <div class="term-card"><div class="term-name">Width</div><div
+              class="term-def">Neurons per layer. Wider &rarr; more capacity but
+              more parameters. Notated as \(n_{h_1}, n_{h_2},
+              \ldots\)</div></div>
+          <div class="term-card"><div class="term-name">Fully
+              Connected</div><div class="term-def">Every neuron in layer \(l\)
+              connects to every neuron in layer \(l+1\) with a unique weight
+              \(w_{ji}\).</div></div>
+        </div>
+
+        <h3>2.3 Forward Propagation</h3>
+        <p>Information flows from input through each layer to produce output
+          \(\hat{\mathbf{y}}\). Two equivalent notations are used in class:</p>
+
+        <div class="formula-block green">
+          <div class="formula-label">Goodfellow Notation &mdash; General Forward
+            Pass Algorithm</div>
+          \[ \mathbf{h}^{(0)} = \mathbf{x} \]
+          \[ \text{for } k = 1, \ldots, l:\quad \mathbf{a}^{(k)} =
+          \mathbf{b}^{(k)} + W^{(k)}\mathbf{h}^{(k-1)},\quad \mathbf{h}^{(k)} =
+          f\!\left(\mathbf{a}^{(k)}\right) \]
+          \[ \hat{\mathbf{y}} = \mathbf{h}^{(l)}, \qquad J =
+          L(\hat{\mathbf{y}},\,\mathbf{y}) + \lambda\,\Omega(\theta) \]
+          <div class="formula-desc">\(\mathbf{a}^{(k)}\) = pre-activation at
+            layer \(k\) &nbsp;&middot;&nbsp; \(\mathbf{h}^{(k)}\) =
+            post-activation &nbsp;&middot;&nbsp; \(W^{(k)}\) = weight matrix of
+            layer \(k\) &nbsp;&middot;&nbsp; \(\mathbf{b}^{(k)}\) = bias vector
+            &nbsp;&middot;&nbsp; \(J\) = total cost &nbsp;&middot;&nbsp; \(L\) =
+            loss function &nbsp;&middot;&nbsp; \(\lambda\Omega(\theta)\) =
+            regularization term</div>
+        </div>
+
+        <div class="formula-block green">
+          <div class="formula-label">Compact Notation (W<sub>xh</sub> /
+            W<sub>hy</sub> style &mdash; used in lecture slides)</div>
+          \[ f(\mathbf{x};\,W_{xh},\mathbf{c},\,W_{hy},\mathbf{b}) =
+          f_2\!\left(W_{hy}^T\cdot
+          f_1\!\left(W_{xh}^T\cdot\mathbf{x}+\mathbf{c}\right)+\mathbf{b}\right)
+          \]
+          \[ \text{If biases absorbed into weight matrices:}\quad
+          f(\mathbf{x};\,W_{xh},W_{hy}) = f_2\!\left(W_{hy}^T\cdot
+          f_1\!\left(W_{xh}^T\cdot\mathbf{x}\right)\right) \]
+          <div class="formula-desc">\(W_{xh}\) = weights from input to hidden
+            &nbsp;&middot;&nbsp; \(\mathbf{c}\) = hidden bias
+            &nbsp;&middot;&nbsp; \(W_{hy}\) = weights from hidden to output
+            &nbsp;&middot;&nbsp; \(\mathbf{b}\) = output bias
+            &nbsp;&middot;&nbsp; \(f_1, f_2\) = activation functions at each
+            layer</div>
+        </div>
+
+        <div class="formula-block green">
+          <div class="formula-label">Mini-Batch X Notation (for batched
+            training)</div>
+          \[ f(\mathbf{X};\,W_{xh},\mathbf{c},\,W_{hy},\mathbf{b}) =
+          f_2\!\left(f_1\!\left(\mathbf{X}W_{xh}+\mathbf{c}\right)\cdot
+          W_{hy}+\mathbf{b}\right) \]
+          <div class="formula-desc">\(\mathbf{X}\) is the mini-batch matrix of
+            shape \([n_{\text{samples}} \times n_{\text{features}}]\). When
+            using batches, the input goes on the left: \(\mathbf{X}W_{xh}\) vs
+            single input: \(W_{xh}^T\mathbf{x}\).</div>
+        </div>
+
+        <h3>2.4 Number of Parameters</h3>
+        <div class="formula-block blue">
+          <div class="formula-label">Parameter Count &mdash; Fully Connected
+            Layer</div>
+          \[ \text{Params for layer } k = (n_{k-1}+1)\times n_k \]
+          \[ \text{Total} = \sum_{k=1}^{L}(n_{k-1}+1)\times n_k \]
+          <div class="formula-desc">\(n_{k-1}\) = neurons in previous layer
+            &nbsp;&middot;&nbsp; \(n_k\) = neurons in current layer
+            &nbsp;&middot;&nbsp; \(+1\) accounts for the bias weight per
+            neuron.<br>Example (Raschka): input=8, h1=12, h2=8, output=1 &rarr;
+            \((8+1)\times12 + (12+1)\times8 + (8+1)\times1 = 108+104+9 =
+            \mathbf{221}\) total params.</div>
+        </div>
+
+        <h3>2.5 Worked Example: XOR with Sigmoid</h3>
+        <div class="formula-block blue">
+          <div class="formula-label">XOR Network (Sigmoid Activation &mdash;
+            Non-Linear Solution)</div>
+          \[ h_1 = \sigma(-10 + 20x_1 + 20x_2), \quad h_2 = \sigma(30 - 20x_1 -
+          20x_2) \]
+          \[ y = \sigma(-30 + 20h_1 + 20h_2), \qquad \text{where}\quad \sigma(z)
+          = \frac{1}{1+e^{-z}} \]
+          <div class="formula-desc">Input \((0,0)\): \(h_1\approx 0, h_2\approx
+            1 \Rightarrow y\approx 0\). Input \((0,1)\): \(h_1\approx 1,
+            h_2\approx 1 \Rightarrow y\approx 1\). Input \((1,1)\): \(h_1\approx
+            1, h_2\approx 0 \Rightarrow y\approx 0\). Correctly solves
+            XOR.</div>
+        </div>
+
+        <!-- ══════════════ PART 3 — ACTIVATIONS ══════════════ -->
+        <div id="activations" class="part-header purple">
+          <div class="part-num">03 &middot; Activation Functions</div>
+          <h2>Activation Functions &amp; Loss Functions</h2>
+          <p>Non-linear functions applied element-wise after the weighted sum.
+            Without non-linearity, stacking any number of layers collapses to a
+            single linear transformation.</p>
+        </div>
+
+        <h3>3.1 Why Non-linearity?</h3>
+        <div class="callout note"><strong>Universal Approximation
+            Theorem:</strong> A single hidden layer with sufficient neurons can
+          approximate any continuous function to arbitrary accuracy. However,
+          <em>deep</em> networks require exponentially fewer neurons than
+          shallow networks for the same approximation quality, generalize
+          better, and empirically outperform shallow networks. Test accuracy
+          improves as depth increases from 3 to 11 layers; CNNs consistently
+          outperform fully-connected nets with the same parameter count.</div>
+
+        <h3>3.2 Common Activation Functions</h3>
+        <div class="act-gallery">
+          <div class="act-card">
+            <div class="act-name">Step / Sign</div>
+            \(\displaystyle
+            f(z)=\begin{cases}1\;(or+1)&z\ge0\\0\;(or-1)&\text{else}\end{cases}\)
+            <div class="act-range">Range: {0,1} or {&plusmn;1}</div>
+            <div class="act-note">Perceptron. Non-differentiable &rarr; cannot
+              use in backprop.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name">Sigmoid (&sigma;)</div>
+            \(\displaystyle\sigma(z)=\frac{1}{1+e^{-z}}\)
+            <div class="act-range">Range: (0, 1)</div>
+            <div class="act-note">Output as probability. Vanishing gradient for
+              large |z|. Used in Adaline/output layer for binary
+              classification.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name">Tanh</div>
+            \(\displaystyle\tanh(z)=\frac{e^z-e^{-z}}{e^z+e^{-z}}\)
+            <div class="act-range">Range: (&minus;1, 1)</div>
+            <div class="act-note">Zero-centered. Stronger gradients than
+              sigmoid, but still vanishes at extremes. Used in LeNet-5.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name">ReLU</div>
+            \(\displaystyle f(z)=\max(0,z)\)
+            <div class="act-range">Range: [0, &infin;)</div>
+            <div class="act-note">Most popular for hidden layers. No vanishing
+              gradient for \(z>0\). Suffers from dying ReLU (\(z\le0\) &rarr;
+              always 0 gradient).</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name">Leaky ReLU</div>
+            \(\displaystyle f(z)=\max(\alpha z,\,z),\;\alpha\ll1\)
+            <div class="act-range">Range: (&minus;&infin;, &infin;)</div>
+            <div class="act-note">Fixes dying ReLU. Small slope
+              \(\alpha\approx0.01\) for negative inputs. Gradient always
+              non-zero.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name">Softmax</div>
+            \(\displaystyle\sigma(\mathbf{z})_k=\frac{e^{z_k}}{\sum_j e^{z_j}}\)
+            <div class="act-range">Range: (0,1), sum=1</div>
+            <div class="act-note">Output layer for multi-class. Converts logits
+              to probability distribution over C classes.</div>
+          </div>
+        </div>
+
+        <h4>Key Derivatives (required for Backpropagation)</h4>
+        <div class="formula-block purple">
+          <div class="formula-label">Activation Derivatives</div>
+          \[ \sigma'(z) = \sigma(z)\bigl(1-\sigma(z)\bigr) \]
+          \[ \tanh'(z) = 1 - \tanh^2(z) \]
+          \[ \text{ReLU}'(z) = \begin{cases}1 & z>0\\0 & z\le0\end{cases} \]
+          <div class="formula-desc">These derivatives appear in every backprop
+            computation. Sigmoid and tanh derivatives become very small near
+            saturation (&rarr; vanishing gradient). ReLU derivative is either 0
+            or 1 &mdash; no vanishing gradient for positive inputs.</div>
+        </div>
+
+        <h3>3.3 Loss Functions</h3>
+        <div class="formula-block orange">
+          <div class="formula-label">Mean Squared Error (MSE) &mdash;
+            Regression</div>
+          \[ L(y,\hat{y}) = \frac{1}{n}\sum_{i=1}^n(y_i - \hat{y}_i)^2 \]
+          <div class="formula-desc">Use with linear output activation. Penalizes
+            larger errors quadratically.</div>
+        </div>
+        <div class="formula-block orange">
+          <div class="formula-label">Binary Cross-Entropy &mdash; Binary
+            Classification</div>
+          \[ L(y,\hat{y}) = -\frac{1}{n}\sum_i\Bigl[y_i\log\hat{y}_i +
+          (1-y_i)\log(1-\hat{y}_i)\Bigr] \]
+          <div class="formula-desc">Use with sigmoid output. Measures divergence
+            between true and predicted distributions.</div>
+        </div>
+        <div class="formula-block orange">
+          <div class="formula-label">Categorical Cross-Entropy &mdash;
+            Multi-Class Classification</div>
+          \[ L(y,\hat{y}) = -\sum_{c=1}^C y_c\log\hat{y}_c \]
+          <div class="formula-desc">Use with softmax output for C classes.
+            \(y_c=1\) for the true class, 0 otherwise (one-hot encoding).</div>
+        </div>
+
+        <!-- ══════════════ PART 4 — BACKPROPAGATION ══════════════ -->
+        <div id="backprop" class="part-header blue">
+          <div class="part-num">04 &middot; Backpropagation</div>
+          <h2>Backpropagation</h2>
+          <p>Algorithm to compute gradients of the loss w.r.t. all weights by
+            applying the chain rule layer-by-layer in reverse. Goal: set weights
+            to minimize error \(E\). (Mitchell 1997; Goodfellow et al. 2016)</p>
+        </div>
+
+        <h3>4.1 Three-Step Learning Procedure</h3>
+        <div class="algo-box">
+          <div class="algo-header">Learning Procedure</div>
+          <div class="algo-step"><span
+              class="step-num">1.</span><span><strong>Forward
+                Propagation:</strong> Compute output \(\hat{y}\) for input
+              \(\mathbf{x}\). Cache all pre-activations \(\mathbf{a}^{(k)}\) and
+              post-activations \(\mathbf{h}^{(k)}\).</span></div>
+          <div class="algo-step"><span
+              class="step-num">2.</span><span><strong>Backward
+                Propagation:</strong> Compute error term \(\delta\) for each
+              unit. The target for hidden units is NOT directly available
+              &mdash; it must be inferred from output deltas via the chain
+              rule.</span></div>
+          <div class="algo-step"><span
+              class="step-num">3.</span><span><strong>Weight Update:</strong>
+              Update every weight using the computed gradients and learning rate
+              \(\eta\).</span></div>
+        </div>
+
+        <h3>4.2 Gradient for Output Unit Weights (with Sigmoid)</h3>
+        <p>Using the chain rule to compute \(\partial E_d / \partial w_{ji}\)
+          for a weight connecting unit \(i\) to output unit \(j\):</p>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Chain Rule Decomposition &mdash; Output
+            Layer</div>
+          \[ \frac{\partial E_d}{\partial w_{ji}} = \frac{\partial E_d}{\partial
+          o_j}\cdot\frac{\partial
+          o_j}{\partial\,\text{net}_j}\cdot\frac{\partial\,\text{net}_j}{\partial
+          w_{ji}} = -(t_j-o_j)\,o_j(1-o_j)\,x_{ji} \]
+          <div class="formula-desc">
+            \(\dfrac{\partial E_d}{\partial o_j} = -(t_j-o_j)\) (from SSE:
+            \(E_d=\tfrac{1}{2}\sum_k(t_k-o_k)^2\)) &nbsp;&middot;&nbsp;
+            \(\dfrac{\partial o_j}{\partial\,\text{net}_j} = o_j(1-o_j)\)
+            (sigmoid derivative) &nbsp;&middot;&nbsp;
+            \(\dfrac{\partial\,\text{net}_j}{\partial w_{ji}} = x_{ji}\)
+          </div>
+        </div>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Output Unit Error Signal (&delta;)</div>
+          \[ \delta_j = o_j(1-o_j)(t_j - o_j) \]
+          \[ \therefore\quad \frac{\partial E_d}{\partial w_{ji}} =
+          -\delta_j\,x_{ji} \]
+          <div class="formula-desc">\(\delta_j\) is the error signal at output
+            unit \(j\). It captures how wrong the output is, scaled by how
+            sensitive the activation is at that operating point.</div>
+        </div>
+
+        <h3>4.3 Gradient for Hidden Unit Weights</h3>
+        <p>For hidden unit \(h\), no direct target is available. We
+          back-propagate error from all output units \(k\) that receive from
+          \(h\):</p>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Hidden Unit Error Signal
+            (&delta;<sub>h</sub>)</div>
+          \[ \delta_h = o_h(1-o_h)\sum_{k\in\,\text{outputs}(h)}
+          w_{kh}\,\delta_k \]
+          \[ \therefore\quad \frac{\partial E_d}{\partial w_{ji}} =
+          -\delta_h\,x_{ji} \]
+          <div class="formula-desc">\(\delta_h\) is a weighted sum of output
+            deltas, weighted by the connections from \(h\) to each output unit.
+            This is the "propagating error backward" step that gives
+            backpropagation its name.</div>
+        </div>
+
+        <h3>4.4 Weight Update (same for all layers)</h3>
+        <div class="formula-block green">
+          <div class="formula-label">Weight Update Rule &mdash; Mitchell (1997),
+            Eq. T4.5</div>
+          \[ w_{ji} \leftarrow w_{ji} + \Delta w_{ji}, \qquad \Delta w_{ji} =
+          \eta\,\delta_j\,x_{ji} \]
+          <div class="formula-desc">\(\eta\) = learning rate
+            &nbsp;&middot;&nbsp; \(\delta_j\) = error signal at unit \(j\)
+            &nbsp;&middot;&nbsp; \(x_{ji}\) = input from unit \(i\) to unit
+            \(j\)</div>
+        </div>
+
+        <h3>4.5 Full Backpropagation Algorithm (Mitchell, 1997)</h3>
+        <div class="algo-box">
+          <div class="algo-header">BACKPROPAGATION(training_examples, &eta;,
+            n<sub>in</sub>, n<sub>out</sub>, n<sub>hidden</sub>)</div>
+          <div class="algo-step"><span class="step-num">Init</span><span>Create
+              feed-forward network with \(n_{\text{in}}\) inputs,
+              \(n_{\text{hidden}}\) hidden units, \(n_{\text{out}}\) output
+              units. Initialize all weights to small random values (e.g.,
+              between &minus;0.05 and 0.05).</span></div>
+          <div class="algo-step"><span class="step-num">Repeat</span><span>Until
+              termination (fixed iterations / training error &lt; threshold /
+              validation criterion met). Do for each \(\langle\mathbf{x},
+              \mathbf{t}\rangle\) in training_examples:</span></div>
+          <div class="algo-step"><span
+              class="step-num">1.</span><span><strong>Forward pass:</strong>
+              Input \(\mathbf{x}\) to the network; compute output \(o_u\) of
+              every unit \(u\) in the network.</span></div>
+          <div class="algo-step"><span
+              class="step-num">2.</span><span><strong>Output deltas:</strong>
+              For each output unit \(k\):<br>\[\delta_k \leftarrow
+              o_k(1-o_k)(t_k - o_k)\]</span></div>
+          <div class="algo-step"><span
+              class="step-num">3.</span><span><strong>Hidden deltas:</strong>
+              For each hidden unit \(h\):<br>\[\delta_h \leftarrow
+              o_h(1-o_h)\sum_{k\,\in\,\text{outputs}}w_{kh}\,\delta_k\]</span></div>
+          <div class="algo-step"><span
+              class="step-num">4.</span><span><strong>Update weights:</strong>
+              For each weight \(w_{ji}\):<br>\[w_{ji} \leftarrow w_{ji} + \Delta
+              w_{ji},\qquad \Delta w_{ji} =
+              \eta\,\delta_j\,x_{ji}\]</span></div>
+        </div>
+
+        <div class="callout success"><strong>Computational Efficiency:</strong>
+          One backward pass computes gradients for ALL parameters
+          simultaneously, reusing cached forward-pass values. This makes deep
+          network training feasible.</div>
+
+        <h3>4.6 Common Training Problems</h3>
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">Vanishing
+              Gradient</div><div class="term-def">Gradients shrink exponentially
+              through deep layers. Sigmoid/tanh worsen this near saturation.
+              Fix: ReLU, residual connections, batch normalization.</div></div>
+          <div class="term-card"><div class="term-name">Exploding
+              Gradient</div><div class="term-def">Gradients grow exponentially
+              &rarr; unstable (NaN). Fix: gradient clipping, careful
+              initialization.</div></div>
+          <div class="term-card"><div class="term-name">Local Minima</div><div
+              class="term-def">Batch GD can get stuck. SGD noise helps escape.
+              No guarantee of global minimum if multiple local minima
+              exist.</div></div>
+          <div class="term-card"><div class="term-name">Learning Rate
+              &eta;</div><div class="term-def">Too small &rarr; converges very
+              slowly. Too large &rarr; overshoots and diverges. Use schedules or
+              adaptive optimizers (Adam).</div></div>
+          <div class="term-card"><div class="term-name">Overfitting</div><div
+              class="term-def">Network memorizes training data. Fix: dropout,
+              L1/L2 regularization \(\lambda\Omega(\theta)\), early stopping,
+              more data.</div></div>
+          <div class="term-card"><div class="term-name">Dying ReLU</div><div
+              class="term-def">Neurons always output 0 &rarr; zero gradient
+              &rarr; never recover. Fix: Leaky ReLU (\(\alpha=0.01\) slope), He
+              initialization.</div></div>
+        </div>
+
+        <!-- ══════════════ PART 5 — CNN ══════════════ -->
+        <div id="cnn" class="part-header blue">
+          <div class="part-num">05 &middot; Convolutional Neural Network</div>
+          <h2>Convolutional Neural Network (CNN)</h2>
+          <p>An ANN that replaces general matrix multiplication with the
+            <em>convolution operation</em> in at least one layer. Explicitly
+            assumes inputs have grid-like (spatial) topology. (LeCun et al.
+            1989, 1998; Goodfellow et al. 2016; Lepe &amp; Vazquez 2017)</p>
+        </div>
+
+        <!-- 5.1 Motivation -->
+        <div id="cnn-motivation"></div>
+        <h3>5.1 Why CNN? &mdash; The Problem with FFNN on Images</h3>
+
+        <div class="callout warn"><strong>Dimensionality Explosion:</strong> A
+          \(320\times280\) RGB image has \(320\times280\times3 = 268{,}800\)
+          pixels. A single FFNN input&rarr;output layer on that image requires
+          \(>8\) billion multiplications. A CNN with a \(1\times2\) kernel needs
+          only \(319\times280\times3 = 267{,}960\) operations &mdash; roughly
+          <strong>60,000&times; more efficient</strong>.</div>
+
+        <p>Three core problems with FFNN on images:</p>
+        <ul>
+          <li><strong>Dimensionality explosion.</strong> Flattening a 2D/3D
+            image to 1D and connecting every pixel to every neuron creates an
+            impractical number of parameters.</li>
+          <li><strong>Spatial information destroyed.</strong> Flattening kills
+            neighborhood relationships. Pixels and their neighbors carry joint
+            meaning (edges, textures); once flattened they are independent
+            numbers.</li>
+          <li><strong>Parameter explosion &rarr; overfitting.</strong> More
+            weights = more memorization, not better generalization.</li>
+        </ul>
+
+        <h3>5.2 What CNN Is</h3>
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">Input</div><div
+              class="term-def">A multidimensional array (e.g., RGB image of size
+              \(H\times W\) stored as \(H\times W\times 3\) array of pixel
+              intensities 0&ndash;255).</div></div>
+          <div class="term-card"><div class="term-name">Kernel /
+              Filter</div><div class="term-def">Small learnable weight matrix
+              (e.g., 3&times;3 or 5&times;5) that slides over the input. Also
+              called: weights, parameters, filter.</div></div>
+          <div class="term-card"><div class="term-name">Feature Map</div><div
+              class="term-def">Output produced when a kernel is convolved with
+              the input. High values = pattern detected at that
+              location.</div></div>
+          <div class="term-card"><div class="term-name">Convolution</div><div
+              class="term-def">Sliding a kernel over the input, computing dot
+              products at each position to produce one value per location in the
+              feature map.</div></div>
+        </div>
+
+        <h3>5.3 Two Core Innovations</h3>
+        <div class="compare-row">
+          <div class="compare-box">
+            <h5>Local (Sparse) Connectivity</h5>
+            <p style="font-size:14px;color:var(--ink-soft);margin-top:6px;">Each
+              output neuron connects only to a <strong>local region</strong> of
+              the input &mdash; the <strong>receptive field</strong>. A
+              3&times;3 kernel: each output connects to only 9 inputs, not
+              thousands. Biologically inspired: Hubel &amp; Wiesel (1959) found
+              visual cortex neurons respond to small local visual regions.</p>
+          </div>
+          <div class="compare-box">
+            <h5>Parameter Sharing</h5>
+            <p style="font-size:14px;color:var(--ink-soft);margin-top:6px;">The
+              <strong>same kernel weights</strong> are used at every spatial
+              position. One kernel is learned and applied everywhere &mdash;
+              instead of unique weights per position. Gives <strong>translation
+                equivariance</strong>: the same feature anywhere uses the same
+              detector.</p>
+          </div>
+        </div>
+
+        <h4>LeCun 1989 Parameter Comparison (Net-3)</h4>
+        <table>
+          <tr><th>Configuration</th><th>Weights</th></tr>
+          <tr><td>Fully connected (FFNN)</td><td>&gt;3,200</td></tr>
+          <tr><td>Locally connected (no weight sharing)</td><td>1,226</td></tr>
+          <tr><td>Locally connected + weight sharing
+              (CNN)</td><td><strong>206</strong></td></tr>
+        </table>
+
+        <!-- 5.4 Convolution -->
+        <div id="cnn-convolution"></div>
+        <h3>5.4 The Convolution Operation</h3>
+
+        <h4>1D Convolution (Conceptual)</h4>
+        <p>Slide a kernel across a 1D input array, computing element-wise
+          products and summing at each position. Parameter sharing: same kernel
+          values reused at every position.</p>
+
+        <h4>2D Convolution (Grayscale Images)</h4>
+        <p>The kernel slides across both rows and columns. At each position,
+          multiply overlapping values element-wise and sum to produce one output
+          value in the feature map.</p>
+
+        <h4>3D Convolution (RGB / Multi-channel)</h4>
+        <p>For RGB images, the kernel has <strong>depth = number of input
+            channels</strong> (\(C_{\text{in}}\)). A kernel of size \(F\times
+          F\times C_{\text{in}}\) produces one feature map. Using \(K\)
+          different kernels produces \(K\) feature maps (output depth =
+          \(K\)).</p>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Output Dimension Formula</div>
+          \[ V = \frac{W - F + 2P}{S} + 1 \]
+          <div class="formula-desc">
+            \(W\) = input width/height (assumes square) &nbsp;&middot;&nbsp;
+            \(F\) = filter/kernel size &nbsp;&middot;&nbsp;
+            \(P\) = padding (zeros added around border) &nbsp;&middot;&nbsp;
+            \(S\) = stride &nbsp;&middot;&nbsp;
+            \(V\) = output spatial dimension &nbsp;&middot;&nbsp;
+            Output volume = \(V \times V \times K\) (for \(K\) filters)
+          </div>
+        </div>
+
+        <h4>Padding Types</h4>
+        <ul>
+          <li><strong>Valid (P=0):</strong> No padding &rarr; output shrinks.
+            Each conv layer reduces spatial dimensions.</li>
+          <li><strong>Same (P=(F&minus;1)/2 with S=1):</strong> Zero-pad to keep
+            output same size as input.</li>
+        </ul>
+
+        <h4>Worked Examples</h4>
+        <table>
+          <tr><th>Input Shape</th><th>Filters</th><th>P</th><th>S</th><th>V
+              Calculation</th><th>Output Volume</th></tr>
+          <tr><td>3&times;3&times;3</td><td>1, size
+              2&times;2&times;3</td><td>0</td><td>1</td><td>\((3-2+0)/1+1=2\)</td><td>2&times;2&times;1</td></tr>
+          <tr><td>3&times;3&times;2</td><td>3, size
+              2&times;2&times;2</td><td>0</td><td>1</td><td>\((3-2+0)/1+1=2\)</td><td>2&times;2&times;3</td></tr>
+          <tr><td>32&times;32&times;3</td><td>10, size
+              5&times;5&times;3</td><td>0</td><td>1</td><td>\((32-5+0)/1+1=28\)</td><td>28&times;28&times;10</td></tr>
+        </table>
+
+        <!-- 5.5 Three Stages -->
+        <div id="cnn-stages"></div>
+        <h3>5.5 The Three Stages of a CNN Layer</h3>
+
+        <div class="algo-box">
+          <div class="algo-header">Three-Stage CNN Layer Structure</div>
+          <div class="algo-step">
+            <span class="step-num">Stage 1</span>
+            <span><strong>Convolution (Affine Transform):</strong> Kernel slides
+              across input computing linear combinations. Produces raw feature
+              map &mdash; still linear.<br>
+              \[\text{net}_c = \mathbf{X}\star K\quad\text{(where }\star\text{
+              denotes convolution/cross-correlation)}\]</span>
+          </div>
+          <div class="algo-step">
+            <span class="step-num">Stage 2</span>
+            <span><strong>Detector (Non-linearity / Activation):</strong>
+              Non-linear activation applied element-wise. Without this, stacking
+              conv layers collapses to one linear transform. Most common: ReLU.
+              \[H = f_c(\text{net}_c) = \max(0,\,\text{net}_c)\]
+              Example: \([-9, 32, 14, -6]\xrightarrow{\text{ReLU}}[0, 32, 14,
+              0]\)</span>
+          </div>
+          <div class="algo-step">
+            <span class="step-num">Stage 3</span>
+            <span><strong>Pooling (Downsampling):</strong> Reduces spatial
+              dimensions. Benefits: fewer parameters downstream, translation
+              invariance (small input shifts don&rsquo;t change output much),
+              controls overfitting. Most common: Max Pooling.</span>
+          </div>
+        </div>
+
+        <h4>Pooling Types</h4>
+        <table>
+          <tr><th>Type</th><th>Operation</th><th>Notes</th></tr>
+          <tr><td><strong>Max Pooling</strong></td><td>Maximum value in each
+              window</td><td>Most common. A 2&times;2 pool with S=2 halves the
+              spatial dimensions. Preserves dominant features.</td></tr>
+          <tr><td><strong>Average Pooling</strong></td><td>Mean value in each
+              window</td><td>Smoother downsampling. Used in LeNet-5.</td></tr>
+          <tr><td><strong>L2-norm Pooling</strong></td><td>\(\sqrt{\sum x_i^2}\)
+              in each window</td><td>Less common. Emphasizes larger
+              activations.</td></tr>
+        </table>
+
+        <!-- 5.6 Parameter Count -->
+        <div id="cnn-params"></div>
+        <h3>5.6 Parameter Counting in CNN Layers</h3>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Number of Neurons in a Conv Layer</div>
+          \[ N_{\text{neurons}} = V_H \times V_W \times K \]
+          <div class="formula-desc">\(V_H, V_W\) = output height and width (from
+            output formula) &nbsp;&middot;&nbsp; \(K\) = number of filters</div>
+        </div>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Parameters WITHOUT Weight Sharing (locally
+            connected)</div>
+          \[ N_{\text{params}} = N_{\text{neurons}} \times (F\times F\times
+          C_{\text{in}} + 1) \]
+        </div>
+
+        <div class="formula-block blue">
+          <div class="formula-label">Parameters WITH Weight Sharing (standard
+            CNN)</div>
+          \[ N_{\text{params}} = K \times (F\times F\times C_{\text{in}} + 1) \]
+          <div class="formula-desc">\(K\) = number of filters
+            &nbsp;&middot;&nbsp; \(F\times F\) = filter spatial size
+            &nbsp;&middot;&nbsp; \(C_{\text{in}}\) = input channels
+            &nbsp;&middot;&nbsp; \(+1\) = one bias per filter<br>
+            Example (LeNet C1): \(K=6,\, F=5,\, C_{\text{in}}=1 \Rightarrow
+            6\times(25\times1+1) = 6\times26 = \mathbf{156}\) params</div>
+        </div>
+
+        <h3>5.7 Full CNN Architecture Pattern</h3>
+        <p>A typical CNN repeats [Conv + ReLU &rarr; Pool] blocks, then flattens
+          into fully-connected layers for classification:</p>
+
+        <div class="cnn-arch">
+          <div class="layer-box"><div class="layer-rect input">INPUT</div><div
+              class="layer-label">H&times;W&times;C</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect conv">CONV</div><div
+              class="layer-label">+ReLU</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect pool">POOL</div><div
+              class="layer-label">Max/Avg</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect conv">CONV</div><div
+              class="layer-label">+ReLU</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect pool">POOL</div><div
+              class="layer-label">Max/Avg</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect fc">FLATTEN</div><div
+              class="layer-label">1D vector</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect fc">FC</div><div
+              class="layer-label">Dense</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="layer-box"><div class="layer-rect out">OUTPUT</div><div
+              class="layer-label">Softmax</div></div>
+        </div>
+
+        <div class="callout note"><strong>Feature Hierarchy:</strong> Conv layer
+          1 &rarr; edges/colors. Conv layer 2 &rarr; corners/textures. Deeper
+          layers &rarr; shapes, object parts, objects. Pooling reduces spatial
+          size. FC layers do the final classification based on extracted
+          features.</div>
+
+        <!-- 5.8 LeNet-5 -->
+        <div id="cnn-lenet"></div>
+        <h3>5.8 LeNet-5 (LeCun et al., 1998)</h3>
+        <p>The first practical CNN for handwritten digit recognition (MNIST).
+          Input: 32&times;32 grayscale (MNIST 28&times;28 padded to
+          32&times;32). End-to-end training with backpropagation.</p>
+
+        <table>
+          <tr><th>Layer</th><th>Type</th><th>Output
+              Shape</th><th>Details</th><th>Parameters</th></tr>
+          <tr><td>Input</td><td>Image</td><td>32&times;32&times;1</td><td>Grayscale,
+              padded from 28&times;28</td><td>&mdash;</td></tr>
+          <tr><td>C1</td><td>Conv</td><td>28&times;28&times;6</td><td>6 filters,
+              5&times;5, S=1, P=0, tanh &nbsp;&middot;&nbsp;
+              \(V=(32-5)/1+1=28\)</td><td>\(6\times(5\times5\times1+1)=\mathbf{156}\)</td></tr>
+          <tr><td>S2</td><td>Avg
+              Pool</td><td>14&times;14&times;6</td><td>2&times;2 window,
+              S=2</td><td>0 (no learnable params)</td></tr>
+          <tr><td>C3</td><td>Conv</td><td>10&times;10&times;16</td><td>16
+              filters, 5&times;5, S=1, P=0, tanh &nbsp;&middot;&nbsp;
+              \(V=(14-5)/1+1=10\)</td><td>\(16\times(5\times5\times6+1)=\mathbf{2{,}416}\)</td></tr>
+          <tr><td>S4</td><td>Avg
+              Pool</td><td>5&times;5&times;16</td><td>2&times;2 window,
+              S=2</td><td>0</td></tr>
+          <tr><td>Flatten</td><td>&mdash;</td><td>400</td><td>\(5\times5\times16=400\)</td><td>&mdash;</td></tr>
+          <tr><td>FC C5</td><td>FC</td><td>120</td><td>Fully connected,
+              tanh</td><td>\((400+1)\times120=\mathbf{48{,}120}\)</td></tr>
+          <tr><td>FC F6</td><td>FC</td><td>84</td><td>Fully connected,
+              tanh</td><td>\((120+1)\times84=\mathbf{10{,}164}\)</td></tr>
+          <tr><td>Output</td><td>FC</td><td>10</td><td>10 classes (digits
+              0&ndash;9),
+              Softmax</td><td>\((84+1)\times10=\mathbf{850}\)</td></tr>
+          <tr><td colspan="4"><strong>Total
+                Parameters</strong></td><td><strong>61,706</strong></td></tr>
+        </table>
+
+        <div class="formula-block blue">
+          <div class="formula-label">LeNet-5 Total Parameter Verification</div>
+          \[ 156 + 0 + 2{,}416 + 0 + 48{,}120 + 10{,}164 + 850 =
+          \mathbf{61{,}706} \]
+          <div class="formula-desc">C3 uses 5&times;5 kernel on 6-channel S2
+            output: \(16\times(5\times5\times6+1)=16\times151=2{,}416\). Tiny by
+            modern standards (ResNet-50 &asymp;25M params), but proved CNN
+            viability for image tasks for the first time.</div>
+        </div>
+
+        <h3>5.9 Notable CNN Architectures</h3>
+        <table>
+          <tr><th>Architecture</th><th>Year</th><th>Key Innovation</th></tr>
+          <tr><td><strong>LeNet-5</strong></td><td>1998</td><td>First practical
+              CNN. Local connectivity + weight sharing.</td></tr>
+          <tr><td><strong>AlexNet</strong></td><td>2012</td><td>8 layers, ReLU
+              activation (novel), dropout, GPU training on ImageNet. Marked the
+              &ldquo;Rise of CNN.&rdquo;</td></tr>
+          <tr><td><strong>VGG16</strong></td><td>2015</td><td>16 layers, only
+              3&times;3 filters. Full model: &sim;138M params. Input:
+              224&times;224&times;3.</td></tr>
+          <tr><td><strong>GoogLeNet</strong></td><td>2014</td><td>Inception
+              modules: parallel filter paths of different sizes in one
+              layer.</td></tr>
+          <tr><td><strong>ResNet</strong></td><td>2015</td><td>Skip (residual)
+              connections: gradients flow directly through layers, enabling
+              50/101/152-layer nets.</td></tr>
+          <tr><td><strong>Vision
+                Transformer</strong></td><td>2020</td><td>Transformer
+              self-attention applied to image patches &mdash; no convolution
+              needed.</td></tr>
+        </table>
+
+        <h3>5.10 CNN vs FFNN &mdash; Complete Comparison</h3>
+        <table>
+          <tr><th>Aspect</th><th>FFNN (MLP)</th><th>CNN</th></tr>
+          <tr><td>Input handling</td><td>Flattened 1D vector &mdash; spatial
+              structure lost</td><td>Grid-structured &mdash; spatial info
+              preserved</td></tr>
+          <tr><td>Connectivity</td><td>Every neuron &rarr; every input (fully
+              connected)</td><td>Each neuron &rarr; local receptive field
+              only</td></tr>
+          <tr><td>Weight sharing</td><td>No &mdash; unique weight per
+              connection</td><td>Yes &mdash; same kernel at every
+              position</td></tr>
+          <tr><td>Spatial feature detection</td><td>No</td><td>Yes &mdash;
+              kernels learn edges, textures, shapes</td></tr>
+          <tr><td>Parameter count</td><td>Very high for image
+              inputs</td><td>Much lower due to weight sharing</td></tr>
+          <tr><td>Overfitting tendency</td><td>Higher for image
+              tasks</td><td>Lower for image tasks</td></tr>
+          <tr><td>Feature engineering</td><td>Manual</td><td>Automatic (learned
+              filters)</td></tr>
+          <tr><td>Translation invariance</td><td>No</td><td>Yes (shared filters
+              + pooling)</td></tr>
+          <tr><td>Best for</td><td>Tabular data, fixed-size
+              vectors</td><td>Images, audio spectrograms, grid-structured
+              data</td></tr>
+        </table>
+
+        <div class="callout success"><strong>Two Key Properties of CNN:</strong>
+          (1) <strong>Translation equivariance</strong>: if the input shifts,
+          the feature map shifts by the same amount &mdash; a feature is
+          detected regardless of where it appears. (2) <strong>Hierarchical
+            feature learning</strong>: layer 1 learns edges &rarr; layer 2
+          learns textures &rarr; deeper layers learn shapes &rarr; object parts
+          &rarr; full objects.</div>
+
+        <h3>5.11 Key CNN Terms</h3>
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">Kernel / Filter
+              (K)</div><div class="term-def">Learnable weight matrix. One kernel
+              &rarr; one feature map. \(K\) kernels &rarr; \(K\) output
+              channels.</div></div>
+          <div class="term-card"><div class="term-name">Feature Map</div><div
+              class="term-def">Output of applying one kernel to the full input.
+              High values = pattern detected at that location.</div></div>
+          <div class="term-card"><div class="term-name">Receptive
+              Field</div><div class="term-def">Local region of input one filter
+              examines. Size = \(F\times F\). Deeper layers have larger
+              effective receptive fields.</div></div>
+          <div class="term-card"><div class="term-name">Stride (S)</div><div
+              class="term-def">Pixels the kernel moves per step. \(S=1\) &rarr;
+              overlapping. \(S=2\) &rarr; roughly halves output
+              size.</div></div>
+          <div class="term-card"><div class="term-name">Padding (P)</div><div
+              class="term-def">&ldquo;Valid&rdquo; (P=0): output shrinks.
+              &ldquo;Same&rdquo; (\(P=(F-1)/2\) with S=1): output same size as
+              input.</div></div>
+          <div class="term-card"><div class="term-name">Parameter
+              Sharing</div><div class="term-def">Same kernel weights applied
+              everywhere &rarr; dramatic parameter reduction. FFNN would need
+              unique weights per connection.</div></div>
+          <div class="term-card"><div class="term-name">Sparse
+              Connectivity</div><div class="term-def">Each output unit connects
+              to only \(F\times F\times C_{\text{in}}\) inputs (the receptive
+              field), not all inputs.</div></div>
+          <div class="term-card"><div class="term-name">Translation
+              Equivariance</div><div class="term-def">If input shifts, feature
+              map shifts by same amount. Kernels detect features at any position
+              using same weights.</div></div>
+          <div class="term-card"><div class="term-name">Translation
+              Invariance</div><div class="term-def">After pooling, small shifts
+              in input do not change the output. Pooling provides this
+              property.</div></div>
+          <div class="term-card"><div class="term-name">Flatten</div><div
+              class="term-def">Reshape 3D volume \((H\times W\times C)\) after
+              conv/pool into a 1D vector to feed into FC layers.</div></div>
+          <div class="term-card"><div class="term-name">Feature
+              Hierarchy</div><div class="term-def">Early layers: edges &rarr;
+              Middle: corners, textures &rarr; Deep: object parts, faces,
+              objects.</div></div>
+          <div class="term-card"><div class="term-name">Depth
+              (channels)</div><div class="term-def">Number of feature maps in a
+              layer = number of filters \(K\). RGB image has depth 3 (input
+              channels).</div></div>
+        </div>
+
+        <!-- ══════════════ GLOSSARY ══════════════ -->
+        <div id="glossary" class="part-header"
+          style="margin-top:60px;border-left-color:var(--ink);">
+          <div class="part-num">Glossary</div>
+          <h2>All Key Terms at a Glance</h2>
+          <p>Every important term from the midterm topics, organized by
+            section.</p>
+        </div>
+
+        <h4>Math &amp; Notation</h4>
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="tag">x, X</span> input vector
+            / mini-batch</div>
+          <div class="glossary-item"><span class="tag">w, W</span> weights</div>
+          <div class="glossary-item"><span class="tag">b, w&sub;0&sub;, c</span>
+            bias</div>
+          <div class="glossary-item"><span class="tag">z / net / a</span>
+            pre-activation</div>
+          <div class="glossary-item"><span class="tag">o / h</span>
+            post-activation</div>
+          <div class="glossary-item"><span class="tag">&#375;</span> predicted
+            output</div>
+          <div class="glossary-item"><span class="tag">y / t</span> true label /
+            target</div>
+          <div class="glossary-item"><span class="tag">E / J</span> error /
+            total cost</div>
+          <div class="glossary-item"><span class="tag">&eta;</span> learning
+            rate</div>
+          <div class="glossary-item"><span class="tag">&delta;</span> error
+            signal (delta)</div>
+          <div class="glossary-item"><span class="tag">&lambda;</span>
+            regularization rate</div>
+          <div class="glossary-item"><span class="tag">&Omega;(&theta;)</span>
+            regularizer</div>
+          <div class="glossary-item"><span class="tag">&sigma;</span>
+            sigmoid</div>
+          <div class="glossary-item"><span class="tag">f(&middot;)</span>
+            activation function</div>
+          <div class="glossary-item"><span class="tag">K</span>
+            kernel/filter</div>
+          <div class="glossary-item"><span class="tag">V</span> output dim</div>
+          <div class="glossary-item"><span class="tag">F</span> filter
+            size</div>
+          <div class="glossary-item"><span class="tag">P</span> padding</div>
+          <div class="glossary-item"><span class="tag">S</span> stride</div>
+        </div>
+
+        <h4>Perceptron Terms</h4>
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="tag">Perceptron</span>
+            artificial neuron for linear classification</div>
+          <div class="glossary-item"><span class="tag">McCulloch-Pitts</span>
+            early neuron model</div>
+          <div class="glossary-item"><span class="tag">threshold &theta;</span>
+            cutoff for firing</div>
+          <div class="glossary-item"><span class="tag">sign function</span>
+            outputs &plusmn;1</div>
+          <div class="glossary-item"><span class="tag">step function</span>
+            outputs 0/1</div>
+          <div class="glossary-item"><span class="tag">net input z</span>
+            weighted sum before activation</div>
+          <div class="glossary-item"><span class="tag">hyperplane decision
+              surface</span> linear separator</div>
+          <div class="glossary-item"><span class="tag">linear
+              separability</span> classes separable by a hyperplane</div>
+          <div class="glossary-item"><span class="tag">hypothesis space H</span>
+            set of possible weights</div>
+          <div class="glossary-item"><span class="tag">perceptron training
+              rule</span> update rule for thresholded output</div>
+          <div class="glossary-item"><span class="tag">convergence
+              theorem</span> finite convergence for separable data</div>
+          <div class="glossary-item"><span class="tag">XOR problem</span> not
+            linearly separable</div>
+          <div class="glossary-item"><span class="tag">m-of-n function</span>
+            true if at least m inputs are true</div>
+          <div class="glossary-item"><span class="tag">epoch</span> one full
+            pass over the data</div>
+          <div class="glossary-item"><span class="tag">batch size</span> samples
+            per update group</div>
+          <div class="glossary-item"><span class="tag">step</span> one
+            mini-batch update</div>
+          <div class="glossary-item"><span class="tag">delta rule</span> LMS /
+            Widrow-Hoff update</div>
+          <div class="glossary-item"><span class="tag">LMS rule</span> least
+            mean squares rule</div>
+          <div class="glossary-item"><span class="tag">Adaline</span> adaptive
+            linear neuron</div>
+          <div class="glossary-item"><span class="tag">Widrow-Hoff</span>
+            another name for delta rule</div>
+          <div class="glossary-item"><span class="tag">batch GD</span> gradient
+            descent over all samples</div>
+          <div class="glossary-item"><span class="tag">SGD</span> stochastic
+            gradient descent</div>
+          <div class="glossary-item"><span class="tag">mini-batch SGD</span>
+            gradient descent on small batches</div>
+          <div class="glossary-item"><span class="tag">gradient
+              &nabla;E(w)</span> direction of steepest ascent</div>
+          <div class="glossary-item"><span class="tag">SSE</span> sum of squared
+            errors</div>
+        </div>
+
+        <h4>FFNN Terms</h4>
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="tag">feedforward</span>
+            information flows only forward</div>
+          <div class="glossary-item"><span class="tag">MLP</span> multi-layer
+            perceptron</div>
+          <div class="glossary-item"><span class="tag">hidden layer</span>
+            intermediate representation layer</div>
+          <div class="glossary-item"><span class="tag">depth</span> number of
+            layers</div>
+          <div class="glossary-item"><span class="tag">width</span> number of
+            neurons per layer</div>
+          <div class="glossary-item"><span class="tag">W<sub>xh</sub> /
+              W<sub>hy</sub> notation</span> compact layer notation</div>
+          <div class="glossary-item"><span class="tag">compact / explicit
+              style</span> two equivalent notations</div>
+          <div class="glossary-item"><span class="tag">forward
+              propagation</span> compute outputs from inputs</div>
+          <div class="glossary-item"><span class="tag">backpropagation</span>
+            reverse-mode gradient computation</div>
+          <div class="glossary-item"><span class="tag">chain rule</span>
+            derivative composition rule</div>
+          <div class="glossary-item"><span class="tag">gradient descent</span>
+            minimize loss by following negative gradient</div>
+          <div class="glossary-item"><span class="tag">vanishing gradient</span>
+            gradients shrink through layers</div>
+          <div class="glossary-item"><span class="tag">exploding gradient</span>
+            gradients grow too large</div>
+          <div class="glossary-item"><span class="tag">overfitting</span>
+            memorizes training data</div>
+          <div class="glossary-item"><span class="tag">underfitting</span> model
+            too simple</div>
+          <div class="glossary-item"><span class="tag">sigmoid</span> squashing
+            activation</div>
+          <div class="glossary-item"><span class="tag">tanh</span> zero-centered
+            squashing activation</div>
+          <div class="glossary-item"><span class="tag">ReLU</span> rectified
+            linear unit</div>
+          <div class="glossary-item"><span class="tag">leaky ReLU</span> ReLU
+            with small negative slope</div>
+          <div class="glossary-item"><span class="tag">softmax</span>
+            probability distribution over classes</div>
+          <div class="glossary-item"><span class="tag">MSE</span> mean squared
+            error</div>
+          <div class="glossary-item"><span class="tag">binary CE</span> binary
+            cross-entropy</div>
+          <div class="glossary-item"><span class="tag">categorical CE</span>
+            multi-class cross-entropy</div>
+          <div class="glossary-item"><span class="tag">output delta
+              &delta;<sub>j</sub></span> error signal at output unit</div>
+          <div class="glossary-item"><span class="tag">hidden delta
+              &delta;<sub>h</sub></span> error signal at hidden unit</div>
+          <div class="glossary-item"><span class="tag">universal approximation
+              theorem</span> single hidden layer can approximate any continuous
+            function</div>
+          <div class="glossary-item"><span class="tag">one-hot encoding</span>
+            vector with one active class entry</div>
+          <div class="glossary-item"><span class="tag">regularization
+              &lambda;&Omega;(&theta;)</span> penalty term to reduce
+            overfitting</div>
+        </div>
+
+        <h4>CNN Terms</h4>
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="tag">convolution /
+              cross-correlation</span> sliding local dot product</div>
+          <div class="glossary-item"><span class="tag">kernel / filter</span>
+            learnable weight window</div>
+          <div class="glossary-item"><span class="tag">feature map</span>
+            convolution output</div>
+          <div class="glossary-item"><span class="tag">stride S</span> step size
+            of the kernel</div>
+          <div class="glossary-item"><span class="tag">padding P</span> zero
+            border added to input</div>
+          <div class="glossary-item"><span class="tag">valid padding</span> no
+            padding, output shrinks</div>
+          <div class="glossary-item"><span class="tag">same padding</span> keeps
+            output size</div>
+          <div class="glossary-item"><span class="tag">receptive field</span>
+            local input region a filter sees</div>
+          <div class="glossary-item"><span class="tag">parameter sharing</span>
+            same kernel reused everywhere</div>
+          <div class="glossary-item"><span class="tag">sparse
+              connectivity</span> each output connects to local inputs</div>
+          <div class="glossary-item"><span class="tag">max pooling</span> take
+            maximum value per window</div>
+          <div class="glossary-item"><span class="tag">average pooling</span>
+            take mean value per window</div>
+          <div class="glossary-item"><span class="tag">L2-norm pooling</span>
+            use Euclidean norm per window</div>
+          <div class="glossary-item"><span class="tag">flatten</span> reshape
+            volume into 1D vector</div>
+          <div class="glossary-item"><span class="tag">translation
+              equivariance</span> shifted input shifts feature map</div>
+          <div class="glossary-item"><span class="tag">translation
+              invariance</span> small shifts do not change output much</div>
+          <div class="glossary-item"><span class="tag">feature hierarchy</span>
+            edges to objects across layers</div>
+          <div class="glossary-item"><span class="tag">depth (channels)</span>
+            number of feature maps</div>
+          <div class="glossary-item"><span class="tag">V = (W&minus;F+2P)/S +
+              1</span> output dimension formula</div>
+          <div class="glossary-item"><span class="tag">N<sub>params</sub> =
+              K&times;(F&sup2;&times;C<sub>in</sub>+1)</span> CNN parameter
+            formula</div>
+          <div class="glossary-item"><span class="tag">LeNet-5</span> first
+            practical CNN</div>
+          <div class="glossary-item"><span class="tag">AlexNet</span> deep CNN
+            breakthrough</div>
+          <div class="glossary-item"><span class="tag">VGG16</span> deep stack
+            of 3&times;3 filters</div>
+          <div class="glossary-item"><span class="tag">ResNet / skip
+              connections</span> residual shortcut paths</div>
+          <div class="glossary-item"><span class="tag">locally connected</span>
+            no weight sharing</div>
+        </div>
+
+        <hr class="divider">
+        <p
+          style="text-align:center;font-size:13px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;">
+          Notes based on: Goodfellow et al. (2016) Deep Learning &middot; LeCun
+          et al. (1989, 1998) &middot; Mitchell (1997) &middot; Raschka et al.
+          (2022)
+          <br>IF3270 Pembelajaran Mesin &middot; Sem 2-2025/2026 &middot; Tim
+          Pengajar IF3270
+          <br>Topics: Perceptron &middot; FFNN &middot; CNN &nbsp;|&nbsp;
+          Excluded: Ensemble &middot; CNN Backpropagation
+        </p>
+
+      
+    </div>
+
+  </main>
+
+  <!-- ── RIGHT RAIL (notes TOC, dark styled) ── -->
+  <aside class="sidebar-right" style="width: 240px;">
+    <div style="position: sticky; top: 0; padding-top: var(--sp-lg);">
+
+      <!-- Reading progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">Contents</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div class="notes-toc-list" style="padding-top: 8px;">
+          <a href="#perceptron" class="notes-toc-item">01. Perceptron</a>
+          <a href="#ffnn" class="notes-toc-item">02. FFNN</a>
+          <a href="#activations" class="notes-toc-item">03. Activations</a>
+          <a href="#backprop" class="notes-toc-item">04. Backpropagation</a>
+          <a href="#cnn" class="notes-toc-item">05. CNN</a>
+          <a href="#cnn-motivation" class="notes-toc-item sub">&rarr; Motivation</a>
+          <a href="#cnn-convolution" class="notes-toc-item sub">&rarr; Convolution Op.</a>
+          <a href="#cnn-stages" class="notes-toc-item sub">&rarr; Three Stages</a>
+          <a href="#cnn-params" class="notes-toc-item sub">&rarr; Parameter Count</a>
+          <a href="#cnn-lenet" class="notes-toc-item sub">&rarr; LeNet-5</a>
+          <a href="#glossary" class="notes-toc-item">Glossary</a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">About this note</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Course</span><span style="color: var(--text-secondary);">IF3270</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Topic</span><span style="color: var(--text-secondary);">Machine Learning</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Version</span><span style="color: var(--text-secondary);">v5</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Read time</span><span style="color: var(--text-secondary);">~25 min</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+
+    </div>
+  </aside>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+// ── TOC active state (adapted for .notes-toc-item) ──────────
+(function(){
+  const links = Array.from(document.querySelectorAll('.notes-toc-item[href^="#"]'));
+  const getEl = id => document.getElementById(id);
+  const sections = links.map(l => getEl(l.getAttribute('href').slice(1))).filter(Boolean);
+  if(!links.length || !sections.length) return;
+  const setActive = id => {
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+  };
+  const obs = new IntersectionObserver(entries => {
+    const vis = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+    if(vis.length) setActive(vis[0].target.id);
+  }, {root:null, rootMargin:'-20% 0px -60% 0px', threshold:[0.1,0.25,0.5,0.75]});
+  sections.forEach(s=>obs.observe(s));
+  ['cnn-motivation','cnn-convolution','cnn-stages','cnn-params','cnn-lenet'].forEach(id=>{
+    const el = getEl(id); if(el) obs.observe(el);
+  });
+  if(sections[0]) setActive(sections[0].id);
+})();
+
+// ── Reading progress bar ─────────────────────────────────────
+(function(){
+  const bar = document.getElementById('readingProgress');
+  if(!bar) return;
+  const update = () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  };
+  window.addEventListener('scroll', update, {passive: true});
+  update();
+})();
+
+// ── Cursor trail (from original notes) ──────────────────────
+
+(function(){
+  const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+  const getEl = id => document.getElementById(id);
+  const sections = links.map(l => getEl(l.getAttribute('href').slice(1))).filter(Boolean);
+
+  if(!links.length || !sections.length) return;
+
+  const setActive = id => {
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+  };
+
+  const obs = new IntersectionObserver(entries => {
+    const vis = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+    if(vis.length) setActive(vis[0].target.id);
+  }, {root:null, rootMargin:'-20% 0px -60% 0px', threshold:[0.1,0.25,0.5,0.75]});
+
+  sections.forEach(s=>obs.observe(s));
+
+  ['cnn-motivation','cnn-convolution','cnn-stages','cnn-params','cnn-lenet'].forEach(id=>{
+    const el = getEl(id); if(el) obs.observe(el);
+  });
+
+  if(sections[0]) setActive(sections[0].id);
+})();
+
+(function(){
+  const toggleBtn = document.getElementById('cursorToggleBtn');
+  const pointer = document.getElementById('cursorPointer');
+  const trailCanvas = document.getElementById('cursorTrailCanvas');
+  if(!toggleBtn || !pointer || !trailCanvas) return;
+
+  const ctx = trailCanvas.getContext('2d', { alpha: true });
+  if(!ctx) return;
+
+  const state = {
+    enabled: false,
+    points: [],
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2
+  };
+
+  const MAX_POINTS = 52;
+
+  function resizeCanvas(){
+    trailCanvas.width = window.innerWidth;
+    trailCanvas.height = window.innerHeight;
+  }
+
+  function updateToggleUI(){
+    toggleBtn.classList.toggle('is-on', state.enabled);
+    toggleBtn.setAttribute('aria-pressed', String(state.enabled));
+    document.body.classList.toggle('cursor-mode-on', state.enabled);
+  }
+
+  function addPoint(x, y){
+    state.points.push({ x, y });
+    if(state.points.length > MAX_POINTS){
+      state.points.splice(0, state.points.length - MAX_POINTS);
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+
+    if(state.points.length > 1){
+      for(let i = 1; i < state.points.length; i++){
+        const prev = state.points[i - 1];
+        const cur = state.points[i];
+        const t = i / state.points.length;
+        const alphaGlow = 0.04 + (0.22 * t);
+        const alphaCore = 0.18 + (0.58 * t);
+        const glowWidth = 0.9 + (1.3 * t);
+        const coreWidth = 0.28 + (0.62 * t);
+
+        ctx.beginPath();
+        ctx.moveTo(prev.x, prev.y);
+        ctx.lineTo(cur.x, cur.y);
+        ctx.lineWidth = glowWidth;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'rgba(255,24,24,' + alphaGlow + ')';
+        ctx.shadowBlur = 6 + (7 * t);
+        ctx.shadowColor = 'rgba(255,24,24,0.45)';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(prev.x, prev.y);
+        ctx.lineTo(cur.x, cur.y);
+        ctx.lineWidth = coreWidth;
+        ctx.strokeStyle = 'rgba(255,68,68,' + alphaCore + ')';
+        ctx.shadowBlur = 0;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    state.points.splice(0, 1);
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+
+  window.addEventListener('mousemove', (e) => {
+    state.x = e.clientX;
+    state.y = e.clientY;
+    pointer.style.left = state.x + 'px';
+    pointer.style.top = state.y + 'px';
+    if(state.enabled){
+      addPoint(state.x, state.y);
+    }
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    state.enabled = !state.enabled;
+    if(!state.enabled){
+      state.points.length = 0;
+      ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+    }
+    updateToggleUI();
+  });
+
+  resizeCanvas();
+  updateToggleUI();
+  draw();
+})();
+
+</script>
+</body>
+</html>

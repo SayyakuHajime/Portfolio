@@ -58,11 +58,90 @@ function initThemeToggle() {
   });
 }
 
+// ── MOBILE NAV DRAWER ──────────────────────────────────
+function initMobileDrawer() {
+  const sidebar = document.querySelector('.sidebar-left');
+  if (!sidebar) {
+    return;
+  }
+
+  const existingTrigger = document.querySelector('.mobile-nav-trigger');
+  const trigger = existingTrigger || document.createElement('button');
+  if (!existingTrigger) {
+    trigger.className = 'mobile-nav-trigger';
+    trigger.type = 'button';
+    trigger.setAttribute('aria-label', 'Open navigation menu');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+    document.body.appendChild(trigger);
+  }
+
+  const existingOverlay = document.querySelector('.mobile-nav-overlay');
+  const overlay = existingOverlay || document.createElement('div');
+  if (!existingOverlay) {
+    overlay.className = 'mobile-nav-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+  }
+
+  const mobileQuery = window.matchMedia('(max-width: 900px)');
+
+  const closeDrawer = () => {
+    document.body.classList.remove('drawer-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  };
+
+  const openDrawer = () => {
+    if (!mobileQuery.matches) {
+      return;
+    }
+    document.body.classList.add('drawer-open');
+    trigger.setAttribute('aria-expanded', 'true');
+  };
+
+  trigger.addEventListener('click', () => {
+    if (document.body.classList.contains('drawer-open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  });
+
+  overlay.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeDrawer();
+    }
+  });
+
+  sidebar.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  const handleMediaChange = () => {
+    if (!mobileQuery.matches) {
+      closeDrawer();
+    }
+  };
+
+  if (typeof mobileQuery.addEventListener === 'function') {
+    mobileQuery.addEventListener('change', handleMediaChange);
+  } else if (typeof mobileQuery.addListener === 'function') {
+    mobileQuery.addListener(handleMediaChange);
+  }
+}
+
 // ── NAV ACTIVE STATE ─────────────────────────────────────
 function setActiveNav() {
-  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const pathname = window.location.pathname || '';
+  const page = pathname.split('/').pop() || 'index.html';
+  const isNotesRoute = pathname.includes('/notes/') || page === 'notes.html';
+
   document.querySelectorAll('.nav-item[data-page]').forEach(el => {
-    el.classList.toggle('active', el.dataset.page === page);
+    const navTarget = el.dataset.page;
+    const isActive = navTarget === page || (navTarget === 'notes' && isNotesRoute);
+    el.classList.toggle('active', isActive);
   });
 }
 
@@ -121,6 +200,7 @@ function initScrollAnimations() {
 // ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
+  initMobileDrawer();
   setActiveNav();
   initTabs();
   initScrollAnimations();
