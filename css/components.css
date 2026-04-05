@@ -144,6 +144,30 @@
     text-align: left;
 }
 
+body:not(.writings-page) .nav-item.active {
+    background: var(--accent-p-bg);
+    border-color: var(--accent-p-mid);
+    color: var(--accent-p);
+}
+
+body:not(.writings-page) .btn-primary {
+    background: var(--accent-p);
+    border-color: var(--accent-p);
+}
+
+body:not(.writings-page) .tab.active {
+    border-bottom-color: var(--accent-p);
+}
+
+body:not(.writings-page) .post-action:hover {
+    color: var(--accent-p);
+    background-color: var(--accent-p-bg);
+}
+
+body:not(.writings-page) .text-primary {
+    color: var(--accent-p);
+}
+
 .profile-name-text {
     font-family: var(--font-mono);
     font-size: 0.7rem;
