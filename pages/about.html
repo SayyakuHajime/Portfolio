@@ -1,195 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Sayyaku/Hajime</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
-    <link rel="stylesheet" href="../css/browser-compat.css">
-    <link rel="stylesheet" href="../css/image-fixes.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="../js/components.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Sayyaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .about-hero {
+      padding: var(--sp-xl) var(--sp-lg);
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::after {
+      content: 'S';
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      font-family: var(--font-display);
+      font-size: 14rem;
+      font-weight: 600;
+      color: var(--border-subtle);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .about-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: var(--sp-md);
+      position: relative;
+      z-index: 1;
+    }
+    .about-hero h1 em {
+      font-style: italic;
+      color: var(--accent-warm);
+    }
+    .about-section {
+      padding: var(--sp-xl) var(--sp-lg);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .about-section h3 {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: var(--sp-md);
+    }
+    .about-section p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--sp-md);
+    }
+    .about-section p:last-child { margin-bottom: 0; }
+    .about-section p strong { color: var(--text-primary); font-weight: 500; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: flex;
+      gap: var(--sp-md);
+      padding: var(--sp-md) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      min-width: 50px;
+      padding-top: 2px;
+    }
+    .timeline-content { flex: 1; }
+    .timeline-title { font-size: 0.9375rem; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+    .timeline-sub { font-size: 0.825rem; color: var(--text-secondary); }
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-md);
+    }
+    .value-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--r-md);
+      padding: var(--sp-md);
+      transition: border-color 0.2s;
+    }
+    .value-card:hover { border-color: var(--accent-gold); }
+    .value-icon {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+      margin-bottom: var(--sp-xs);
+    }
+    .value-title { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+    .value-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Left Sidebar - Loaded from component -->
-        <div id="sidebar-left-container"></div>
+<div class="site-wrapper">
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="header">
-                <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
-                    <a href="home.html" style="padding: var(--spacing-sm); border-radius: var(--radius-full); transition: background-color var(--transition-fast);" onmouseover="this.style.backgroundColor='rgba(26, 24, 20, 0.08)'" onmouseout="this.style.backgroundColor='transparent'">
-                        <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
-                    </a>
-                    <div style="flex: 1;">
-                        <h1 style="font-size: var(--font-xl);">About Me</h1>
-                        <p style="font-size: var(--font-sm); color: var(--ink-faint);">My Journey</p>
-                    </div>
-                </div>
-            </div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="writings.html" class="nav-item" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="projects.html" class="nav-item" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="about.html" class="nav-item active" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="brand.html" class="nav-item" data-page="brand.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M13 9v3M8.5 16.5l4-2M17.5 16.5l-4-2"/></svg>
+        <span class="nav-label">Brand</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
 
-            <!-- About Content -->
-            <div style="padding: var(--spacing-xl);">
-                <div style="margin-bottom: var(--spacing-2xl);">
-                    <h2 style="font-size: var(--font-2xl); font-weight: 700; margin-bottom: var(--spacing-md);">My Journey</h2>
-                    <p style="margin-bottom: var(--spacing-md); line-height: 1.6;">
-                        I'm constantly learning and experimenting. I'm still building my foundational skills
-                        in <span style="color: var(--accent-b);">programming</span> and exploring different
-                        <span style="color: var(--accent-b);">technologies</span>.
-                    </p>
-                    <p style="line-height: 1.6;">
-                        My focus is on understanding the fundamentals and gradually expanding my knowledge
-                        in various programming languages and tools. Every day is a learning opportunity
-                        to grow as a developer.
-                    </p>
-                </div>
-
-                <div style="background-color: var(--paper-warm); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-2xl);">
-                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-lg);">Quick Facts</h3>
-                    <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
-                        <div style="display: flex; gap: var(--spacing-md);">
-                            <div style="font-weight: 700; min-width: 120px;">Status:</div>
-                            <div>Learning</div>
-                        </div>
-                        <div style="display: flex; gap: var(--spacing-md);">
-                            <div style="font-weight: 700; min-width: 120px;">Focus:</div>
-                            <div>Programming Basics</div>
-                        </div>
-                        <div style="display: flex; gap: var(--spacing-md);">
-                            <div style="font-weight: 700; min-width: 120px;">Languages:</div>
-                            <div>C, C++, Java, JavaScript, Python</div>
-                        </div>
-                        <div style="display: flex; gap: var(--spacing-md);">
-                            <div style="font-weight: 700; min-width: 120px;">Tools:</div>
-                            <div>Neovim, Obsidian, LaTeX</div>
-                        </div>
-                        <div style="display: flex; gap: var(--spacing-md);">
-                            <div style="font-weight: 700; min-width: 120px;">Goal:</div>
-                            <div>Building Foundational Skills</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: var(--spacing-2xl);">
-                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-md);">What I'm Learning</h3>
-                    <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
-                        <div style="background-color: var(--paper-warm); border-radius: var(--radius-md); padding: var(--spacing-lg);">
-                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
-                                <i data-lucide="code" style="color: var(--accent-b);"></i>
-                                <h4 style="font-weight: 700;">Programming Fundamentals</h4>
-                            </div>
-                            <p style="color: var(--ink-faint); line-height: 1.6;">
-                                Understanding core concepts like data structures, algorithms, and object-oriented programming across multiple languages.
-                            </p>
-                        </div>
-
-                        <div style="background-color: var(--paper-warm); border-radius: var(--radius-md); padding: var(--spacing-lg);">
-                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
-                                <i data-lucide="globe" style="color: var(--accent-b);"></i>
-                                <h4 style="font-weight: 700;">Web Development</h4>
-                            </div>
-                            <p style="color: var(--ink-faint); line-height: 1.6;">
-                                Building modern web applications with HTML, CSS, JavaScript, and exploring frameworks like React and Next.js.
-                            </p>
-                        </div>
-
-                        <div style="background-color: var(--paper-warm); border-radius: var(--radius-md); padding: var(--spacing-lg);">
-                            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
-                                <i data-lucide="book-open" style="color: var(--accent-b);"></i>
-                                <h4 style="font-weight: 700;">Continuous Learning</h4>
-                            </div>
-                            <p style="color: var(--ink-faint); line-height: 1.6;">
-                                Committed to learning something new every day through hands-on projects, documentation, and experimentation.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-md);">Connect With Me</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
-                        <a href="https://github.com/SayyakuHajime" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--paper-warm); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--paper-cream)'" onmouseout="this.style.backgroundColor='var(--paper-warm)'">
-                            <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
-                            <span>GitHub</span>
-                        </a>
-                        <a href="https://linkedin.com/in/muhammadhazimrp" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--paper-warm); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--paper-cream)'" onmouseout="this.style.backgroundColor='var(--paper-warm)'">
-                            <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="https://instagram.com/hazim_dash" target="_blank" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--paper-warm); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--paper-cream)'" onmouseout="this.style.backgroundColor='var(--paper-warm)'">
-                            <i data-lucide="instagram" style="width: 1rem; height: 1rem;"></i>
-                            <span>Instagram</span>
-                        </a>
-                        <a href="mailto:hazimprajoda@protonmail.com" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background-color: var(--paper-warm); border-radius: var(--radius-full); transition: background-color var(--transition-fast); font-size: var(--font-sm);" onmouseover="this.style.backgroundColor='var(--paper-cream)'" onmouseout="this.style.backgroundColor='var(--paper-warm)'">
-                            <i data-lucide="mail" style="width: 1rem; height: 1rem;"></i>
-                            <span>Email</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Right Sidebar -->
-        <aside class="sidebar-right">
-            <!-- Skills Section -->
-            <div class="card">
-                <div class="card-header">Skills</div>
-                <div class="card-body">
-                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
-                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
-                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--ink);">Programming</div>
-                            <img src="https://skillicons.dev/icons?i=c,cpp,java,js,ts,python,html&perline=7&theme=dark" alt="Programming Languages" style="width: 100%; display: block;" />
-                        </div>
-                    </div>
-                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
-                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
-                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--ink);">Tools & Database</div>
-                            <img src="https://skillicons.dev/icons?i=neovim,obsidian,latex,docker,azure,postgres,sqlite&perline=7&theme=dark" alt="Tools" style="width: 100%; display: block;" />
-                        </div>
-                    </div>
-                </div>
-                <a href="skills.html" class="card-item text-primary" style="display: block;">
-                    Show more
-                </a>
-            </div>
-
-            <!-- Past Projects Section -->
-            <div class="card">
-                <div class="card-header">Past Projects</div>
-                <div class="card-body">
-                    <a href="projects.html" class="card-item">
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint);">Web Development</div>
-                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--ink);">Rush Hour Puzzle Solver</div>
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint); margin-top: var(--spacing-xs);">Next.js, A* Algorithm</div>
-                    </a>
-                    <a href="projects.html" class="card-item">
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint);">Programming</div>
-                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--ink);">Data Structures Practice</div>
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint); margin-top: var(--spacing-xs);">C++, Java</div>
-                    </a>
-                    <a href="projects.html" class="card-item">
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint);">Learning</div>
-                        <div style="margin-top: var(--spacing-xs); font-weight: 500; color: var(--ink);">Algorithm Challenges</div>
-                        <div style="font-size: var(--font-xs); color: var(--ink-faint); margin-top: var(--spacing-xs);">Python, JavaScript</div>
-                    </a>
-                </div>
-                <a href="projects.html" class="card-item text-primary" style="display: block;">
-                    Show more
-                </a>
-            </div>
-        </aside>
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <span class="page-title">About</span>
     </div>
 
-    <!-- Mobile Navigation - Loaded from component -->
-    <div id="mobile-nav-container"></div>
+    <div class="about-hero animate-in">
+      <h1>Student of<br>machines <em>&amp;</em> ideas.</h1>
+      <p style="font-size:0.9375rem; color: var(--text-secondary); max-width: 440px; line-height: 1.8; position: relative; z-index: 1;">
+        Based in Bandung, West Java. Studying Machine Learning with a focus on natural language processing and information retrieval. Known online as @SayyakuHajime. I build things to understand them, and write to figure out what I actually think.
+      </p>
+    </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <div class="about-section animate-in">
+      <h3>Background</h3>
+      <p>I came to machine learning through a combination of curiosity about how language works and frustration with how poorly existing tools handled Indonesian text. That frustration turned into a project, which turned into a research interest.</p>
+      <p>My current focus is on <strong>representation learning</strong> and how neural networks build internal models of language — both what they capture and what they systematically miss. I'm particularly interested in the gap between benchmark performance and real-world robustness.</p>
+      <p>Outside of ML, I think a lot about <strong>systems thinking</strong>, the philosophy of knowledge, and what it means to understand something versus being able to predict it.</p>
+    </div>
+
+    <div class="about-section animate-in">
+      <h3>Education & Timeline</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-year">2025</span>
+          <div class="timeline-content">
+            <div class="timeline-title">Published Indo-Scholar Search</div>
+            <div class="timeline-sub">Semantic search for Indonesian academic papers — first end-to-end ML system I shipped.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2024</span>
+          <div class="timeline-content">
+            <div class="timeline-title">Started ML coursework in earnest</div>
+            <div class="timeline-sub">Deep dive into probability theory, optimization, and neural architecture.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2023</span>
+          <div class="timeline-content">
+            <div class="timeline-title">First Python project — simple NLP pipeline</div>
+            <div class="timeline-sub">Text cleaning and tokenization for Indonesian news corpus.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2022</span>
+          <div class="timeline-content">
+            <div class="timeline-title">Started university</div>
+            <div class="timeline-sub">Bandung, West Java, Indonesia.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-section animate-in">
+      <h3>How I work</h3>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">∂</div>
+          <div class="value-title">First principles</div>
+          <div class="value-desc">I prefer to derive from scratch over copying patterns. Slower, but you actually know what you built.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">∑</div>
+          <div class="value-title">Write to think</div>
+          <div class="value-desc">If I can't explain it clearly in writing, I don't understand it yet. Confusion is always the first draft.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">∞</div>
+          <div class="value-title">Ship imperfect</div>
+          <div class="value-desc">Launched is better than perfect. Most of what I've learned came from something breaking in production.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">⊕</div>
+          <div class="value-title">Build in context</div>
+          <div class="value-desc">Tools should serve actual people solving actual problems. Benchmarks are starting points, not finish lines.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT RAIL -->
+  <aside class="sidebar-right">
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">Currently</p>
+      </div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <div class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Studying ML midterms
+        </div>
+        <div class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Maintaining Portfolio repository
+        </div>
+        <div class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Working on IF2211 algorithm assignments
+        </div>
+      </div>
+    </div>
+
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">GitHub Snapshot</p>
+      </div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <div class="contact-link" style="cursor: default;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Name: SayyakuHajime
+        </div>
+        <div class="contact-link" style="cursor: default;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          @SayyakuHajime
+        </div>
+        <div class="contact-link" style="cursor: default;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          11 public repos · 9 followers · 16 following
+        </div>
+      </div>
+    </div>
+
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">Contact</p>
+      </div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <a href="https://sayyakuhajime.github.io/Portfolio/" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          sayyakuhajime.github.io
+        </a>
+        <a href="https://github.com/SayyakuHajime" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          github/SayyakuHajime
+        </a>
+        <a href="mailto:hello@sayyaku.dev" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          hello@sayyaku.dev
+        </a>
+      </div>
+    </div>
+
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">Reading</p>
+      </div>
+      <div class="divider"></div>
+      <div style="padding: var(--sp-sm) var(--sp-lg) var(--sp-md);">
+        <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">The Alignment Problem</p>
+        <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">Brian Christian</p>
+        <div class="divider" style="margin: var(--sp-sm) 0;"></div>
+        <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">Deep Learning</p>
+        <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">Goodfellow, Bengio, Courville</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script src="../js/app.js"></script>
 </body>
 </html>

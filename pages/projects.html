@@ -1,149 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Sayyaku/Hajime</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
-    <link rel="stylesheet" href="../css/browser-compat.css">
-    <link rel="stylesheet" href="../css/image-fixes.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="../js/components.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Sayyaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .projects-intro {
+      padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .projects-intro h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: var(--sp-sm);
+    }
+    .projects-intro p { font-size: 0.9rem; color: var(--text-secondary); max-width: 420px; line-height: 1.7; }
+
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .status-active .status-dot { background: #4ade80; box-shadow: 0 0 6px #4ade8080; }
+    .status-active { color: #4ade80; }
+    .status-done .status-dot { background: var(--text-muted); }
+    .status-done { color: var(--text-muted); }
+    .status-wip .status-dot { background: var(--accent-gold); }
+    .status-wip { color: var(--accent-gold); }
+
+    .project-links { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
+
+    /* stat row */
+    .project-stats {
+      display: flex; gap: var(--sp-lg); margin-top: var(--sp-md);
+      padding-top: var(--sp-md);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .pstat { display: flex; flex-direction: column; gap: 2px; }
+    .pstat-value { font-family: var(--font-display); font-size: 1.3rem; color: var(--text-primary); }
+    .pstat-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Left Sidebar - Loaded from component -->
-        <div id="sidebar-left-container"></div>
+<div class="site-wrapper">
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="header">
-                <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
-                    <a href="home.html" style="padding: var(--spacing-sm); border-radius: var(--radius-full); transition: background-color var(--transition-fast);" onmouseover="this.style.backgroundColor='rgba(26, 24, 20, 0.08)'" onmouseout="this.style.backgroundColor='transparent'">
-                        <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
-                    </a>
-                    <div style="flex: 1;">
-                        <h1 style="font-size: var(--font-xl);">Featured Projects</h1>
-                        <p style="font-size: var(--font-sm); color: var(--ink-faint);">My Work</p>
-                    </div>
-                </div>
-            </div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="writings.html" class="nav-item" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="projects.html" class="nav-item active" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="about.html" class="nav-item" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="brand.html" class="nav-item" data-page="brand.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M13 9v3M8.5 16.5l4-2M17.5 16.5l-4-2"/></svg>
+        <span class="nav-label">Brand</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
 
-            <!-- Projects Content -->
-            <div style="padding: var(--spacing-xl);">
-                <!-- Project 1 -->
-                <div style="background-color: var(--paper-warm); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--spacing-md);">
-                        <h3 style="font-size: var(--font-xl); font-weight: 700;">Rush Hour Puzzle Solver</h3>
-                        <a href="https://github.com/SayyakuHajime/Tucil3_13523009" target="_blank" class="btn btn-secondary" style="padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-sm);">
-                            <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
-                            Code
-                        </a>
-                    </div>
-
-                    <p style="line-height: 1.6; margin-bottom: var(--spacing-lg); color: var(--ink-faint);">
-                        Interactive web application for solving Rush Hour puzzles using various pathfinding algorithms
-                        including Greedy Best First Search, Uniform Cost Search (UCS), and A*. Features visualization
-                        of solution steps with animations and performance analysis comparing algorithm efficiency.
-                    </p>
-
-                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Next.js</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">React</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">JavaScript</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">A* Algorithm</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">UCS</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Greedy Search</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Tailwind CSS</span>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div style="background-color: var(--paper-warm); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--spacing-md);">
-                        <h3 style="font-size: var(--font-xl); font-weight: 700;">Portfolio Website</h3>
-                    </div>
-
-                    <p style="line-height: 1.6; margin-bottom: var(--spacing-lg); color: var(--ink-faint);">
-                        A modern portfolio website with a Twitter-like interface design. Features responsive layout,
-                        modular CSS architecture, and clean navigation between different sections showcasing my work and skills.
-                    </p>
-
-                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">HTML</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">CSS</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">JavaScript</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Responsive Design</span>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div style="background-color: var(--paper-warm); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--spacing-md);">
-                        <h3 style="font-size: var(--font-xl); font-weight: 700;">Data Structures & Algorithms Practice</h3>
-                    </div>
-
-                    <p style="line-height: 1.6; margin-bottom: var(--spacing-lg); color: var(--ink-faint);">
-                        Collection of data structure implementations and algorithm solutions in various programming languages.
-                        Focused on understanding fundamental concepts like trees, graphs, sorting, and searching algorithms.
-                    </p>
-
-                    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">C++</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Java</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Python</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Algorithms</span>
-                        <span style="background-color: var(--paper-cream); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-full); font-size: var(--font-sm);">Data Structures</span>
-                    </div>
-                </div>
-
-                <!-- Coming Soon -->
-                <div style="background-color: var(--paper-warm); border-radius: var(--radius-lg); padding: var(--spacing-xl); border: 2px dashed var(--rule);">
-                    <div style="text-align: center;">
-                        <i data-lucide="plus-circle" style="width: 3rem; height: 3rem; margin: 0 auto var(--spacing-md); color: var(--ink-faint);"></i>
-                        <h3 style="font-size: var(--font-xl); font-weight: 700; margin-bottom: var(--spacing-sm);">More Projects Coming Soon</h3>
-                        <p style="color: var(--ink-faint);">Currently working on new exciting projects!</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Right Sidebar -->
-        <aside class="sidebar-right">
-            <!-- Skills Section -->
-            <div class="card">
-                <div class="card-header">Skills</div>
-                <div class="card-body">
-                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
-                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
-                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--ink);">Programming</div>
-                            <img src="https://skillicons.dev/icons?i=c,cpp,java,js,ts,python,html&perline=7&theme=dark" alt="Programming Languages" style="width: 100%; display: block;" />
-                        </div>
-                    </div>
-                    <div class="card-item" style="padding-bottom: var(--spacing-md);">
-                        <div style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
-                            <div style="font-size: var(--font-sm); font-weight: 500; color: var(--ink);">Tools & Database</div>
-                            <img src="https://skillicons.dev/icons?i=neovim,obsidian,latex,docker,azure,postgres,sqlite&perline=7&theme=dark" alt="Tools" style="width: 100%; display: block;" />
-                        </div>
-                    </div>
-                </div>
-                <a href="skills.html" class="card-item text-primary" style="display: block;">
-                    Show more
-                </a>
-            </div>
-
-        </aside>
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <span class="page-title">Projects</span>
+      <span class="header-meta">11 public repos</span>
     </div>
 
-    <!-- Mobile Navigation - Loaded from component -->
-    <div id="mobile-nav-container"></div>
+    <div class="projects-intro animate-in">
+      <h2>Things I've built,<br>am building.</h2>
+      <p>A mix of research tools, experiments, and personal utilities. Some are polished, some are proofs of concept. All of them taught me something.</p>
+    </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <div class="tabs">
+      <div class="tab active" data-tab="all">All</div>
+      <div class="tab" data-tab="ml">ML / AI</div>
+      <div class="tab" data-tab="web">Web</div>
+      <div class="tab" data-tab="tools">Tools</div>
+    </div>
+
+    <article class="project-item animate-in">
+      <div class="project-header">
+        <div>
+          <h2 class="project-name">IF2150 Signance</h2>
+          <div style="margin-top: 4px;"><span class="project-status status-active"><span class="status-dot"></span>Active</span></div>
+        </div>
+        <a href="https://github.com/SayyakuHajime/IF2150-2024-K01-G12-Signance" class="project-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+      <p class="project-desc">Software engineering implementation project for IF2150. The repository contains the complete team build of Signance and its supporting project structure.</p>
+      <div class="project-stack">
+        <span class="tag tag-accent">Python</span>
+        <span class="tag">Software Engineering</span>
+        <span class="tag">Team Project</span>
+      </div>
+      <div class="project-stats">
+        <div class="pstat"><span class="pstat-value">IF2150</span><span class="pstat-label">Course</span></div>
+        <div class="pstat"><span class="pstat-value">2024</span><span class="pstat-label">Academic year</span></div>
+        <div class="pstat"><span class="pstat-value">Repo</span><span class="pstat-label">Public on GitHub</span></div>
+      </div>
+    </article>
+
+    <article class="project-item animate-in">
+      <div class="project-header">
+        <div>
+          <h2 class="project-name">Rush Hour Solver</h2>
+          <div style="margin-top: 4px;"><span class="project-status status-wip"><span class="status-dot"></span>In Progress</span></div>
+        </div>
+        <a href="https://github.com/SayyakuHajime/Tucil3_13523009" class="project-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+      <p class="project-desc">Tugas Kecil 3 IF2211 Strategi Algoritma. A puzzle Rush Hour solver project implemented as a public JavaScript repository.</p>
+      <div class="project-stack">
+        <span class="tag tag-accent">JavaScript</span>
+        <span class="tag">Algorithmic Search</span>
+        <span class="tag">IF2211</span>
+      </div>
+    </article>
+
+    <article class="project-item animate-in">
+      <div class="project-header">
+        <div>
+          <h2 class="project-name">TSP Solver (Dynamic Programming)</h2>
+          <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Complete</span></div>
+        </div>
+        <a href="https://github.com/SayyakuHajime/Tugas-IF2211-TSPSolver-13523009" class="project-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+      </div>
+      <p class="project-desc">Additional IF2211 assignment repository focused on solving Travelling Salesman Problem variants using dynamic programming strategies.</p>
+      <div class="project-stack">
+        <span class="tag tag-accent">Scala</span>
+        <span class="tag">Dynamic Programming</span>
+        <span class="tag">IF2211</span>
+      </div>
+    </article>
+
+    <article class="project-item animate-in">
+      <div class="project-header">
+        <div>
+          <h2 class="project-name">Portfolio Website</h2>
+          <div style="margin-top: 4px;"><span class="project-status status-done"><span class="status-dot"></span>Deprecated</span></div>
+        </div>
+        <a href="https://github.com/SayyakuHajime/Portfolio" class="project-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+      <p class="project-desc">Public portfolio repository and deployment source. This is the live web identity base linked from the GitHub profile website field.</p>
+      <div class="project-stack">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">Vanilla JS</span>
+      </div>
+    </article>
+  </main>
+
+  <!-- RIGHT RAIL -->
+  <aside class="sidebar-right">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search projects…" />
+    </div>
+
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">At a glance</p>
+      </div>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <span class="skill-chip">11 Public Repos</span>
+        <span class="skill-chip">9 Followers</span>
+        <span class="skill-chip">16 Following</span>
+      </div>
+      <div style="height: var(--sp-sm)"></div>
+    </div>
+
+    <div class="card animate-in">
+      <div class="card-section">
+        <p class="card-title">Languages used</p>
+      </div>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">JavaScript</span>
+        <span class="skill-chip">Java</span>
+        <span class="skill-chip">C++</span>
+        <span class="skill-chip">Scala</span>
+      </div>
+      <div style="height: var(--sp-sm)"></div>
+    </div>
+  </aside>
+</div>
+
+<script src="../js/app.js"></script>
 </body>
 </html>
