@@ -84,7 +84,7 @@ function initMobileDrawer() {
     document.body.appendChild(overlay);
   }
 
-  const mobileQuery = window.matchMedia('(max-width: 900px)');
+  const mobileQuery = window.matchMedia('(max-width: 1100px)');
 
   const closeDrawer = () => {
     document.body.classList.remove('drawer-open');
@@ -95,6 +95,7 @@ function initMobileDrawer() {
     if (!mobileQuery.matches) {
       return;
     }
+    document.body.classList.remove('toc-drawer-open');
     document.body.classList.add('drawer-open');
     trigger.setAttribute('aria-expanded', 'true');
   };
