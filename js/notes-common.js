@@ -1,7 +1,7 @@
 (function () {
   function initNotesToc() {
     var links = Array.from(document.querySelectorAll('.notes-toc-item[href^="#"]'));
-    if (!links.length || typeof IntersectionObserver === 'undefined') {
+    if (!links.length) {
       return;
     }
 
@@ -19,40 +19,58 @@
       return;
     }
 
+    var lastActiveId = '';
+
     var setActive = function (id) {
+      if (!id || id === lastActiveId) {
+        return;
+      }
+
+      lastActiveId = id;
       links.forEach(function (link) {
         link.classList.toggle('active', link.getAttribute('href') === '#' + id);
       });
     };
 
-    var obs = new IntersectionObserver(
-      function (entries) {
-        var visible = entries
-          .filter(function (entry) {
-            return entry.isIntersecting;
-          })
-          .sort(function (a, b) {
-            return b.intersectionRatio - a.intersectionRatio;
-          });
+    var getActiveSectionId = function () {
+      var marker = Math.max(96, window.innerHeight * 0.26);
 
-        if (visible.length) {
-          setActive(visible[0].target.id);
+      for (var i = sections.length - 1; i >= 0; i -= 1) {
+        if (sections[i].getBoundingClientRect().top <= marker) {
+          return sections[i].id;
         }
-      },
-      {
-        root: null,
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: [0.1, 0.25, 0.5, 0.75]
       }
-    );
 
-    sections.forEach(function (section) {
-      obs.observe(section);
+      return sections[0].id;
+    };
+
+    var ticking = false;
+    var updateActiveFromScroll = function () {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        setActive(getActiveSectionId());
+        ticking = false;
+      });
+    };
+
+    links.forEach(function (link) {
+      link.addEventListener('click', function () {
+        var href = link.getAttribute('href');
+        if (href && href.length > 1) {
+          setActive(href.slice(1));
+        }
+      });
     });
 
-    if (sections[0]) {
-      setActive(sections[0].id);
-    }
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    window.addEventListener('resize', updateActiveFromScroll, { passive: true });
+    window.addEventListener('hashchange', updateActiveFromScroll);
+
+    updateActiveFromScroll();
   }
 
   function initReadingProgress() {
