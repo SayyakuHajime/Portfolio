@@ -171,7 +171,7 @@
   </aside>
 
   <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
-  <main class="main-content">
+  <main class="main-content" style="max-width: none; flex: 1; min-width: 0;">
     <div class="page-header">
       <span class="page-title">IF3211 Midterm Notes</span>
       <span class="header-meta">Computational Biology</span>
@@ -190,13 +190,6 @@
         <span class="topic-chip">Metabolism</span>
       </div>
     </div>
-
-    <!-- MOBILE TOC TRIGGER -->
-    <button class="notes-toc-trigger" id="tocTriggerBtn" type="button" aria-label="Open table of contents">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
-      <span class="notes-toc-trigger-label">Contents</span>
-    </button>
-    <div class="notes-toc-overlay" id="tocOverlay"></div>
 
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="notes-scope">
@@ -1172,51 +1165,76 @@ print(trace_pathway(glycolysis, <span class="str">'Glucose'</span>, <span class=
   </main>
 
   <!-- ═══════════════ RIGHT SIDEBAR (TOC) ═══════════════ -->
-  <aside class="sidebar-right">
-    <div style="position:sticky;top:20px;">
-      <div class="card animate-in">
+  <aside class="sidebar-right" style="width: 240px;">
+    <div style="position: sticky; top: 0; padding-top: var(--sp-lg);">
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
         <div class="card-section">
           <p class="card-title">Contents</p>
         </div>
-        <div class="divider"></div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar" id="readingProgress"></div>
-        </div>
-        <nav class="notes-toc-list">
-          <a class="notes-toc-item" href="#t1">1. Intro to CompBio</a>
-          <a class="notes-toc-item sub" href="#t1-def">What is CompBio?</a>
-          <a class="notes-toc-item sub" href="#t1-fields">Five Related Fields</a>
-          <a class="notes-toc-item sub" href="#t1-apps">Applications</a>
-          <a class="notes-toc-item sub" href="#t1-bioinspired">Bio-Inspired Algorithms</a>
-          <a class="notes-toc-item" href="#t2">2. Macromolecules</a>
-          <a class="notes-toc-item sub" href="#t2-polymer">Polymers &amp; Monomers</a>
-          <a class="notes-toc-item sub" href="#t2-carbs">Carbohydrates</a>
-          <a class="notes-toc-item sub" href="#t2-lipids">Lipids</a>
-          <a class="notes-toc-item sub" href="#t2-proteins">Proteins</a>
-          <a class="notes-toc-item sub" href="#t2-nucleic">Nucleic Acids &amp; ATP</a>
-          <a class="notes-toc-item" href="#t3">3. Genetics</a>
-          <a class="notes-toc-item sub" href="#t3-dna">DNA Structure</a>
-          <a class="notes-toc-item sub" href="#t3-replication">DNA Replication</a>
-          <a class="notes-toc-item sub" href="#t3-central">Central Dogma</a>
-          <a class="notes-toc-item sub" href="#t3-transcription">Transcription</a>
-          <a class="notes-toc-item sub" href="#t3-translation">Translation</a>
-          <a class="notes-toc-item sub" href="#t3-mutation">Mutations</a>
-          <a class="notes-toc-item sub" href="#t3-comp">Computational Genetics</a>
-          <a class="notes-toc-item" href="#t4">4. Cell Transport</a>
-          <a class="notes-toc-item sub" href="#t4-membrane">Membrane Structure</a>
-          <a class="notes-toc-item sub" href="#t4-passive">Passive Transport</a>
-          <a class="notes-toc-item sub" href="#t4-active">Active Transport</a>
-          <a class="notes-toc-item sub" href="#t4-bulk">Bulk Transport</a>
-          <a class="notes-toc-item" href="#t5">5. Metabolism</a>
-          <a class="notes-toc-item sub" href="#t5-thermo">Thermodynamics</a>
-          <a class="notes-toc-item sub" href="#t5-enzymes">Enzymes</a>
-          <a class="notes-toc-item sub" href="#t5-respiration">Cellular Respiration</a>
-          <a class="notes-toc-item sub" href="#t5-fermentation">Fermentation</a>
-          <a class="notes-toc-item sub" href="#t5-photosynthesis">Photosynthesis</a>
-          <a class="notes-toc-item sub" href="#t5-comp">Metabolic Computation</a>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div class="notes-toc-list" style="padding-top: 8px;">
+          <a class="notes-toc-item" href="#t1">01. Intro to CompBio</a>
+          <a class="notes-toc-item sub" href="#t1-def">&rarr; What is CompBio?</a>
+          <a class="notes-toc-item sub" href="#t1-fields">&rarr; Five Related Fields</a>
+          <a class="notes-toc-item sub" href="#t1-apps">&rarr; Applications</a>
+          <a class="notes-toc-item sub" href="#t1-bioinspired">&rarr; Bio-Inspired Algorithms</a>
+          <a class="notes-toc-item" href="#t2">02. Macromolecules</a>
+          <a class="notes-toc-item sub" href="#t2-polymer">&rarr; Polymers &amp; Monomers</a>
+          <a class="notes-toc-item sub" href="#t2-carbs">&rarr; Carbohydrates</a>
+          <a class="notes-toc-item sub" href="#t2-lipids">&rarr; Lipids</a>
+          <a class="notes-toc-item sub" href="#t2-proteins">&rarr; Proteins</a>
+          <a class="notes-toc-item sub" href="#t2-nucleic">&rarr; Nucleic Acids &amp; ATP</a>
+          <a class="notes-toc-item" href="#t3">03. Genetics</a>
+          <a class="notes-toc-item sub" href="#t3-dna">&rarr; DNA Structure</a>
+          <a class="notes-toc-item sub" href="#t3-replication">&rarr; DNA Replication</a>
+          <a class="notes-toc-item sub" href="#t3-central">&rarr; Central Dogma</a>
+          <a class="notes-toc-item sub" href="#t3-transcription">&rarr; Transcription</a>
+          <a class="notes-toc-item sub" href="#t3-translation">&rarr; Translation</a>
+          <a class="notes-toc-item sub" href="#t3-mutation">&rarr; Mutations</a>
+          <a class="notes-toc-item sub" href="#t3-comp">&rarr; Computational Genetics</a>
+          <a class="notes-toc-item" href="#t4">04. Cell Transport</a>
+          <a class="notes-toc-item sub" href="#t4-membrane">&rarr; Membrane Structure</a>
+          <a class="notes-toc-item sub" href="#t4-passive">&rarr; Passive Transport</a>
+          <a class="notes-toc-item sub" href="#t4-active">&rarr; Active Transport</a>
+          <a class="notes-toc-item sub" href="#t4-bulk">&rarr; Bulk Transport</a>
+          <a class="notes-toc-item" href="#t5">05. Metabolism</a>
+          <a class="notes-toc-item sub" href="#t5-thermo">&rarr; Thermodynamics</a>
+          <a class="notes-toc-item sub" href="#t5-enzymes">&rarr; Enzymes</a>
+          <a class="notes-toc-item sub" href="#t5-respiration">&rarr; Cellular Respiration</a>
+          <a class="notes-toc-item sub" href="#t5-fermentation">&rarr; Fermentation</a>
+          <a class="notes-toc-item sub" href="#t5-photosynthesis">&rarr; Photosynthesis</a>
+          <a class="notes-toc-item sub" href="#t5-comp">&rarr; Metabolic Computation</a>
           <a class="notes-toc-item" href="#t6">Glossary &amp; Recap</a>
-        </nav>
+
+        </div>
       </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">About this note</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Course</span><span style="color: var(--text-secondary);">IF3211</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Topic</span><span style="color: var(--text-secondary);">Computational Biology</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Version</span><span style="color: var(--text-secondary);">v2</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Read time</span><span style="color: var(--text-secondary);">~30 min</span>
+          </div>
+        </div>
+      </div>
+
       <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
     </div>
   </aside>
@@ -1225,40 +1243,5 @@ print(trace_pathway(glycolysis, <span class="str">'Glucose'</span>, <span class=
 
 <script src="../js/app.js"></script>
 <script src="../js/notes-common.js"></script>
-<script>
-  /* ── Reading Progress Bar ── */
-  const bar = document.getElementById('readingProgress');
-  if (bar) {
-    window.addEventListener('scroll', () => {
-      const docH = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      bar.style.width = (window.scrollY / docH * 100) + '%';
-    });
-  }
-
-  /* ── Mobile TOC Drawer ── */
-  const tocBtn = document.getElementById('tocTriggerBtn');
-  const tocOverlay = document.getElementById('tocOverlay');
-  if (tocBtn && tocOverlay) {
-    tocBtn.addEventListener('click', () => document.body.classList.toggle('toc-drawer-open'));
-    tocOverlay.addEventListener('click', () => document.body.classList.remove('toc-drawer-open'));
-    document.querySelectorAll('.notes-toc-item').forEach(link => {
-      link.addEventListener('click', () => document.body.classList.remove('toc-drawer-open'));
-    });
-  }
-
-  /* ── Active TOC Highlight on Scroll ── */
-  const sections = document.querySelectorAll('[id]');
-  const tocLinks = document.querySelectorAll('.notes-toc-item');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('active'));
-        const activeLink = document.querySelector(`.notes-toc-item[href="#${entry.target.id}"]`);
-        if (activeLink) activeLink.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-10% 0% -80% 0%' });
-  sections.forEach(s => observer.observe(s));
-</script>
 </body>
 </html>
