@@ -12,221 +12,6 @@
 
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/notes/notes.css" />
-
-  <!-- Inline minimal versions of style.css + notes.css variables -->
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --font-sans: 'Geist', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --sp-xs: 4px; --sp-sm: 8px; --sp-md: 16px; --sp-lg: 24px; --sp-xl: 40px;
-      --r-sm: 6px; --r-md: 12px; --r-lg: 18px;
-      --bg-base: #fdfaf4; --bg-surface: #f7f3eb; --bg-elevated: #f2ede2;
-      --text-primary: #1a1510; --text-secondary: #4a4540; --text-muted: #8a857a;
-      --border-subtle: rgba(30,22,10,0.1); --border-default: rgba(30,22,10,0.16); --border-strong: rgba(30,22,10,0.28);
-      --danger: #c0524a;
-      --ease: cubic-bezier(0.16,1,0.3,1);
-    }
-    body.theme-dark {
-      --bg-base: #110f0c; --bg-surface: #181510; --bg-elevated: #201d17;
-      --text-primary: #f0ebe0; --text-secondary: #c0b8a8; --text-muted: #706860;
-      --border-subtle: rgba(255,245,225,0.1); --border-default: rgba(255,245,225,0.16); --border-strong: rgba(255,245,225,0.28);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-sans); background: var(--bg-base); color: var(--text-primary); min-height: 100vh; }
-
-    /* ── LAYOUT ── */
-    .site-wrapper { display: flex; min-height: 100vh; }
-    .sidebar-left { width: 220px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; padding: 24px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--bg-surface); }
-    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 20px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 16px; }
-    .logo-mark { width: 32px; height: 32px; background: var(--text-primary); color: var(--bg-base); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.1rem; border-radius: 8px; }
-    .logo-text { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; color: var(--text-primary); }
-    .sidebar-nav { flex: 1; padding: 0 12px; display: flex; flex-direction: column; gap: 2px; }
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm); color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; transition: background 0.15s, color 0.15s; }
-    .nav-item:hover, .nav-item.active { background: var(--bg-elevated); color: var(--text-primary); }
-    .nav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
-    .theme-toggle { margin: 16px 12px 8px; padding: 8px 12px; border: 1px solid var(--border-subtle); border-radius: var(--r-sm); background: transparent; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.72rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .sidebar-profile { padding: 14px 16px 0; border-top: 1px solid var(--border-subtle); margin-top: auto; display: flex; align-items: center; gap: 10px; }
-    .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--text-primary); color: var(--bg-base); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 0.9rem; flex-shrink: 0; }
-    .profile-name { font-size: 0.8rem; font-weight: 500; color: var(--text-primary); }
-    .profile-handle { font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-mono); }
-    .main-content { flex: 1; min-width: 0; }
-    .page-header { padding: 20px 32px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: baseline; }
-    .page-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; color: var(--text-primary); }
-    .header-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
-    .sidebar-right { width: 240px; flex-shrink: 0; }
-    .card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--r-md); }
-    .card-section { padding: 12px 16px; }
-    .card-title { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
-
-    /* ── MOBILE NAV ── */
-    .mobile-nav-trigger { display: none; position: fixed; top: 12px; left: 12px; width: 42px; height: 42px; border-radius: var(--r-md); border: 1px solid var(--border-default); background: rgba(253,250,244,0.78); color: var(--text-primary); align-items: center; justify-content: center; cursor: pointer; z-index: 1300; backdrop-filter: blur(14px); }
-    body.theme-dark .mobile-nav-trigger { background: rgba(19,18,16,0.78); }
-    .mobile-nav-trigger svg { width: 18px; height: 18px; }
-    .mobile-nav-overlay { display: none; }
-    @media (max-width: 1100px) {
-      .mobile-nav-trigger { display: flex; }
-      .mobile-nav-overlay { display: block; position: fixed; inset: 0; background: rgba(12,11,9,0.36); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 1230; }
-      .sidebar-left { position: fixed; top: 0; left: 0; bottom: 0; height: 100vh; transform: translateX(-110%); transition: transform 0.24s var(--ease); z-index: 1240; pointer-events: none; visibility: hidden; }
-      body.drawer-open .sidebar-left { transform: translateX(0); pointer-events: auto; visibility: visible; }
-      body.drawer-open .mobile-nav-overlay { opacity: 1; pointer-events: auto; }
-      .sidebar-right { display: none !important; }
-    }
-
-    /* ══════════════════════════════════════
-       NOTES ARTICLE STYLES (inline)
-    ══════════════════════════════════════ */
-    body.notes-layout-article {
-      --cover-bg: linear-gradient(136deg, #f8f2e6 0%, #efe5d5 52%, #e2d2bb 100%);
-      --cover-text: #1f1710; --cover-sub: rgba(45,33,20,0.75);
-      --cover-label: rgba(58,43,28,0.72); --cover-chip-border: rgba(53,37,20,0.23);
-      --cover-chip-text: rgba(38,27,16,0.86); --cover-ring-a: rgba(84,58,27,0.17);
-      --cover-ring-b: rgba(84,58,27,0.12); --cover-ref: rgba(58,41,24,0.68);
-    }
-    body.theme-dark.notes-layout-article {
-      --cover-bg: linear-gradient(140deg, #12100d 0%, #1b1712 48%, #2a2117 100%);
-      --cover-text: #f7f3ea; --cover-sub: rgba(250,245,236,0.64);
-      --cover-label: rgba(250,245,236,0.44); --cover-chip-border: rgba(250,245,236,0.25);
-      --cover-chip-text: rgba(250,245,236,0.78); --cover-ring-a: rgba(250,245,236,0.08);
-      --cover-ring-b: rgba(250,245,236,0.06); --cover-ref: rgba(250,245,236,0.34);
-    }
-    .notes-cover { background: var(--cover-bg); color: var(--cover-text); padding: 64px 48px 52px; position: relative; overflow: hidden; }
-    .notes-cover::before { content:''; position: absolute; top:-60px; right:-60px; width:360px; height:360px; border-radius:50%; border:1px solid var(--cover-ring-a); }
-    .notes-cover::after { content:''; position: absolute; bottom:-80px; left:30%; width:480px; height:480px; border-radius:50%; border:1px solid var(--cover-ring-b); }
-    .cover-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--cover-label); margin-bottom: 20px; }
-    .notes-cover h1 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; color: var(--cover-text); }
-    .cover-sub { font-size: 15px; color: var(--cover-sub); font-style: italic; margin-bottom: 32px; }
-    .cover-topics { display: flex; gap: 10px; flex-wrap: wrap; }
-    .topic-chip { font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 14px; border: 1px solid var(--cover-chip-border); border-radius: 2px; letter-spacing: .08em; color: var(--cover-chip-text); background: transparent; }
-    .refs-note { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--cover-ref); margin-top: 28px; letter-spacing: .05em; }
-
-    .notes-scope * { box-sizing: border-box; }
-    .notes-scope {
-      --ink:#1a1814; --ink-soft:#3d3a35; --ink-faint:#6e6a62;
-      --paper:#faf8f4; --paper-warm:#f3f0e8; --paper-cream:#ede9de;
-      --rule:#d5d0c5; --rule-light:#e8e4d8;
-      --accent-p:#5c3fa0; --accent-p-bg:#f0ecfa; --accent-p-mid:#9b85d4;
-      --accent-n:#1a6b4a; --accent-n-bg:#edf7f2; --accent-n-mid:#5aa882;
-      --accent-b:#174e87; --accent-b-bg:#eaf2fb; --accent-b-mid:#6699cc;
-      --accent-r:#912b2b; --accent-r-bg:#fdf0f0; --accent-r-mid:#cc7777;
-      --accent-o:#7a4a10; --accent-o-bg:#fdf5e8; --accent-o-mid:#d4961f;
-      font-family: 'Source Serif 4', Georgia, serif;
-      background: var(--paper); color: var(--ink);
-      line-height: 1.75; font-size: 15px; padding: 32px;
-    }
-    body.theme-dark .notes-scope {
-      --ink:#ece6da; --ink-soft:#c8bfaf; --ink-faint:#998f7f;
-      --paper:#11100d; --paper-warm:#191713; --paper-cream:#23201b;
-      --rule:#3c352c; --rule-light:#2f2a22;
-      --accent-p:#c9b0f8; --accent-p-bg:rgba(155,133,212,0.22); --accent-p-mid:rgba(201,176,248,0.45);
-      --accent-n:#9ad9b6; --accent-n-bg:rgba(90,168,130,0.24); --accent-n-mid:rgba(154,217,182,0.46);
-      --accent-b:#a5c9f1; --accent-b-bg:rgba(102,153,204,0.24); --accent-b-mid:rgba(165,201,241,0.46);
-      --accent-r:#e7adad; --accent-r-bg:rgba(204,119,119,0.24); --accent-r-mid:rgba(231,173,173,0.46);
-      --accent-o:#efc383; --accent-o-bg:rgba(212,150,31,0.24); --accent-o-mid:rgba(239,195,131,0.46);
-    }
-    .notes-scope h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; margin: 36px 0 10px; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 7px; }
-    .notes-scope h4 { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin: 20px 0 7px; }
-    .notes-scope p { margin-bottom: 12px; color: var(--ink-soft); }
-    .notes-scope a { color: var(--accent-b); }
-    .notes-scope strong { color: var(--ink); }
-    .notes-scope em { font-style: italic; }
-    .notes-scope ul.notes { list-style: none; padding-left: 0; margin: 12px 0 16px; }
-    .notes-scope ul.notes li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 14px; color: var(--ink-soft); }
-    .notes-scope ul.notes li::before { content: '›'; position: absolute; left: 0; color: var(--accent-b); font-weight: 700; }
-    .notes-scope ul.notes li.green::before { color: var(--accent-n); }
-    .notes-scope ul.notes li.orange::before { color: var(--accent-o); }
-    .notes-scope ul.notes li.purple::before { color: var(--accent-p); }
-    .notes-scope ul.notes li.red::before { color: var(--accent-r); }
-    .notes-scope pre, .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
-    .notes-scope pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-x: auto; line-height: 1.6; margin: 12px 0; }
-    .notes-scope code { background: var(--paper-cream); border: 1px solid var(--rule); padding: 1px 6px; border-radius: 3px; }
-    .notes-scope pre code { background: none; border: none; padding: 0; }
-
-    /* Part headers */
-    .notes-scope .part-header { margin: 48px 0 0; padding: 24px 28px; border-left: 4px solid var(--ink); background: var(--paper-warm); border-radius: 0 4px 4px 0; }
-    .notes-scope .part-header.purple { border-left-color: var(--accent-p); }
-    .notes-scope .part-header.green { border-left-color: var(--accent-n); }
-    .notes-scope .part-header.blue { border-left-color: var(--accent-b); }
-    .notes-scope .part-header.orange { border-left-color: var(--accent-o); }
-    .notes-scope .part-header.red { border-left-color: var(--accent-r); }
-    .notes-scope .part-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
-    .notes-scope .part-header h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
-    .notes-scope .part-header p { color: var(--ink-soft); font-size: 14px; margin: 0; }
-
-    /* Formula block */
-    .notes-scope .formula-block { margin: 18px 0; background: var(--paper-cream); border: 1px solid var(--rule); border-left: 3px solid var(--ink); border-radius: 0 4px 4px 0; padding: 16px 20px; overflow-x: auto; }
-    .notes-scope .formula-block.purple { border-left-color: var(--accent-p); }
-    .notes-scope .formula-block.green { border-left-color: var(--accent-n); }
-    .notes-scope .formula-block.blue { border-left-color: var(--accent-b); }
-    .notes-scope .formula-block.orange { border-left-color: var(--accent-o); }
-    .notes-scope .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; display: block; }
-    .notes-scope .formula-desc { font-size: 12px; color: var(--ink-faint); margin-top: 6px; font-style: italic; }
-
-    /* Callouts */
-    .notes-scope .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; display: flex; gap: 12px; align-items: flex-start; }
-    .notes-scope .callout.note { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
-    .notes-scope .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
-    .notes-scope .callout.success { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
-    .notes-scope .callout.warn { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
-    .notes-scope .callout.danger { background: var(--accent-r-bg); border-color: var(--accent-r-mid); color: var(--accent-r); }
-    .notes-scope .callout-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; }
-    .notes-scope .callout-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-    .notes-scope .callout-body { min-width: 0; }
-    .notes-scope .callout-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-    .notes-scope .callout-text { font-size: 13px; margin-bottom: 0; color: inherit; }
-
-    /* Progress bar */
-    .progress-bar-wrap { height: 3px; background: var(--border-subtle); border-radius: 2px; margin-bottom: 20px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; width: 0; background: var(--accent-b, #174e87); border-radius: 2px; transition: width 0.1s; }
-
-    /* TOC */
-    .notes-toc-list { display: flex; flex-direction: column; gap: 2px; }
-    .notes-toc-item { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-muted, #8a857a); padding: 5px 16px; text-decoration: none; border-left: 2px solid transparent; transition: color 0.15s, border-color 0.15s; display: block; letter-spacing: 0.03em; }
-    .notes-toc-item:hover, .notes-toc-item.active { color: var(--text-primary, #1a1510); border-left-color: var(--accent-b, #174e87); }
-
-    /* Custom additions: viz containers */
-    .notes-scope .viz-container { margin: 20px 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--paper-warm); }
-    .notes-scope .viz-caption { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint); padding: 8px 16px; border-top: 1px solid var(--rule); }
-    .notes-scope .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-    .notes-scope .col-card { background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; }
-    .notes-scope .col-card .col-title { font-weight: 600; font-size: 13px; margin-bottom: 8px; color: var(--ink); }
-    .notes-scope .term-grid { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 12px 0 18px; font-size: 13px; align-items: baseline; }
-    .notes-scope .term { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent-p); white-space: nowrap; padding: 2px 0; }
-    .notes-scope .def { color: var(--ink-soft); }
-    .notes-scope .comparison-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
-    .notes-scope .comparison-table th { font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; background: var(--paper-cream); padding: 8px 12px; text-align: left; border: 1px solid var(--rule); color: var(--ink-faint); }
-    .notes-scope .comparison-table td { padding: 8px 12px; border: 1px solid var(--rule); vertical-align: top; color: var(--ink-soft); }
-    .notes-scope .comparison-table tr:nth-child(even) td { background: var(--paper-warm); }
-    .notes-scope .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; letter-spacing: .06em; font-weight: 600; }
-    .notes-scope .badge.blue { background: var(--accent-b-bg); color: var(--accent-b); border: 1px solid var(--accent-b-mid); }
-    .notes-scope .badge.green { background: var(--accent-n-bg); color: var(--accent-n); border: 1px solid var(--accent-n-mid); }
-    .notes-scope .badge.purple { background: var(--accent-p-bg); color: var(--accent-p); border: 1px solid var(--accent-p-mid); }
-    .notes-scope .badge.orange { background: var(--accent-o-bg); color: var(--accent-o); border: 1px solid var(--accent-o-mid); }
-    .notes-scope .badge.red { background: var(--accent-r-bg); color: var(--accent-r); border: 1px solid var(--accent-r-mid); }
-
-    @media (max-width: 900px) {
-      .notes-scope .two-col { grid-template-columns: 1fr; }
-      .notes-cover { padding: 40px 24px 36px; }
-      .notes-cover h1 { font-size: 30px; }
-    }
-
-    /* Notes TOC drawer (mobile) */
-    .notes-toc-trigger { display: none; position: fixed; top: 12px; right: 12px; height: 42px; border-radius: var(--r-md); border: 1px solid var(--border-default); background: rgba(253,250,244,0.78); color: var(--text-primary); padding: 0 12px; align-items: center; justify-content: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; z-index: 1300; transition: all 0.18s; backdrop-filter: blur(14px); }
-    body.theme-dark .notes-toc-trigger { background: rgba(19,18,16,0.78); }
-    .notes-toc-trigger svg { width: 16px; height: 16px; }
-    .notes-toc-overlay { display: none; }
-    @media (max-width: 1100px) {
-      .notes-toc-trigger { display: inline-flex; }
-      .notes-toc-overlay { display: block; position: fixed; inset: 0; background: rgba(12,11,9,0.36); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 1230; }
-      .sidebar-right { display: block !important; position: fixed !important; top: 0; right: 0; bottom: 0; width: min(86vw, 340px) !important; height: 100vh !important; padding: 20px 14px 18px !important; border-left: 1px solid var(--border-subtle); background: rgba(253,250,244,0.88); transform: translateX(110%); transition: transform 0.24s var(--ease); z-index: 1240; overflow-y: auto; pointer-events: none; visibility: hidden; backdrop-filter: blur(18px); }
-      body.theme-dark .sidebar-right { background: rgba(19,18,16,0.88); }
-      .sidebar-right > div { position: static !important; padding-top: 0 !important; }
-      body.toc-drawer-open .notes-toc-overlay { opacity: 1; pointer-events: auto; }
-      body.toc-drawer-open .sidebar-right { transform: translateX(0); pointer-events: auto; visibility: visible; }
-    }
-  </style>
 </head>
 <body class="notes-layout-article">
 
@@ -242,11 +27,11 @@
       <span class="logo-text">Sayyaku</span>
     </div>
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg><span class="nav-label">Home</span></a>
-      <a href="#" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="nav-label">Writings</span></a>
-      <a href="#" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="nav-label">Projects</span></a>
-      <a href="#" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="nav-label">About</span></a>
-      <a href="#" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="nav-label">Notes</span></a>
+      <a href="../index.html" class="nav-item" data-page="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg><span class="nav-label">Home</span></a>
+      <a href="../pages/writings.html" class="nav-item" data-page="writings.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="nav-label">Writings</span></a>
+      <a href="../pages/projects.html" class="nav-item" data-page="projects.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="nav-label">Projects</span></a>
+      <a href="../pages/about.html" class="nav-item" data-page="about.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="nav-label">About</span></a>
+      <a href="../pages/notes.html" class="nav-item active" data-page="notes"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="nav-label">Notes</span></a>
     </nav>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
       <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
@@ -347,7 +132,7 @@
       </div>
 
       <h3>Terminologi Kunci: Komponen SI</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Technoware</span><span class="def">Teknologi yang digunakan — HW, SW, jaringan (Infoware) + teknologi pendukung lainnya</span>
         <span class="term">Organoware</span><span class="def">Dimensi organisasional: struktur, kebijakan, dan prosedur bisnis (SOP)</span>
         <span class="term">Brainware</span><span class="def">Sumber daya manusia: pengguna, pengelola (sysadmin, helpdesk), dan pengembang sistem</span>
@@ -358,10 +143,7 @@
       <p>SI harus menyediakan informasi bagi organisasi dengan memenuhi tujuh kriteria kualitas informasi (COBIT-based):</p>
 
       <div class="viz-container">
-        <svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:12px;">
-          <defs>
-            <style>.goal-box rect{rx:4;ry:4} .goal-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase} .goal-desc{font-family:'Source Serif 4',serif;font-size:10px}</style>
-          </defs>
+        <svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <!-- 7 boxes -->
           <g transform="translate(10,20)">
             <rect width="82" height="130" rx="4" fill="#eaf2fb" stroke="#6699cc" stroke-width="1.2"/>
@@ -447,7 +229,7 @@
 
       <h3>Penyelarasan SI, TI, dan Bisnis</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:16px;">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <!-- Three columns -->
           <rect x="20" y="30" width="160" height="140" rx="6" fill="#fdf5e8" stroke="#d4961f" stroke-width="1.5"/>
           <text x="100" y="55" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="600" fill="#7a4a10" letter-spacing=".08em">STRATEGI BISNIS</text>
@@ -496,42 +278,42 @@
 
       <div class="viz-container">
         <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
-          <!-- Pyramid layers -->
-          <!-- Wisdom (top) -->
-          <polygon points="280,30 210,110 350,110" fill="#5c3fa0" opacity="0.85"/>
-          <text x="280" y="78" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">WISDOM</text>
-          <!-- Knowledge -->
-          <polygon points="210,115 130,195 430,195" fill="#174e87" opacity="0.8"/>
-          <text x="280" y="163" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">KNOWLEDGE</text>
-          <!-- Information -->
-          <polygon points="130,200 50,280 510,280" fill="#1a6b4a" opacity="0.75"/>
-          <text x="280" y="248" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">INFORMATION</text>
-          <!-- Data (base) -->
-          <polygon points="50,285 20,330 540,330 510,285" fill="#7a4a10" opacity="0.65"/>
-          <text x="280" y="313" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">DATA</text>
+          <!-- Pyramid layers — shared edges, no gaps -->
+          <!-- Wisdom (top triangle): apex → y=30, base → y=105 -->
+          <polygon points="280,30 221,105 339,105" fill="#5c3fa0" opacity="0.9"/>
+          <text x="280" y="74" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">WISDOM</text>
+          <!-- Knowledge: y=105 → y=180 -->
+          <polygon points="221,105 339,105 398,180 163,180" fill="#174e87" opacity="0.85"/>
+          <text x="280" y="147" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">KNOWLEDGE</text>
+          <!-- Information: y=180 → y=255 -->
+          <polygon points="163,180 398,180 456,255 104,255" fill="#1a6b4a" opacity="0.8"/>
+          <text x="280" y="222" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">INFORMATION</text>
+          <!-- Data (base): y=255 → y=330 -->
+          <polygon points="104,255 456,255 515,330 45,330" fill="#7a4a10" opacity="0.75"/>
+          <text x="280" y="297" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="white">DATA</text>
 
           <!-- Right side labels -->
-          <text x="380" y="78" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">Pengetahuan yang</text>
-          <text x="380" y="92" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">diakumulasikan &amp;</text>
-          <text x="380" y="106" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">diaplikasikan</text>
+          <text x="540" y="58" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">Pengetahuan yang</text>
+          <text x="540" y="72" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">diakumulasikan &amp;</text>
+          <text x="540" y="86" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#5c3fa0">diaplikasikan</text>
 
-          <text x="445" y="160" font-family="Source Serif 4,serif" font-size="11" fill="#174e87">Info + pola,</text>
-          <text x="445" y="174" font-family="Source Serif 4,serif" font-size="11" fill="#174e87">pengalaman</text>
+          <text x="540" y="138" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#174e87">Info + pola,</text>
+          <text x="540" y="152" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#174e87">pengalaman</text>
 
-          <text x="525" y="242" font-family="Source Serif 4,serif" font-size="11" fill="#1a6b4a">Data + konteks</text>
-          <text x="525" y="256" font-family="Source Serif 4,serif" font-size="11" fill="#1a6b4a">&amp; makna</text>
+          <text x="540" y="213" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#1a6b4a">Data + konteks</text>
+          <text x="540" y="227" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#1a6b4a">&amp; makna</text>
 
-          <text x="555" y="313" font-family="Source Serif 4,serif" font-size="11" fill="#7a4a10">Fakta mentah</text>
+          <text x="540" y="297" text-anchor="end" font-family="Source Serif 4,serif" font-size="11" fill="#7a4a10">Fakta mentah</text>
 
           <!-- Volume/Value axis -->
-          <text x="14" y="200" font-family="IBM Plex Mono,monospace" font-size="9" fill="#998f7f" transform="rotate(-90,14,200)">VOLUME</text>
-          <text x="548" y="200" font-family="IBM Plex Mono,monospace" font-size="9" fill="#998f7f" transform="rotate(90,548,200)">VALUE</text>
+          <text x="22" y="200" font-family="IBM Plex Mono,monospace" font-size="9" fill="#998f7f" transform="rotate(-90,22,200)">VOLUME</text>
+          <text x="536" y="200" font-family="IBM Plex Mono,monospace" font-size="9" fill="#998f7f" transform="rotate(90,536,200)">VALUE</text>
         </svg>
         <div class="viz-caption">Gambar 4. Piramida Data — semakin ke atas semakin bernilai, semakin kecil volumenya</div>
       </div>
 
       <h3>Definisi Lengkap</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Data (Datum)</span><span class="def">Satu atau lebih simbol yang merepresentasikan sesuatu — fakta mentah, belum terformat. Bentuknya bisa berupa: nilai terformat, teks, citra (image), audio, dan video.</span>
         <span class="term">Informasi</span><span class="def">Data yang telah diolah menjadi bentuk yang <em>berarti</em> bagi penerimanya dan bermanfaat dalam pengambilan keputusan (Davis, 1999). Shannon &amp; Weaver: informasi = jumlah ketidakpastian yang dikurangi.</span>
         <span class="term">Pengetahuan</span><span class="def">Kombinasi dari naluri, gagasan, aturan, dan prosedur yang mengarahkan tindakan atau keputusan (Alter, 1992). Informasi + pengalaman masa lalu + keahlian.</span>
@@ -576,7 +358,7 @@
 
       <h3>Siklus Informasi (Burch &amp; Grudnitski, 1989)</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:16px;">
+        <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <defs>
             <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#998f7f"/></marker>
           </defs>
@@ -614,7 +396,7 @@
 
       <h3>Level Manajemen</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:16px;">
+        <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <!-- Three tiers -->
           <rect x="30" y="20" width="340" height="55" rx="4" fill="#fdf0f0" stroke="#cc7777" stroke-width="1.5"/>
           <text x="200" y="43" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#912b2b">TOP LEVEL — Strategic Planning</text>
@@ -641,7 +423,7 @@
       </div>
 
       <h3>Proses Manajemen (POLC)</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Planning</span><span class="def">Menetapkan apa yang akan dikerjakan — penentuan tujuan dan cara pencapaian terbaik</span>
         <span class="term">Organizing</span><span class="def">Membuat pengaturan — penentuan bagaimana penyusunan organisasi dan aktivitas</span>
         <span class="term">Leading</span><span class="def">Memberikan arahan — proses memotivasi anggota organisasi agar planning dapat dijalankan</span>
@@ -690,7 +472,7 @@
       </div>
 
       <div class="viz-container">
-        <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:10px;">
+        <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <!-- Support activities (top) -->
           <rect x="20" y="20" width="480" height="36" rx="3" fill="#eaf2fb" stroke="#6699cc" stroke-width="1.2"/>
           <text x="260" y="43" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="600" fill="#174e87">FIRM INFRASTRUCTURE (Finance, Legal, Management)</text>
@@ -766,7 +548,7 @@
       <p>Perusahaan harus memahami 5 kekuatan yang mempengaruhi industrinya untuk bertahan dan berkembang:</p>
 
       <div class="viz-container">
-        <svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:10px;">
+        <svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <defs>
             <marker id="arr3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#998f7f"/></marker>
           </defs>
@@ -801,7 +583,7 @@
         <div class="viz-caption">Gambar 8. Porter's Five Forces Model — Lima kekuatan yang mempengaruhi industri</div>
       </div>
 
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Rivalry</span><span class="def">Intensitas persaingan — tergantung jumlah pesaing, pertumbuhan industri, hambatan keluar, komitmen pesaing</span>
         <span class="term">New Entrants</span><span class="def">Hambatan masuk: economies of scale, switching costs, capital requirements, regulasi pemerintah, akses distribusi</span>
         <span class="term">Substitutes</span><span class="def">Produk yang memenuhi fungsi yang sama dengan cara berbeda (e.g., video call = substitute perjalanan bisnis)</span>
@@ -830,7 +612,7 @@
       </div>
 
       <h3>Elemen Kunci Proses Bisnis</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Customer</span><span class="def">Orang yang menerima dan menggunakan manfaat langsung dari produk/layanan hasil proses</span>
         <span class="term">Products/Services</span><span class="def">Keluaran yang dihasilkan dari proses untuk customer</span>
         <span class="term">Business Process</span><span class="def">Kumpulan langkah/aktivitas yang dibangun dalam sistem</span>
@@ -861,7 +643,7 @@
 
       <!-- BPMN Symbols Visualization -->
       <div class="viz-container">
-        <svg viewBox="0 0 660 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:14px;">
+        <svg viewBox="0 0 660 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
 
           <!-- EVENTS section -->
           <text x="16" y="24" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" fill="#5c3fa0" letter-spacing=".06em">EVENTS</text>
@@ -952,7 +734,7 @@
       </div>
 
       <h3>Terminologi BPMN Lengkap</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Start Event</span><span class="def">Lingkaran tipis — menandai dimulainya proses. Tidak ada incoming sequence flow.</span>
         <span class="term">End Event</span><span class="def">Lingkaran tebal — menandai berakhirnya proses. Tidak ada outgoing sequence flow.</span>
         <span class="term">Intermediate Event</span><span class="def">Lingkaran ganda — terjadi selama proses berlangsung (timer, message, error, dll).</span>
@@ -987,7 +769,7 @@
       </div>
 
       <div class="viz-container">
-        <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:12px;">
+        <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <defs>
             <marker id="sa" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#3d3a35"/></marker>
           </defs>
@@ -1094,7 +876,7 @@
 
       <h3>Tahapan SDLC</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 680 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:12px;">
+        <svg viewBox="0 0 680 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <defs>
             <marker id="sa2" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0, 6 2.5, 0 5" fill="#998f7f"/></marker>
           </defs>
@@ -1139,7 +921,7 @@
 
       <h3>Feasibility Study</h3>
       <p>Studi kelayakan adalah investigasi untuk mengevaluasi potensi keberhasilan proyek sebelum mulai dibangun. Hanya proyek yang memberikan ROI yang reasonable akan didukung.</p>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Technical</span><span class="def">Can we build it? — Apakah teknologi yang dibutuhkan tersedia dan tim mampu menggunakannya?</span>
         <span class="term">Economic</span><span class="def">Is it worth it? — TCO (Total Cost of Ownership) vs tangible &amp; intangible benefits</span>
         <span class="term">Operational</span><span class="def">Will users accept it? — Apakah pengguna akan mengadopsi sistem ini?</span>
@@ -1161,7 +943,7 @@
 
       <h3>Tipe-tipe Model SDLC</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:12px;">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <!-- Waterfall -->
           <text x="100" y="20" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="600" fill="#174e87">WATERFALL</text>
           <rect x="20" y="28" width="160" height="28" rx="3" fill="#eaf2fb" stroke="#6699cc" stroke-width="1.2"/>
@@ -1282,7 +1064,7 @@
 
       <h3>Framework Requirement Engineering</h3>
       <div class="viz-container">
-        <svg viewBox="0 0 580 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;padding:14px;">
+        <svg viewBox="0 0 580 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#faf8f4;">
           <defs>
             <marker id="ra" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#998f7f"/></marker>
           </defs>
@@ -1308,7 +1090,7 @@
       </div>
 
       <h3>Peran dalam Requirements Engineering</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Project Sponsor</span><span class="def">Pemilik proyek, pengambil keputusan final. Accountable for delivery of business benefit.</span>
         <span class="term">Managers</span><span class="def">Owners dari requirements individual — memiliki input ke proses dan otoritas atas relevansi requirement.</span>
         <span class="term">Users (Process Workers)</span><span class="def">Yang bekerja dengan sistem existing — sumber informasi kunci tentang kebutuhan aktual.</span>
@@ -1367,7 +1149,7 @@
       </div>
 
       <h3>Klasifikasi PIECES</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">P — Performance</span><span class="def">Throughput, response time — "sistem harus merespons dalam 2 detik"</span>
         <span class="term">I — Information</span><span class="def">Akurasi, relevansi, ketepatan waktu informasi yang dihasilkan/disimpan</span>
         <span class="term">E — Economy</span><span class="def">Biaya, profitabilitas — pengurangan cost atau peningkatan revenue</span>
@@ -1380,7 +1162,7 @@
       <p>Analisis kebutuhan adalah proses mengkaji, merafining, menyusun, dan memprioritaskan requirements agar jelas, lengkap, dan actionable untuk desain sistem.</p>
 
       <h4>Prioritisasi: MoSCoW Method</h4>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Must Have</span><span class="def">Fundamental/wajib — tanpa ini, solusi tidak bisa diterima. Contoh: kemampuan merekam item masuk/keluar di inventory system.</span>
         <span class="term">Should Have</span><span class="def">Wajib tapi tidak harus di Day 1 — bisa delay atau workaround manual sementara waktu.</span>
         <span class="term">Could Have</span><span class="def">Nice to have — akan diimplementasikan jika mudah dilakukan bersama Must &amp; Should haves, otherwise dilewatkan.</span>
@@ -1449,7 +1231,7 @@
       </div>
 
       <h3>Requirements Management</h3>
-      <div class="term-grid">
+      <div class="term-grid term-grid-pairs">
         <span class="term">Requirements Catalogue</span><span class="def">Repository (database) untuk semua requirements — central source of truth</span>
         <span class="term">Glossary of Terms</span><span class="def">Menghilangkan ambiguitas dari dokumen requirements — definisikan apa arti "customer" dalam konteks proyek ini</span>
         <span class="term">Functional Models</span><span class="def">DFD, use case diagram — melengkapi functional requirements secara visual</span>
@@ -1582,136 +1364,7 @@
 </button>
 <div class="notes-toc-overlay" aria-hidden="true"></div>
 
-<script>
-/* ── THEME ── */
-const THEME_KEY = 'portfolio-theme';
-function getTheme() { try { return localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light'; } catch(e) { return 'light'; } }
-function setTheme(t) { try { localStorage.setItem(THEME_KEY, t); } catch(e) {} }
-function applyTheme(t) {
-  const isDark = t === 'dark';
-  document.body.classList.toggle('theme-dark', isDark);
-  const toggle = document.getElementById('theme-toggle');
-  if (!toggle) return;
-  toggle.setAttribute('aria-pressed', String(isDark));
-  const icon = toggle.querySelector('.theme-toggle-icon');
-  const label = toggle.querySelector('.theme-toggle-label');
-  if (icon) icon.textContent = isDark ? '☽' : '☀';
-  if (label) label.textContent = isDark ? 'Dark' : 'Light';
-}
-applyTheme(getTheme());
-document.getElementById('theme-toggle')?.addEventListener('click', () => {
-  const next = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
-  applyTheme(next); setTheme(next);
-});
-
-/* ── READING PROGRESS ── */
-const bar = document.getElementById('readingProgress');
-if (bar) {
-  const updateBar = () => {
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = total <= 0 ? '0%' : Math.min(100, Math.max(0, (window.scrollY / total) * 100)) + '%';
-  };
-  window.addEventListener('scroll', updateBar, { passive: true });
-  window.addEventListener('resize', updateBar, { passive: true });
-  updateBar();
-}
-
-/* ── TOC ACTIVE STATE ── */
-(function() {
-  const links = Array.from(document.querySelectorAll('.notes-toc-item[href^="#"]'));
-  if (!links.length) return;
-  const sections = links.map(l => document.getElementById(l.getAttribute('href').slice(1))).filter(Boolean);
-  let lastId = '';
-  const setActive = id => {
-    if (!id || id === lastId) return;
-    lastId = id;
-    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
-  };
-  const getActive = () => {
-    const marker = Math.max(96, window.innerHeight * 0.26);
-    for (let i = sections.length - 1; i >= 0; i--) {
-      if (sections[i].getBoundingClientRect().top <= marker) return sections[i].id;
-    }
-    return sections[0].id;
-  };
-  let ticking = false;
-  const update = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { setActive(getActive()); ticking = false; }); };
-  links.forEach(l => l.addEventListener('click', () => { const h = l.getAttribute('href'); if (h && h.length > 1) setActive(h.slice(1)); }));
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
-})();
-
-/* ── MOBILE NAV ── */
-(function() {
-  const sidebar = document.querySelector('.sidebar-left');
-  const trigger = document.querySelector('.mobile-nav-trigger');
-  const overlay = document.querySelector('.mobile-nav-overlay');
-  if (!sidebar || !trigger || !overlay) return;
-  const mq = window.matchMedia('(max-width: 1100px)');
-  const close = () => { document.body.classList.remove('drawer-open'); trigger.setAttribute('aria-expanded', 'false'); };
-  const open = () => { if (!mq.matches) return; document.body.classList.add('drawer-open'); trigger.setAttribute('aria-expanded', 'true'); };
-  trigger.addEventListener('click', () => document.body.classList.contains('drawer-open') ? close() : open());
-  overlay.addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  sidebar.querySelectorAll('.nav-item').forEach(l => l.addEventListener('click', close));
-})();
-
-/* ── TOC DRAWER ── */
-(function() {
-  const trigger = document.querySelector('.notes-toc-trigger');
-  const overlay = document.querySelector('.notes-toc-overlay');
-  if (!trigger || !overlay) return;
-  const mq = window.matchMedia('(max-width: 1100px)');
-  const close = () => { document.body.classList.remove('toc-drawer-open'); trigger.setAttribute('aria-expanded', 'false'); };
-  const open = () => { if (!mq.matches) return; document.body.classList.remove('drawer-open'); document.body.classList.add('toc-drawer-open'); trigger.setAttribute('aria-expanded', 'true'); };
-  trigger.addEventListener('click', () => document.body.classList.contains('toc-drawer-open') ? close() : open());
-  overlay.addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  document.querySelectorAll('.notes-toc-item').forEach(l => l.addEventListener('click', close));
-})();
-
-/* ── POINTER TRAIL ── */
-(function() {
-  const btn = document.getElementById('cursorToggleBtn');
-  const pointer = document.getElementById('cursorPointer');
-  const canvas = document.getElementById('cursorTrailCanvas');
-  if (!btn || !pointer || !canvas) return;
-  const ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) return;
-  let state = { enabled: false, points: [], x: window.innerWidth/2, y: window.innerHeight/2 };
-  const MAX = 52;
-  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-  const updateUI = () => { btn.classList.toggle('is-on', state.enabled); btn.setAttribute('aria-pressed', String(state.enabled)); document.body.classList.toggle('cursor-mode-on', state.enabled); };
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (state.points.length > 1) {
-      for (let i = 1; i < state.points.length; i++) {
-        const p = state.points[i-1], c = state.points[i], t = i/state.points.length;
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(c.x, c.y);
-        ctx.lineWidth = 0.9 + 1.3*t; ctx.lineCap = 'round';
-        ctx.strokeStyle = `rgba(255,24,24,${0.04 + 0.22*t})`; ctx.shadowBlur = 6+7*t; ctx.shadowColor = 'rgba(255,24,24,0.45)'; ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(c.x, c.y);
-        ctx.lineWidth = 0.28 + 0.62*t; ctx.strokeStyle = `rgba(255,68,68,${0.18+0.58*t})`; ctx.shadowBlur = 0; ctx.stroke();
-      }
-      ctx.shadowBlur = 0;
-    }
-    state.points.splice(0, 1);
-    requestAnimationFrame(draw);
-  };
-  window.addEventListener('resize', resize);
-  window.addEventListener('mousemove', e => {
-    state.x = e.clientX; state.y = e.clientY;
-    pointer.style.left = state.x + 'px'; pointer.style.top = state.y + 'px';
-    if (state.enabled) { state.points.push({x:state.x,y:state.y}); if (state.points.length > MAX) state.points.splice(0, state.points.length - MAX); }
-  });
-  btn.addEventListener('click', () => {
-    state.enabled = !state.enabled;
-    if (!state.enabled) { state.points.length = 0; ctx.clearRect(0,0,canvas.width,canvas.height); }
-    updateUI();
-  });
-  resize(); updateUI(); draw();
-})();
-</script>
+<script src="../js/app.js"></script>
+<script src="../js/notes-common.js"></script>
 </body>
 </html>
