@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note Template - Sayyaku</title>
+  <meta name="description" content="Reusable note template for portfolio notes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Portfolio fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Notes fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      chtml: { scale: 1.05, matchFontHeight: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <!-- Portfolio styles -->
+  <link rel="stylesheet" href="../../css/style.css" />
+  <!-- Notes styles -->
+  <link rel="stylesheet" href="../../css/notes/notes.css" />
+</head>
+<body class="notes-layout-article">
+
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<div class="site-wrapper">
+
+  <!-- ── LEFT SIDEBAR (portfolio nav) ── -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <div class="logo-mark">S</div>
+      <span class="logo-text">Sayyaku</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../../index.html" class="nav-item" data-page="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="../../pages/writings.html" class="nav-item" data-page="writings.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-label">Writings</span>
+      </a>
+      <a href="../../pages/projects.html" class="nav-item" data-page="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="../../pages/about.html" class="nav-item" data-page="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="../../pages/notes.html" class="nav-item" data-page="notes">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <span class="nav-label">Notes</span>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT (notes) ── -->
+  <main class="main-content" style="max-width: none; flex: 1; min-width: 0;">
+
+    <!-- Sticky page header -->
+    <div class="page-header">
+      <span class="page-title">Note Title</span>
+      <span class="header-meta">COURSE000 &middot; Study Notes</span>
+    </div>
+
+    <!-- Notes cover -->
+    <div class="notes-cover">
+      <div class="cover-label">COURSE000 Course Name &middot; Midterm / Final Study Notes</div>
+      <h1>Your Note Title<br>With Optional Subtitle</h1>
+      <div class="cover-sub">Topic A &middot; Topic B &middot; Topic C</div>
+      <div class="cover-topics">
+        <span class="topic-chip">Core Concept 1</span>
+        <span class="topic-chip">Core Concept 2</span>
+        <span class="topic-chip">Core Concept 3</span>
+        <span class="topic-chip">Core Concept 4</span>
+      </div>
+      <div class="refs-note">References: Book / Paper / Lecture Deck / Instructor Notes</div>
+    </div>
+
+    <!-- Notes content (scoped) -->
+    <div class="notes-scope">
+
+      <!-- ══════════════ PART 1 ══════════════ -->
+      <div id="part1" class="part-header purple">
+        <div class="part-num">01 &middot; Foundations</div>
+        <h2>First Major Section</h2>
+        <p>Open with a concise explanation of the section scope and why it matters. Reference sources inline (Author Year, Ch. N).</p>
+      </div>
+
+      <h3>1.1 Key Idea</h3>
+      <p>Write the concept in plain language first, then add technical detail and caveats. Use <strong>bold</strong> for the first introduction of a term, and <em>italics</em> for emphasis.</p>
+
+      <div class="term-grid">
+        <div class="term-card"><div class="term-name">Term A</div><div class="term-def">Definition of Term A. Keep it to one or two sentences.</div></div>
+        <div class="term-card"><div class="term-name">Term B</div><div class="term-def">Definition of Term B. Reference the formula or equation where applicable.</div></div>
+        <div class="term-card"><div class="term-name">Term C</div><div class="term-def">Definition of Term C. Note any common gotchas or edge cases.</div></div>
+        <div class="term-card"><div class="term-name">Term D</div><div class="term-def">Definition of Term D.</div></div>
+      </div>
+
+      <h3>1.2 Core Formula</h3>
+
+      <div class="formula-block purple">
+        <div class="formula-label">Formula Name or Equation Label</div>
+        \[ y = f(\mathbf{x}; \mathbf{w}) = \mathbf{w}^T \mathbf{x} + b \]
+        <div class="formula-desc">Briefly explain every symbol: \(\mathbf{w}\) = weight vector &nbsp;&middot;&nbsp; \(\mathbf{x}\) = input &nbsp;&middot;&nbsp; \(b\) = bias.</div>
+      </div>
+
+      <div class="formula-block orange">
+        <div class="formula-label">Error / Loss Function</div>
+        \[ E(\mathbf{w}) = \frac{1}{2}\sum_{d \in D}(y_d - o_d)^2 \]
+        <div class="formula-desc">\(o_d\) = predicted output for example \(d\) &nbsp;&middot;&nbsp; \(y_d\) = true label. The \(\tfrac{1}{2}\) simplifies the derivative.</div>
+      </div>
+
+      <h3>1.3 Algorithm</h3>
+
+      <div class="algo-box">
+        <div class="algo-header">ALGORITHM-NAME(inputs)</div>
+        <div class="algo-step"><span class="step-num">Input</span><span>Describe the inputs here, e.g., training set \(D\), learning rate \(\eta\).</span></div>
+        <div class="algo-step"><span class="step-num">Init</span><span>Initialize weights to small random values, e.g., \(w_k \leftarrow \mathcal{U}(-0.05,\, 0.05)\).</span></div>
+        <div class="algo-step"><span class="step-num">Repeat</span><span><strong>For each</strong> example \(\langle\mathbf{x}_i, y_i\rangle\) in \(D\):</span></div>
+        <div class="algo-step"><span class="step-num">2a.</span><span>Compute prediction: \(o_i \leftarrow f(\mathbf{w}^T\mathbf{x}_i)\)</span></div>
+        <div class="algo-step"><span class="step-num">2b.</span><span>Update weights: \(w_j \leftarrow w_j + \eta\,(y_i - o_i)\,x_{ij}\)</span></div>
+        <div class="algo-step"><span class="step-num">Until</span><span>Termination condition met (error threshold, max epochs, or validation criterion). Return \(\mathbf{w}\).</span></div>
+      </div>
+
+      <div class="callout insight"><strong>Key Insight:</strong> Use this box to highlight a non-obvious theorem, proof sketch, or exam-critical fact.</div>
+
+      <div class="callout warn"><strong>Common Pitfall:</strong> Use this box for gotchas, edge cases, or conditions under which the method breaks.</div>
+
+      <!-- ══════════════ PART 2 ══════════════ -->
+      <div id="part2" class="part-header green">
+        <div class="part-num">02 &middot; Applications</div>
+        <h2>Second Major Section</h2>
+        <p>Add worked examples, comparisons, or practical workflows in this section.</p>
+      </div>
+
+      <h3>2.1 Comparison</h3>
+
+      <div class="compare-row">
+        <div class="compare-box">
+          <h5>Approach A</h5>
+          \[ \Delta w_k = \eta\sum_{d \in D}(y_d - o_d)(x_{dk}) \]
+          <p style="font-size:13px;margin-top:8px;color:var(--ink-faint)">One weight update per epoch. Stable but slow for large datasets.</p>
+        </div>
+        <div class="compare-box">
+          <h5>Approach B</h5>
+          \[ \Delta w_k = \eta\,(y_d - o_d)(x_{dk}) \]
+          <p style="font-size:13px;margin-top:8px;color:var(--ink-faint)">One update per example. Faster and noisier &mdash; can escape local minima.</p>
+        </div>
+      </div>
+
+      <h3>2.2 Comparison Table</h3>
+
+      <table>
+        <tr><th>Aspect</th><th>Method A</th><th>Method B</th></tr>
+        <tr><td>Update frequency</td><td>Once per epoch</td><td>Once per example</td></tr>
+        <tr><td>Stability</td><td>High</td><td>Lower (noisy)</td></tr>
+        <tr><td>Convergence guarantee</td><td>Yes (convex)</td><td>Approximate</td></tr>
+        <tr><td>Handles non-separable</td><td>Yes</td><td>Yes</td></tr>
+      </table>
+
+      <div class="callout note"><strong>Note:</strong> Use this box for assumptions, exam emphasis, or clarifications.</div>
+
+      <div class="callout success"><strong>Computational Efficiency:</strong> Use this box for positive takeaways, advantages, or validated conclusions.</div>
+
+      <!-- ══════════════ PART 3 ══════════════ -->
+      <div id="part3" class="part-header blue">
+        <div class="part-num">03 &middot; Component Gallery</div>
+        <h2>All Available Components</h2>
+        <p>Reference section showing every reusable component available in this template.</p>
+      </div>
+
+      <h3>3.1 Formula Block Variants</h3>
+
+      <div class="formula-block purple">
+        <div class="formula-label">Purple Formula Block</div>
+        \[ f(z) = \frac{1}{1 + e^{-z}} \]
+        <div class="formula-desc">Use for key definitions and primary equations.</div>
+      </div>
+
+      <div class="formula-block green">
+        <div class="formula-label">Green Formula Block</div>
+        \[ w \leftarrow w + \Delta w \]
+        <div class="formula-desc">Use for update rules and positive outcomes.</div>
+      </div>
+
+      <div class="formula-block blue">
+        <div class="formula-label">Blue Formula Block</div>
+        \[ V = \frac{W - F + 2P}{S} + 1 \]
+        <div class="formula-desc">Use for derived formulas and output quantities.</div>
+      </div>
+
+      <div class="formula-block orange">
+        <div class="formula-label">Orange Formula Block</div>
+        \[ E(\mathbf{w}) = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2 \]
+        <div class="formula-desc">Use for loss functions and error metrics.</div>
+      </div>
+
+      <h3>3.2 Diagram Container</h3>
+      <p>Use <code>.diagram-container</code> with semantic SVG classes (<code>svg-fill-p</code>, <code>svg-text-ink</code>, etc.) so colors adapt automatically to light and dark themes. CSS rules override SVG presentation attributes, so the inline <code>fill</code>/<code>stroke</code> values below are just authoring hints — the classes drive the actual colors.</p>
+
+      <div class="diagram-container">
+        <div class="diagram-title">Perceptron Architecture</div>
+        <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" style="max-width:580px; width:100%;">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path class="svg-arrow" d="M0,0 L0,6 L8,3 z" fill="#3d3a35"/>
+            </marker>
+          </defs>
+          <!-- Inputs -->
+          <circle cx="60" cy="60" r="18" class="svg-fill-p svg-stroke-p" fill="#f0ecfa" stroke="#9b85d4" stroke-width="1.5"/>
+          <text x="60" y="65" class="svg-text-p" text-anchor="middle" font-size="12" fill="#5c3fa0">x₁</text>
+          <circle cx="60" cy="110" r="18" class="svg-fill-p svg-stroke-p" fill="#f0ecfa" stroke="#9b85d4" stroke-width="1.5"/>
+          <text x="60" y="115" class="svg-text-p" text-anchor="middle" font-size="12" fill="#5c3fa0">x₂</text>
+          <circle cx="60" cy="160" r="18" class="svg-fill-p svg-stroke-p" fill="#f0ecfa" stroke="#9b85d4" stroke-width="1.5"/>
+          <text x="60" y="165" class="svg-text-p" text-anchor="middle" font-size="12" fill="#5c3fa0">xₙ</text>
+          <text x="60" y="138" class="svg-text-p" text-anchor="middle" font-size="18" fill="#9b85d4">⋮</text>
+          <!-- Bias -->
+          <circle cx="60" cy="16" r="14" class="svg-fill-o svg-stroke-o" fill="#fdf5e8" stroke="#d4961f" stroke-width="1.5"/>
+          <text x="60" y="21" class="svg-text-o" text-anchor="middle" font-size="11" fill="#7a4a10">b</text>
+          <!-- Connection lines -->
+          <line x1="78" y1="60" x2="230" y2="105" class="svg-conn" stroke="#c8c0d8" stroke-width="1.2"/>
+          <line x1="78" y1="110" x2="230" y2="110" class="svg-conn" stroke="#c8c0d8" stroke-width="1.2"/>
+          <line x1="78" y1="160" x2="230" y2="115" class="svg-conn" stroke="#c8c0d8" stroke-width="1.2"/>
+          <line x1="70" y1="20" x2="230" y2="100" class="svg-conn-bias" stroke="#e8c870" stroke-width="1.2" stroke-dasharray="4,2"/>
+          <text x="140" y="73" class="svg-text-p" font-size="11" fill="#9b85d4">w₁</text>
+          <text x="145" y="107" class="svg-text-p" font-size="11" fill="#9b85d4">w₂</text>
+          <text x="138" y="148" class="svg-text-p" font-size="11" fill="#9b85d4">wₙ</text>
+          <!-- Summation node -->
+          <circle cx="260" cy="110" r="30" class="svg-fill-paper svg-stroke-ink" fill="#faf8f4" stroke="#3d3a35" stroke-width="1.5"/>
+          <text x="260" y="116" class="svg-text-ink" text-anchor="middle" font-size="22" fill="#1a1814">Σ</text>
+          <!-- Activation node -->
+          <rect x="330" y="82" width="70" height="56" rx="4" class="svg-fill-n svg-stroke-n" fill="#edf7f2" stroke="#5aa882" stroke-width="1.5"/>
+          <text x="365" y="110" class="svg-text-n" text-anchor="middle" font-size="11" fill="#1a6b4a">f(net)</text>
+          <text x="365" y="126" class="svg-text-n" text-anchor="middle" font-size="10" fill="#5aa882">activation</text>
+          <!-- Arrows -->
+          <line x1="290" y1="110" x2="328" y2="110" class="svg-stroke-ink" stroke="#3d3a35" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="400" y1="110" x2="460" y2="110" class="svg-stroke-ink" stroke="#3d3a35" stroke-width="1.5" marker-end="url(#arr)"/>
+          <!-- Output -->
+          <circle cx="490" cy="110" r="22" class="svg-fill-r svg-stroke-r" fill="#fdf0f0" stroke="#cc7777" stroke-width="1.5"/>
+          <text x="490" y="115" class="svg-text-r" text-anchor="middle" font-size="12" fill="#912b2b">ŷ</text>
+          <!-- net label -->
+          <text x="308" y="103" class="svg-text-muted" font-size="10" fill="#6e6a62">net</text>
+        </svg>
+      </div>
+
+      <h4>SVG Class Reference</h4>
+      <table>
+        <tr><th>Class</th><th>Property</th><th>CSS Variable</th></tr>
+        <tr><td><code>svg-fill-p</code></td><td>fill</td><td><code>--accent-p-bg</code></td></tr>
+        <tr><td><code>svg-fill-n</code></td><td>fill</td><td><code>--accent-n-bg</code></td></tr>
+        <tr><td><code>svg-fill-r</code></td><td>fill</td><td><code>--accent-r-bg</code></td></tr>
+        <tr><td><code>svg-fill-o</code></td><td>fill</td><td><code>--accent-o-bg</code></td></tr>
+        <tr><td><code>svg-fill-paper</code></td><td>fill</td><td><code>--paper</code></td></tr>
+        <tr><td><code>svg-stroke-p</code></td><td>stroke</td><td><code>--accent-p-mid</code></td></tr>
+        <tr><td><code>svg-stroke-n</code></td><td>stroke</td><td><code>--accent-n-mid</code></td></tr>
+        <tr><td><code>svg-stroke-r</code></td><td>stroke</td><td><code>--accent-r-mid</code></td></tr>
+        <tr><td><code>svg-stroke-o</code></td><td>stroke</td><td><code>--accent-o-mid</code></td></tr>
+        <tr><td><code>svg-stroke-ink</code></td><td>stroke</td><td><code>--ink-soft</code></td></tr>
+        <tr><td><code>svg-stroke-rule</code></td><td>stroke</td><td><code>--rule</code></td></tr>
+        <tr><td><code>svg-text-p / n / r / o</code></td><td>fill (text)</td><td><code>--accent-p/n/r/o</code></td></tr>
+        <tr><td><code>svg-text-ink</code></td><td>fill (text)</td><td><code>--ink</code></td></tr>
+        <tr><td><code>svg-text-muted</code></td><td>fill (text)</td><td><code>--ink-faint</code></td></tr>
+        <tr><td><code>svg-conn</code></td><td>stroke (line)</td><td><code>--rule</code></td></tr>
+        <tr><td><code>svg-conn-bias</code></td><td>stroke (dashed)</td><td><code>--accent-o-mid</code></td></tr>
+        <tr><td><code>svg-arrow</code> (on <code>&lt;path&gt;</code> in marker)</td><td>fill</td><td><code>--ink-soft</code></td></tr>
+      </table>
+
+      <h3>3.3 Callout Variants</h3>
+      <div class="callout note"><strong>Note (blue):</strong> Assumptions, exam emphasis, neutral information.</div>
+      <div class="callout warn"><strong>Warn (orange):</strong> Pitfalls, conditions that break the method, XOR-style limitations.</div>
+      <div class="callout success"><strong>Success (green):</strong> Advantages, positive takeaways, convergence results.</div>
+      <div class="callout insight"><strong>Insight (purple):</strong> Key theorems, non-obvious proofs, exam-critical derivations.</div>
+
+      <h3>3.3 Image Layout Helpers</h3>
+      <pre><code>&lt;!-- Inline image in text --&gt;
+&lt;img class="img-inline" src="path/to/icon.png" alt="icon" /&gt;
+
+&lt;!-- Wrapped image with flowing text --&gt;
+&lt;img class="img-wrap-right" src="path/to/diagram.png" alt="diagram" /&gt;
+...text paragraph...
+&lt;span class="note-clear" aria-hidden="true"&gt;&lt;/span&gt;
+
+&lt;!-- Centered break image with caption --&gt;
+&lt;figure class="note-figure break"&gt;
+  &lt;img src="path/to/architecture.png" alt="architecture" /&gt;
+  &lt;figcaption&gt;Figure 1. Architecture overview.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- Full-width image --&gt;
+&lt;img class="img-full" src="path/to/timeline.png" alt="timeline" /&gt;</code></pre>
+
+      <!-- ══════════════ GLOSSARY ══════════════ -->
+      <div id="glossary" class="part-header" style="margin-top:60px;border-left-color:var(--ink);">
+        <div class="part-num">Glossary</div>
+        <h2>All Key Terms at a Glance</h2>
+        <p>Every important term from the topics covered, organized by section.</p>
+      </div>
+
+      <h4>Section 1 Terms</h4>
+      <div class="glossary-grid">
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+      </div>
+
+      <h4>Section 2 Terms</h4>
+      <div class="glossary-grid">
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+        <div class="glossary-item"><span class="tag">term</span> definition or one-line description</div>
+      </div>
+
+      <hr class="divider">
+      <p style="text-align:center;font-size:13px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;">
+        Notes based on: Reference A &middot; Reference B &middot; Reference C
+        <br>COURSE000 Course Name &middot; Sem X-YYYY/YYYY &middot; Instructor Name
+        <br>Topics: Topic A &middot; Topic B &middot; Topic C
+      </p>
+
+    </div>
+
+  </main>
+
+  <!-- ── RIGHT RAIL (notes TOC, dark styled) ── -->
+  <aside class="sidebar-right" style="width: 240px;">
+    <div style="position: sticky; top: 0; padding-top: var(--sp-lg);">
+
+      <!-- Reading progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">Contents</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div class="notes-toc-list" style="padding-top: 8px;">
+          <a href="#part1" class="notes-toc-item">01. Foundations</a>
+          <a href="#part2" class="notes-toc-item">02. Applications</a>
+          <a href="#part3" class="notes-toc-item">03. Component Gallery</a>
+          <a href="#part3" class="notes-toc-item sub">&rarr; Diagrams</a>
+          <a href="#glossary" class="notes-toc-item">Glossary</a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">About this note</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Course</span><span style="color: var(--text-secondary);">COURSE000</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Topic</span><span style="color: var(--text-secondary);">Template Topic</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Version</span><span style="color: var(--text-secondary);">v1</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Read time</span><span style="color: var(--text-secondary);">~15 min</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+
+    </div>
+  </aside>
+
+</div>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/notes-common.js"></script>
+</body>
+</html>
