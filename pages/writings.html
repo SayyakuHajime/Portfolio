@@ -9,35 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    /* Writings-specific filter bar */
-    .filter-bar {
-      display: flex;
-      gap: var(--sp-sm);
-      padding: var(--sp-md) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-      overflow-x: auto;
-      scrollbar-width: none;
-      flex-wrap: wrap;
-    }
-    .filter-chip {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border: 1px solid var(--border-default);
-      padding: 5px 12px;
-      border-radius: var(--r-sm);
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .filter-chip:hover { color: var(--text-primary); border-color: var(--border-strong); }
-    .filter-chip.active {
-      color: var(--accent-gold);
-      border-color: rgba(212, 168, 67, 0.4);
-      background: var(--accent-glow);
-    }
     .writings-intro {
       padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
       border-bottom: 1px solid var(--border-subtle);
@@ -57,32 +28,110 @@
       max-width: 420px;
       line-height: 1.7;
     }
-    /* Right rail for writings */
-    .toc-list { padding: var(--sp-sm) var(--sp-lg) var(--sp-md); }
-    .toc-item {
-      padding: var(--sp-xs) 0;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.825rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: color 0.15s;
+
+    .wip-wrap {
+      padding: var(--sp-xl) var(--sp-lg);
+      display: grid;
+      gap: var(--sp-md);
     }
-    .toc-item:hover { color: var(--accent-gold); }
-    .toc-item:last-child { border-bottom: none; }
-    .toc-num {
+    .wip-card {
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, var(--bg-surface), var(--bg-elevated));
+      padding: var(--sp-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    .wip-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 12%, var(--accent-glow), transparent 55%);
+      pointer-events: none;
+    }
+    .wip-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      border: 1px solid rgba(212, 168, 67, 0.35);
+      background: var(--accent-glow);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: var(--sp-md);
+    }
+    .wip-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.18);
+    }
+    .wip-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.15;
+      margin-bottom: var(--sp-sm);
+      color: var(--text-primary);
+    }
+    .wip-text {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: var(--sp-lg);
+    }
+    .wip-kitty {
+      font-family: var(--font-mono);
       color: var(--text-muted);
-      margin-right: var(--sp-xs);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: var(--sp-sm);
     }
-    .writing-title-link {
-      color: inherit;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
+    .wip-actions {
+      display: flex;
+      gap: var(--sp-sm);
+      flex-wrap: wrap;
     }
-    .writing-title-link:hover {
-      color: var(--accent-warm);
-      border-color: rgba(160, 111, 31, 0.35);
+    .wip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--r-sm);
+      padding: 7px 12px;
+      transition: all 0.15s;
+    }
+    .wip-link:hover {
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+      background: var(--accent-glow);
+    }
+    .wip-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .wip-side-note {
+      padding: var(--sp-md) var(--sp-lg);
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .wip-side-note strong {
+      color: var(--text-primary);
+      font-weight: 500;
     }
   </style>
 </head>
@@ -134,74 +183,44 @@
   <main class="main-content">
     <div class="page-header">
       <span class="page-title">Writings</span>
-      <span class="header-meta">2 linked notes</span>
+      <span class="header-meta">work in progress</span>
     </div>
 
     <div class="writings-intro animate-in">
       <h2>Ideas deserve<br>proper space.</h2>
-      <p>Long-form essays, research notes, and explorations at the edge of what I'm currently learning. Mostly ML, sometimes philosophy of mind, occasionally just observations.</p>
+      <p>I am currently refining my long-form essays and research notes. This page will feature my best writing once the archive is ready.</p>
     </div>
 
-    <!-- Filter bar -->
-    <div class="filter-bar">
-      <span class="filter-chip active" data-filter="all">All</span>
-      <span class="filter-chip" data-filter="ml">ML Theory</span>
-      <span class="filter-chip" data-filter="nlp">NLP</span>
-      <span class="filter-chip" data-filter="systems">Systems</span>
-      <span class="filter-chip" data-filter="essay">Essays</span>
-      <span class="filter-chip" data-filter="notes">Study Notes</span>
-    </div>
-
-    <!-- Writing list -->
-    <article class="writing-item animate-in" data-category="notes">
-      <div class="writing-number">No. 9</div>
-      <h2 class="writing-title"><a href="../notes/ml_midterm_notes.html" class="writing-title-link">Midterm Study Notes: ML Fundamentals</a></h2>
-      <p class="writing-subtitle">A complete reference for regression, classification, ensemble methods, and neural networks</p>
-      <div class="writing-meta-row">
-        <span class="tag">Study Notes</span>
-        <span class="read-time">25 min read</span>
-        <span class="feed-date">Mar 2025</span>
-      </div>
-    </article>
-
-    <article class="writing-item animate-in" data-category="notes">
-      <div class="writing-number">No. 10</div>
-      <h2 class="writing-title"><a href="../notes/mobile_midterm_notes.html" class="writing-title-link">Midterm Study Notes: Mobile App Development</a></h2>
-      <p class="writing-subtitle">IF3210 notes on platform architecture, SDLC, Android, design systems, and Kotlin null safety</p>
-      <div class="writing-meta-row">
-        <span class="tag">Study Notes</span>
-        <span class="read-time">28 min read</span>
-        <span class="feed-date">Apr 2026</span>
-      </div>
-    </article>
+    <section class="wip-wrap animate-in">
+      <article class="wip-card">
+        <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
+        <h2 class="wip-title">Writings archive is being curated.</h2>
+        <p class="wip-text">I'm selecting and editing pieces on ML Theory, NLP, and Systems to ensure they meet the quality I want for this portfolio. Check back soon for the full collection.</p>
+        <div class="wip-actions">
+          <a href="../index.html" class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Home
+          </a>
+          <a href="notes.html" class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+            Browse Study Notes
+          </a>
+        </div>
+        <p class="wip-kitty">pen scratching noises in progress</p>
+      </article>
+    </section>
   </main>
 
   <!-- RIGHT RAIL -->
   <aside class="sidebar-right">
-    <div class="search-bar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Search writings…" id="search-input" />
-    </div>
-
     <div class="card animate-in">
       <div class="card-section">
-        <p class="card-title">Archive</p>
+        <p class="card-title">Writing Desk</p>
       </div>
       <div class="divider"></div>
-      <div class="toc-list">
-        <div class="toc-item"><span class="toc-num">2025</span> 8 pieces</div>
-        <div class="toc-item"><span class="toc-num">2024</span> 4 pieces</div>
-      </div>
-    </div>
-
-    <div class="card animate-in">
-      <div class="card-section">
-        <p class="card-title">Most read</p>
-      </div>
-      <div class="divider"></div>
-      <div class="toc-list">
-        <a href="../notes/ml_midterm_notes.html" class="toc-item"><span class="toc-num">01.</span> ML Midterm Notes</a>
-        <a href="../notes/mobile_midterm_notes.html" class="toc-item"><span class="toc-num">02.</span> Mobile App Midterm Notes</a>
+      <div class="wip-side-note">
+        <p><strong>Status:</strong> Drafts being polished.</p>
+        <p>Focusing on quality over quantity.</p>
       </div>
     </div>
 
@@ -210,44 +229,13 @@
         <p class="card-title">Topics</p>
       </div>
       <div class="divider"></div>
-      <div class="skills-grid">
-        <span class="skill-chip">ML Theory</span>
-        <span class="skill-chip">NLP</span>
-        <span class="skill-chip">Systems</span>
-        <span class="skill-chip">Essay</span>
-        <span class="skill-chip">Notes</span>
+      <div class="wip-side-note">
+        <p>ML Theory, NLP, and general tech observations.</p>
       </div>
-      <div style="height: var(--sp-sm)"></div>
     </div>
   </aside>
 </div>
 
 <script src="../js/app.js"></script>
-<script>
-  // Filter writings by category
-  const chips = document.querySelectorAll('.filter-chip');
-  const items = document.querySelectorAll('.writing-item');
-
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
-      items.forEach(item => {
-        const match = filter === 'all' || item.dataset.category === filter;
-        item.style.display = match ? '' : 'none';
-      });
-    });
-  });
-
-  // Search writings
-  document.getElementById('search-input').addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase();
-    items.forEach(item => {
-      const text = item.textContent.toLowerCase();
-      item.style.display = text.includes(q) ? '' : 'none';
-    });
-  });
-</script>
 </body>
 </html>
