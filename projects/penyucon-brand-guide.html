@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PenyuCon — Brand & Design Guidelines v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── BRAND COLOR — identity only, never UI text/button ── */
+    --brand: #5BBFBF;
+
+    /* ── AQUA SCALE (Primary family + brand) ── */
+    --aqua-50:  #F2FBFA;
+    --aqua-100: #D4F3F0;
+    --aqua-200: #A9E6E2;
+    --aqua-300: #75D3D0;
+    --aqua-400: #5BBFBF;
+    --aqua-500: #309A9C;
+    --aqua-600: #247A7D;   /* ← UI interactive */
+    --aqua-700: #206265;
+    --aqua-800: #1E4E51;
+    --aqua-900: #1D4244;
+    --aqua-950: #0B2528;
+
+    /* ── DEEP TEAL SCALE (Secondary) ── */
+    --teal-50:  #EAF2F1;
+    --teal-100: #C5DEDA;
+    --teal-200: #9ECAC4;
+    --teal-300: #70ADA5;
+    --teal-400: #4A8F88;
+    --teal-500: #377069;
+    --teal-600: #2A5752;
+    --teal-700: #1F403C;   /* ← 30% secondary */
+    --teal-800: #162D2A;
+    --teal-900: #0E1E1C;
+    --teal-950: #070F0E;
+
+    /* ── SAND SCALE (Accent) ── */
+    --sand-50:  #FAFAF8;
+    --sand-100: #F2EDE3;   /* ← 10% accent */
+    --sand-200: #E0D8C8;
+    --sand-300: #C8BEAA;
+    --sand-400: #AFA48F;
+    --sand-500: #8F8675;
+    --sand-600: #726A5C;
+    --sand-700: #565045;
+    --sand-800: #3A3630;
+    --sand-900: #201E1A;
+
+    /* ── LOTUS PINK — special use only ── */
+    --lotus-light: #F0D5D8;
+    --lotus-mid:   #C4848E;
+    --lotus-dark:  #8C3F48;
+
+    /* ── 60:30:10 TOKENS ── */
+    --c-primary:   #EAF8F7;   /* 60% — Aqua 50 adjusted */
+    --c-secondary: #1F403C;   /* 30% — Deep Teal 700 */
+    --c-accent:    #F2EDE3;   /* 10% — Sand 100 */
+
+    /* ── UI INTERACTIVE (accessibility-safe) ── */
+    --c-ui:        #247A7D;   /* Aqua 600, 5.5:1 on --c-primary */
+    --c-ui-hover:  #206265;   /* Aqua 700 */
+    --c-ui-ondark: #A9E6E2;   /* Aqua 200 on dark bg */
+
+    /* ── TEXT TOKENS ── */
+    --c-text:       #1F403C;   /* Deep Teal 700 on light bg — 11:1 ✓ */
+    --c-text-sub:   #247A7D;   /* Aqua 600 on light bg — 5.5:1 ✓ */
+    --c-text-dark:  #FFFFFF;   /* on secondary — 13:1 ✓ */
+    --c-text-acc:   #3A3630;   /* Sand 800 on Sand 100 — 7:1 ✓ */
+
+    /* ── BORDERS ── */
+    --c-border:     #A9E6E2;   /* Aqua 200 */
+    --c-border-acc: #E0D8C8;   /* Sand 200 */
+
+    /* ── TYPOGRAPHY ── */
+    --ff-h: 'Plus Jakarta Sans', sans-serif;
+    --ff-b: 'DM Sans', sans-serif;
+
+    /* ── BORDER RADIUS — MD3 ── */
+    --r-xs:   4px;
+    --r-sm:   8px;
+    --r-md:   12px;
+    --r-lg:   16px;
+    --r-xl:   28px;
+    --r-full: 9999px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--c-primary); color: var(--c-text); font-family: var(--ff-b); line-height: 1.6; }
+
+  /* ══ COVER ══ */
+  .cover {
+    min-height: 100vh; background: var(--c-secondary);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding: 60px 40px;
+  }
+  .cover::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 55% 45% at 15% 80%, rgba(91,191,191,.09) 0%, transparent 60%),
+                radial-gradient(ellipse 38% 32% at 82% 18%, rgba(36,122,125,.07) 0%, transparent 55%);
+  }
+  .cwave { position: absolute; bottom: 0; left: 0; right: 0; opacity: .07; pointer-events: none; }
+  .cdeco { position: absolute; right: 44px; bottom: 72px; opacity: .06; pointer-events: none; }
+  .cdeco2 { position: absolute; left: 28px; top: 56px; opacity: .04; pointer-events: none; transform: scaleX(-1) rotate(-12deg); }
+  .clabel { font-family: var(--ff-b); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--aqua-300); margin-bottom: 50px; position: relative; }
+  .cwrap  { display: flex; flex-direction: column; align-items: center; gap: 18px; position: relative; }
+  .cword  { font-family: var(--ff-h); font-size: 78px; font-weight: 700; letter-spacing: -.03em; color: var(--sand-50); line-height: 1; }
+  .cword span { color: var(--brand); }
+  .ctag   { font-family: var(--ff-b); font-size: 11px; font-weight: 300; letter-spacing: .26em; text-transform: uppercase; color: var(--teal-200); }
+  .cdiv   { width: 1px; height: 54px; background: linear-gradient(to bottom, transparent, var(--aqua-600), transparent); margin: 30px 0; }
+  .cfoot  { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--teal-400); opacity: .58; position: relative; }
+
+  /* ══ SECTIONS ══ */
+  section { padding: 88px 64px; }
+  section + section { border-top: 1px solid rgba(91,191,191,.09); }
+  .sl { font-size: 10px; letter-spacing: .36em; text-transform: uppercase; color: var(--c-text-sub); margin-bottom: 10px; }
+  .st { font-family: var(--ff-h); font-size: 34px; font-weight: 700; letter-spacing: -.02em; color: var(--c-text); margin-bottom: 10px; }
+  .si { font-size: 14px; line-height: 1.85; font-weight: 300; color: var(--teal-500); max-width: 560px; margin-bottom: 48px; }
+
+  /* ── 60:30:10 band ── */
+  .band { display: flex; border-radius: var(--r-lg); overflow: hidden; height: 96px; margin-bottom: 32px; box-shadow: 0 2px 16px rgba(0,0,0,.07); }
+  .bseg { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .bpct { font-family: var(--ff-h); font-size: 22px; font-weight: 700; }
+  .bname{ font-size: 9px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; opacity: .72; }
+  .bhex { font-size: 10px; font-family: monospace; opacity: .68; }
+
+  /* ── token cards ── */
+  .tcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+  .tcard  { border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--c-border); }
+  .tsw    { height: 72px; }
+  .tbody  { padding: 12px 14px; background: var(--sand-50); }
+  .trole  { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-text-sub); font-weight: 500; margin-bottom: 3px; }
+  .tname  { font-family: var(--ff-h); font-size: 13px; font-weight: 600; color: var(--c-text); margin-bottom: 2px; }
+  .thex   { font-size: 11px; font-family: monospace; color: var(--c-text-sub); margin-bottom: 4px; }
+  .tuse   { font-size: 11px; color: var(--teal-400); line-height: 1.4; }
+
+  /* ── brand vs UI ── */
+  .bigrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+  .bicard { border-radius: var(--r-md); padding: 28px 32px; }
+  .bilabel{ font-size: 9px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  .bisw   { width: 52px; height: 52px; border-radius: var(--r-sm); margin-bottom: 10px; }
+  .bihex  { font-size: 18px; font-family: monospace; font-weight: 700; margin-bottom: 4px; }
+  .biname { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .bidesc { font-size: 12px; line-height: 1.7; }
+  .bibadge{ display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: var(--r-full); font-weight: 700; margin-top: 12px; }
+
+  /* ── color scales ── */
+  .swrap { margin-bottom: 32px; }
+  .stitle{ font-family: var(--ff-h); font-size: 14px; font-weight: 600; color: var(--c-text); margin-bottom: 3px; }
+  .ssub  { font-size: 12px; color: var(--c-text-sub); margin-bottom: 10px; }
+  .srow  { display: flex; gap: 3px; }
+  .cs {
+    flex: 1; height: 54px; border-radius: 4px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 5px; cursor: default; transition: flex .22s ease;
+    border: .5px solid rgba(0,0,0,.05);
+  }
+  .cs:hover { flex: 2.2; }
+  .csn { font-size: 9px; font-weight: 600; }
+  .csh { font-size: 8px; font-family: monospace; margin-top: 1px; }
+  .csdot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.9); margin-bottom: 2px; }
+  .cslabel { font-size: 8px; font-weight: 700; margin-bottom: 1px; }
+
+  /* ── accessibility ── */
+  .a11y { display: flex; flex-direction: column; gap: 9px; }
+  .arow  { display: flex; align-items: center; gap: 14px; padding: 9px 14px; border-radius: var(--r-sm); border: 1px solid var(--c-border); background: var(--sand-50); }
+  .asw   { padding: 6px 16px; border-radius: var(--r-sm); font-size: 13px; font-weight: 500; min-width: 152px; text-align: center; flex-shrink: 0; }
+  .adesc { font-size: 12px; color: var(--teal-500); flex: 1; }
+  .aratio{ font-size: 12px; font-family: monospace; font-weight: 700; flex-shrink: 0; }
+  .pass  { color: #1B6B35; }
+  .fail  { color: #B71C1C; }
+  .baaa  { display: inline-block; background: #E8F5E9; color: #1B6B35; font-size: 9px; padding: 2px 7px; border-radius: var(--r-full); font-weight: 700; margin-left: 4px; }
+  .baa   { display: inline-block; background: #E3F2FD; color: #0D47A1; font-size: 9px; padding: 2px 7px; border-radius: var(--r-full); font-weight: 700; margin-left: 4px; }
+  .bfail { display: inline-block; background: #FFEBEE; color: #B71C1C; font-size: 9px; padding: 2px 7px; border-radius: var(--r-full); font-weight: 700; margin-left: 4px; }
+
+  /* ── lotus pink ── */
+  .lotus-card { background: var(--c-secondary); border-radius: var(--r-lg); padding: 34px 40px; display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; margin-top: 48px; }
+  .lotus-sws  { display: flex; gap: 8px; }
+  .lotus-sw   { width: 52px; height: 52px; border-radius: var(--r-sm); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 5px; }
+  .lotus-sw span { font-size: 8px; font-family: monospace; }
+  .lotus-info { flex: 1; min-width: 220px; }
+  .lotus-t    { font-family: var(--ff-h); font-size: 15px; font-weight: 600; color: var(--sand-50); margin-bottom: 6px; }
+  .lotus-d    { font-size: 13px; color: var(--teal-200); line-height: 1.7; font-weight: 300; margin-bottom: 12px; }
+  .lotus-ul   { display: flex; flex-direction: column; gap: 6px; }
+  .lotus-li   { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--teal-100); }
+  .lotus-dot  { width: 7px; height: 7px; border-radius: 50%; background: var(--lotus-mid); flex-shrink: 0; }
+
+  /* ── typography ── */
+  .tblock { margin-bottom: 52px; }
+  .tmeta  { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 6px; }
+  .trole2 { font-size: 9px; letter-spacing: .32em; text-transform: uppercase; color: var(--c-text-sub); }
+  .tname2 { font-size: 11px; color: var(--teal-300); }
+  .tdiv   { border: none; border-top: 1px solid rgba(91,191,191,.12); margin-bottom: 22px; }
+  .sph    { font-family: var(--ff-h); font-size: 60px; font-weight: 700; letter-spacing: -.03em; color: var(--c-text); line-height: 1.02; }
+  .spb    { font-size: 15px; line-height: 1.85; color: var(--teal-600); max-width: 580px; }
+  .wrow   { display: flex; gap: 26px; margin-top: 18px; flex-wrap: wrap; }
+  .wi     { display: flex; flex-direction: column; gap: 3px; }
+  .wlabel { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-text-sub); }
+  .mdscale{ display: flex; flex-direction: column; gap: 6px; margin-top: 32px; }
+  .mdrow  { display: flex; align-items: baseline; gap: 18px; padding: 8px 0; border-bottom: 1px solid rgba(91,191,191,.08); flex-wrap: wrap; }
+  .mdtok  { font-size: 10px; font-family: monospace; color: var(--c-text-sub); min-width: 136px; }
+  .mdspec { font-size: 11px; color: var(--teal-400); min-width: 152px; }
+
+  /* ── icons ── */
+  .igwrap  { display: flex; flex-direction: column; gap: 20px; }
+  .isetlbl { font-size: 11px; letter-spacing: .1em; color: var(--c-text-sub); text-transform: uppercase; font-weight: 500; margin-bottom: 10px; }
+  .igrid   { display: grid; grid-template-columns: repeat(8,1fr); gap: 10px; }
+  .icell   { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 6px; border-radius: var(--r-md); border: 1px solid var(--c-border); background: var(--sand-50); }
+  .icell-dk{ background: var(--teal-700); border-color: var(--teal-600); }
+  .icap    { font-size: 9px; color: var(--c-text-sub); text-align: center; }
+  .icap-dk { font-size: 9px; color: var(--teal-300); text-align: center; }
+  .icap-on { font-size: 9px; color: var(--aqua-600); font-weight: 600; text-align: center; }
+  .sizerow { display: flex; gap: 26px; align-items: flex-end; flex-wrap: wrap; margin-top: 30px; }
+  .sizei   { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .sizelbl { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-text-sub); }
+
+  /* ── border radius ── */
+  .rgrid { display: grid; grid-template-columns: repeat(6,1fr); gap: 18px; }
+  .ri    { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .rbox  { width: 72px; height: 72px; background: var(--aqua-100); border: 1.5px solid var(--aqua-300); display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 11px; color: var(--aqua-700); }
+  .rinfo { text-align: center; }
+  .rname { font-family: var(--ff-h); font-size: 11px; font-weight: 600; color: var(--c-text); }
+  .rdp   { font-size: 10px; color: var(--c-text-sub); font-family: monospace; margin-top: 2px; }
+  .ruse  { font-size: 10px; color: var(--teal-400); margin-top: 3px; line-height: 1.4; }
+  .rdemo { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 28px; }
+
+  /* ── rules ── */
+  .rgrid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .rcell  { padding: 38px 42px; }
+  .rcdo   { background: rgba(36,122,125,.05); border-left: 2px solid var(--c-ui); }
+  .rcdont { background: rgba(114,106,92,.05); border-left: 2px solid var(--sand-500); }
+  .rctit  { font-family: var(--ff-h); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; margin-bottom: 18px; }
+  .rcdo .rctit   { color: var(--c-ui); }
+  .rcdont .rctit { color: var(--sand-600); }
+  .rclist{ list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .rclist li { font-size: 13px; line-height: 1.7; color: var(--teal-600); padding-left: 22px; position: relative; }
+  .rclist li::before { position: absolute; left: 0; font-weight: 700; }
+  .rcdo .rclist li::before   { content: '✓'; color: var(--c-ui); }
+  .rcdont .rclist li::before { content: '✕'; color: var(--sand-500); }
+
+  /* ── mockups ── */
+  .mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .dc { background: var(--c-secondary); border-radius: var(--r-lg); padding: 36px 34px; position: relative; overflow: hidden; }
+  .dc::after { content: ''; position: absolute; bottom: -50px; right: -50px; width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle, rgba(91,191,191,.07) 0%, transparent 70%); }
+  .dc-eye  { font-size: 8px; letter-spacing: .38em; text-transform: uppercase; color: var(--aqua-400); margin-bottom: 6px; }
+  .dc-tit  { font-family: var(--ff-h); font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -.02em; margin-bottom: 3px; }
+  .dc-sub  { font-size: 12px; color: var(--teal-200); font-weight: 300; }
+  .dc-line { border: none; border-top: 1px solid rgba(91,191,191,.11); margin: 13px 0; }
+  .dc-row  { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+  .dc-item { font-size: 11px; color: var(--teal-200); font-weight: 300; }
+  .dc-val  { font-family: var(--ff-h); font-size: 14px; font-weight: 600; color: var(--aqua-300); }
+  .dc-tot  { font-family: var(--ff-h); font-size: 21px; font-weight: 700; color: #fff; }
+  .dc-btn  { margin-top: 16px; width: 100%; padding: 12px; background: var(--c-ui); border: none; border-radius: var(--r-full); font-family: var(--ff-h); font-size: 14px; font-weight: 600; color: #fff; cursor: default; }
+  .dc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .dc-url  { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--teal-400); }
+
+  .app  { background: var(--c-primary); border-radius: var(--r-lg); border: 1px solid var(--c-border); overflow: hidden; }
+  .ahdr { background: var(--c-secondary); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .abrand { font-family: var(--ff-h); font-size: 16px; font-weight: 700; color: var(--sand-50); }
+  .abrand span { color: var(--brand); }
+  .abody { padding: 20px 24px; }
+  .asec { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--c-text-sub); margin-bottom: 12px; }
+  .chips { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .chip  { padding: 5px 13px; border-radius: var(--r-full); font-size: 11px; font-weight: 500; cursor: default; }
+  .cion  { background: var(--c-ui); color: #fff; }
+  .cioff { background: var(--c-primary); color: var(--teal-500); border: 1px solid var(--c-border); }
+  .tcard2 { background: var(--c-accent); border: 1px solid var(--c-border-acc); border-radius: var(--r-md); padding: 13px 15px; display: flex; gap: 12px; align-items: center; margin-bottom: 9px; }
+  .timg  { width: 44px; height: 44px; background: var(--aqua-200); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tn    { font-family: var(--ff-h); font-size: 13px; font-weight: 600; color: var(--c-text); }
+  .ts    { font-size: 11px; color: var(--teal-400); margin-top: 2px; }
+  .tbar  { background: var(--aqua-200); border-radius: var(--r-full); height: 4px; margin-top: 7px; }
+  .tfill { height: 100%; border-radius: var(--r-full); background: var(--c-ui); }
+  .tpct  { font-size: 10px; color: var(--c-ui); margin-top: 2px; }
+  .anav  { display: flex; border-top: 1px solid var(--c-border); padding: 10px 24px; }
+  .navi  { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; letter-spacing: .06em; text-transform: uppercase; cursor: default; }
+  .non   { color: var(--c-ui); }
+  .noff  { color: var(--teal-300); }
+
+  /* ── colour story ── */
+  .story { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 172px 172px; gap: 3px; border-radius: var(--r-lg); overflow: hidden; }
+  .sc    { display: flex; align-items: flex-end; padding: 16px; }
+  .sc.tall { grid-row: 1/3; }
+  .sl2   { font-family: var(--ff-h); font-size: 12px; font-weight: 500; letter-spacing: .08em; color: rgba(255,255,255,.52); }
+  .sl2-dk{ color: rgba(31,64,60,.38); }
+
+  /* ── footer ── */
+  .ft   { background: var(--teal-900); padding: 54px 64px; display: flex; justify-content: space-between; align-items: center; }
+  .ftn  { font-family: var(--ff-h); font-size: 21px; font-weight: 700; color: var(--sand-50); }
+  .ftn span { color: var(--brand); }
+  .fts  { font-size: 11px; color: var(--teal-300); margin-top: 4px; letter-spacing: .1em; }
+  .ftnote { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--teal-400); opacity: .52; }
+
+  @media (max-width: 768px) {
+    section { padding: 52px 22px; }
+    .mgrid, .rgrid2, .bigrid, .tcards { grid-template-columns: 1fr; }
+    .igrid { grid-template-columns: repeat(4,1fr); }
+    .rgrid { grid-template-columns: repeat(3,1fr); }
+    .cword { font-size: 50px; }
+    .ft    { flex-direction: column; gap: 24px; text-align: center; }
+    .story { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .sc.tall { grid-row: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <svg class="cwave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,50 C240,90 480,15 720,55 C960,95 1200,15 1440,55 L1440,120 L0,120Z" fill="#5BBFBF"/>
+    <path d="M0,75 C360,35 720,95 1080,55 C1260,35 1380,68 1440,75 L1440,120 L0,120Z" fill="#247A7D" opacity=".4"/>
+  </svg>
+  <svg class="cdeco" width="290" height="230" viewBox="0 0 320 260" fill="none">
+    <ellipse cx="160" cy="130" rx="90" ry="65" fill="#5BBFBF"/><ellipse cx="160" cy="130" rx="70" ry="48" fill="#247A7D"/>
+    <ellipse cx="160" cy="110" rx="36" ry="28" fill="#5BBFBF"/>
+    <path d="M100 80 Q80 50 60 60 Q75 85 105 95" fill="#5BBFBF"/><path d="M220 80 Q240 50 260 60 Q245 85 215 95" fill="#5BBFBF"/>
+    <path d="M110 175 Q85 195 70 210 Q90 205 115 185" fill="#5BBFBF"/><path d="M210 175 Q235 195 250 210 Q230 205 205 185" fill="#5BBFBF"/>
+    <ellipse cx="148" cy="104" rx="7" ry="8" fill="#1A4A40"/><ellipse cx="172" cy="104" rx="7" ry="8" fill="#1A4A40"/>
+    <ellipse cx="148" cy="103" rx="2.5" ry="3" fill="#5BBFBF"/><ellipse cx="172" cy="103" rx="2.5" ry="3" fill="#5BBFBF"/>
+  </svg>
+  <svg class="cdeco2" width="150" height="130" viewBox="0 0 320 260" fill="none">
+    <ellipse cx="160" cy="130" rx="90" ry="65" fill="#5BBFBF"/><ellipse cx="160" cy="130" rx="70" ry="48" fill="#247A7D"/>
+    <ellipse cx="160" cy="110" rx="36" ry="28" fill="#5BBFBF"/>
+    <path d="M100 80 Q80 50 60 60 Q75 85 105 95" fill="#5BBFBF"/><path d="M220 80 Q240 50 260 60 Q245 85 215 95" fill="#5BBFBF"/>
+  </svg>
+  <div class="clabel">Brand & Design Guidelines · 2025</div>
+  <div class="cwrap">
+    <svg width="104" height="104" viewBox="0 0 110 110" fill="none">
+      <circle cx="55" cy="55" r="52" stroke="#5BBFBF" stroke-width=".8" opacity=".22"/>
+      <circle cx="55" cy="55" r="40" fill="#1A4A40" opacity=".32"/>
+      <ellipse cx="55" cy="57" rx="22" ry="16" fill="#5BBFBF"/>
+      <ellipse cx="55" cy="57" rx="17" ry="11" fill="#247A7D"/>
+      <ellipse cx="55" cy="40" rx="9" ry="10" fill="#5BBFBF"/>
+      <path d="M33 49 Q18 39 16 29 Q26 37 36 49" fill="#5BBFBF"/>
+      <path d="M77 49 Q92 39 94 29 Q84 37 74 49" fill="#5BBFBF"/>
+      <path d="M36 69 Q22 79 20 91 Q30 83 40 71" fill="#5BBFBF"/>
+      <path d="M74 69 Q88 79 90 91 Q80 83 70 71" fill="#5BBFBF"/>
+      <circle cx="51" cy="38" r="2.4" fill="#1A4A40"/><circle cx="59" cy="38" r="2.4" fill="#1A4A40"/>
+      <circle cx="51" cy="37.5" r=".9" fill="#5BBFBF"/><circle cx="59" cy="37.5" r=".9" fill="#5BBFBF"/>
+      <path d="M45 51 Q55 47 65 51" stroke="#309A9C" stroke-width=".8" fill="none"/>
+      <path d="M42 58 Q55 53 68 58" stroke="#309A9C" stroke-width=".8" fill="none"/>
+    </svg>
+    <div class="cword">Penyu<span>Con</span></div>
+    <div class="ctag">Platform Konservasi Penyu Indonesia</div>
+  </div>
+  <div class="cdiv"></div>
+  <div class="cfoot">Visual Design Identity System</div>
+</div>
+
+
+<!-- ══ 01 — COLOR SYSTEM ══ -->
+<section>
+  <div class="sl">01 — Color System</div>
+  <div class="st">60 : 30 : 10</div>
+  <div class="si">Satu hue dominan (turquoise), satu kontras kuat (deep teal), satu aksen hangat (sand). Primary terang — secondary gelap. Seluruh warna berasal dari dunia yang sama: alam laut Indonesia.</div>
+
+  <!-- Band -->
+  <div class="band">
+    <div class="bseg" style="flex:6; background:#EAF8F7; color:#1F403C;">
+      <span class="bpct">60%</span><span class="bname">Primary</span><span class="bhex">#EAF8F7</span>
+    </div>
+    <div class="bseg" style="flex:3; background:#1F403C; color:#A9E6E2;">
+      <span class="bpct">30%</span><span class="bname">Secondary</span><span class="bhex">#1F403C</span>
+    </div>
+    <div class="bseg" style="flex:1; background:#F2EDE3; color:#3A3630;">
+      <span class="bpct" style="font-size:15px;">10%</span><span class="bname" style="font-size:8px;">Accent</span><span class="bhex">#F2EDE3</span>
+    </div>
+  </div>
+
+  <div class="tcards">
+    <div class="tcard">
+      <div class="tsw" style="background:#EAF8F7;"></div>
+      <div class="tbody">
+        <div class="trole">60% — Primary</div>
+        <div class="tname">Aqua 50</div>
+        <div class="thex">#EAF8F7</div>
+        <div class="tuse">Page background, section ringan, surface utama</div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tsw" style="background:#1F403C;"></div>
+      <div class="tbody">
+        <div class="trole">30% — Secondary</div>
+        <div class="tname">Deep Teal 700</div>
+        <div class="thex">#1F403C</div>
+        <div class="tuse">Navbar, dark card, section header, dark surface</div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tsw" style="background:#F2EDE3; border-bottom:1px solid #E0D8C8;"></div>
+      <div class="tbody">
+        <div class="trole">10% — Accent</div>
+        <div class="tname">Sand 100</div>
+        <div class="thex">#F2EDE3</div>
+        <div class="tuse">Card surface, chip, area konten sekunder yang hangat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand vs UI -->
+  <div class="bigrid">
+    <div class="bicard" style="background:var(--c-accent); border:1px solid var(--c-border-acc);">
+      <div class="bilabel" style="color:var(--teal-400);">BRAND COLOR — Identity only</div>
+      <div class="bisw" style="background:#5BBFBF;"></div>
+      <div class="bihex" style="color:var(--c-text);">#5BBFBF</div>
+      <div class="biname" style="color:var(--c-text);">Aqua 400 — Brand Turquoise</div>
+      <div class="bidesc" style="color:var(--teal-500);">Hanya untuk logo, wordmark, dan elemen identity. <strong>Jangan dipakai untuk teks atau tombol UI</strong> — contrast ratio 2.8:1, tidak lolos WCAG AA minimum 4.5:1.</div>
+      <div class="bibadge" style="background:#FFEBEE; color:#B71C1C;">✕ 2.8:1 — FAIL untuk teks</div>
+    </div>
+    <div class="bicard" style="background:var(--c-secondary);">
+      <div class="bilabel" style="color:var(--aqua-400);">UI INTERACTIVE — Buttons & links</div>
+      <div class="bisw" style="background:#247A7D;"></div>
+      <div class="bihex" style="color:#fff;">#247A7D</div>
+      <div class="biname" style="color:#fff;">Aqua 600 — UI Interactive</div>
+      <div class="bidesc" style="color:var(--teal-200);">Semua elemen interaktif: tombol, link, focus ring, active state, progress fill. Contrast ratio 5.5:1 pada Primary — lolos WCAG AA.</div>
+      <div class="bibadge" style="background:#E8F5E9; color:#1B6B35;">✓ 5.5:1 — AA Passed</div>
+    </div>
+  </div>
+
+  <!-- Full scales -->
+  <div style="margin-top:56px;">
+    <div style="font-family:var(--ff-h);font-size:16px;font-weight:600;color:var(--c-text);margin-bottom:28px;">Color Scales Lengkap</div>
+
+    <div class="swrap">
+      <div class="stitle">Aqua — Primary Family + Brand</div>
+      <div class="ssub">400 = brand identity · 600 = UI interactive (tombol, link) · 50 = 60% primary bg</div>
+      <div class="srow">
+        <div class="cs" style="background:#F2FBFA;border-radius:5px 0 0 5px;"><span class="csn" style="color:#309A9C;">50</span><span class="csh" style="color:#75D3D0;">F2FBFA</span></div>
+        <div class="cs" style="background:#D4F3F0;"><span class="csn" style="color:#247A7D;">100</span><span class="csh" style="color:#309A9C;">D4F3F0</span></div>
+        <div class="cs" style="background:#A9E6E2;"><span class="csn" style="color:#206265;">200</span><span class="csh" style="color:#247A7D;">A9E6E2</span></div>
+        <div class="cs" style="background:#75D3D0;"><span class="csn" style="color:#1E4E51;">300</span><span class="csh" style="color:#206265;">75D3D0</span></div>
+        <div class="cs" style="background:#5BBFBF;outline:2.5px solid #309A9C;outline-offset:2px;border-radius:4px;"><span class="cslabel" style="color:#fff;">BRAND</span><div class="csdot"></div><span class="csn" style="color:#fff;">400</span><span class="csh" style="color:#D4F3F0;">5BBFBF</span></div>
+        <div class="cs" style="background:#309A9C;"><span class="csn" style="color:#D4F3F0;">500</span><span class="csh" style="color:#A9E6E2;">309A9C</span></div>
+        <div class="cs" style="background:#247A7D;outline:2.5px solid #A9E6E2;outline-offset:2px;border-radius:4px;"><span class="cslabel" style="color:#A9E6E2;">UI</span><div class="csdot"></div><span class="csn" style="color:#fff;">600</span><span class="csh" style="color:#A9E6E2;">247A7D</span></div>
+        <div class="cs" style="background:#206265;"><span class="csn" style="color:#D4F3F0;">700</span><span class="csh" style="color:#A9E6E2;">206265</span></div>
+        <div class="cs" style="background:#1E4E51;"><span class="csn" style="color:#75D3D0;">800</span><span class="csh" style="color:#75D3D0;">1E4E51</span></div>
+        <div class="cs" style="background:#1D4244;"><span class="csn" style="color:#75D3D0;">900</span><span class="csh" style="color:#5BBFBF;">1D4244</span></div>
+        <div class="cs" style="background:#0B2528;border-radius:0 5px 5px 0;"><span class="csn" style="color:#5BBFBF;">950</span><span class="csh" style="color:#5BBFBF;">0B2528</span></div>
+      </div>
+    </div>
+
+    <div class="swrap">
+      <div class="stitle">Deep Teal — Secondary (30%)</div>
+      <div class="ssub">700 = 30% secondary — navbar, dark card, dark overlay</div>
+      <div class="srow">
+        <div class="cs" style="background:#EAF2F1;border-radius:5px 0 0 5px;"><span class="csn" style="color:#377069;">50</span><span class="csh" style="color:#4A8F88;">EAF2F1</span></div>
+        <div class="cs" style="background:#C5DEDA;"><span class="csn" style="color:#2A5752;">100</span><span class="csh" style="color:#377069;">C5DEDA</span></div>
+        <div class="cs" style="background:#9ECAC4;"><span class="csn" style="color:#1F403C;">200</span><span class="csh" style="color:#2A5752;">9ECAC4</span></div>
+        <div class="cs" style="background:#70ADA5;"><span class="csn" style="color:#162D2A;">300</span><span class="csh" style="color:#1F403C;">70ADA5</span></div>
+        <div class="cs" style="background:#4A8F88;"><span class="csn" style="color:#EAF2F1;">400</span><span class="csh" style="color:#C5DEDA;">4A8F88</span></div>
+        <div class="cs" style="background:#377069;"><span class="csn" style="color:#C5DEDA;">500</span><span class="csh" style="color:#9ECAC4;">377069</span></div>
+        <div class="cs" style="background:#2A5752;"><span class="csn" style="color:#9ECAC4;">600</span><span class="csh" style="color:#70ADA5;">2A5752</span></div>
+        <div class="cs" style="background:#1F403C;outline:2.5px solid #9ECAC4;outline-offset:2px;border-radius:4px;"><span class="cslabel" style="color:#9ECAC4;">30%</span><div class="csdot"></div><span class="csn" style="color:#fff;">700</span><span class="csh" style="color:#9ECAC4;">1F403C</span></div>
+        <div class="cs" style="background:#162D2A;"><span class="csn" style="color:#70ADA5;">800</span><span class="csh" style="color:#4A8F88;">162D2A</span></div>
+        <div class="cs" style="background:#0E1E1C;"><span class="csn" style="color:#4A8F88;">900</span><span class="csh" style="color:#377069;">0E1E1C</span></div>
+        <div class="cs" style="background:#070F0E;border-radius:0 5px 5px 0;"><span class="csn" style="color:#377069;">950</span><span class="csh" style="color:#2A5752;">070F0E</span></div>
+      </div>
+    </div>
+
+    <div class="swrap">
+      <div class="stitle">Sand — Accent (10%)</div>
+      <div class="ssub">100 = 10% accent — card surface, chip, area konten hangat</div>
+      <div class="srow">
+        <div class="cs" style="background:#FAFAF8;border:.5px solid #E0D8C8;border-radius:5px 0 0 5px;"><span class="csn" style="color:#8F8675;">50</span><span class="csh" style="color:#AFA48F;">FAFAF8</span></div>
+        <div class="cs" style="background:#F2EDE3;border:.5px solid #E0D8C8;outline:2.5px solid #C8BEAA;outline-offset:2px;border-radius:4px;"><span class="cslabel" style="color:#726A5C;">10%</span><div class="csdot" style="background:rgba(0,0,0,.18);"></div><span class="csn" style="color:#565045;">100</span><span class="csh" style="color:#726A5C;">F2EDE3</span></div>
+        <div class="cs" style="background:#E0D8C8;"><span class="csn" style="color:#565045;">200</span><span class="csh" style="color:#726A5C;">E0D8C8</span></div>
+        <div class="cs" style="background:#C8BEAA;"><span class="csn" style="color:#3A3630;">300</span><span class="csh" style="color:#565045;">C8BEAA</span></div>
+        <div class="cs" style="background:#AFA48F;"><span class="csn" style="color:#201E1A;">400</span><span class="csh" style="color:#3A3630;">AFA48F</span></div>
+        <div class="cs" style="background:#8F8675;"><span class="csn" style="color:#F2EDE3;">500</span><span class="csh" style="color:#E0D8C8;">8F8675</span></div>
+        <div class="cs" style="background:#726A5C;"><span class="csn" style="color:#E0D8C8;">600</span><span class="csh" style="color:#C8BEAA;">726A5C</span></div>
+        <div class="cs" style="background:#565045;"><span class="csn" style="color:#C8BEAA;">700</span><span class="csh" style="color:#AFA48F;">565045</span></div>
+        <div class="cs" style="background:#3A3630;"><span class="csn" style="color:#AFA48F;">800</span><span class="csh" style="color:#8F8675;">3A3630</span></div>
+        <div class="cs" style="background:#201E1A;"><span class="csn" style="color:#8F8675;">900</span><span class="csh" style="color:#726A5C;">201E1A</span></div>
+        <div class="cs" style="background:#0F0E0C;border-radius:0 5px 5px 0;"><span class="csn" style="color:#726A5C;">950</span><span class="csh" style="color:#565045;">0F0E0C</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 02 — ACCESSIBILITY ══ -->
+<section style="background:var(--c-accent);">
+  <div class="sl">02 — Accessibility</div>
+  <div class="st">Contrast Ratios</div>
+  <div class="si">Semua kombinasi teks–background wajib memenuhi WCAG AA minimum. Target ideal AAA untuk teks body utama.</div>
+
+  <div class="a11y">
+    <div class="arow">
+      <div class="asw" style="background:#EAF8F7;color:#1F403C;">Teks body utama</div>
+      <div class="adesc">Deep Teal 700 pada Primary (Aqua 50) — kombinasi teks utama</div>
+      <div class="aratio pass">11.2:1<span class="baaa">AAA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#EAF8F7;color:#247A7D;">Link / label aktif</div>
+      <div class="adesc">Aqua 600 (UI Interactive) pada Primary — link, tab aktif</div>
+      <div class="aratio pass">5.5:1<span class="baa">AA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#247A7D;color:#fff;">Label tombol</div>
+      <div class="adesc">Putih pada Aqua 600 — label di tombol primary</div>
+      <div class="aratio pass">5.5:1<span class="baa">AA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#F2EDE3;color:#3A3630;">Teks di accent card</div>
+      <div class="adesc">Sand 800 pada Sand 100 — teks di card accent</div>
+      <div class="aratio pass">7.1:1<span class="baaa">AAA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#F2EDE3;color:#1F403C;">Heading di accent</div>
+      <div class="adesc">Deep Teal 700 pada Sand 100 — heading di card accent</div>
+      <div class="aratio pass">9.4:1<span class="baaa">AAA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#1F403C;color:#fff;">Teks di dark section</div>
+      <div class="adesc">Putih pada Deep Teal 700 — teks di navbar, dark card</div>
+      <div class="aratio pass">13.1:1<span class="baaa">AAA</span></div>
+    </div>
+    <div class="arow">
+      <div class="asw" style="background:#1F403C;color:#A9E6E2;">Sub teks di dark</div>
+      <div class="adesc">Aqua 200 pada Deep Teal 700 — sub teks, metadata di dark</div>
+      <div class="aratio pass">7.3:1<span class="baaa">AAA</span></div>
+    </div>
+    <div class="arow" style="border-color:#FFCDD2;">
+      <div class="asw" style="background:#EAF8F7;color:#5BBFBF;">Brand color ← jangan</div>
+      <div class="adesc">Brand #5BBFBF pada Primary — jangan dipakai untuk teks atau label UI apapun</div>
+      <div class="aratio fail">2.8:1<span class="bfail">FAIL</span></div>
+    </div>
+  </div>
+
+  <!-- Lotus Pink special -->
+  <div style="font-family:var(--ff-h);font-size:16px;font-weight:600;color:var(--c-text);margin-top:52px;margin-bottom:6px;">Warna Khusus — Lotus Pink</div>
+  <div style="font-size:13px;color:var(--teal-500);font-weight:300;max-width:520px;margin-bottom:18px;">Bukan bagian dari 60:30:10. Dipakai hanya untuk konteks emosional atau kampanye tertentu.</div>
+  <div class="lotus-card">
+    <div>
+      <div class="lotus-sws">
+        <div class="lotus-sw" style="background:#F0D5D8;border-radius:var(--r-sm);"><span style="color:#8C3F48;">Light</span></div>
+        <div class="lotus-sw" style="background:#C4848E;border-radius:var(--r-sm);"><span style="color:#fff;">Mid</span></div>
+        <div class="lotus-sw" style="background:#8C3F48;border-radius:var(--r-sm);"><span style="color:#F0D5D8;">Dark</span></div>
+      </div>
+      <div style="font-size:9px;color:var(--teal-300);margin-top:7px;font-family:monospace;">#F0D5D8 · #C4848E · #8C3F48</div>
+    </div>
+    <div class="lotus-info">
+      <div class="lotus-t">Lotus Pink — Special Use Only</div>
+      <div class="lotus-d">Diambil dari bunga teratai merah muda di moodboard. Komplementer dengan teal di color wheel. Dipakai sangat sparingly — tidak masuk proporsi 60:30:10.</div>
+      <div class="lotus-ul">
+        <div class="lotus-li"><div class="lotus-dot"></div>Status "Kritis" atau "Butuh Perhatian Segera" pada penyu</div>
+        <div class="lotus-li"><div class="lotus-dot"></div>Banner kampanye donasi darurat</div>
+        <div class="lotus-li"><div class="lotus-dot"></div>Badge spesies yang terancam punah</div>
+        <div class="lotus-li"><div class="lotus-dot"></div>Elemen ilustrasi / dekoratif saja — bukan teks UI reguler</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 03 — TYPOGRAPHY ══ -->
+<section>
+  <div class="sl">03 — Typography</div>
+  <div class="st">Sistem Tipografi</div>
+
+  <div class="tblock">
+    <div class="tmeta">
+      <span class="trole2">Display · Heading · Label · Navigation · CTA</span>
+      <span class="tname2">Plus Jakarta Sans — SIL Open Font License</span>
+    </div>
+    <hr class="tdiv">
+    <div class="sph">Lestarikan<br>Penyu Indonesia</div>
+    <div class="wrow">
+      <div class="wi"><div style="font-family:var(--ff-h);font-size:18px;font-weight:300;color:var(--c-text);">Light 300</div><div class="wlabel">Caption kecil</div></div>
+      <div class="wi"><div style="font-family:var(--ff-h);font-size:18px;font-weight:400;color:var(--c-text);">Regular 400</div><div class="wlabel">Body heading</div></div>
+      <div class="wi"><div style="font-family:var(--ff-h);font-size:18px;font-weight:500;color:var(--c-text);">Medium 500</div><div class="wlabel">Section title</div></div>
+      <div class="wi"><div style="font-family:var(--ff-h);font-size:18px;font-weight:600;color:var(--c-text);">Semibold 600</div><div class="wlabel">Display, CTA</div></div>
+      <div class="wi"><div style="font-family:var(--ff-h);font-size:18px;font-weight:700;color:var(--c-text);">Bold 700</div><div class="wlabel">Hero, wordmark</div></div>
+    </div>
+  </div>
+
+  <div class="tblock">
+    <div class="tmeta">
+      <span class="trole2">Body · Paragraf · Artikel edukasi · Form · Caption</span>
+      <span class="tname2">DM Sans — SIL Open Font License</span>
+    </div>
+    <hr class="tdiv">
+    <div class="spb">Program adopsi penyu PenyuCon memungkinkan kamu memantau perkembangan penyu secara langsung — mulai dari penetasan telur hingga penyu dewasa. Setiap donasi tercatat transparan dan dapat diverifikasi kapan saja melalui riwayat donasi di aplikasi.</div>
+    <div class="wrow" style="margin-top:16px;">
+      <div class="wi"><div style="font-family:var(--ff-b);font-size:18px;font-weight:300;color:var(--teal-600);">Light 300</div><div class="wlabel">Artikel panjang</div></div>
+      <div class="wi"><div style="font-family:var(--ff-b);font-size:18px;font-weight:400;color:var(--teal-600);">Regular 400</div><div class="wlabel">Body paragraph</div></div>
+      <div class="wi"><div style="font-family:var(--ff-b);font-size:18px;font-weight:500;color:var(--teal-600);">Medium 500</div><div class="wlabel">Label, metadata</div></div>
+    </div>
+  </div>
+
+  <!-- MD3 scale -->
+  <div class="tblock">
+    <div class="tmeta"><span class="trole2">Material Design 3 — Type Scale</span></div>
+    <hr class="tdiv">
+    <div class="mdscale">
+      <div class="mdrow"><span class="mdtok">Display Large</span><span class="mdspec">57sp · Regular · −0.25</span><span style="font-family:var(--ff-h);font-size:28px;font-weight:400;color:var(--c-text);">Adopsi Penyu</span></div>
+      <div class="mdrow"><span class="mdtok">Headline Medium</span><span class="mdspec">28sp · Regular · 0</span><span style="font-family:var(--ff-h);font-size:22px;font-weight:400;color:var(--c-text);">Program Konservasi</span></div>
+      <div class="mdrow"><span class="mdtok">Title Large</span><span class="mdspec">22sp · Regular · 0</span><span style="font-family:var(--ff-h);font-size:18px;font-weight:500;color:var(--c-text);">Penyu Saya</span></div>
+      <div class="mdrow"><span class="mdtok">Title Medium</span><span class="mdspec">16sp · Medium · +0.15</span><span style="font-family:var(--ff-h);font-size:15px;font-weight:600;color:var(--c-text);">Si Kura — Penyu Hijau</span></div>
+      <div class="mdrow"><span class="mdtok">Body Large</span><span class="mdspec">16sp · Regular · +0.5</span><span style="font-family:var(--ff-b);font-size:15px;color:var(--teal-600);">Status kesehatan: sangat baik</span></div>
+      <div class="mdrow"><span class="mdtok">Body Medium</span><span class="mdspec">14sp · Regular · +0.25</span><span style="font-family:var(--ff-b);font-size:13px;color:var(--teal-600);">Pantai Pangumbahan, Sukabumi, Jawa Barat</span></div>
+      <div class="mdrow"><span class="mdtok">Label Large</span><span class="mdspec">14sp · Medium · +0.1</span><span style="font-family:var(--ff-h);font-size:13px;font-weight:600;color:var(--c-ui);">DONASI SEKARANG</span></div>
+      <div class="mdrow"><span class="mdtok">Label Small</span><span class="mdspec">11sp · Medium · +0.5</span><span style="font-family:var(--ff-b);font-size:11px;font-weight:500;color:var(--teal-400);">72% TARGET TERPENUHI</span></div>
+    </div>
+  </div>
+
+  <!-- Live demo -->
+  <div style="background:var(--c-secondary);padding:46px 52px;border-radius:var(--r-lg);position:relative;overflow:hidden;">
+    <div style="position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(91,191,191,.07) 0%,transparent 70%);"></div>
+    <div style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--aqua-400);margin-bottom:10px;font-family:var(--ff-b);">Halaman Donasi</div>
+    <div style="font-family:var(--ff-h);font-size:44px;font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1.04;margin-bottom:4px;">Adopsi Penyu</div>
+    <div style="font-family:var(--ff-h);font-size:20px;font-weight:400;color:var(--aqua-300);margin-bottom:18px;">Program Transparansi PenyuCon</div>
+    <div style="font-family:var(--ff-b);font-size:14px;line-height:1.85;color:var(--teal-100);font-weight:300;max-width:480px;margin-bottom:26px;">Setiap penyu yang kamu adopsi mendapatkan timeline perkembangan yang diperbarui setiap minggu, lengkap dengan foto dan laporan dari tim konservasi kami.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(91,191,191,.10);padding-bottom:9px;"><span style="font-family:var(--ff-b);font-size:12px;color:var(--teal-200);">Adopsi Penyu Hijau — 1 Tahun</span><span style="font-family:var(--ff-h);font-size:17px;font-weight:600;color:var(--aqua-300);">Rp 350.000</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(91,191,191,.10);padding-bottom:9px;"><span style="font-family:var(--ff-b);font-size:12px;color:var(--teal-200);">Sponsor Penetasan — Per Sarang</span><span style="font-family:var(--ff-h);font-size:17px;font-weight:600;color:var(--aqua-300);">Rp 750.000</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:var(--ff-b);font-size:12px;color:var(--teal-200);">Mitra Konservasi — Tahunan</span><span style="font-family:var(--ff-h);font-size:17px;font-weight:600;color:var(--aqua-300);">Rp 2.000.000</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 04 — ICONS ══ -->
+<section style="background:var(--c-accent);">
+  <div class="sl">04 — Iconography</div>
+  <div class="st">Lucide Icons</div>
+  <div class="si">Stroke-based, 1.5px stroke-width, konsisten di semua ukuran. Gunakan satu gaya (stroke) di seluruh aplikasi — jangan campur dengan filled icon.</div>
+
+  <div class="igwrap">
+    <div>
+      <div class="isetlbl">Pada latar Primary (60%) — stroke warna Aqua 600</div>
+      <div class="igrid">
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="icap">Beranda</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="icap">Donasi</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="icap">Timeline</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><div class="icap">Statistik</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div class="icap">Invoice</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="icap">Profil</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="icap">Cari</div></div>
+        <div class="icell"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="icap">Notifikasi</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="isetlbl">Pada latar Secondary (30%) — stroke Aqua 200, active pakai Aqua 400</div>
+      <div class="igrid" style="background:var(--c-secondary);padding:12px;border-radius:var(--r-md);">
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="icap-dk">Beranda</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="icap-dk">Donasi</div></div>
+        <div class="icell icell-dk" style="background:rgba(36,122,125,.3);border-color:#247A7D;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5BBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="icap-on">Aktif ●</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><div class="icap-dk">Statistik</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div class="icap-dk">Invoice</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="icap-dk">Profil</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="icap-dk">Cari</div></div>
+        <div class="icell icell-dk"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="icap-dk">Notif</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sizerow">
+    <div class="sizei"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="sizelbl">16px · Label</div></div>
+    <div class="sizei"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="sizelbl">20px · Tombol</div></div>
+    <div class="sizei"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="sizelbl">24px · Navigasi</div></div>
+    <div class="sizei"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="sizelbl">32px · Hero fitur</div></div>
+    <div class="sizei"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="sizelbl">48px · Ilustrasi</div></div>
+  </div>
+</section>
+
+
+<!-- ══ 05 — BORDER RADIUS ══ -->
+<section>
+  <div class="sl">05 — Shape System</div>
+  <div class="st">Border Radius — MD3</div>
+  <div class="si">Enam tingkat corner radius dari Material Design 3. Ukuran komponen menentukan tingkat radius — jangan menggunakan nilai di luar skala ini.</div>
+
+  <div class="rgrid">
+    <div class="ri"><div class="rbox" style="border-radius:4px;">4px</div><div class="rinfo"><div class="rname">Extra Small</div><div class="rdp">4dp · --r-xs</div><div class="ruse">Form field, menu item, tooltip</div></div></div>
+    <div class="ri"><div class="rbox" style="border-radius:8px;">8px</div><div class="rinfo"><div class="rname">Small</div><div class="rdp">8dp · --r-sm</div><div class="ruse">Chip, icon button, thumbnail</div></div></div>
+    <div class="ri"><div class="rbox" style="border-radius:12px;">12px</div><div class="rinfo"><div class="rname">Medium</div><div class="rdp">12dp · --r-md</div><div class="ruse">Card, list item, text field</div></div></div>
+    <div class="ri"><div class="rbox" style="border-radius:16px;">16px</div><div class="rinfo"><div class="rname">Large</div><div class="rdp">16dp · --r-lg</div><div class="ruse">Bottom sheet, nav drawer, modal</div></div></div>
+    <div class="ri"><div class="rbox" style="border-radius:28px;">28px</div><div class="rinfo"><div class="rname">Extra Large</div><div class="rdp">28dp · --r-xl</div><div class="ruse">FAB, large dialog, side panel</div></div></div>
+    <div class="ri"><div class="rbox" style="border-radius:9999px;">∞</div><div class="rinfo"><div class="rname">Full</div><div class="rdp">9999px · --r-full</div><div class="ruse">Button pill, badge, chip, progress</div></div></div>
+  </div>
+
+  <div style="margin-top:36px;font-family:var(--ff-h);font-size:14px;font-weight:600;color:var(--c-text);margin-bottom:14px;">Penerapan di komponen PenyuCon</div>
+  <div class="rdemo">
+    <div style="padding:6px 16px;border-radius:9999px;border:1.5px solid var(--c-border);font-size:12px;font-family:var(--ff-b);color:var(--teal-600);">Penyu Hijau <span style="font-size:9px;color:var(--c-text-sub);">Full</span></div>
+    <input style="padding:9px 14px;border-radius:4px;border:1.5px solid var(--c-border);font-size:13px;font-family:var(--ff-b);color:var(--teal-600);background:var(--sand-50);outline:none;width:164px;" value="Nama lengkap..." readonly>
+    <div style="padding:14px 18px;border-radius:12px;background:var(--c-accent);border:1px solid var(--c-border-acc);font-size:12px;font-family:var(--ff-b);color:var(--teal-600);">Card Adopsi <span style="font-size:9px;color:var(--c-text-sub);">Medium</span></div>
+    <button style="padding:10px 22px;border-radius:9999px;background:var(--c-ui);border:none;font-size:13px;font-family:var(--ff-h);font-weight:600;color:#fff;cursor:default;">Donasi Sekarang</button>
+    <div style="width:54px;height:54px;border-radius:28px;background:var(--c-ui);display:flex;align-items:center;justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+    <div style="padding:3px 10px;border-radius:9999px;background:var(--c-ui);font-size:11px;font-family:var(--ff-b);color:#fff;font-weight:500;">Aktif</div>
+  </div>
+</section>
+
+
+<!-- ══ 06 — GUIDELINES ══ -->
+<section style="background:var(--c-accent);">
+  <div class="sl">06 — Design Guidelines</div>
+  <div class="st">Do & Don't</div>
+
+  <div class="rgrid2">
+    <div class="rcell rcdo">
+      <div class="rctit">Do</div>
+      <ul class="rclist">
+        <li>Pakai Aqua 600 (#247A7D) untuk semua tombol, link, dan elemen interaktif — bukan brand color #5BBFBF</li>
+        <li>Pertahankan proporsi 60:30:10 — Primary (Aqua 50) dominan, Secondary (Deep Teal 700) tegas di dark area, Accent (Sand 100) hangat dan sparingly di card</li>
+        <li>Gunakan Deep Teal 700 (#1F403C) untuk body text dan heading di latar terang — contrast 11:1, AAA</li>
+        <li>Pasangkan Plus Jakarta Sans (heading) dengan DM Sans (body) — konsisten di seluruh layar</li>
+        <li>Lucide Icons stroke-width 1.5px — satu gaya stroke di seluruh aplikasi, ukuran 24px untuk navigasi</li>
+        <li>Ikuti skala MD3: card = 12dp, tombol = full (9999px), form field = 4dp, FAB = 28dp</li>
+        <li>Lotus Pink hanya untuk status kritis, kampanye darurat, atau badge spesies terancam — tidak lebih</li>
+      </ul>
+    </div>
+    <div class="rcell rcdont">
+      <div class="rctit">Don't</div>
+      <ul class="rclist">
+        <li>Jangan pakai #5BBFBF untuk teks, label, atau tombol UI — hanya untuk logo dan identity mark saja</li>
+        <li>Jangan tambah warna di luar 3 skala (Aqua, Deep Teal, Sand) tanpa alasan yang terdokumentasi</li>
+        <li>Jangan campur filled icon dan stroke icon dalam halaman yang sama</li>
+        <li>Jangan gunakan Pure White (#FFFFFF) sebagai bg page atau Pure Black (#000000) sebagai teks — pakai token dari skala</li>
+        <li>Jangan terapkan border-radius di luar 6 tingkat MD3 — tidak ada rx=6, rx=10, atau rx=20</li>
+        <li>Jangan center-align paragraf body lebih dari 3 baris — gunakan left-align untuk keterbacaan</li>
+        <li>Jangan tampilkan Lotus Pink berdampingan dengan warna oranye atau merah lain di UI yang sama</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 07 — BRAND IN USE ══ -->
+<section style="background:var(--c-secondary);">
+  <div class="sl" style="color:var(--aqua-400);">07 — Brand in Use</div>
+  <div class="st" style="color:#fff;">Komponen dalam Konteks</div>
+
+  <div class="mgrid">
+    <div class="dc">
+      <div class="dc-eye">PenyuCon · Program Adopsi</div>
+      <div class="dc-tit">Ringkasan Donasi</div>
+      <div class="dc-sub">Transparansi penuh untuk setiap rupiah yang diberikan</div>
+      <div class="dc-line"></div>
+      <div class="dc-row"><span class="dc-item">Adopsi Penyu Hijau — 1 Tahun</span><span class="dc-val">Rp 350.000</span></div>
+      <div class="dc-row"><span class="dc-item">Biaya operasional konservasi</span><span class="dc-val">Rp 50.000</span></div>
+      <div class="dc-row"><span class="dc-item">Monitoring & laporan bulanan</span><span class="dc-val">Rp 25.000</span></div>
+      <div class="dc-line"></div>
+      <div class="dc-row"><span class="dc-item" style="color:var(--aqua-200);font-weight:500;">Total</span><span class="dc-tot">Rp 425.000</span></div>
+      <button class="dc-btn">Konfirmasi & Bayar</button>
+      <div class="dc-foot">
+        <div class="dc-url">penyucon.id</div>
+        <svg width="22" height="22" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="55" r="40" fill="rgba(91,191,191,.1)"/><ellipse cx="55" cy="57" rx="22" ry="16" fill="none" stroke="#5BBFBF" stroke-width="1"/><ellipse cx="55" cy="40" rx="8" ry="9" fill="none" stroke="#5BBFBF" stroke-width="1"/><path d="M33 49 Q18 39 16 29 Q26 37 36 49" fill="none" stroke="#5BBFBF" stroke-width="1"/><path d="M77 49 Q92 39 94 29 Q84 37 74 49" fill="none" stroke="#5BBFBF" stroke-width="1"/></svg>
+      </div>
+    </div>
+
+    <div class="app">
+      <div class="ahdr">
+        <div class="abrand">Penyu<span>Con</span></div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A9E6E2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      </div>
+      <div class="abody">
+        <div class="chips">
+          <div class="chip cion">Semua</div>
+          <div class="chip cioff">Penyu Hijau</div>
+          <div class="chip cioff">Belimbing</div>
+          <div class="chip cioff">Lekang</div>
+        </div>
+        <div class="asec">Penyu Saya</div>
+        <div class="tcard2">
+          <div class="timg"><svg width="26" height="26" viewBox="0 0 110 110" fill="none"><ellipse cx="55" cy="57" rx="22" ry="16" fill="#5BBFBF"/><ellipse cx="55" cy="57" rx="17" ry="11" fill="#247A7D"/><ellipse cx="55" cy="40" rx="9" ry="10" fill="#5BBFBF"/><path d="M33 49 Q18 39 16 29 Q26 37 36 49" fill="#5BBFBF"/><path d="M77 49 Q92 39 94 29 Q84 37 74 49" fill="#5BBFBF"/></svg></div>
+          <div style="flex:1;"><div class="tn">Si Kura — Penyu Hijau</div><div class="ts">Sehat · Pantai Pangumbahan</div><div class="tbar"><div class="tfill" style="width:72%;"></div></div><div class="tpct">72% target terpenuhi</div></div>
+        </div>
+        <div class="tcard2">
+          <div class="timg" style="background:var(--teal-100);"><svg width="26" height="26" viewBox="0 0 110 110" fill="none"><ellipse cx="55" cy="57" rx="22" ry="16" fill="#70ADA5"/><ellipse cx="55" cy="57" rx="17" ry="11" fill="#377069"/><ellipse cx="55" cy="40" rx="9" ry="10" fill="#70ADA5"/><path d="M33 49 Q18 39 16 29 Q26 37 36 49" fill="#70ADA5"/><path d="M77 49 Q92 39 94 29 Q84 37 74 49" fill="#70ADA5"/></svg></div>
+          <div style="flex:1;"><div class="tn">Biru — Penyu Lekang</div><div class="ts">Pemulihan · Cilacap, Jateng</div><div class="tbar"><div class="tfill" style="width:38%;background:var(--teal-400);"></div></div><div class="tpct" style="color:var(--teal-500);">38% target terpenuhi</div></div>
+        </div>
+      </div>
+      <div class="anav">
+        <div class="navi non"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#247A7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Beranda</div>
+        <div class="navi noff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ECAC4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Edukasi</div>
+        <div class="navi noff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ECAC4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>Donasi</div>
+        <div class="navi noff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ECAC4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profil</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colour story -->
+  <div style="margin-top:48px;">
+    <div style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--aqua-400);margin-bottom:14px;font-family:var(--ff-b);">Colour World</div>
+    <div class="story">
+      <div class="sc tall" style="background:#EAF8F7;"><div class="sl2 sl2-dk">60% Primary · Aqua 50 · #EAF8F7</div></div>
+      <div class="sc" style="background:#1F403C;"><div class="sl2">30% Secondary · Deep Teal 700</div></div>
+      <div class="sc" style="background:#F2EDE3;"><div class="sl2 sl2-dk">10% Accent · Sand 100</div></div>
+      <div class="sc" style="background:#247A7D;"><div class="sl2">UI Interactive · Aqua 600</div></div>
+      <div class="sc" style="background:#5BBFBF;"><div class="sl2">Brand · Aqua 400</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<div class="ft">
+  <div>
+    <div class="ftn">Penyu<span>Con</span></div>
+    <div class="fts">Platform Konservasi Penyu Indonesia</div>
+  </div>
+  <div class="ftnote">Brand & Design System · Kelompok 9 · IF3151 IMK 2025</div>
+  <svg width="46" height="46" viewBox="0 0 110 110" fill="none">
+    <circle cx="55" cy="55" r="52" stroke="#5BBFBF" stroke-width=".8" opacity=".18"/>
+    <ellipse cx="55" cy="57" rx="22" ry="16" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+    <ellipse cx="55" cy="40" rx="9" ry="10" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+    <path d="M33 49 Q18 39 16 29 Q26 37 36 49" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+    <path d="M77 49 Q92 39 94 29 Q84 37 74 49" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+    <path d="M36 69 Q22 79 20 91 Q30 83 40 71" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+    <path d="M74 69 Q88 79 90 91 Q80 83 70 71" fill="none" stroke="#A9E6E2" stroke-width=".8"/>
+  </svg>
+</div>
+
+</body>
+</html>
