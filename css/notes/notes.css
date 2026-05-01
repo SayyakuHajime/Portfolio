@@ -674,7 +674,31 @@ body.notes-layout-article .notes-scope .arrow { color: var(--rule); font-size: 1
 body.notes-layout-article .notes-scope ul, body.notes-layout-article .notes-scope ol { padding-left: 20px; margin-bottom: 12px; color: var(--ink-soft); }
 body.notes-layout-article .notes-scope li { margin-bottom: 6px; font-size: 14px; line-height: 1.7; }
 body.notes-layout-article .notes-scope .diagram-container { margin: 18px 0; padding: 20px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 4px; text-align: center; overflow-x: auto; }
+body.notes-layout-article .notes-scope .diagram-container .diagram-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
 body.notes-layout-article .notes-scope svg text { font-family: 'IBM Plex Mono', monospace !important; }
+
+/* Theme-aware SVG color classes — CSS rules override SVG presentation attributes,
+   so adding these classes makes diagrams adapt to light/dark automatically. */
+body.notes-layout-article .notes-scope .diagram-container svg .svg-fill-p     { fill: var(--accent-p-bg); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-fill-n     { fill: var(--accent-n-bg); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-fill-r     { fill: var(--accent-r-bg); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-fill-o     { fill: var(--accent-o-bg); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-fill-paper { fill: var(--paper); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-p   { stroke: var(--accent-p-mid); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-n   { stroke: var(--accent-n-mid); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-r   { stroke: var(--accent-r-mid); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-o   { stroke: var(--accent-o-mid); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-ink { stroke: var(--ink-soft); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-stroke-rule { stroke: var(--rule); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-p     { fill: var(--accent-p); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-n     { fill: var(--accent-n); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-r     { fill: var(--accent-r); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-o     { fill: var(--accent-o); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-ink   { fill: var(--ink); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-text-muted { fill: var(--ink-faint); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-conn       { stroke: var(--rule); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-conn-bias  { stroke: var(--accent-o-mid); }
+body.notes-layout-article .notes-scope .diagram-container svg .svg-arrow path { fill: var(--ink-soft); }
 body.notes-layout-article .notes-scope .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: var(--tag-bg); padding: 2px 8px; border-radius: 2px; color: var(--ink-faint); letter-spacing: .06em; }
 
 /* Additional shared article components used by IF3151 and SISFOR notes. */
@@ -1580,51 +1604,6 @@ body.notes-layout-modular .notes-scope .hl-orange { color: var(--code-highlight-
   }
 }
 
-/* Note template styles (scoped to body.notes-layout-template) */
-    body.notes-layout-template .note-hero {
-      padding: var(--sp-xl) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    body.notes-layout-template .note-hero h1 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: var(--sp-sm);
-    }
-    body.notes-layout-template .note-hero p {
-      color: var(--text-secondary);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-    body.notes-layout-template .note-body {
-      padding: var(--sp-xl) var(--sp-lg);
-      display: grid;
-      gap: var(--sp-lg);
-    }
-    body.notes-layout-template .note-block {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--r-md);
-      padding: var(--sp-md);
-    }
-    body.notes-layout-template .note-block h2 {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: var(--sp-sm);
-    }
-    body.notes-layout-template .note-block p {
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-    body.notes-layout-template .note-meta {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
 
 /* Mobile TOC drawer for notes pages */
 .notes-toc-trigger {
