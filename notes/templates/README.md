@@ -4,7 +4,6 @@ This folder stores long-form study notes so content stays modular and independen
 
 ## Structure
 
-- `notes/ml_midterm_notes.html`: existing midterm note migrated from pages.
 - `notes/templates/note-template.html`: reusable template for new notes.
 
 ## Add a New Note
