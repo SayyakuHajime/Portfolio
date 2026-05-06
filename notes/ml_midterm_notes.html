@@ -115,7 +115,7 @@
             1958; Mitchell 1997, Ch. 4; Raschka 2022, Ch. 11)</p>
         </div>
 
-        <h3>1.1 Biological Motivation</h3>
+        <h3 id="1-1-biological-motivation">1.1 Biological Motivation</h3>
         <p>McCulloch and Pitts (1943) described a neuron as a simple logic gate
           with binary outputs: multiple signals arrive at the
           <strong>dendrites</strong>, are integrated in the <strong>cell
@@ -139,7 +139,7 @@
               function.</div></div>
         </div>
 
-        <h3>1.2 Formal Definition of a Neuron</h3>
+        <h3 id="1-2-formal-definition-of-a-neuron">1.2 Formal Definition of a Neuron</h3>
 
         <div class="diagram-container">
           <div class="diagram-title">Perceptron Architecture</div>
@@ -228,7 +228,7 @@
             in \(\mathbb{R}^n\).</div>
         </div>
 
-        <h3>1.3 m-of-n Functions</h3>
+        <h3 id="1-3-m-of-n-functions">1.3 m-of-n Functions</h3>
         <p>A perceptron easily represents <strong>m-of-n functions</strong>:
           functions where at least \(m\) of the \(n\) inputs must be true.
           Strategy: set all input weights to the same value (e.g., 0.5) then set
@@ -258,7 +258,7 @@
           </div>
         </div>
 
-        <h3>1.4 Perceptron Training (Learning) Rule</h3>
+        <h3 id="1-4-perceptron-training-learning-rule">1.4 Perceptron Training (Learning) Rule</h3>
         <p>Uses the <strong>thresholded</strong> output for the update signal.
           Proven to converge if training data is linearly separable and learning
           rate \(\eta\) is sufficiently small.</p>
@@ -316,7 +316,7 @@
           </div>
         </div>
 
-        <h3>1.5 Batch Gradient Descent &mdash; The Delta Rule</h3>
+        <h3 id="1-5-batch-gradient-descent-delta-rule">1.5 Batch Gradient Descent &mdash; The Delta Rule</h3>
         <p>When data is NOT linearly separable, the Perceptron rule fails. The
           <strong>Delta Rule</strong> (= Widrow-Hoff rule = LMS rule = Adaline
           rule) uses the <em>unthresholded linear output</em> and minimizes SSE
@@ -355,7 +355,7 @@
             gradient descent step size.</div>
         </div>
 
-        <h3>1.6 Stochastic &amp; Mini-Batch Gradient Descent</h3>
+        <h3 id="1-6-stochastic-mini-batch-gradient-descent">1.6 Stochastic &amp; Mini-Batch Gradient Descent</h3>
         <p>Stochastic GD (SGD) updates weights after each individual example
           &mdash; an incremental update.</p>
 
@@ -414,7 +414,7 @@
             2022 Ch.11; Goodfellow et al. 2016)</p>
         </div>
 
-        <h3>2.1 From Adaline to FFNN</h3>
+        <h3 id="2-1-from-adaline-to-ffnn">2.1 From Adaline to FFNN</h3>
         <p>The <strong>Adaline</strong> (ADAptive LInear NEuron) is a
           single-layer neural network and the direct bridge from the Perceptron
           to FFNN. It uses the <em>identity</em> activation for weight updates,
@@ -434,7 +434,7 @@
             algorithm.</div>
         </div>
 
-        <h3>2.2 FFNN Architecture</h3>
+        <h3 id="2-2-ffnn-architecture">2.2 FFNN Architecture</h3>
         <div class="term-grid">
           <div class="term-card"><div class="term-name">Input Layer
               (l=0)</div><div class="term-def">Receives feature vector
@@ -462,7 +462,7 @@
               \(w_{ji}\).</div></div>
         </div>
 
-        <h3>2.3 Forward Propagation</h3>
+        <h3 id="2-3-forward-propagation">2.3 Forward Propagation</h3>
         <p>Information flows from input through each layer to produce output
           \(\hat{\mathbf{y}}\). Two equivalent notations are used in class:</p>
 
@@ -514,7 +514,7 @@
             single input: \(W_{xh}^T\mathbf{x}\).</div>
         </div>
 
-        <h3>2.4 Number of Parameters</h3>
+        <h3 id="2-4-number-of-parameters">2.4 Number of Parameters</h3>
         <div class="formula-block blue">
           <div class="formula-label">Parameter Count &mdash; Fully Connected
             Layer</div>
@@ -528,7 +528,7 @@
             \mathbf{221}\) total params.</div>
         </div>
 
-        <h3>2.5 Worked Example: XOR with Sigmoid</h3>
+        <h3 id="2-5-worked-example-xor-with-sigmoid">2.5 Worked Example: XOR with Sigmoid</h3>
         <div class="formula-block blue">
           <div class="formula-label">XOR Network (Sigmoid Activation &mdash;
             Non-Linear Solution)</div>
@@ -552,7 +552,7 @@
             single linear transformation.</p>
         </div>
 
-        <h3>3.1 Why Non-linearity?</h3>
+        <h3 id="3-1-why-non-linearity">3.1 Why Non-linearity?</h3>
         <div class="callout note">
           <div class="callout-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -567,7 +567,7 @@
           </div>
         </div>
 
-        <h3>3.2 Common Activation Functions</h3>
+        <h3 id="3-2-common-activation-functions">3.2 Common Activation Functions</h3>
         <div class="act-gallery">
           <div class="act-card">
             <div class="act-name">Step / Sign</div>
@@ -629,7 +629,7 @@
             or 1 &mdash; no vanishing gradient for positive inputs.</div>
         </div>
 
-        <h3>3.3 Loss Functions</h3>
+        <h3 id="3-3-loss-functions">3.3 Loss Functions</h3>
         <div class="formula-block orange">
           <div class="formula-label">Mean Squared Error (MSE) &mdash;
             Regression</div>
@@ -662,7 +662,7 @@
             to minimize error \(E\). (Mitchell 1997; Goodfellow et al. 2016)</p>
         </div>
 
-        <h3>4.1 Three-Step Learning Procedure</h3>
+        <h3 id="4-1-three-step-learning-procedure">4.1 Three-Step Learning Procedure</h3>
         <div class="algo-box">
           <div class="algo-header">Learning Procedure</div>
           <div class="algo-step"><span
@@ -682,7 +682,7 @@
               \(\eta\).</span></div>
         </div>
 
-        <h3>4.2 Gradient for Output Unit Weights (with Sigmoid)</h3>
+        <h3 id="4-2-gradient-output-unit-weights">4.2 Gradient for Output Unit Weights (with Sigmoid)</h3>
         <p>Using the chain rule to compute \(\partial E_d / \partial w_{ji}\)
           for a weight connecting unit \(i\) to output unit \(j\):</p>
 
@@ -712,7 +712,7 @@
             sensitive the activation is at that operating point.</div>
         </div>
 
-        <h3>4.3 Gradient for Hidden Unit Weights</h3>
+        <h3 id="4-3-gradient-hidden-unit-weights">4.3 Gradient for Hidden Unit Weights</h3>
         <p>For hidden unit \(h\), no direct target is available. We
           back-propagate error from all output units \(k\) that receive from
           \(h\):</p>
@@ -730,7 +730,7 @@
             backpropagation its name.</div>
         </div>
 
-        <h3>4.4 Weight Update (same for all layers)</h3>
+        <h3 id="4-4-weight-update">4.4 Weight Update (same for all layers)</h3>
         <div class="formula-block green">
           <div class="formula-label">Weight Update Rule &mdash; Mitchell (1997),
             Eq. T4.5</div>
@@ -742,7 +742,7 @@
             \(j\)</div>
         </div>
 
-        <h3>4.5 Full Backpropagation Algorithm (Mitchell, 1997)</h3>
+        <h3 id="4-5-full-backpropagation-algorithm">4.5 Full Backpropagation Algorithm (Mitchell, 1997)</h3>
         <div class="algo-box">
           <div class="algo-header">BACKPROPAGATION(training_examples, &eta;,
             n<sub>in</sub>, n<sub>out</sub>, n<sub>hidden</sub>)</div>
@@ -786,7 +786,7 @@
           </div>
         </div>
 
-        <h3>4.6 Common Training Problems</h3>
+        <h3 id="4-6-common-training-problems">4.6 Common Training Problems</h3>
         <div class="term-grid">
           <div class="term-card"><div class="term-name">Vanishing
               Gradient</div><div class="term-def">Gradients shrink exponentially
@@ -992,6 +992,7 @@
           </div>
         </div>
 
+        <div id="cnn-pooling"></div>
         <h4>Pooling Types</h4>
 
         <div class="diagram-container">
@@ -1040,6 +1041,8 @@
           </svg>
         </div>
 
+        <p class="note">This diagram illustrates the most common pooling operation: max pooling. The table below describes how average pooling and L2-norm pooling differ by using mean or root-sum-of-squares over each window instead of the maximum.</p>
+
         <table>
           <tr><th>Type</th><th>Operation</th><th>Notes</th></tr>
           <tr><td><strong>Max Pooling</strong></td><td>Maximum value in each
@@ -1082,6 +1085,7 @@
             6\times(25\times1+1) = 6\times26 = \mathbf{156}\) params</div>
         </div>
 
+        <div id="cnn-arch"></div>
         <h3>5.7 Full CNN Architecture Pattern</h3>
         <p>A typical CNN repeats [Conv + ReLU &rarr; Pool] blocks, then flattens
           into fully-connected layers for classification:</p>
@@ -1535,15 +1539,37 @@
         <div style="height:1px; background: var(--border-subtle);"></div>
         <div class="notes-toc-list" style="padding-top: 8px;">
           <a href="#perceptron" class="notes-toc-item">01. Perceptron</a>
+          <!-- <a href="#1-1-biological-motivation" class="notes-toc-item sub">&rarr; 1.1 Biological Motivation</a>
+          <a href="#1-2-formal-definition-of-a-neuron" class="notes-toc-item sub">&rarr; 1.2 Formal Definition</a>
+          <a href="#1-3-m-of-n-functions" class="notes-toc-item sub">&rarr; 1.3 m-of-n Functions</a>
+          <a href="#1-4-perceptron-training-learning-rule" class="notes-toc-item sub">&rarr; 1.4 Training Rule</a>
+          <a href="#1-5-batch-gradient-descent-delta-rule" class="notes-toc-item sub">&rarr; 1.5 Batch GD</a>
+          <a href="#1-6-stochastic-mini-batch-gradient-descent" class="notes-toc-item sub">&rarr; 1.6 SGD / Mini-Batch</a> -->
           <a href="#ffnn" class="notes-toc-item">02. FFNN</a>
+          <!-- <a href="#2-1-from-adaline-to-ffnn" class="notes-toc-item sub">&rarr; 2.1 From Adaline</a>
+          <a href="#2-2-ffnn-architecture" class="notes-toc-item sub">&rarr; 2.2 Architecture</a>
+          <a href="#2-3-forward-propagation" class="notes-toc-item sub">&rarr; 2.3 Forward Prop.</a>
+          <a href="#2-4-number-of-parameters" class="notes-toc-item sub">&rarr; 2.4 Parameters</a>
+          <a href="#2-5-worked-example-xor-with-sigmoid" class="notes-toc-item sub">&rarr; 2.5 XOR Example</a> -->
           <a href="#activations" class="notes-toc-item">03. Activations</a>
+          <!-- <a href="#3-1-why-non-linearity" class="notes-toc-item sub">&rarr; 3.1 Why Non-linearity?</a>
+          <a href="#3-2-common-activation-functions" class="notes-toc-item sub">&rarr; 3.2 Activation Functions</a>
+          <a href="#3-3-loss-functions" class="notes-toc-item sub">&rarr; 3.3 Loss Functions</a> -->
           <a href="#backprop" class="notes-toc-item">04. Backpropagation</a>
+          <!-- <a href="#4-1-three-step-learning-procedure" class="notes-toc-item sub">&rarr; 4.1 Learning Procedure</a>
+          <a href="#4-2-gradient-output-unit-weights" class="notes-toc-item sub">&rarr; 4.2 Output Gradients</a>
+          <a href="#4-3-gradient-hidden-unit-weights" class="notes-toc-item sub">&rarr; 4.3 Hidden Gradients</a>
+          <a href="#4-4-weight-update" class="notes-toc-item sub">&rarr; 4.4 Weight Update</a>
+          <a href="#4-5-full-backpropagation-algorithm" class="notes-toc-item sub">&rarr; 4.5 Backprop Algorithm</a>
+          <a href="#4-6-common-training-problems" class="notes-toc-item sub">&rarr; 4.6 Training Problems</a> -->
           <a href="#cnn" class="notes-toc-item">05. CNN</a>
-          <a href="#cnn-motivation" class="notes-toc-item sub">&rarr; Motivation</a>
+          <!-- <a href="#cnn-motivation" class="notes-toc-item sub">&rarr; Motivation</a>
           <a href="#cnn-convolution" class="notes-toc-item sub">&rarr; Convolution Op.</a>
           <a href="#cnn-stages" class="notes-toc-item sub">&rarr; Three Stages</a>
+          <a href="#cnn-pooling" class="notes-toc-item sub">&rarr; Pooling Types</a>
           <a href="#cnn-params" class="notes-toc-item sub">&rarr; Parameter Count</a>
-          <a href="#cnn-lenet" class="notes-toc-item sub">&rarr; LeNet-5</a>
+          <a href="#cnn-arch" class="notes-toc-item sub">&rarr; Full Architecture</a>
+          <a href="#cnn-lenet" class="notes-toc-item sub">&rarr; LeNet-5</a> -->
           <a href="#glossary" class="notes-toc-item">Glossary</a>
         </div>
       </div>
