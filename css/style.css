@@ -19,12 +19,12 @@
 
   --text-primary:   #1f1a14;
   --text-secondary: #4f4639;
-  --text-muted:     #7c705f;
+  --text-muted:     #5a5145;
 
-  --accent-gold:    #a06f1f;
-  --accent-amber:   #8e6118;
-  --accent-warm:    #bb8534;
-  --accent-glow:    rgba(160, 111, 31, 0.12);
+  --accent-gold:    #6e4c15;
+  --accent-amber:   #6f4b13;
+  --accent-warm:    #6b4d1e;
+  --accent-glow:    rgba(110, 76, 21, 0.12);
   --header-bg:      rgba(247, 243, 235, 0.86);
 
   --danger:         #c0524a;
@@ -55,26 +55,61 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── DARK THEME OVERRIDES ──────────────────────────────── */
+/* ── DARK THEME ─────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base:        #0c0b09;
+    --bg-surface:     #131210;
+    --bg-elevated:    #1a1916;
+    --bg-hover:       #201f1c;
+    --border-subtle:  #252320;
+    --border-default: #302e2a;
+    --border-strong:  #44413c;
+    --text-primary:   #f0ece3;
+    --text-secondary: #a49e94;
+    --text-muted:     #a29e96;
+    --accent-gold:    #d4a843;
+    --accent-amber:   #b8863a;
+    --accent-warm:    #e8c070;
+    --accent-glow:    rgba(212, 168, 67, 0.12);
+    --header-bg:      rgba(12, 11, 9, 0.85);
+  }
+}
+
 body.theme-dark {
   --bg-base:        #0c0b09;
   --bg-surface:     #131210;
   --bg-elevated:    #1a1916;
   --bg-hover:       #201f1c;
-
   --border-subtle:  #252320;
   --border-default: #302e2a;
   --border-strong:  #44413c;
-
   --text-primary:   #f0ece3;
-  --text-secondary: #a09a90;
-  --text-muted:     #5c5852;
-
+  --text-secondary: #a49e94;
+  --text-muted:     #9e9a92;
   --accent-gold:    #d4a843;
   --accent-amber:   #b8863a;
   --accent-warm:    #e8c070;
   --accent-glow:    rgba(212, 168, 67, 0.12);
   --header-bg:      rgba(12, 11, 9, 0.85);
+}
+
+body.theme-light {
+  --bg-base:        #f7f3eb;
+  --bg-surface:     #fdfaf4;
+  --bg-elevated:    #fffdf9;
+  --bg-hover:       #efe7d9;
+  --border-subtle:  #e3d8c6;
+  --border-default: #d2c1a6;
+  --border-strong:  #bda37e;
+  --text-primary:   #1f1a14;
+  --text-secondary: #4f4639;
+  --text-muted:     #5a5145;
+  --accent-gold:    #6e4c15;
+  --accent-amber:   #6f4b13;
+  --accent-warm:    #6b4d1e;
+  --accent-glow:    rgba(110, 76, 21, 0.12);
+  --header-bg:      rgba(247, 243, 235, 0.86);
 }
 
 /* ── RESET & BASE ───────────────────────────────────────── */
@@ -414,7 +449,7 @@ ul { list-style: none; }
   background: var(--accent-glow);
   padding: 2px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(212, 168, 67, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 25%, transparent);
 }
 
 .feed-date {
@@ -519,7 +554,7 @@ ul { list-style: none; }
 
 .tag-accent {
   color: var(--accent-gold);
-  border-color: rgba(212, 168, 67, 0.3);
+  border-color: color-mix(in srgb, var(--accent-gold) 35%, transparent);
   background: var(--accent-glow);
 }
 
@@ -795,16 +830,9 @@ ul { list-style: none; }
 /* ── MOBILE ─────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .sidebar-right { display: none; }
-  .main-content {
-    max-width: none;
-    border-right: none;
-  }
-}
+  .main-content { border-right: none; }
 
-@media (max-width: 1100px) {
-  .mobile-nav-trigger {
-    display: inline-flex;
-  }
+  .mobile-nav-trigger { display: inline-flex; }
 
   .mobile-nav-overlay {
     display: block;
@@ -819,9 +847,7 @@ ul { list-style: none; }
 
   .sidebar-left {
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
+    top: 0; left: 0; bottom: 0;
     width: min(84vw, 300px);
     max-width: 300px;
     height: 100dvh;
@@ -832,22 +858,10 @@ ul { list-style: none; }
     box-shadow: 12px 0 28px rgba(0, 0, 0, 0.28);
   }
 
-  body.drawer-open .sidebar-left {
-    transform: translateX(0);
-  }
-
-  body.drawer-open .mobile-nav-overlay {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  body.drawer-open {
-    overflow: hidden;
-  }
-
-  .page-header {
-    padding-left: 64px;
-  }
+  body.drawer-open .sidebar-left { transform: translateX(0); }
+  body.drawer-open .mobile-nav-overlay { opacity: 1; pointer-events: auto; }
+  body.drawer-open { overflow: hidden; }
+  .page-header { padding-left: 64px; }
 }
 
 @media (max-width: 480px) {
