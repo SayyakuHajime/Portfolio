@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes Viewer — Sayyaku</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
+  <script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/notes/notes.css" />
+  <style>
+    .md-drop {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg-base);
+    }
+    .md-drop-inner {
+      text-align: center;
+      border: 2px dashed var(--border-default);
+      border-radius: var(--r-lg);
+      padding: 56px 72px;
+      max-width: 460px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .md-drop.dragover .md-drop-inner { border-color: var(--accent-gold); background: var(--accent-glow); }
+    .md-drop-icon { color: var(--text-muted); margin-bottom: 20px; }
+    .md-drop-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 400; margin-bottom: 8px; }
+    .md-drop-sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.65; }
+    .md-drop-sub code { font-family: var(--font-mono); font-size: 0.8em; background: var(--bg-hover); padding: 1px 5px; border-radius: 3px; }
+    .md-pick-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 24px; border-radius: var(--r-lg);
+      background: var(--accent-gold); color: var(--bg-base);
+      font-family: var(--font-ui); font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; border: none; transition: opacity 0.15s;
+    }
+    .md-pick-btn:hover { opacity: 0.88; }
+    .md-drop-hint { margin-top: 14px; font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    #change-btn {
+      position: fixed; bottom: 20px; right: 20px; z-index: 100;
+      display: none; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: var(--r-md);
+      background: var(--bg-surface); color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+      font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.15s;
+    }
+    #change-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  </style>
+</head>
+<body class="notes-layout-article">
+
+<!-- Drop zone overlay -->
+<div id="md-drop" class="md-drop">
+  <div class="md-drop-inner">
+    <div class="md-drop-icon">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+    </div>
+    <h1 class="md-drop-title">Drop your note</h1>
+    <p class="md-drop-sub">Drag a <code>.md</code> file here — frontmatter, callouts,<br>LaTeX math, and tables all render automatically.</p>
+    <button class="md-pick-btn" id="pick-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Choose file
+    </button>
+    <input type="file" id="md-input" accept=".md,.markdown,.txt" hidden />
+    <p class="md-drop-hint">YAML front matter · [!callouts] · $LaTeX$ · GFM tables</p>
+  </div>
+</div>
+
+<!-- Swap-file button (appears after load) -->
+<button id="change-btn">
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+  Change file
+</button>
+
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<!-- Main layout (hidden until file loaded) -->
+<div class="site-wrapper" id="main-layout" hidden>
+
+  <!-- LEFT SIDEBAR (notes nav) -->
+  <aside class="sidebar-left">
+    <a href="../pages/notes.html" class="sidebar-logo" style="text-decoration:none;margin-bottom:var(--sp-lg);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--text-muted);"><polyline points="15 18 9 12 15 6"/></svg>
+      <span style="font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">All Notes</span>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="../projects/RNN_LSTM_Calculator.html" class="nav-item">
+        <div><div class="nav-label">RNN &amp; LSTM Calc</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      </a>
+      <a href="ml_lastterm_notes.html" class="nav-item">
+        <div><div class="nav-label">ML Last Term Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      </a>
+      <a href="ml_midterm_notes.html" class="nav-item">
+        <div><div class="nav-label">ML Midterm Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      </a>
+      <a href="md-viewer.html" class="nav-item active">
+        <div><div class="nav-label">MD Viewer</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">tool</div></div>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content" style="max-width:none;flex:1;min-width:0;">
+    <div class="page-header">
+      <span class="page-title" id="pg-title">Notes</span>
+      <span class="header-meta" id="pg-meta"></span>
+    </div>
+    <div id="md-cover"></div>
+    <div class="notes-scope" id="md-body"></div>
+  </main>
+
+  <!-- RIGHT RAIL -->
+  <aside class="sidebar-right" style="width:240px;">
+    <div style="position:sticky;top:0;padding-top:var(--sp-lg);">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+      <div class="card" style="margin-bottom:var(--sp-md);">
+        <div class="card-section"><p class="card-title">Contents</p></div>
+        <div style="height:1px;background:var(--border-subtle);"></div>
+        <div class="notes-toc-list" id="md-toc" style="padding-top:8px;"></div>
+      </div>
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+    </div>
+  </aside>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/notes-common.js"></script>
+<script>
+(function () {
+  // ── CALLOUT ICONS ────────────────────────────────────
+  const ICON = {
+    note:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    warn:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    insight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  };
+  const TYPE = { note:'note', info:'note', warn:'warn', warning:'warn', caution:'warn', tip:'success', success:'success', check:'success', insight:'insight', important:'insight', key:'insight' };
+
+  // ── FRONTMATTER ──────────────────────────────────────
+  function parseFM(raw) {
+    const m = raw.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n?([\s\S]*)/);
+    if (!m) return { meta: {}, body: raw };
+    const meta = {};
+    m[1].split('\n').forEach(line => {
+      const col = line.indexOf(':');
+      if (col < 0) return;
+      let val = line.slice(col + 1).trim();
+      if (val.startsWith('[') && val.endsWith(']'))
+        val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).join(' · ');
+      meta[line.slice(0, col).trim()] = val;
+    });
+    return { meta, body: m[2] };
+  }
+
+  // ── MATH PROTECTION (prevent marked eating $ _ chars) ─
+  function protectMath(md) {
+    const stash = [];
+    const save = s => { stash.push(s); return '\x00M' + (stash.length - 1) + '\x00'; };
+    md = md.replace(/\$\$[\s\S]+?\$\$/g, save);
+    md = md.replace(/\$[^$\n]+?\$/g, save);
+    md = md.replace(/\\\([\s\S]+?\\\)/g, save);
+    md = md.replace(/\\\[[\s\S]+?\\\]/g, save);
+    const restore = html => html.replace(/\x00M(\d+)\x00/g, (_, i) => stash[i]);
+    return { md, restore };
+  }
+
+  // ── CALLOUT PRE-PROCESSOR ────────────────────────────
+  function callouts(md) {
+    return md.replace(/((?:^> ?[^\n]*(?:\n|$))+)/gm, match => {
+      const lines = match.trimEnd().split('\n');
+      const first = lines[0].replace(/^> ?/, '');
+      const cm = first.match(/^\[!(\w+)\](?:\s+(.+))?/);
+      if (!cm) return match;
+      const cls = TYPE[cm[1].toLowerCase()] || 'note';
+      const title = cm[2] ? `<div class="callout-title">${cm[2]}</div>` : '';
+      const body = lines.slice(1).map(l => l.replace(/^> ?/, '')).join('\n');
+      return `<div class="callout ${cls}"><div class="callout-icon">${ICON[cls]}</div><div class="callout-body">${title}<div class="callout-text">${marked.parse(body)}</div></div></div>`;
+    });
+  }
+
+  // ── SLUG ─────────────────────────────────────────────
+  function slug(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-'); }
+
+  // ── BUILD TOC ─────────────────────────────────────────
+  function buildTOC(el) {
+    const toc = document.getElementById('md-toc');
+    toc.innerHTML = '';
+    const seen = {};
+    el.querySelectorAll('h2, h3').forEach(h => {
+      let id = slug(h.textContent);
+      if (seen[id]) id += '-' + (++seen[id]); else seen[id] = 1;
+      h.id = id;
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.className = 'notes-toc-item' + (h.tagName === 'H3' ? ' sub' : '');
+      a.textContent = h.textContent;
+      toc.appendChild(a);
+    });
+  }
+
+  // ── RENDER ───────────────────────────────────────────
+  function render(raw) {
+    const { meta, body } = parseFM(raw);
+    const title   = meta.title || 'Untitled';
+    const course  = meta.course || '';
+    const subject = meta.subject || meta.topic || '';
+    const exam    = meta.exam || meta.type || '';
+    const topics  = meta.topics || '';
+    const refs    = meta.references || meta.refs || '';
+
+    document.title = title + ' — Sayyaku';
+    document.getElementById('pg-title').textContent = title;
+    document.getElementById('pg-meta').textContent = [course, exam].filter(Boolean).join(' · ');
+
+    document.getElementById('md-cover').innerHTML = `
+      <div class="notes-cover">
+        ${course ? `<div class="cover-label">${[course, subject, exam].filter(Boolean).join(' · ')}</div>` : ''}
+        <h1>${title}</h1>
+        ${topics ? `<div class="cover-topics">${topics.split('·').map(t=>`<span class="topic-chip">${t.trim()}</span>`).join('')}</div>` : ''}
+        ${refs ? `<div class="refs-note">References: ${refs}</div>` : ''}
+      </div>`;
+
+    const { md: safe, restore } = protectMath(body);
+    const processed = callouts(safe);
+    const rawHtml = restore(marked.parse(processed, { gfm: true, breaks: false }));
+
+    const bodyEl = document.getElementById('md-body');
+    bodyEl.innerHTML = rawHtml;
+    buildTOC(bodyEl);
+
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise([bodyEl]);
+
+    document.getElementById('main-layout').hidden = false;
+    document.getElementById('md-drop').style.display = 'none';
+    document.getElementById('change-btn').style.display = 'inline-flex';
+  }
+
+  // ── FILE HANDLING ────────────────────────────────────
+  function loadFile(f) {
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = e => render(e.target.result);
+    r.readAsText(f);
+  }
+
+  const drop = document.getElementById('md-drop');
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); loadFile(e.dataTransfer.files[0]); });
+
+  document.getElementById('pick-btn').addEventListener('click', () => document.getElementById('md-input').click());
+  document.getElementById('md-input').addEventListener('change', e => loadFile(e.target.files[0]));
+
+  document.getElementById('change-btn').addEventListener('click', () => {
+    document.getElementById('main-layout').hidden = true;
+    drop.style.display = 'flex';
+    document.getElementById('change-btn').style.display = 'none';
+  });
+
+  // Allow drag anywhere on the page after a file is loaded
+  document.addEventListener('dragover', e => e.preventDefault());
+  document.addEventListener('drop', e => { e.preventDefault(); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+})();
+</script>
+</body>
+</html>
