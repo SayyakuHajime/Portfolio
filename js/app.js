@@ -26,6 +26,8 @@ function applyTheme(theme) {
   const isDark = theme === 'dark';
   document.body.classList.toggle('theme-dark', isDark);
   document.body.classList.toggle('theme-light', !isDark);
+  document.documentElement.classList.toggle('theme-dark', isDark);
+  document.documentElement.classList.toggle('theme-light', !isDark);
 
   const toggle = document.getElementById('theme-toggle');
   if (!toggle) {
@@ -201,6 +203,25 @@ function initScrollAnimations() {
   });
 }
 
+// ── COLLAPSIBLE SIDEBAR ──────────────────────────────────
+function initSidebarCollapse() {
+  const sidebar = document.querySelector('.sidebar-left');
+  if (!sidebar) return;
+  try {
+    if (localStorage.getItem('sidebar-collapsed') === 'true') sidebar.classList.add('sidebar-collapsed');
+  } catch (_e) {}
+  const btn = document.createElement('button');
+  btn.className = 'sidebar-toggle';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'Toggle sidebar');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
+  sidebar.appendChild(btn);
+  btn.addEventListener('click', () => {
+    const collapsed = sidebar.classList.toggle('sidebar-collapsed');
+    try { localStorage.setItem('sidebar-collapsed', collapsed); } catch (_e) {}
+  });
+}
+
 // ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
@@ -208,4 +229,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setActiveNav();
   initTabs();
   initScrollAnimations();
+  initSidebarCollapse();
 });
