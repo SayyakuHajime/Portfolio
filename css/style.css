@@ -94,6 +94,26 @@ body.theme-dark {
   --header-bg:      rgba(12, 11, 9, 0.85);
 }
 
+/* ── ANTI-FLICKER: mirror on <html> so inline head script works ── */
+html.theme-dark {
+  --bg-base:        #0c0b09;  --bg-surface:     #131210;
+  --bg-elevated:    #1a1916;  --bg-hover:       #201f1c;
+  --border-subtle:  #252320;  --border-default: #302e2a;  --border-strong:  #44413c;
+  --text-primary:   #f0ece3;  --text-secondary: #a49e94;  --text-muted:     #a29e96;
+  --accent-gold:    #d4a843;  --accent-amber:   #b8863a;  --accent-warm:    #e8c070;
+  --accent-glow:    rgba(212, 168, 67, 0.12);
+  --header-bg:      rgba(12, 11, 9, 0.85);
+}
+html.theme-light {
+  --bg-base:        #f7f3eb;  --bg-surface:     #fdfaf4;
+  --bg-elevated:    #fffdf9;  --bg-hover:       #efe7d9;
+  --border-subtle:  #e3d8c6;  --border-default: #d2c1a6;  --border-strong:  #bda37e;
+  --text-primary:   #1f1a14;  --text-secondary: #4f4639;  --text-muted:     #5a5145;
+  --accent-gold:    #6e4c15;  --accent-amber:   #6f4b13;  --accent-warm:    #6b4d1e;
+  --accent-glow:    rgba(110, 76, 21, 0.12);
+  --header-bg:      rgba(247, 243, 235, 0.86);
+}
+
 body.theme-light {
   --bg-base:        #f7f3eb;
   --bg-surface:     #fdfaf4;
@@ -866,11 +886,46 @@ ul { list-style: none; }
 
 @media (max-width: 480px) {
   :root { --sp-lg: 16px; }
-  .mobile-nav-trigger {
-    top: 10px;
-    left: 10px;
-    width: 38px;
-    height: 38px;
-  }
+  .mobile-nav-trigger { top: 10px; left: 10px; width: 38px; height: 38px; }
   .hero-name { font-size: 1.5rem; }
 }
+
+/* ── COLLAPSIBLE SIDEBAR ─────────────────────────────── */
+.sidebar-left {
+  transition: width 0.24s var(--ease), padding 0.24s var(--ease);
+}
+
+.sidebar-left.sidebar-collapsed {
+  width: 52px;
+  padding-left: 6px;
+  padding-right: 6px;
+  overflow: hidden;
+}
+.sidebar-left.sidebar-collapsed .nav-label,
+.sidebar-left.sidebar-collapsed .logo-text,
+.sidebar-left.sidebar-collapsed .profile-info,
+.sidebar-left.sidebar-collapsed .theme-toggle-label { display: none; }
+.sidebar-left.sidebar-collapsed .sidebar-logo { justify-content: center; }
+.sidebar-left.sidebar-collapsed .nav-item { justify-content: center; gap: 0; padding: var(--sp-sm); }
+.sidebar-left.sidebar-collapsed .nav-item .nav-icon { opacity: 0.7; margin: 0; }
+.sidebar-left.sidebar-collapsed .theme-toggle { padding: var(--sp-sm); justify-content: center; }
+.sidebar-left.sidebar-collapsed .sidebar-profile { justify-content: center; padding: var(--sp-sm); }
+.sidebar-left.sidebar-collapsed .nav-item.active::before { height: 40%; }
+
+.sidebar-toggle {
+  position: absolute;
+  right: -13px;
+  top: calc(var(--sp-xl) + 2px);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--text-muted);
+}
+.sidebar-toggle:hover { background: var(--bg-hover); border-color: var(--border-strong); color: var(--text-primary); }
+.sidebar-toggle svg { width: 12px; height: 12px; transition: transform 0.24s var(--ease); }
+.sidebar-left.sidebar-collapsed .sidebar-toggle svg { transform: rotate(180deg); }
