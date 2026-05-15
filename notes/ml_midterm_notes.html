@@ -32,32 +32,24 @@
 
 <div class="site-wrapper">
 
-  <!-- ── LEFT SIDEBAR (portfolio nav) ── -->
+  <!-- ── LEFT SIDEBAR (notes nav) ── -->
   <aside class="sidebar-left">
-    <div class="sidebar-logo">
-      <div class="logo-mark">S</div>
-      <span class="logo-text">Sayyaku</span>
-    </div>
+    <a href="../pages/notes.html" class="sidebar-logo" style="text-decoration:none;margin-bottom:var(--sp-lg);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--text-muted);"><polyline points="15 18 9 12 15 6"/></svg>
+      <span style="font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">All Notes</span>
+    </a>
     <nav class="sidebar-nav">
-      <a href="../index.html" class="nav-item" data-page="index.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
-        <span class="nav-label">Home</span>
+      <a href="../projects/RNN_LSTM_Calculator.html" class="nav-item">
+        <div><div class="nav-label">RNN &amp; LSTM Calc</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
       </a>
-      <a href="../pages/writings.html" class="nav-item" data-page="writings.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        <span class="nav-label">Writings</span>
+      <a href="ml_lastterm_notes.html" class="nav-item">
+        <div><div class="nav-label">ML Last Term Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
       </a>
-      <a href="../pages/projects.html" class="nav-item" data-page="projects.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        <span class="nav-label">Projects</span>
+      <a href="ml_midterm_notes.html" class="nav-item active">
+        <div><div class="nav-label">ML Midterm Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
       </a>
-      <a href="../pages/about.html" class="nav-item" data-page="about.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        <span class="nav-label">About</span>
-      </a>
-      <a href="../pages/notes.html" class="nav-item" data-page="notes">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
-        <span class="nav-label">Notes</span>
+      <a href="md-viewer.html" class="nav-item">
+        <div><div class="nav-label">MD Viewer</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">tool</div></div>
       </a>
     </nav>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
