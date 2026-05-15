@@ -25,15 +25,17 @@
 
   .ck-tweaks{
     position: sticky; top: 76px; align-self:start;
-    max-height: calc(100vh - 96px); overflow-y: auto;
+    height: calc(100vh - 96px); overflow-y: scroll;
     padding-right: 4px;
     display:flex; flex-direction:column; gap: 12px;
   }
   @media (max-width: 960px){
-    .ck-tweaks{ position:static; max-height:none; overflow-y:visible; }
+    .ck-tweaks{ position:static; height:auto; overflow-y:visible; }
   }
-  .ck-tweaks::-webkit-scrollbar{width:4px}
-  .ck-tweaks::-webkit-scrollbar-thumb{background:var(--border-default); border-radius:2px}
+  .ck-tweaks::-webkit-scrollbar{width:6px}
+  .ck-tweaks::-webkit-scrollbar-track{background:var(--paper-cream); border-radius:3px}
+  .ck-tweaks::-webkit-scrollbar-thumb{background:var(--border-default); border-radius:3px}
+  .ck-tweaks::-webkit-scrollbar-thumb:hover{background:var(--border-strong)}
 
   .ck-card{
     background: var(--paper);
@@ -395,14 +397,14 @@
     .ck-timeline { padding: 6px 12px 8px; }
     .ck-strip > div { padding: 8px 10px; }
     .ck-strip .v { font-size: 16px; }
-    .ck-tweaks { top: 56px; max-height: calc(100vh - 72px); }
+    .ck-tweaks { top: 56px; height: calc(100vh - 72px); }
     .ck-diagram-meta { padding: 6px 12px; }
     .ck-card-h { padding: 7px 12px; }
   }
   @media (max-height: 450px) {
     .ck-diagram { min-height: 40px; }
     .ck-mtx-vis { height: 44px; }
-    .ck-tweaks { top: 48px; max-height: calc(100vh - 60px); }
+    .ck-tweaks { top: 48px; height: calc(100vh - 60px); }
     .ck-strip { display: none; }
   }
 
