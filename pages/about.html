@@ -6,110 +6,15 @@
   <title>About — Sayyaku</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="../js/theme-init.js"></script>
   <link rel="stylesheet" href="../css/style.css" />
-  <style>
-    .about-hero {
-      padding: var(--sp-xl) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-      position: relative;
-      overflow: hidden;
-    }
-    .about-hero::after {
-      content: 'S';
-      position: absolute;
-      right: -20px;
-      top: -20px;
-      font-family: var(--font-display);
-      font-size: 14rem;
-      font-weight: 600;
-      color: var(--border-subtle);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-    .about-hero h1 {
-      font-family: var(--font-display);
-      font-size: 2.8rem;
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: var(--sp-md);
-      position: relative;
-      z-index: 1;
-    }
-    .about-hero h1 em {
-      font-style: italic;
-      color: var(--accent-warm);
-    }
-    .about-section {
-      padding: var(--sp-xl) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .about-section h3 {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: var(--sp-md);
-    }
-    .about-section p {
-      font-size: 0.9375rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: var(--sp-md);
-    }
-    .about-section p:last-child { margin-bottom: 0; }
-    .about-section p strong { color: var(--text-primary); font-weight: 500; }
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .timeline-item {
-      display: flex;
-      gap: var(--sp-md);
-      padding: var(--sp-md) 0;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-year {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      min-width: 50px;
-      padding-top: 2px;
-    }
-    .timeline-content { flex: 1; }
-    .timeline-title { font-size: 0.9375rem; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
-    .timeline-sub { font-size: 0.825rem; color: var(--text-secondary); }
-    .values-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-md);
-    }
-    .value-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--r-md);
-      padding: var(--sp-md);
-      transition: border-color 0.2s;
-    }
-    .value-card:hover { border-color: var(--accent-gold); }
-    .value-icon {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--accent-gold);
-      margin-bottom: var(--sp-xs);
-    }
-    .value-title { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
-    .value-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
-  </style>
 </head>
 <body>
 <div class="site-wrapper">
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-    <div class="sidebar-logo">
-      <div class="logo-mark">S</div>
-      <span class="logo-text">Sayyaku</span>
-    </div>
+    <div class="sidebar-logo"></div>
     <nav class="sidebar-nav">
       <a href="../index.html" class="nav-item" data-page="index.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>

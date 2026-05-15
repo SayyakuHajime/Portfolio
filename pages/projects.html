@@ -6,136 +6,15 @@
   <title>Projects — Sayyaku</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="../js/theme-init.js"></script>
   <link rel="stylesheet" href="../css/style.css" />
-  <style>
-    .projects-intro {
-      padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .projects-intro h2 {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 300;
-      font-style: italic;
-      margin-bottom: var(--sp-sm);
-    }
-    .projects-intro p { font-size: 0.9rem; color: var(--text-secondary); max-width: 460px; line-height: 1.7; }
-
-    .wip-wrap {
-      padding: var(--sp-xl) var(--sp-lg);
-      display: grid;
-      gap: var(--sp-md);
-    }
-    .wip-card {
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--r-lg);
-      background: linear-gradient(180deg, var(--bg-surface), var(--bg-elevated));
-      padding: var(--sp-xl);
-      position: relative;
-      overflow: hidden;
-    }
-    .wip-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 85% 12%, var(--accent-glow), transparent 55%);
-      pointer-events: none;
-    }
-    .wip-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      border: 1px solid rgba(160, 111, 31, 0.35);
-      background: var(--accent-glow);
-      border-radius: 999px;
-      padding: 4px 10px;
-      margin-bottom: var(--sp-md);
-    }
-    .wip-chip-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      box-shadow: 0 0 0 4px rgba(160, 111, 31, 0.18);
-    }
-    .wip-title {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 500;
-      line-height: 1.15;
-      margin-bottom: var(--sp-sm);
-      color: var(--text-primary);
-    }
-    .wip-text {
-      color: var(--text-secondary);
-      line-height: 1.8;
-      max-width: 640px;
-      margin-bottom: var(--sp-lg);
-    }
-    .wip-kitty {
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-      font-size: 0.76rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: var(--sp-sm);
-    }
-    .wip-actions {
-      display: flex;
-      gap: var(--sp-sm);
-      flex-wrap: wrap;
-    }
-    .wip-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--r-sm);
-      padding: 7px 12px;
-      transition: all 0.15s;
-    }
-    .wip-link:hover {
-      color: var(--accent-gold);
-      border-color: var(--accent-gold);
-      background: var(--accent-glow);
-    }
-    .wip-link svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    .wip-side-note {
-      padding: var(--sp-md) var(--sp-lg);
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-    .wip-side-note strong {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-  </style>
 </head>
 <body>
 <div class="site-wrapper">
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-    <div class="sidebar-logo">
-      <div class="logo-mark">S</div>
-      <span class="logo-text">Sayyaku</span>
-    </div>
+    <div class="sidebar-logo"></div>
     <nav class="sidebar-nav">
       <a href="../index.html" class="nav-item" data-page="index.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>

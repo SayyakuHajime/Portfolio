@@ -35,22 +35,24 @@
 
   <!-- ── LEFT SIDEBAR (notes nav) ── -->
   <aside class="sidebar-left">
-    <a href="../pages/notes.html" class="sidebar-logo" style="text-decoration:none;margin-bottom:var(--sp-lg);">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--text-muted);"><polyline points="15 18 9 12 15 6"/></svg>
-      <span style="font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">All Notes</span>
-    </a>
+    <div class="sidebar-logo">
+      <a href="../pages/notes.html" class="notes-back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>All Notes</span>
+      </a>
+    </div>
     <nav class="sidebar-nav">
-      <a href="../projects/RNN_LSTM_Calculator.html" class="nav-item">
-        <div><div class="nav-label">RNN &amp; LSTM Calc</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      <a href="../projects/RNN_LSTM_Calculator.html" class="nav-item" data-abbr="RNN">
+        <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="ml_lastterm_notes.html" class="nav-item">
-        <div><div class="nav-label">ML Last Term Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      <a href="ml_lastterm_notes.html" class="nav-item" data-abbr="ML2">
+        <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="ml_midterm_notes.html" class="nav-item active">
-        <div><div class="nav-label">ML Midterm Notes</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">IF3270</div></div>
+      <a href="ml_midterm_notes.html" class="nav-item active" data-abbr="ML1">
+        <div><div class="nav-label">ML Midterm Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="md-viewer.html" class="nav-item">
-        <div><div class="nav-label">MD Viewer</div><div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-top:1px;">tool</div></div>
+      <a href="md-viewer.html" class="nav-item" data-abbr="MD">
+        <div><div class="nav-label">MD Viewer</div><div class="nav-sub">tool</div></div>
       </a>
     </nav>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
