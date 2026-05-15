@@ -214,8 +214,14 @@ function initSidebarCollapse() {
   btn.className = 'sidebar-toggle';
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Toggle sidebar');
-  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
-  sidebar.appendChild(btn);
+  // panel-left toggle icon: vertical bar + two horizontal lines
+  btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="1" width="14" height="14" rx="2"/><line x1="5" y1="1" x2="5" y2="15"/></svg>';
+  const logo = sidebar.querySelector('.sidebar-logo');
+  if (logo) {
+    logo.appendChild(btn);
+  } else {
+    sidebar.appendChild(btn);
+  }
   btn.addEventListener('click', () => {
     const collapsed = sidebar.classList.toggle('sidebar-collapsed');
     try { localStorage.setItem('sidebar-collapsed', collapsed); } catch (_e) {}
