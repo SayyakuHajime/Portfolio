@@ -7,70 +7,14 @@
   <meta name="description" content="Modular notes archive and templates." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="../js/theme-init.js"></script>
   <link rel="stylesheet" href="../css/style.css" />
-  <style>
-    .notes-intro {
-      padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .notes-intro h2 {
-      font-family: var(--font-display);
-      font-size: 2.1rem;
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: var(--sp-sm);
-    }
-    .notes-intro p {
-      color: var(--text-secondary);
-      max-width: 520px;
-      line-height: 1.8;
-    }
-    .note-item {
-      display: block;
-      padding: var(--sp-lg);
-      border-bottom: 1px solid var(--border-default);
-      transition: background 0.15s;
-    }
-    .note-item:hover {
-      background: var(--bg-surface);
-    }
-    .note-title {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 6px;
-      color: var(--text-primary);
-    }
-    .note-title-link {
-      color: inherit;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .note-title-link:hover {
-      color: var(--accent-warm);
-      border-color: rgba(160, 111, 31, 0.35);
-    }
-    .note-desc {
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 580px;
-    }
-    .note-meta {
-      margin-top: var(--sp-sm);
-      display: flex;
-      gap: var(--sp-sm);
-      flex-wrap: wrap;
-    }
-  </style>
 </head>
 <body>
 <div class="site-wrapper">
 
   <aside class="sidebar-left">
-    <div class="sidebar-logo">
-      <div class="logo-mark">S</div>
-      <span class="logo-text">Sayyaku</span>
-    </div>
+    <div class="sidebar-logo"></div>
     <nav class="sidebar-nav">
       <a href="../index.html" class="nav-item" data-page="index.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
