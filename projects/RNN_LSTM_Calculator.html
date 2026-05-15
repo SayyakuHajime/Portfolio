@@ -189,7 +189,7 @@
   .ck-legend{ display:flex; gap:14px; }
   .ck-legend span{ display:inline-flex; align-items:center; gap:6px; }
   .ck-legend i{ width:10px; height:10px; border-radius:50%; display:inline-block; border:1px solid var(--rule); }
-  .ck-diagram{ position: relative; background: var(--paper-warm); min-height: 200px; }
+  .ck-diagram{ position: relative; background: var(--paper-warm); min-height: 100px; }
   .ck-diagram svg{ display:block; width:100%; height:100%; }
   .ck-diagram-frame{ overflow-x: auto; }
   .ck-strip{ overflow-x: auto; }
@@ -371,6 +371,7 @@
     border: 1px solid var(--rule);
     padding: 1px 4px; border-radius: 2px;
     width: 58px; text-align: right;
+    appearance: textfield;
     -moz-appearance: textfield;
   }
   .ck-num::-webkit-outer-spin-button, .ck-num::-webkit-inner-spin-button { appearance:none; margin:0; }
@@ -379,6 +380,30 @@
   /* mobile formula/stats stack */
   @media (max-width: 700px){
     .ck-panel-row { grid-template-columns: 1fr !important; }
+  }
+
+  /* ── small-height viewport: compress all panel boxes ── */
+  @media (max-height: 650px) {
+    .ck-diagram { min-height: 60px; }
+    .ck-mtx-vis { height: 60px; }
+    .ck-card-body { gap: 8px; padding: 10px 12px; }
+    .ck-eqs { padding: 8px 12px; gap: 6px; }
+    .ck-eq { padding: 6px 10px; }
+    .ck-stats { padding: 8px 12px 10px; gap: 4px; }
+    .ck-stat { padding: 3px 0; }
+    .ck-mtx-grid { padding: 8px 12px; gap: 8px; }
+    .ck-timeline { padding: 6px 12px 8px; }
+    .ck-strip > div { padding: 8px 10px; }
+    .ck-strip .v { font-size: 16px; }
+    .ck-tweaks { top: 56px; max-height: calc(100vh - 72px); }
+    .ck-diagram-meta { padding: 6px 12px; }
+    .ck-card-h { padding: 7px 12px; }
+  }
+  @media (max-height: 450px) {
+    .ck-diagram { min-height: 40px; }
+    .ck-mtx-vis { height: 44px; }
+    .ck-tweaks { top: 48px; max-height: calc(100vh - 60px); }
+    .ck-strip { display: none; }
   }
 
   /* foot meta */
@@ -1191,19 +1216,32 @@ function renderTimeline(){
   document.getElementById('tlBadge').textContent = `T = ${T}`;
 }
 
-/* sync diagram container to viewBox aspect ratio so DOM nodes and SVG align */
+/* sync diagram container — maintain exact VW/VH aspect ratio so DOM nodes align with SVG */
 function syncDiagramSize(host, VW, VH) {
   const frame = host.closest('.ck-diagram-frame');
-  const frameW = frame ? frame.clientWidth : host.clientWidth;
+  const frameW = (frame ? frame.clientWidth : host.parentElement.clientWidth) || 400;
+  // cap height so small-viewport windows aren't overwhelmed
+  const maxH = Math.min(Math.round(window.innerHeight * 0.42), 400);
 
   if (state.view === 'unrolled' && VW > frameW) {
-    // Allow horizontal scroll for wide unrolled views
+    // wider than frame → horizontal scroll, fixed pixel dimensions
     host.style.width = VW + 'px';
     host.style.height = VH + 'px';
+    host.style.marginLeft = '';
   } else {
-    host.style.width = '100%';
-    const w = host.clientWidth || frameW;
-    host.style.height = Math.round(w / VW * VH) + 'px';
+    let w = frameW;
+    let h = Math.round(w / VW * VH);
+    // if aspect-ratio height exceeds cap, shrink width proportionally
+    if (h > maxH) {
+      h = maxH;
+      w = Math.round(h * VW / VH);
+    }
+    host.style.width = w + 'px';
+    host.style.height = h + 'px';
+    // center if narrower than frame
+    host.style.marginLeft = w < frameW ? 'auto' : '0';
+    host.style.marginRight = w < frameW ? 'auto' : '0';
+    host.style.display = 'block';
   }
 }
 

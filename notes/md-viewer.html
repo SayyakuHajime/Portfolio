@@ -42,16 +42,22 @@
     }
     .md-pick-btn:hover { opacity: 0.88; }
     .md-drop-hint { margin-top: 14px; font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-    #change-btn {
+    .fab-row {
       position: fixed; bottom: 20px; right: 20px; z-index: 100;
-      display: none; align-items: center; gap: 6px;
+      display: none; flex-direction: column; gap: 8px; align-items: flex-end;
+    }
+    .fab-row.visible { display: flex; }
+    .fab-btn {
+      display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px; border-radius: var(--r-md);
       background: var(--bg-surface); color: var(--text-secondary);
       border: 1px solid var(--border-default);
       font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer; transition: all 0.15s;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
     }
-    #change-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+    .fab-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+    .fab-btn.primary { background: var(--accent-gold); color: var(--bg-base); border-color: transparent; }
+    .fab-btn.primary:hover { opacity: 0.88; }
   </style>
 </head>
 <body class="notes-layout-article">
@@ -68,20 +74,32 @@
     </div>
     <h1 class="md-drop-title">Drop your note</h1>
     <p class="md-drop-sub">Drag a <code>.md</code> file here — frontmatter, callouts,<br>LaTeX math, and tables all render automatically.</p>
-    <button class="md-pick-btn" id="pick-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Choose file
-    </button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="md-pick-btn" id="pick-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Choose file
+      </button>
+      <button class="md-pick-btn" id="tmpl-btn" style="background:transparent;color:var(--text-secondary);border:1px solid var(--border-default);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Template
+      </button>
+    </div>
     <input type="file" id="md-input" accept=".md,.markdown,.txt" hidden />
     <p class="md-drop-hint">YAML front matter · [!callouts] · $LaTeX$ · GFM tables</p>
   </div>
 </div>
 
-<!-- Swap-file button (appears after load) -->
-<button id="change-btn">
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-  Change file
-</button>
+<!-- FAB buttons (appear after file loaded) -->
+<div id="fab-row" class="fab-row">
+  <button class="fab-btn primary" id="dl-btn">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    Download HTML
+  </button>
+  <button class="fab-btn" id="change-btn">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    Change file
+  </button>
+</div>
 
 <canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
 <div class="cursor-pointer" id="cursorPointer"></div>
@@ -258,7 +276,7 @@
 
     document.getElementById('main-layout').hidden = false;
     document.getElementById('md-drop').style.display = 'none';
-    document.getElementById('change-btn').style.display = 'inline-flex';
+    document.getElementById('fab-row').classList.add('visible');
   }
 
   // ── FILE HANDLING ────────────────────────────────────
@@ -280,7 +298,70 @@
   document.getElementById('change-btn').addEventListener('click', () => {
     document.getElementById('main-layout').hidden = true;
     drop.style.display = 'flex';
-    document.getElementById('change-btn').style.display = 'none';
+    document.getElementById('fab-row').classList.remove('visible');
+  });
+
+  // ── DOWNLOAD TEMPLATE ─────────────────────────────────
+  document.getElementById('tmpl-btn').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = 'templates/note-template.md';
+    a.download = 'note-template.md';
+    a.click();
+  });
+
+  // ── DOWNLOAD AS SELF-CONTAINED HTML ──────────────────
+  document.getElementById('dl-btn').addEventListener('click', async () => {
+    const title = document.getElementById('pg-title').textContent || 'note';
+    const coverHtml = document.getElementById('md-cover').innerHTML;
+    const bodyHtml  = document.getElementById('md-body').innerHTML;
+    const theme = document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light';
+
+    let mainCss = '', notesCss = '';
+    try {
+      [mainCss, notesCss] = await Promise.all([
+        fetch('../css/style.css').then(r => r.text()),
+        fetch('../css/notes/notes.css').then(r => r.text()),
+      ]);
+    } catch (_) {}
+
+    const FONTS = [
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap',
+      'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap',
+    ];
+    const fontLinks = FONTS.map(f => `<link rel="stylesheet" href="${f}"/>`).join('\n');
+
+    const html = `<!DOCTYPE html>
+<html lang="en" class="theme-${theme}">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>${title}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+${fontLinks}
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\\\(','\\\\)']],displayMath:[['$$','$$'],['\\\\[','\\\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};<\/script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><\/script>
+<style>
+${mainCss}
+${notesCss}
+body{margin:0}
+.dl-note-wrapper{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+</style>
+</head>
+<body class="notes-layout-article">
+<div class="dl-note-wrapper">
+${coverHtml}
+<div class="notes-scope">${bodyHtml}</div>
+</div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = title.toLowerCase().replace(/[^\w]+/g, '-') + '.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
   });
 
   // Allow drag anywhere on the page after a file is loaded
