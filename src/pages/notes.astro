@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Notes - Sayyaku" description="Modular notes archive and templates." activePage="notes">
+  <div class="page-header">
+    <span class="page-title">Notes</span>
+    <span class="header-meta">modular archive</span>
+  </div>
+
+  <section class="notes-intro animate-in">
+    <h2>Study notes.</h2>
+    <p>A collection of notes from various subjects.</p>
+  </section>
+
+  <article class="note-item animate-in">
+    <div>
+      <h2 class="note-title"><a href={`${base}projects/RNN_LSTM_Calculator.html`} class="note-title-link">RNN &amp; LSTM Calculator</a></h2>
+      <p class="note-desc">(WIP) Interactive construction kit for Vanilla RNN and LSTM cells. Tune dimensions, gates, topology, and regularization — see parameters, FLOPs, weight matrices, and unrolled timelines update live.</p>
+      <div class="note-meta">
+        <span class="tag">IF3270</span><span class="tag">RNN · LSTM</span><span class="tag">Interactive</span><span class="tag">v1.3</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="note-item animate-in">
+    <div>
+      <h2 class="note-title"><a href={`${base}notes/ml_lastterm_notes.html`} class="note-title-link">ML Last Term Notes (WIP)</a></h2>
+      <p class="note-desc">Advanced neural network architectures: CNN Backprop, RNN, LSTM, and BPTT.</p>
+      <div class="note-meta">
+        <span class="tag">IF3270</span><span class="tag">Sequential Models</span><span class="tag">v1.0</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="note-item animate-in">
+    <div>
+      <h2 class="note-title"><a href={`${base}notes/ml_midterm_notes.html`} class="note-title-link">ML Midterm Notes</a></h2>
+      <p class="note-desc">Full study reference for perceptron, FFNN, backpropagation, and CNN concepts.</p>
+      <div class="note-meta">
+        <span class="tag">IF3270</span><span class="tag">Neural Networks</span><span class="tag">v5</span>
+      </div>
+    </div>
+  </article>
+
+  <div slot="right-rail">
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Why Notes?</p></div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <div class="contact-link" style="cursor:default;">Notes help me organize and review information efficiently.</div>
+        <div class="contact-link" style="cursor:default;">I use modular notes to break down complex topics into manageable sections.</div>
+        <div class="contact-link" style="cursor:default;">Slides and textbooks can be overwhelming, so I create concise notes to focus on key concepts.</div>
+      </div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Disclaimer</p></div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <div class="contact-link" style="cursor:default;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Notes are for personal reference and may contain errors. Use them as a starting point, not a definitive source.
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,287 @@
+---
+import NotesLayout from '../../layouts/NotesLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<NotesLayout title="Notes Viewer — Sayyaku" activeNote="md-viewer" hideHeader={true}>
+  <Fragment slot="head">
+    <script is:inline>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
+    <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+            integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"
+            integrity="sha384-+VfUPEb0PdtChMwmBcBmykRMDd+v6D/oFmB3rZM/puCMDYcIvF968OimRh4KQY9a" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/styles/github-dark.min.css"
+          integrity="sha384-wH75j6z1lH97ZOpMOInqhgKzFkAInZPPSPlZpYKYTOqsaizPvhQZmAtLcPKXpLyH" crossorigin="anonymous" />
+    <script is:inline src="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/lib/highlight.min.js"
+            integrity="sha384-ugCFWYMWO87Y80o3yB42kOL+W58l7+Dstl/FLrHb1HyrMIrJGcPBTLqUJo5kX1gB" crossorigin="anonymous"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"
+            integrity="sha384-NNQgBjjuhtXzPmmy4gurS5X7P4uTt1DThyevz4Ua0IVK5+kazYQI1W27JHjbbxQz" crossorigin="anonymous"></script>
+    <style>
+      .md-drop {
+        position: fixed; inset: 0; z-index: 2000;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--bg-base);
+      }
+      .md-drop-inner {
+        text-align: center; border: 2px dashed var(--border-default);
+        border-radius: var(--r-lg); padding: 56px 72px; max-width: 460px;
+        transition: border-color 0.15s, background 0.15s;
+      }
+      .md-drop.dragover .md-drop-inner { border-color: var(--accent-gold); background: var(--accent-glow); }
+      .md-drop-icon { color: var(--text-muted); margin-bottom: 20px; }
+      .md-drop-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 400; margin-bottom: 8px; }
+      .md-drop-sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.65; }
+      .md-drop-sub code { font-family: var(--font-mono); font-size: 0.8em; background: var(--bg-hover); padding: 1px 5px; border-radius: 3px; }
+      .md-pick-btn {
+        display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;
+        border-radius: var(--r-lg); background: var(--accent-gold); color: var(--bg-base);
+        font-family: var(--font-ui); font-size: 0.875rem; font-weight: 500;
+        cursor: pointer; border: none; transition: opacity 0.15s;
+      }
+      .md-pick-btn:hover { opacity: 0.88; }
+      .md-drop-hint { margin-top: 14px; font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+      .fab-row { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; flex-direction: column; gap: 8px; align-items: flex-end; }
+      .fab-row.visible { display: flex; }
+      .fab-btn {
+        display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+        border-radius: var(--r-md); background: var(--bg-surface); color: var(--text-secondary);
+        border: 1px solid var(--border-default); font-family: var(--font-mono); font-size: 0.63rem;
+        letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      }
+      .fab-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+      .fab-btn.primary { background: var(--accent-gold); color: var(--bg-base); border-color: transparent; }
+      .fab-btn.primary:hover { opacity: 0.88; }
+    </style>
+  </Fragment>
+
+  <!-- Drop zone overlay -->
+  <div id="md-drop" class="md-drop">
+    <div class="md-drop-inner">
+      <div class="md-drop-icon">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <h1 class="md-drop-title">Drop your note</h1>
+      <p class="md-drop-sub">Drag a <code>.md</code> file here — frontmatter, callouts,<br>LaTeX math, and tables all render automatically.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="md-pick-btn" id="pick-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Choose file
+        </button>
+        <button class="md-pick-btn" id="tmpl-btn" style="background:transparent;color:var(--text-secondary);border:1px solid var(--border-default);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          Template
+        </button>
+      </div>
+      <input type="file" id="md-input" accept=".md,.markdown,.txt" hidden />
+      <p class="md-drop-hint">YAML front matter · [!callouts] · $LaTeX$ · GFM tables</p>
+    </div>
+  </div>
+
+  <!-- FAB buttons -->
+  <div id="fab-row" class="fab-row">
+    <button class="fab-btn primary" id="dl-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Download HTML
+    </button>
+    <button class="fab-btn" id="change-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Change file
+    </button>
+  </div>
+
+  <!-- Page header + body (rendered after file load) -->
+  <div class="page-header" id="pg-header" style="display:none;">
+    <span class="page-title" id="pg-title">Notes</span>
+    <span class="header-meta" id="pg-meta"></span>
+  </div>
+  <div id="md-cover"></div>
+  <div class="notes-scope" id="md-body"></div>
+
+  <div slot="right-rail">
+    <div class="card" style="margin-bottom:var(--sp-md);">
+      <div class="card-section"><p class="card-title">Contents</p></div>
+      <div style="height:1px;background:var(--border-subtle);"></div>
+      <div class="notes-toc-list" id="md-toc" style="padding-top:8px;"></div>
+    </div>
+  </div>
+</NotesLayout>
+
+<script is:inline>
+(function () {
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  let currentFile = null;
+  function saveScroll() { if (!currentFile) return; sessionStorage.setItem('scroll:'+currentFile, window.scrollY); }
+  function restoreScroll() { if (!currentFile) return; var y=sessionStorage.getItem('scroll:'+currentFile); if(y) window.scrollTo(0,parseInt(y,10)); }
+  window.addEventListener('scroll', saveScroll, { passive: true });
+
+  const ICON = {
+    note:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    warn:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    insight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  };
+  const TYPE = { note:'note',info:'note',warn:'warn',warning:'warn',caution:'warn',tip:'success',success:'success',check:'success',insight:'insight',important:'insight',key:'insight' };
+
+  function parseFM(raw) {
+    var m = raw.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n?([\s\S]*)/);
+    if (!m) return { meta: {}, body: raw };
+    var meta = {};
+    m[1].split('\n').forEach(function(line) {
+      var col = line.indexOf(':'); if (col < 0) return;
+      var val = line.slice(col+1).trim();
+      if (val.startsWith('[') && val.endsWith(']'))
+        val = val.slice(1,-1).split(',').map(function(s){return s.trim().replace(/^['"]|['"]$/g,'');}).join(' · ');
+      meta[line.slice(0,col).trim()] = val;
+    });
+    return { meta: meta, body: m[2] };
+  }
+
+  function protectMath(md) {
+    var stash = [];
+    var save = function(s) { stash.push(s); return '\x00M'+(stash.length-1)+'\x00'; };
+    md = md.replace(/\$\$[\s\S]+?\$\$/g, save);
+    md = md.replace(/\$[^$\n]+?\$/g, save);
+    md = md.replace(/\\\([\s\S]+?\\\)/g, save);
+    md = md.replace(/\\\[[\s\S]+?\\\]/g, save);
+    var restore = function(html) { return html.replace(/\x00M(\d+)\x00/g, function(_,i){return stash[i];}); };
+    return { md: md, restore: restore };
+  }
+
+  function callouts(md) {
+    return md.replace(/((?:^> ?[^\n]*(?:\n|$))+)/gm, function(match) {
+      var lines = match.trimEnd().split('\n');
+      var first = lines[0].replace(/^> ?/, '');
+      var cm = first.match(/^\[!(\w+)\](?:\s+(.+))?/);
+      if (!cm) return match;
+      var cls = TYPE[cm[1].toLowerCase()] || 'note';
+      var title = cm[2] ? '<div class="callout-title">'+esc(cm[2])+'</div>' : '';
+      var body = lines.slice(1).map(function(l){return l.replace(/^> ?/,'');}).join('\n');
+      return '<div class="callout '+cls+'"><div class="callout-icon">'+ICON[cls]+'</div><div class="callout-body">'+title+'<div class="callout-text">'+marked.parse(body)+'</div></div></div>';
+    });
+  }
+
+  function slug(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-'); }
+
+  function buildTOC(el) {
+    var toc = document.getElementById('md-toc');
+    toc.innerHTML = '';
+    var seen = {};
+    el.querySelectorAll('h2, h3').forEach(function(h) {
+      var id = slug(h.textContent);
+      if (seen[id]) id += '-'+(++seen[id]); else seen[id] = 1;
+      h.id = id;
+      var a = document.createElement('a');
+      a.href = '#'+id;
+      a.className = 'notes-toc-item'+(h.tagName==='H3'?' sub':'');
+      a.textContent = h.textContent;
+      toc.appendChild(a);
+    });
+  }
+
+  function render(raw) {
+    var _a = parseFM(raw), meta = _a.meta, body = _a.body;
+    var title   = meta.title || 'Untitled';
+    var course  = meta.course || '';
+    var subject = meta.subject || meta.topic || '';
+    var exam    = meta.exam || meta.type || '';
+    var topics  = meta.topics || '';
+    var refs    = meta.references || meta.refs || '';
+
+    document.title = title + ' — Sayyaku';
+    document.getElementById('pg-title').textContent = title;
+    document.getElementById('pg-meta').textContent = [course, exam].filter(Boolean).join(' · ');
+    document.getElementById('pg-header').style.display = '';
+
+    document.getElementById('md-cover').innerHTML =
+      '<div class="notes-cover">' +
+      (course ? '<div class="cover-label">'+[esc(course),esc(subject),esc(exam)].filter(Boolean).join(' · ')+'</div>' : '') +
+      '<h1>'+esc(title)+'</h1>' +
+      (topics ? '<div class="cover-topics">'+topics.split('·').map(function(t){return '<span class="topic-chip">'+esc(t.trim())+'</span>';}).join('')+'</div>' : '') +
+      (refs ? '<div class="refs-note">References: '+esc(refs)+'</div>' : '') +
+      '</div>';
+
+    var _b = protectMath(body), safe = _b.md, restore = _b.restore;
+    var processed = callouts(safe);
+    var rawHtml = restore(marked.parse(processed, { gfm: true, breaks: false }));
+
+    var bodyEl = document.getElementById('md-body');
+    bodyEl.innerHTML = DOMPurify.sanitize(rawHtml);
+    buildTOC(bodyEl);
+
+    bodyEl.querySelectorAll('pre code').forEach(function(block) {
+      if (typeof hljs !== 'undefined') hljs.highlightElement(block);
+    });
+    if (window.MathJax && window.MathJax.typesetPromise) MathJax.typesetPromise([bodyEl]);
+
+    document.getElementById('main-layout').hidden = false;
+    document.getElementById('md-drop').style.display = 'none';
+    document.getElementById('fab-row').classList.add('visible');
+    setTimeout(restoreScroll, 100);
+  }
+
+  function loadFile(f) {
+    if (!f) return;
+    currentFile = f.name;
+    var r = new FileReader();
+    r.onload = function(e) { render(e.target.result); };
+    r.readAsText(f);
+  }
+
+  var drop = document.getElementById('md-drop');
+  drop.addEventListener('dragover', function(e) { e.preventDefault(); drop.classList.add('dragover'); });
+  drop.addEventListener('dragleave', function() { drop.classList.remove('dragover'); });
+  drop.addEventListener('drop', function(e) { e.preventDefault(); drop.classList.remove('dragover'); loadFile(e.dataTransfer.files[0]); });
+
+  document.getElementById('pick-btn').addEventListener('click', function() { document.getElementById('md-input').click(); });
+  document.getElementById('md-input').addEventListener('change', function(e) { loadFile(e.target.files[0]); });
+
+  document.getElementById('change-btn').addEventListener('click', function() {
+    document.getElementById('main-layout').hidden = true;
+    drop.style.display = 'flex';
+    document.getElementById('pg-header').style.display = 'none';
+    document.getElementById('fab-row').classList.remove('visible');
+  });
+
+  document.getElementById('tmpl-btn').addEventListener('click', function() {
+    var a = document.createElement('a');
+    a.href = 'templates/note-template.md'; a.download = 'note-template.md'; a.click();
+  });
+
+  document.getElementById('dl-btn').addEventListener('click', async function() {
+    var title = document.getElementById('pg-title').textContent || 'note';
+    var coverHtml = document.getElementById('md-cover').innerHTML;
+    var bodyHtml  = document.getElementById('md-body').innerHTML;
+    var theme = document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light';
+    var mainCss = '', notesCss = '';
+    try {
+      var results = await Promise.all([
+        fetch('../css/style.css').then(function(r){return r.text();}),
+        fetch('../css/notes/notes.css').then(function(r){return r.text();}),
+      ]);
+      mainCss = results[0]; notesCss = results[1];
+    } catch (_) {
+      console.warn('md-viewer: could not fetch CSS for download — styles may be missing');
+    }
+    var FONTS = [
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap',
+    ];
+    var fontLinks = FONTS.map(function(f){return '<link rel="stylesheet" href="'+f+'"/>';}).join('\n');
+    var escTitle = String(title).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    var html = '<!DOCTYPE html>\n<html lang="en" class="theme-'+theme+'">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,initial-scale=1.0"/>\n<title>'+escTitle+'</title>\n<link rel="preconnect" href="https://fonts.googleapis.com"/>\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>\n'+fontLinks+'\n<script>MathJax={tex:{inlineMath:[[\'$\',\'$\'],[\'\\\\(\',\'\\\\)\']],displayMath:[[\'$$\',\'$$\'],[\'\\\\[\',\'\\\\]\']]}};'+('<\/script>')+'\n<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js">'+('<\/script>')+'\n<style>\n'+mainCss+'\n'+notesCss+'\nbody{margin:0}\n.dl-note-wrapper{max-width:860px;margin:0 auto;padding:40px 24px 80px;}\n</style>\n</head>\n<body class="notes-layout-article">\n<div class="dl-note-wrapper">\n'+coverHtml+'\n<div class="notes-scope">'+bodyHtml+'</div>\n</div>\n</body>\n</html>';
+    var blob = new Blob([html], { type: 'text/html' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = title.toLowerCase().replace(/[^\w]+/g,'-')+'.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.addEventListener('dragover', function(e){e.preventDefault();});
+  document.addEventListener('drop', function(e){e.preventDefault();if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+})();
+</script>
