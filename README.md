@@ -34,9 +34,10 @@
     <li><a href="#about">About</a></li>
     <li><a href="#structure">Project Structure</a></li>
     <li><a href="#dev">Local Development</a></li>
-    <li><a href="#add-page">Adding a Page</a></li>
     <li><a href="#add-note">Adding a Note</a></li>
+    <li><a href="#add-page">Adding a Page</a></li>
     <li><a href="#nav">Editing the Nav</a></li>
+    <li><a href="#css">Editing CSS</a></li>
     <li><a href="#deploy">Deployment</a></li>
   </ol>
 </details>
@@ -53,7 +54,9 @@ A personal portfolio — minimal, fast, no JS framework overhead. Built with Ast
 |:---|:---|
 | Framework | Astro 5 — static output, zero client JS by default |
 | Styling | Vanilla CSS with custom properties (design tokens) |
-| Notes | Large HTML notes served as static files from `public/notes/` |
+| Notes | Markdown files in `src/content/notes/` — Astro renders them automatically |
+| Math | KaTeX (build-time, no JS needed) |
+| Code highlighting | Shiki (build-time, github-dark theme) |
 | Deployment | GitHub Actions → GitHub Pages (auto on push to `master`) |
 | Live URL | https://sayyakuhajime.github.io/Portfolio/ |
 
@@ -67,48 +70,59 @@ A personal portfolio — minimal, fast, no JS framework overhead. Built with Ast
 
 ```
 Portfolio/
-├── src/
-│   ├── layouts/
-│   │   ├── BaseLayout.astro       ← main site layout (all 5 nav pages share this)
-│   │   └── NotesLayout.astro      ← notes-specific layout (sidebar, TOC, cursor)
-│   └── pages/
-│       ├── index.astro            ← Home
-│       ├── about.astro            ← About
-│       ├── notes.astro            ← Notes archive (list of all notes)
-│       ├── projects.astro         ← Projects
-│       ├── writings.astro         ← Writings
-│       ├── 404.astro              ← 404 page
-│       └── notes/
-│           └── md-viewer.astro    ← interactive .md file renderer
 │
-├── public/                        ← static files, copied as-is to dist/
+├── src/                           ← Astro processes everything here
+│   ├── layouts/
+│   │   ├── BaseLayout.astro       ← main nav (all 5 pages share this — edit once)
+│   │   └── NotesLayout.astro      ← notes sidebar, TOC, progress bar
+│   ├── pages/
+│   │   ├── index.astro            ← Home
+│   │   ├── about.astro            ← About
+│   │   ├── notes.astro            ← Notes archive list
+│   │   ├── projects.astro         ← Projects
+│   │   ├── writings.astro         ← Writings
+│   │   ├── 404.astro              ← 404 page
+│   │   └── notes/
+│   │       ├── [slug].astro       ← renders every note in content/notes/
+│   │       └── md-viewer.astro    ← interactive .md drag-and-drop renderer
+│   └── content/
+│       ├── config.ts              ← notes collection schema
+│       └── notes/                 ← DROP YOUR .md FILES HERE
+│
+├── public/                        ← copied as-is to dist/, no processing
 │   ├── css/
-│   │   ├── style.css              ← main design system (edit here)
-│   │   └── notes/notes.css        ← notes-specific styles
+│   │   ├── style.css              ← aggregator (@import only — don't edit)
+│   │   ├── tokens.css             ← design tokens & theme (colors, spacing, fonts)
+│   │   ├── layout.css             ← site structure, sidebar, nav, mobile
+│   │   ├── components.css         ← cards, feed, buttons, page-specific styles
+│   │   ├── animations.css         ← keyframes, .animate-in
+│   │   └── notes/
+│   │       ├── notes.css          ← aggregator (@import only — don't edit)
+│   │       ├── cursor.css         ← cursor trail & pointer
+│   │       ├── notes-layout.css   ← cover, TOC, progress, mobile drawer, print
+│   │       └── notes-content.css  ← typography, callouts, article components
 │   ├── js/
-│   │   ├── app.js                 ← theme toggle, tabs, scroll animations
+│   │   ├── app.js                 ← theme toggle, tabs, scroll animations, SW
 │   │   ├── theme-init.js          ← anti-FOUC theme bootstrap (blocking)
-│   │   └── notes-common.js        ← notes TOC, reading progress, cursor trail
+│   │   └── notes-common.js        ← TOC, reading progress, cursor trail
 │   ├── notes/
-│   │   ├── ml_lastterm_notes.html ← note (edit directly here)
-│   │   ├── ml_midterm_notes.html  ← note (edit directly here)
-│   │   └── templates/             ← .md and .html note templates
-│   ├── projects/
-│   │   ├── RNN_LSTM_Calculator.html
-│   │   ├── oeni-brand-guide-green.html
-│   │   └── penyucon-brand-guide.html
+│   │   ├── ml_lastterm_notes.html ← legacy HTML note (edit directly here)
+│   │   ├── ml_midterm_notes.html  ← legacy HTML note (edit directly here)
+│   │   └── templates/
+│   │       └── note-template.md   ← downloaded by MD Viewer "Template" button
+│   ├── projects/                  ← static project HTML files
 │   ├── assets/images/             ← images and media
-│   ├── favicon.ico
+│   ├── favicon.ico / favicon-*.png / apple-touch-icon.png
 │   ├── sw.js                      ← service worker (offline cache)
 │   └── search-index.json          ← static search index
 │
 ├── .github/workflows/deploy.yml   ← CI/CD: build + deploy to GitHub Pages
-├── astro.config.mjs               ← Astro config (site URL, base path)
+├── astro.config.mjs               ← Astro config (site URL, base path, markdown)
 ├── package.json
 └── .nojekyll                      ← tells GitHub Pages to skip Jekyll
 ```
 
-**Rule:** only edit files in `src/` and `public/`. Never touch `dist/` — it's auto-generated and gitignored.
+**The rule:** edit `src/` for structure and content. Edit `public/` for CSS, JS, and legacy HTML notes.
 
 <div align="right"><a href="#readme-top">↑ Back to top</a></div>
 
@@ -120,7 +134,7 @@ Portfolio/
 
 ### Prerequisites
 
-- Node.js 18+ (project uses Node 20 in CI)
+- Node.js 18+
 - npm
 
 ### Install & run
@@ -130,71 +144,13 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:4321/Portfolio/** (the `/Portfolio` base path is required locally too).
-
-### Build & preview
-
-```bash
-npm run build     # outputs to dist/
-npm run preview   # serve dist/ locally at localhost:4321/Portfolio/
-```
+Open **http://localhost:4321/Portfolio/**
 
 | Command | What it does |
 |:---|:---|
 | `npm run dev` | Dev server with hot reload |
 | `npm run build` | Static build to `dist/` |
-| `npm run preview` | Preview the production build locally |
-
-<div align="right"><a href="#readme-top">↑ Back to top</a></div>
-
----
-
-## Adding a Page
-
-<a id="add-page"></a>
-
-Create a new file in `src/pages/`. It automatically gets a URL based on its filename.
-
-```astro
----
-// src/pages/my-new-page.astro
-import BaseLayout from '../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL;
----
-
-<BaseLayout title="My Page — Sayyaku" activePage="my-new-page">
-  <div class="page-header">
-    <span class="page-title">My Page</span>
-  </div>
-
-  <!-- main content here -->
-
-  <div slot="right-rail">
-    <!-- right sidebar content here -->
-  </div>
-</BaseLayout>
-```
-
-This outputs to `dist/my-new-page.html` → URL: `/Portfolio/my-new-page.html`
-
-### BaseLayout props
-
-| Prop | Type | Description |
-|:---|:---|:---|
-| `title` | `string` | `<title>` tag content |
-| `description` | `string` | meta description |
-| `activePage` | `string` | highlights the matching nav item (`'home'`, `'notes'`, `'projects'`, `'writings'`, `'about'`) |
-| `ogTitle` | `string` | Open Graph title |
-| `ogDescription` | `string` | Open Graph description |
-
-### Named slots
-
-| Slot | Where it renders |
-|:---|:---|
-| *(default)* | Inside `<main class="main-content">` |
-| `right-rail` | Inside the right `<aside>` |
-
-Then add a link to it in the nav — see [Editing the Nav](#nav).
+| `npm run preview` | Serve `dist/` locally |
 
 <div align="right"><a href="#readme-top">↑ Back to top</a></div>
 
@@ -204,101 +160,52 @@ Then add a link to it in the nav — see [Editing the Nav](#nav).
 
 <a id="add-note"></a>
 
-Notes are large HTML files served statically from `public/notes/`. They don't go through Astro's build — they're copied as-is into `dist/notes/`.
+This is the main workflow. Everything is automatic once you drop a `.md` file.
 
-### Step 1 — Create the HTML file
+### Step 1 — Create the file
 
-Copy the template as a starting point:
-
-```bash
-cp public/notes/templates/note-template.html public/notes/my_new_note.html
+```
+src/content/notes/my-note-name.md
 ```
 
-Edit the new file directly. The template already has the correct sidebar nav, MathJax, CSS links, and script tags — just fill in the content inside `<main class="main-content">`.
+The filename becomes the URL: `my-note-name` → `/Portfolio/notes/my-note-name.html`
 
-### Step 2 — Add it to the notes list page
+### Step 2 — Write frontmatter + content
 
-Open `src/pages/notes.astro` and add an article entry:
+```md
+---
+title: My Note Title
+course: IF3270
+subject: Machine Learning
+exam: Final Exam
+topics: [CNN, RNN, LSTM]
+order: 1
+---
 
-```astro
-<article class="note-item animate-in">
-  <div>
-    <h2 class="note-title">
-      <a href={`${base}/notes/my_new_note.html`} class="note-title-link">
-        My New Note
-      </a>
-    </h2>
-    <p class="note-desc">Brief description of what this note covers.</p>
-    <div class="note-meta">
-      <span class="tag">Subject Code</span>
-      <span class="tag">Topic</span>
-      <span class="tag">v1.0</span>
-    </div>
-  </div>
-</article>
+## Section One
+
+Write content here in normal Markdown.
+One blank line before a heading is enough. Single newlines = line breaks.
+
+## Math
+
+Inline: $\sigma(x) = \frac{1}{1 + e^{-x}}$
+
+Display:
+$$
+\frac{\partial L}{\partial W} = \frac{1}{m} X^T (A - Y)
+$$
+
+## Code
+
+```python
+def relu(x):
+    return max(0, x)
 ```
 
-### Step 3 — Add it to the notes sidebar nav
+## Callout
 
-Open both layouts that contain the notes sidebar nav:
-- `src/layouts/NotesLayout.astro` — used by md-viewer
-- `public/notes/ml_lastterm_notes.html` — and any other existing note files
-
-Add a nav item:
-
-```html
-<a href="/Portfolio/notes/my_new_note.html" class="nav-item" data-abbr="NEW">
-  <div>
-    <div class="nav-label">My New Note</div>
-    <div class="nav-sub">Subject Code</div>
-  </div>
-</a>
-```
-
-> **Tip:** Use the MD Viewer (`/Portfolio/notes/md-viewer.html`) to draft notes in Markdown first — it renders frontmatter, callouts, LaTeX math, and GFM tables live. Download the result as HTML, then clean it up for the final file.
-
-### Note file structure
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- ... fonts, MathJax, CSS links (see template) ... -->
-</head>
-<body class="notes-layout-article">
-
-  <div class="site-wrapper">
-    <!-- LEFT SIDEBAR (notes nav) — copy from another note -->
-    <aside class="sidebar-left"> ... </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-      <div class="page-header">
-        <span class="page-title">Note Title</span>
-        <span class="header-meta">Subject · Exam Type</span>
-      </div>
-      <div class="notes-cover"> ... </div>
-      <div class="notes-scope">
-        <!-- your note content: h2, h3, p, pre, .callout, etc. -->
-      </div>
-    </main>
-
-    <!-- RIGHT RAIL (TOC) — copy from another note -->
-    <aside class="sidebar-right"> ... </aside>
-  </div>
-
-  <script src="../js/app.js" defer></script>
-  <script src="../js/notes-common.js"></script>
-</body>
-</html>
-```
-
-### Callout syntax (inside notes-scope)
-
-```html
 <div class="callout note">
-  <div class="callout-icon"><!-- SVG --></div>
   <div class="callout-body">
     <div class="callout-title">Note</div>
     <div class="callout-text"><p>Content here.</p></div>
@@ -306,7 +213,87 @@ Add a nav item:
 </div>
 ```
 
-Available types: `note`, `warn`, `success`, `insight`
+### Step 3 — Push
+
+```bash
+git add src/content/notes/my-note-name.md
+git commit -m "add: my note"
+git push
+```
+
+That's it. The note automatically appears in the sidebar and notes list.
+
+### Frontmatter fields
+
+| Field | Required | Description |
+|:---|:---|:---|
+| `title` | ✅ | Displayed in sidebar, cover, and page title |
+| `course` | no | Course code shown in sidebar and cover |
+| `subject` | no | Subject shown in cover label |
+| `exam` | no | Exam type shown in cover label |
+| `topics` | no | Array of topic chips shown in cover |
+| `order` | no | Sidebar sort order (default: 99, lower = higher) |
+| `references` | no | Reference text shown in cover |
+
+### What renders automatically
+
+- Math → KaTeX (build-time, no client JS)
+- Code blocks → Shiki syntax highlighting (github-dark)
+- `##` / `###` headings → TOC in right rail
+- Frontmatter → cover block (title, course, topics)
+- Dark/light theme
+
+### Callout types
+
+Replace `note` with any of: `note`, `warn`, `success`, `insight`
+
+```html
+<div class="callout warn">
+  <div class="callout-body">
+    <div class="callout-title">Warning</div>
+    <div class="callout-text"><p>Common mistake or pitfall.</p></div>
+  </div>
+</div>
+```
+
+<div align="right"><a href="#readme-top">↑ Back to top</a></div>
+
+---
+
+## Adding a Page
+
+<a id="add-page"></a>
+
+Create a new `.astro` file in `src/pages/`. The filename becomes the URL.
+
+```astro
+---
+// src/pages/my-page.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="My Page — Sayyaku" activePage="my-page">
+  <div class="page-header">
+    <span class="page-title">My Page</span>
+  </div>
+
+  <!-- main content goes here (default slot) -->
+
+  <div slot="right-rail">
+    <!-- right sidebar content -->
+  </div>
+</BaseLayout>
+```
+
+### BaseLayout props
+
+| Prop | Description |
+|:---|:---|
+| `title` | `<title>` tag |
+| `description` | meta description |
+| `activePage` | which nav item to highlight (`'home'`, `'notes'`, `'projects'`, `'writings'`, `'about'`) |
+| `ogTitle` / `ogDescription` | Open Graph tags |
 
 <div align="right"><a href="#readme-top">↑ Back to top</a></div>
 
@@ -316,25 +303,31 @@ Available types: `note`, `warn`, `success`, `insight`
 
 <a id="nav"></a>
 
-The main sidebar nav lives in **one place only**: `src/layouts/BaseLayout.astro`. Edit it there and every page updates.
+The main sidebar nav lives in **one place only**: `src/layouts/BaseLayout.astro`.
 
-```astro
-<!-- src/layouts/BaseLayout.astro -->
-<nav class="sidebar-nav">
-  <a href={`${base}/`} class:list={['nav-item', { active: activePage === 'home' }]} data-page="index.html">
-    <!-- SVG icon -->
-    <span class="nav-label">Home</span>
-  </a>
-  <!-- add new items here -->
-</nav>
-```
+The notes sidebar (Back to All Notes + note list) is in `src/layouts/NotesLayout.astro`. The collection notes appear automatically — only the legacy HTML notes are hardcoded there.
 
-To add a nav item:
-1. Add the `<a>` tag in `BaseLayout.astro`
-2. Pass the matching `activePage` string from your new page's frontmatter
-3. The JS in `app.js` also auto-highlights based on the current URL — both work together
+<div align="right"><a href="#readme-top">↑ Back to top</a></div>
 
-The **notes sidebar** (Back to All Notes + note list) lives in `src/layouts/NotesLayout.astro`. Update it when adding new notes.
+---
+
+## Editing CSS
+
+<a id="css"></a>
+
+`public/css/style.css` and `public/css/notes/notes.css` are aggregators — don't edit them. Edit the split files:
+
+| File | What's in it |
+|:---|:---|
+| `public/css/tokens.css` | All CSS custom properties — colors, spacing, fonts, theme overrides |
+| `public/css/layout.css` | Site shell, sidebar, nav, mobile responsive, collapsible sidebar |
+| `public/css/components.css` | Cards, feed items, buttons, page-specific styles (about, notes list, WIP) |
+| `public/css/animations.css` | `@keyframes fadeUp` and `.animate-in` |
+| `public/css/notes/cursor.css` | Cursor trail canvas + pointer dot |
+| `public/css/notes/notes-layout.css` | Notes cover, TOC, progress bar, mobile drawer, print styles |
+| `public/css/notes/notes-content.css` | Typography, callouts, formulas, tables inside `.notes-scope` |
+
+To change a color or spacing value, edit `tokens.css`. Everything else inherits from there.
 
 <div align="right"><a href="#readme-top">↑ Back to top</a></div>
 
@@ -344,40 +337,29 @@ The **notes sidebar** (Back to All Notes + note list) lives in `src/layouts/Note
 
 <a id="deploy"></a>
 
-Deployment is fully automatic via GitHub Actions.
-
-### How it works
+Automatic on every push to `master`:
 
 ```
 git push master
       │
       ▼
 .github/workflows/deploy.yml
-      │
-      ├─ actions/checkout
-      ├─ actions/setup-node (Node 20)
       ├─ npm ci
       ├─ astro build  →  dist/
-      └─ actions/deploy-pages  →  GitHub Pages (gh-pages source)
+      └─ deploy-pages  →  GitHub Pages
 ```
 
-Every push to `master` triggers a build and deploys `dist/` directly to GitHub Pages. No manual steps needed.
+### First-time setup
 
-### First-time GitHub Pages setup
-
-In your repo: **Settings → Pages → Build and deployment → Source → GitHub Actions**
-
-This only needs to be done once.
+In your GitHub repo: **Settings → Pages → Build and deployment → Source → GitHub Actions**
 
 ### Changing the base URL
-
-If the repo is renamed or moved to a custom domain, update two places:
 
 ```js
 // astro.config.mjs
 export default defineConfig({
-  site: 'https://your-username.github.io',  // ← your GitHub Pages domain
-  base: '/your-repo-name',                  // ← your repo name (or '/' for custom domain)
+  site: 'https://your-username.github.io',
+  base: '/your-repo-name',   // or '/' for a custom domain
 });
 ```
 
