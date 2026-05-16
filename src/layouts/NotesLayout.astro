@@ -25,8 +25,8 @@ const base = import.meta.env.BASE_URL;
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <slot name="head" />
-  <link rel="stylesheet" href={`${base}css/style.css`} />
-  <link rel="stylesheet" href={`${base}css/notes/notes.css`} />
+  <link rel="stylesheet" href={`${base}/css/style.css`} />
+  <link rel="stylesheet" href={`${base}/css/notes/notes.css`} />
 </head>
 <body class="notes-layout-article">
 
@@ -38,22 +38,22 @@ const base = import.meta.env.BASE_URL;
   <!-- LEFT SIDEBAR (notes nav) -->
   <aside class="sidebar-left">
     <div class="sidebar-logo">
-      <a href={`${base}notes.html`} class="notes-back-link">
+      <a href={`${base}/notes.html`} class="notes-back-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         <span>All Notes</span>
       </a>
     </div>
     <nav class="sidebar-nav">
-      <a href={`${base}projects/RNN_LSTM_Calculator.html`} class:list={['nav-item', { active: activeNote === 'rnn' }]} data-abbr="RNN">
+      <a href={`${base}/projects/RNN_LSTM_Calculator.html`} class:list={['nav-item', { active: activeNote === 'rnn' }]} data-abbr="RNN">
         <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}notes/ml_lastterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-lastterm' }]} data-abbr="ML2">
+      <a href={`${base}/notes/ml_lastterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-lastterm' }]} data-abbr="ML2">
         <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}notes/ml_midterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-midterm' }]} data-abbr="ML1">
+      <a href={`${base}/notes/ml_midterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-midterm' }]} data-abbr="ML1">
         <div><div class="nav-label">ML Midterm Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}notes/md-viewer.html`} class:list={['nav-item', { active: activeNote === 'md-viewer' }]} data-abbr="MD">
+      <a href={`${base}/notes/md-viewer.html`} class:list={['nav-item', { active: activeNote === 'md-viewer' }]} data-abbr="MD">
         <div><div class="nav-label">MD Viewer</div><div class="nav-sub">tool</div></div>
       </a>
     </nav>
@@ -94,7 +94,7 @@ const base = import.meta.env.BASE_URL;
 
 </div>
 
-<script is:inline src={`${base}js/app.js`} defer></script>
-<script is:inline src={`${base}js/notes-common.js`}></script>
+<script is:inline src={`${base}/js/app.js`} defer></script>
+<script is:inline src={`${base}/js/notes-common.js`}></script>
 </body>
 </html>

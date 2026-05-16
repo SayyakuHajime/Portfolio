@@ -25,7 +25,7 @@ const base = import.meta.env.BASE_URL;
   <script is:inline>
     (function(){try{var s=localStorage.getItem('portfolio-theme');var t=(s==='dark'||s==='light')?s:(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.classList.add('theme-'+t);}catch(_){}})();
   </script>
-  <link rel="stylesheet" href={`${base}css/style.css`} />
+  <link rel="stylesheet" href={`${base}/css/style.css`} />
 </head>
 <body>
 
@@ -35,23 +35,23 @@ const base = import.meta.env.BASE_URL;
   <aside class="sidebar-left">
     <div class="sidebar-logo"></div>
     <nav class="sidebar-nav">
-      <a href={`${base}`} class:list={['nav-item', { active: activePage === 'home' }]} data-page="index.html">
+      <a href={`${base}/`} class:list={['nav-item', { active: activePage === 'home' }]} data-page="index.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
         <span class="nav-label">Home</span>
       </a>
-      <a href={`${base}writings.html`} class:list={['nav-item', { active: activePage === 'writings' }]} data-page="writings.html">
+      <a href={`${base}/writings.html`} class:list={['nav-item', { active: activePage === 'writings' }]} data-page="writings.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         <span class="nav-label">Writings</span>
       </a>
-      <a href={`${base}projects.html`} class:list={['nav-item', { active: activePage === 'projects' }]} data-page="projects.html">
+      <a href={`${base}/projects.html`} class:list={['nav-item', { active: activePage === 'projects' }]} data-page="projects.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         <span class="nav-label">Projects</span>
       </a>
-      <a href={`${base}about.html`} class:list={['nav-item', { active: activePage === 'about' }]} data-page="about.html">
+      <a href={`${base}/about.html`} class:list={['nav-item', { active: activePage === 'about' }]} data-page="about.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         <span class="nav-label">About</span>
       </a>
-      <a href={`${base}notes.html`} class:list={['nav-item', { active: activePage === 'notes' }]} data-page="notes">
+      <a href={`${base}/notes.html`} class:list={['nav-item', { active: activePage === 'notes' }]} data-page="notes">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
         <span class="nav-label">Notes</span>
       </a>
@@ -81,6 +81,6 @@ const base = import.meta.env.BASE_URL;
 
 </div>
 
-<script is:inline src={`${base}js/app.js`} defer></script>
+<script is:inline src={`${base}/js/app.js`} defer></script>
 </body>
 </html>
