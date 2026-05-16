@@ -1,0 +1,26 @@
+[
+  {
+    "title": "ML Last Term Notes",
+    "url": "/notes/ml_lastterm_notes.html",
+    "tags": ["IF3270", "Sequential Models", "CNN", "RNN", "LSTM", "BPTT"],
+    "excerpt": "Advanced neural network architectures: CNN Backprop, RNN, LSTM, and Backpropagation Through Time."
+  },
+  {
+    "title": "ML Midterm Notes",
+    "url": "/notes/ml_midterm_notes.html",
+    "tags": ["IF3270", "Neural Networks", "Perceptron", "FFNN", "Backpropagation", "CNN"],
+    "excerpt": "Full study reference for perceptron, FFNN, backpropagation, and CNN fundamentals."
+  },
+  {
+    "title": "RNN & LSTM Calculator",
+    "url": "/projects/RNN_LSTM_Calculator.html",
+    "tags": ["IF3270", "RNN", "LSTM", "Interactive", "Calculator"],
+    "excerpt": "Interactive construction kit for Vanilla RNN and LSTM cells with live parameter updates."
+  },
+  {
+    "title": "MD Viewer",
+    "url": "/notes/md-viewer.html",
+    "tags": ["tool", "markdown", "viewer"],
+    "excerpt": "Drop a .md file to render it with frontmatter, callouts, LaTeX math, and tables."
+  }
+]
