@@ -1,0 +1,95 @@
+/* ============================================================
+   DESIGN TOKENS — all custom properties live here
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Colors */
+  --bg-base:        #f7f3eb;
+  --bg-surface:     #fdfaf4;
+  --bg-elevated:    #fffdf9;
+  --bg-hover:       #efe7d9;
+
+  --border-subtle:  #e3d8c6;
+  --border-default: #d2c1a6;
+  --border-strong:  #bda37e;
+
+  --text-primary:   #1f1a14;
+  --text-secondary: #4f4639;
+  --text-muted:     #5a5145;
+
+  --accent-gold:    #6e4c15;
+  --accent-amber:   #6f4b13;
+  --accent-warm:    #6b4d1e;
+  --accent-glow:    rgba(110, 76, 21, 0.12);
+  --header-bg:      rgba(247, 243, 235, 0.86);
+
+  --danger:         #c0524a;
+
+  /* Typography */
+  --font-display:   'Cormorant Garamond', Georgia, serif;
+  --font-ui:        'Geist', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Courier New', monospace;
+
+  /* Spacing */
+  --sp-xs:  4px;
+  --sp-sm:  8px;
+  --sp-md:  16px;
+  --sp-lg:  24px;
+  --sp-xl:  40px;
+  --sp-2xl: 64px;
+
+  /* Radius */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+
+  /* Layout */
+  --sidebar-w:   clamp(220px, 18vw, 320px);
+  --rightrail-w: clamp(240px, 22vw, 360px);
+
+  /* Transition */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── DARK THEME (system preference) ────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base:        #0c0b09;
+    --bg-surface:     #131210;
+    --bg-elevated:    #1a1916;
+    --bg-hover:       #201f1c;
+    --border-subtle:  #252320;
+    --border-default: #302e2a;
+    --border-strong:  #44413c;
+    --text-primary:   #f0ece3;
+    --text-secondary: #a49e94;
+    --text-muted:     #a29e96;
+    --accent-gold:    #d4a843;
+    --accent-amber:   #b8863a;
+    --accent-warm:    #e8c070;
+    --accent-glow:    rgba(212, 168, 67, 0.12);
+    --header-bg:      rgba(12, 11, 9, 0.85);
+  }
+}
+
+/* ── ANTI-FLICKER: class set on <html> by theme-init.js ── */
+html.theme-dark {
+  --bg-base:        #0c0b09;  --bg-surface:     #131210;
+  --bg-elevated:    #1a1916;  --bg-hover:       #201f1c;
+  --border-subtle:  #252320;  --border-default: #302e2a;  --border-strong: #44413c;
+  --text-primary:   #f0ece3;  --text-secondary: #a49e94;  --text-muted:    #a29e96;
+  --accent-gold:    #d4a843;  --accent-amber:   #b8863a;  --accent-warm:   #e8c070;
+  --accent-glow:    rgba(212, 168, 67, 0.12);
+  --header-bg:      rgba(12, 11, 9, 0.85);
+}
+html.theme-light {
+  --bg-base:        #f7f3eb;  --bg-surface:     #fdfaf4;
+  --bg-elevated:    #fffdf9;  --bg-hover:       #efe7d9;
+  --border-subtle:  #e3d8c6;  --border-default: #d2c1a6;  --border-strong: #bda37e;
+  --text-primary:   #1f1a14;  --text-secondary: #4f4639;  --text-muted:    #5a5145;
+  --accent-gold:    #6e4c15;  --accent-amber:   #6f4b13;  --accent-warm:   #6b4d1e;
+  --accent-glow:    rgba(110, 76, 21, 0.12);
+  --header-bg:      rgba(247, 243, 235, 0.86);
+}

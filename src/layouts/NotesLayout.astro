@@ -1,14 +1,30 @@
 ---
+import { getCollection } from 'astro:content';
+
 interface Props {
   title: string;
   activeNote?: string;
+  activeSlug?: string;
   pageTitle?: string;
   pageMeta?: string;
   hideHeader?: boolean;
+  useKatex?: boolean;
 }
 
-const { title, activeNote = '', pageTitle = '', pageMeta = '', hideHeader = false } = Astro.props;
+const {
+  title,
+  activeNote = '',
+  activeSlug = '',
+  pageTitle = '',
+  pageMeta = '',
+  hideHeader = false,
+  useKatex = false,
+} = Astro.props;
+
 const base = import.meta.env.BASE_URL;
+
+const collectionNotes = (await getCollection('notes'))
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <!DOCTYPE html>
@@ -25,9 +41,20 @@ const base = import.meta.env.BASE_URL;
   <script is:inline>
     (function(){try{var s=localStorage.getItem('portfolio-theme');var t=(s==='dark'||s==='light')?s:(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.classList.add('theme-'+t);}catch(_){}})();
   </script>
-  <link href={`https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap`} rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
+  {useKatex && (
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+          integrity="sha384-nB0a76a5iVBkLkiNHYMtXATkGPQOzMGGiRSoRnXb8+I28yU/JSB8bZjTidXLtaN" crossorigin="anonymous" />
+  )}
+  {!useKatex && (
+    <Fragment>
+      <script is:inline>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
+      <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+              integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+    </Fragment>
+  )}
   <slot name="head" />
   <link rel="stylesheet" href={`${base}/css/style.css`} />
   <link rel="stylesheet" href={`${base}/css/notes/notes.css`} />
@@ -48,16 +75,35 @@ const base = import.meta.env.BASE_URL;
       </a>
     </div>
     <nav class="sidebar-nav">
-      <a href={`${base}/projects/RNN_LSTM_Calculator.html`} class:list={['nav-item', { active: activeNote === 'rnn' }]} data-abbr="RNN">
+      <!-- Dynamic: content collection notes -->
+      {collectionNotes.map(note => (
+        <a
+          href={`${base}/notes/${note.slug}.html`}
+          class:list={['nav-item', { active: activeSlug === note.slug }]}
+          data-abbr={note.slug.slice(0, 3).toUpperCase()}
+        >
+          <div>
+            <div class="nav-label">{note.data.title}</div>
+            {note.data.course && <div class="nav-sub">{note.data.course}</div>}
+          </div>
+        </a>
+      ))}
+
+      <!-- Static: legacy HTML notes -->
+      <a href={`${base}/projects/RNN_LSTM_Calculator.html`}
+         class:list={['nav-item', { active: activeNote === 'rnn' }]} data-abbr="RNN">
         <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}/notes/ml_lastterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-lastterm' }]} data-abbr="ML2">
+      <a href={`${base}/notes/ml_lastterm_notes.html`}
+         class:list={['nav-item', { active: activeNote === 'ml-lastterm' }]} data-abbr="ML2">
         <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}/notes/ml_midterm_notes.html`} class:list={['nav-item', { active: activeNote === 'ml-midterm' }]} data-abbr="ML1">
+      <a href={`${base}/notes/ml_midterm_notes.html`}
+         class:list={['nav-item', { active: activeNote === 'ml-midterm' }]} data-abbr="ML1">
         <div><div class="nav-label">ML Midterm Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href={`${base}/notes/md-viewer.html`} class:list={['nav-item', { active: activeNote === 'md-viewer' }]} data-abbr="MD">
+      <a href={`${base}/notes/md-viewer.html`}
+         class:list={['nav-item', { active: activeNote === 'md-viewer' }]} data-abbr="MD">
         <div><div class="nav-label">MD Viewer</div><div class="nav-sub">tool</div></div>
       </a>
     </nav>
