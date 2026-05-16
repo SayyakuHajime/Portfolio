@@ -22,6 +22,10 @@ const base = import.meta.env.BASE_URL;
   {ogDescription && <meta property="og:description" content={ogDescription} />}
   {(ogTitle || ogDescription) && <meta property="og:type" content="website" />}
   <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self';" />
+  <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
+  <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32x32.png`} />
+  <link rel="icon" type="image/png" sizes="16x16" href={`${base}/favicon-16x16.png`} />
+  <link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
   <script is:inline>
     (function(){try{var s=localStorage.getItem('portfolio-theme');var t=(s==='dark'||s==='light')?s:(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.classList.add('theme-'+t);}catch(_){}})();
   </script>
