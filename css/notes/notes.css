@@ -826,3 +826,41 @@ body.cursor-mode-on .cursor-pointer { opacity: 1; }
 
   :is(.notes-layout-article, .notes-layout-modular) .page-header { padding-right: 64px; }
 }
+
+/* ── PRINT STYLES ──────────────────────────────────────── */
+@media print {
+  .sidebar-left,
+  .sidebar-right,
+  .progress-bar-wrap,
+  .fab-row,
+  .cursor-trail-canvas,
+  .cursor-pointer,
+  .cursor-toggle-btn,
+  #theme-toggle,
+  .notes-toc-list,
+  .notes-toc-trigger,
+  .mobile-nav-trigger { display: none !important; }
+
+  .site-wrapper { display: block; }
+  .main-content { max-width: 100%; padding: 0; margin: 0; }
+
+  body { background: #fff; color: #000; font-size: 11pt; }
+
+  h1, h2, h3, h4 { page-break-after: avoid; color: #000; }
+  pre, blockquote, .callout { page-break-inside: avoid; }
+
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
+
+  .notes-cover { border-bottom: 1pt solid #ccc; padding-bottom: 12pt; margin-bottom: 20pt; }
+  .cover-label { font-size: 9pt; color: #555; }
+
+  pre { border: 1pt solid #ccc; padding: 8pt; white-space: pre-wrap; word-wrap: break-word; }
+  code { font-size: 9pt; }
+
+  .callout { border-left: 3pt solid #888; background: none; padding-left: 8pt; }
+  .callout.note { border-color: #888; }
+  .callout.warn { border-color: #c00; }
+  .callout.success { border-color: #080; }
+  .callout.insight { border-color: #00a; }
+}

@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notes Viewer — Sayyaku</title>
   <script src="../js/theme-init.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self';">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
   <script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+          integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"
+          integrity="sha384-+VfUPEb0PdtChMwmBcBmykRMDd+v6D/oFmB3rZM/puCMDYcIvF968OimRh4KQY9a" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/styles/github-dark.min.css"
+        integrity="sha384-wH75j6z1lH97ZOpMOInqhgKzFkAInZPPSPlZpYKYTOqsaizPvhQZmAtLcPKXpLyH" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/lib/highlight.min.js"
+          integrity="sha384-ugCFWYMWO87Y80o3yB42kOL+W58l7+Dstl/FLrHb1HyrMIrJGcPBTLqUJo5kX1gB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"
+          integrity="sha384-NNQgBjjuhtXzPmmy4gurS5X7P4uTt1DThyevz4Ua0IVK5+kazYQI1W27JHjbbxQz" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/notes/notes.css" />
   <style>
@@ -169,10 +177,26 @@
 
 </div>
 
-<script src="../js/app.js"></script>
+<script src="../js/app.js" defer></script>
 <script src="../js/notes-common.js"></script>
 <script>
 (function () {
+  // ── ESCAPE HELPER ─────────────────────────────────────
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  // ── SCROLL PERSISTENCE ───────────────────────────────
+  let currentFile = null;
+  function saveScroll() {
+    if (!currentFile) return;
+    sessionStorage.setItem('scroll:' + currentFile, window.scrollY);
+  }
+  function restoreScroll() {
+    if (!currentFile) return;
+    const y = sessionStorage.getItem('scroll:' + currentFile);
+    if (y) window.scrollTo(0, parseInt(y, 10));
+  }
+  window.addEventListener('scroll', saveScroll, { passive: true });
+
   // ── CALLOUT ICONS ────────────────────────────────────
   const ICON = {
     note:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
@@ -260,10 +284,10 @@
 
     document.getElementById('md-cover').innerHTML = `
       <div class="notes-cover">
-        ${course ? `<div class="cover-label">${[course, subject, exam].filter(Boolean).join(' · ')}</div>` : ''}
-        <h1>${title}</h1>
-        ${topics ? `<div class="cover-topics">${topics.split('·').map(t=>`<span class="topic-chip">${t.trim()}</span>`).join('')}</div>` : ''}
-        ${refs ? `<div class="refs-note">References: ${refs}</div>` : ''}
+        ${course ? `<div class="cover-label">${[esc(course), esc(subject), esc(exam)].filter(Boolean).join(' · ')}</div>` : ''}
+        <h1>${esc(title)}</h1>
+        ${topics ? `<div class="cover-topics">${topics.split('·').map(t=>`<span class="topic-chip">${esc(t.trim())}</span>`).join('')}</div>` : ''}
+        ${refs ? `<div class="refs-note">References: ${esc(refs)}</div>` : ''}
       </div>`;
 
     const { md: safe, restore } = protectMath(body);
@@ -271,19 +295,24 @@
     const rawHtml = restore(marked.parse(processed, { gfm: true, breaks: false }));
 
     const bodyEl = document.getElementById('md-body');
-    bodyEl.innerHTML = rawHtml;
+    bodyEl.innerHTML = DOMPurify.sanitize(rawHtml);
     buildTOC(bodyEl);
 
+    bodyEl.querySelectorAll('pre code').forEach(block => {
+      if (typeof hljs !== 'undefined') hljs.highlightElement(block);
+    });
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise([bodyEl]);
 
     document.getElementById('main-layout').hidden = false;
     document.getElementById('md-drop').style.display = 'none';
     document.getElementById('fab-row').classList.add('visible');
+    setTimeout(restoreScroll, 100);
   }
 
   // ── FILE HANDLING ────────────────────────────────────
   function loadFile(f) {
     if (!f) return;
+    currentFile = f.name;
     const r = new FileReader();
     r.onload = e => render(e.target.result);
     r.readAsText(f);
@@ -324,7 +353,9 @@
         fetch('../css/style.css').then(r => r.text()),
         fetch('../css/notes/notes.css').then(r => r.text()),
       ]);
-    } catch (_) {}
+    } catch (_) {
+      console.warn('md-viewer: could not fetch CSS for download — styles may be missing');
+    }
 
     const FONTS = [
       'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap',
@@ -337,7 +368,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>${title}</title>
+<title>${esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 ${fontLinks}
