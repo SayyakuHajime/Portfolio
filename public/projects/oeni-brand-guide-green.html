@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oeni Yoga Studio — Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:   #2e3d2b;   /* deep forest — replaces charcoal as primary dark */
+    --moss:     #4e6247;   /* mid-depth moss */
+    --fern:     #708060;   /* warm fern green */
+    --sage:     #96aa87;   /* soft sage — main accent */
+    --mist:     #c8d8be;   /* pale green tint */
+    --cream:    #f2f0e8;   /* warm cream background */
+    --earth:    #8a7b62;   /* warm earth/taupe — neutral grounding */
+    --parchment:#e8e4d8;   /* slightly deeper cream */
+
+    --ff-display: 'Cormorant SC', serif;
+    --ff-script:  'Pinyon Script', cursive;
+    --ff-body:    'Jost', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--forest);
+    font-family: var(--ff-body);
+    font-weight: 300;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--forest);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 30% 70%, rgba(78,98,71,.35) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 75% 30%, rgba(112,128,96,.18) 0%, transparent 55%);
+  }
+  .cover-texture {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='1' fill='%2396aa87' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* decorative botanical line art */
+  .cover-botanical {
+    position: absolute;
+    right: -40px; top: -20px;
+    opacity: .06;
+    pointer-events: none;
+  }
+  .cover-botanical-left {
+    position: absolute;
+    left: -60px; bottom: -30px;
+    opacity: .06;
+    pointer-events: none;
+    transform: scaleX(-1) rotate(20deg);
+  }
+
+  .cover-label {
+    font-family: var(--ff-body);
+    font-size: 10px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 52px;
+    position: relative;
+  }
+  .cover-logo-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .cover-wordmark {
+    font-family: var(--ff-display);
+    font-size: 76px;
+    font-weight: 300;
+    letter-spacing: .28em;
+    color: var(--cream);
+    text-transform: uppercase;
+    line-height: 1;
+    position: relative;
+  }
+  .cover-sub {
+    font-family: var(--ff-script);
+    font-size: 28px;
+    color: var(--sage);
+    margin-top: -6px;
+    letter-spacing: .04em;
+  }
+  .cover-divider {
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, transparent, var(--fern), transparent);
+    margin: 36px 0;
+  }
+  .cover-footer {
+    font-family: var(--ff-body);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--fern);
+    opacity: .55;
+    position: relative;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 90px 60px; }
+  section + section { border-top: 1px solid rgba(78,98,71,.15); }
+
+  .section-label {
+    font-family: var(--ff-body);
+    font-size: 10px;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--fern);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--ff-display);
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: .12em;
+    color: var(--forest);
+    margin-bottom: 48px;
+  }
+
+  /* ── LOGO GRID ── */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .logo-cell {
+    padding: 52px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+  .logo-cell.bg-cream   { background: var(--cream); }
+  .logo-cell.bg-forest  { background: var(--forest); }
+  .logo-cell.bg-moss    { background: var(--moss); }
+  .logo-cell.bg-fern    { background: var(--fern); }
+  .logo-cell.bg-sage    { background: var(--sage); }
+  .logo-cell.bg-mist    { background: var(--mist); }
+  .logo-cell.bg-earth   { background: var(--earth); }
+  .logo-caption {
+    font-family: var(--ff-body);
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    opacity: .45;
+    margin-top: 4px;
+  }
+  .wm { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .wm-name    { font-family: var(--ff-display); font-weight: 300; letter-spacing: .22em; text-transform: uppercase; }
+  .wm-tagline { font-family: var(--ff-script); letter-spacing: .04em; }
+
+  /* ── SYMBOL SIZES ── */
+  .symbol-intro {
+    font-family: var(--ff-body);
+    font-size: 13px;
+    line-height: 1.9;
+    max-width: 540px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .symbol-row { display: flex; gap: 48px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 48px; }
+  .symbol-size { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .symbol-size-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; }
+
+  /* ── PALETTE ── */
+  .palette-band { display: flex; gap: 0; overflow: hidden; border-radius: 4px; height: 150px; }
+  .swatch { flex: 1; position: relative; cursor: default; transition: flex .35s ease; }
+  .swatch:hover { flex: 2.2; }
+  .swatch-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 12px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,.3), transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .swatch:hover .swatch-info { opacity: 1; }
+  .swatch-name { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: #fff; }
+  .swatch-hex  { font-size: 11px; font-family: monospace; color: rgba(255,255,255,.7); }
+
+  .palette-detail {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .pd-item { display: flex; flex-direction: column; gap: 8px; }
+  .pd-sw   { height: 56px; border-radius: 4px; }
+  .pd-name { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--forest); }
+  .pd-hex  { font-size: 10px; font-family: monospace; color: var(--fern); }
+  .pd-use  { font-size: 9px; color: var(--fern); line-height: 1.4; }
+
+  /* ── TYPOGRAPHY ── */
+  .type-block { margin-bottom: 56px; }
+  .type-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+  .type-role { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: var(--fern); }
+  .type-name { font-family: var(--ff-body); font-size: 11px; letter-spacing: .1em; color: var(--mist); }
+  .type-divider { border: none; border-top: 1px solid rgba(78,98,71,.15); margin-bottom: 24px; }
+
+  .specimen-display {
+    font-family: var(--ff-display);
+    font-size: 66px; font-weight: 300;
+    letter-spacing: .1em;
+    color: var(--forest);
+    line-height: 1.05;
+  }
+  .specimen-script {
+    font-family: var(--ff-script);
+    font-size: 70px;
+    color: var(--moss);
+    line-height: 1.15;
+  }
+  .specimen-body {
+    font-family: var(--ff-body);
+    font-size: 14px; line-height: 1.85;
+    color: var(--forest);
+    max-width: 600px; font-weight: 300;
+  }
+
+  .type-pair-demo {
+    background: var(--forest);
+    padding: 50px 56px;
+    border-radius: 4px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .type-pair-demo::before {
+    content: '';
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(150,170,135,.1) 0%, transparent 70%);
+  }
+  .tpd-eyebrow { font-family: var(--ff-body); font-size: 9px; letter-spacing: .38em; text-transform: uppercase; color: var(--sage); margin-bottom: 10px; }
+  .tpd-heading { font-family: var(--ff-display); font-size: 44px; font-weight: 300; letter-spacing: .15em; color: var(--cream); margin-bottom: 4px; }
+  .tpd-script  { font-family: var(--ff-script); font-size: 26px; color: var(--sage); margin-bottom: 20px; }
+  .tpd-body    { font-family: var(--ff-body); font-size: 13px; line-height: 1.9; color: var(--mist); font-weight: 300; max-width: 480px; }
+  .tpd-prices  { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .tpd-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid rgba(150,170,135,.12);
+    padding-bottom: 10px;
+  }
+  .tpd-class { font-family: var(--ff-body); font-size: 11px; letter-spacing: .15em; color: var(--mist); }
+  .tpd-price { font-family: var(--ff-display); font-size: 18px; color: var(--sage); letter-spacing: .08em; }
+
+  /* ── BRAND RULES ── */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .voice-cell { padding: 40px; }
+  .vc-do   { background: rgba(78,98,71,.07);  border-left: 2px solid var(--moss); }
+  .vc-dont { background: rgba(138,123,98,.07); border-left: 2px solid var(--earth); }
+  .vc-title { font-family: var(--ff-display); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 20px; }
+  .vc-do .vc-title   { color: var(--moss); }
+  .vc-dont .vc-title { color: var(--earth); }
+  .vc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .vc-list li { font-size: 13px; line-height: 1.65; color: var(--forest); padding-left: 20px; position: relative; }
+  .vc-list li::before { position: absolute; left: 0; }
+  .vc-do .vc-list li::before   { content: '✓'; color: var(--moss); }
+  .vc-dont .vc-list li::before { content: '✕'; color: var(--earth); }
+
+  /* ── MOCKUPS ── */
+  .mockup-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .card-mockup {
+    background: var(--forest);
+    border-radius: 6px;
+    padding: 44px 40px;
+    display: flex; flex-direction: column; gap: 6px;
+    position: relative; overflow: hidden;
+  }
+  .card-mockup::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(150,170,135,.08) 0%, transparent 70%);
+  }
+  .card-eyebrow { font-family: var(--ff-body); font-size: 8px; letter-spacing: .4em; text-transform: uppercase; color: var(--sage); }
+  .card-title   { font-family: var(--ff-display); font-size: 26px; font-weight: 300; color: var(--cream); letter-spacing: .12em; }
+  .card-script  { font-family: var(--ff-script); font-size: 18px; color: var(--sage); margin-top: -2px; }
+  .card-line    { border: none; border-top: 1px solid rgba(150,170,135,.2); margin: 18px 0; }
+  .price-row    { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; }
+  .price-name   { font-family: var(--ff-body); font-size: 11px; letter-spacing: .12em; color: var(--mist); font-weight: 300; }
+  .price-val    { font-family: var(--ff-display); font-size: 16px; font-weight: 400; color: var(--sage); letter-spacing: .08em; }
+
+  .social-mockup { background: var(--cream); border-radius: 6px; border: 1px solid rgba(78,98,71,.12); overflow: hidden; }
+  .sm-header { background: var(--moss); padding: 26px 30px; display: flex; align-items: center; gap: 14px; }
+  .sm-handle { font-family: var(--ff-body); font-size: 11px; letter-spacing: .1em; color: var(--cream); }
+  .sm-body   { padding: 26px 30px; }
+  .sm-visual {
+    width: 100%; height: 165px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--moss) 45%, var(--fern) 100%);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .sm-caption { font-family: var(--ff-body); font-size: 12px; line-height: 1.75; color: var(--forest); font-weight: 300; }
+  .sm-caption em { font-family: var(--ff-script); font-style: normal; font-size: 16px; color: var(--moss); }
+  .sm-tags { margin-top: 12px; font-size: 10px; letter-spacing: .1em; color: var(--fern); }
+
+  /* ── COLOUR STORY ── */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 3px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .story-cell { display: flex; align-items: flex-end; padding: 20px; }
+  .story-cell.tall { grid-row: 1 / 3; }
+  .story-label { font-family: var(--ff-display); font-size: 14px; letter-spacing: .15em; color: rgba(255,255,255,.7); }
+
+  /* ── FOOTER ── */
+  .brand-footer {
+    background: var(--forest);
+    padding: 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .bf-name { font-family: var(--ff-display); font-size: 18px; letter-spacing: .22em; color: var(--cream); }
+  .bf-sub  { font-family: var(--ff-script); font-size: 15px; color: var(--sage); margin-top: 4px; }
+  .bf-note { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--fern); opacity: .5; }
+
+  @media (max-width: 720px) {
+    section { padding: 60px 24px; }
+    .logo-grid, .mockup-row, .voice-grid { grid-template-columns: 1fr; }
+    .palette-detail { grid-template-columns: repeat(4, 1fr); }
+    .cover-wordmark { font-size: 48px; }
+    .brand-footer { flex-direction: column; gap: 24px; text-align: center; }
+    .story-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .story-cell.tall { grid-row: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-texture"></div>
+
+  <!-- decorative botanical SVG right -->
+  <svg class="cover-botanical" width="360" height="480" viewBox="0 0 360 480" fill="none">
+    <path d="M180 480 Q160 360 200 280 Q240 200 180 80" stroke="#96aa87" stroke-width="1.5" fill="none"/>
+    <path d="M180 380 Q130 340 100 300 Q140 310 180 360" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <path d="M185 310 Q230 270 260 240 Q230 255 185 290" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <path d="M178 240 Q128 200 105 165 Q140 178 178 225" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <path d="M183 175 Q220 140 240 108 Q215 125 183 165" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <ellipse cx="180" cy="80" rx="18" ry="26" stroke="#96aa87" stroke-width="1" fill="none"/>
+  </svg>
+
+  <!-- decorative botanical SVG left -->
+  <svg class="cover-botanical-left" width="280" height="400" viewBox="0 0 280 400" fill="none">
+    <path d="M140 400 Q120 300 155 220 Q185 150 140 50" stroke="#96aa87" stroke-width="1.5" fill="none"/>
+    <path d="M140 310 Q90 270 65 235 Q100 244 140 290" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <path d="M145 240 Q190 205 210 175" stroke="#96aa87" stroke-width="1" fill="none"/>
+    <ellipse cx="140" cy="50" rx="14" ry="20" stroke="#96aa87" stroke-width="1" fill="none"/>
+  </svg>
+
+  <div class="cover-label">Brand Identity System · 2025</div>
+
+  <div class="cover-logo-wrap">
+    <!-- Primary Symbol -->
+    <svg width="114" height="114" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+      <!-- crescent -->
+      <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" fill="#4e6247" opacity="0.18"/>
+      <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+      <!-- figure -->
+      <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+      <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+      <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+      <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+      <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- lotus base -->
+      <ellipse cx="57" cy="73" rx="12" ry="4" fill="#96aa87" opacity="0.4"/>
+      <ellipse cx="57" cy="73" rx="7"  ry="2.2" fill="#96aa87" opacity="0.5"/>
+      <circle cx="57" cy="35.5" r="1" fill="#96aa87"/>
+    </svg>
+
+    <div class="cover-wordmark">Oeni</div>
+    <div class="cover-sub">yoga studio</div>
+  </div>
+
+  <div class="cover-divider"></div>
+  <div class="cover-footer">Visual Brand Identity Guide</div>
+</div>
+
+
+<!-- ══ LOGO SYSTEM ══ -->
+<section>
+  <div class="section-label">01 — Identity</div>
+  <div class="section-title">Logo System</div>
+
+  <div class="logo-grid">
+
+    <!-- 1 Primary on cream -->
+    <div class="logo-cell bg-cream">
+      <svg width="62" height="62" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#708060" stroke-width="0.7" opacity="0.35"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" fill="#708060" opacity="0.1"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#708060" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#2e3d2b"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#2e3d2b"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#2e3d2b"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#2e3d2b"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#2e3d2b" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#2e3d2b" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="57" cy="73" rx="12" ry="4" fill="#708060" opacity="0.35"/>
+        <circle cx="57" cy="35.5" r="1" fill="#96aa87"/>
+      </svg>
+      <div class="wm">
+        <div class="wm-name" style="font-size:20px;color:var(--forest)">Oeni</div>
+        <div class="wm-tagline" style="font-size:14px;color:var(--fern)">yoga studio</div>
+      </div>
+      <div class="logo-caption" style="color:var(--fern)">Primary · Light</div>
+    </div>
+
+    <!-- 2 On forest -->
+    <div class="logo-cell bg-forest">
+      <svg width="62" height="62" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" fill="#4e6247" opacity="0.2"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="57" cy="73" rx="12" ry="4" fill="#96aa87" opacity="0.4"/>
+        <circle cx="57" cy="35.5" r="1" fill="#96aa87"/>
+      </svg>
+      <div class="wm">
+        <div class="wm-name" style="font-size:20px;color:var(--cream)">Oeni</div>
+        <div class="wm-tagline" style="font-size:14px;color:var(--sage)">yoga studio</div>
+      </div>
+      <div class="logo-caption" style="color:var(--sage)">Primary · Dark</div>
+    </div>
+
+    <!-- 3 Symbol on moss -->
+    <div class="logo-cell bg-moss">
+      <svg width="76" height="76" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#f2f0e8" stroke-width="0.7" opacity="0.3"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#f2f0e8" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#f2f0e8"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#f2f0e8"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#f2f0e8"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#f2f0e8"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#f2f0e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#f2f0e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="57" cy="73" rx="12" ry="4" fill="#f2f0e8" opacity="0.25"/>
+      </svg>
+      <div class="logo-caption" style="color:rgba(242,240,232,.5)">Symbol · Moss</div>
+    </div>
+
+    <!-- 4 Wordmark on mist -->
+    <div class="logo-cell bg-mist">
+      <div class="wm">
+        <div class="wm-name" style="font-size:36px;color:var(--forest);letter-spacing:.26em;">Oeni</div>
+        <div class="wm-tagline" style="font-size:17px;color:var(--moss)">yoga studio</div>
+      </div>
+      <div class="logo-caption" style="color:var(--moss)">Wordmark · Mist</div>
+    </div>
+
+    <!-- 5 Horizontal lockup on sage -->
+    <div class="logo-cell bg-sage">
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="42" height="42" viewBox="0 0 110 110" fill="none">
+          <circle cx="55" cy="55" r="52" stroke="#2e3d2b" stroke-width="0.7" opacity="0.3"/>
+          <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#2e3d2b" stroke-width="0.8" fill="none"/>
+          <circle cx="57" cy="38" r="5.5" fill="#2e3d2b"/>
+          <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#2e3d2b"/>
+          <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#2e3d2b"/>
+          <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#2e3d2b"/>
+          <path d="M 52 52 Q 44 48 40 43" stroke="#2e3d2b" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M 62 52 Q 70 48 74 43" stroke="#2e3d2b" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div>
+          <div style="font-family:var(--ff-display);font-size:21px;font-weight:300;letter-spacing:.2em;color:var(--forest);line-height:1">Oeni</div>
+          <div style="font-family:var(--ff-script);font-size:13px;color:var(--forest);opacity:.65">yoga studio</div>
+        </div>
+      </div>
+      <div class="logo-caption" style="color:rgba(46,61,43,.45)">Horizontal · Sage</div>
+    </div>
+
+    <!-- 6 On earth/warm neutral -->
+    <div class="logo-cell bg-earth">
+      <svg width="62" height="62" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#f2f0e8" stroke-width="0.7" opacity="0.3"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#f2f0e8" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#f2f0e8"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#f2f0e8"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#f2f0e8"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#f2f0e8"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#f2f0e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#f2f0e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="wm-name" style="font-size:20px;color:#f2f0e8;letter-spacing:.22em;font-family:var(--ff-display)">Oeni</div>
+      <div class="logo-caption" style="color:rgba(242,240,232,.4)">Reversed · Earth</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ SYMBOL ══ -->
+<section style="background:var(--forest)">
+  <div class="section-label" style="color:var(--sage)">02 — Mark</div>
+  <div class="section-title" style="color:var(--cream)">The Symbol</div>
+
+  <p class="symbol-intro" style="color:var(--mist)">
+    A meditating figure cradled within a crescent moon, set against a faint botanical atmosphere. It speaks of rooting down, turning inward, and the quiet ritual of practice. Intentionally gestural — human, not clinical.
+  </p>
+
+  <div class="symbol-row">
+    <div class="symbol-size">
+      <svg width="120" height="120" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" fill="#4e6247" opacity="0.18"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="57" cy="73" rx="12" ry="4" fill="#96aa87" opacity="0.4"/>
+        <circle cx="57" cy="35.5" r="1" fill="#96aa87"/>
+      </svg>
+      <div class="symbol-size-label" style="color:var(--sage)">120px</div>
+    </div>
+    <div class="symbol-size">
+      <svg width="80" height="80" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="57" cy="73" rx="12" ry="4" fill="#96aa87" opacity="0.4"/>
+      </svg>
+      <div class="symbol-size-label" style="color:var(--sage)">80px</div>
+    </div>
+    <div class="symbol-size">
+      <svg width="48" height="48" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="symbol-size-label" style="color:var(--sage)">48px</div>
+    </div>
+    <div class="symbol-size">
+      <svg width="28" height="28" viewBox="0 0 110 110" fill="none">
+        <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" fill="#4e6247" opacity="0.3"/>
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+      </svg>
+      <div class="symbol-size-label" style="color:var(--sage)">28px</div>
+    </div>
+    <div class="symbol-size">
+      <svg width="18" height="18" viewBox="0 0 110 110" fill="none">
+        <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+        <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+        <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+        <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+      </svg>
+      <div class="symbol-size-label" style="color:var(--sage)">18px</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ COLOUR STORY ══ -->
+<section>
+  <div class="section-label">03 — Colour</div>
+  <div class="section-title">The Green Palette</div>
+
+  <!-- colour story blocks -->
+  <div class="story-grid" style="margin-bottom:32px;">
+    <div class="story-cell tall" style="background:var(--forest)">
+      <div class="story-label">Forest<br><span style="font-family:monospace;font-size:12px;opacity:.6">#2e3d2b</span></div>
+    </div>
+    <div class="story-cell" style="background:var(--moss)">
+      <div class="story-label">Moss<br><span style="font-family:monospace;font-size:12px;opacity:.6">#4e6247</span></div>
+    </div>
+    <div class="story-cell" style="background:var(--fern)">
+      <div class="story-label">Fern<br><span style="font-family:monospace;font-size:12px;opacity:.6">#708060</span></div>
+    </div>
+    <div class="story-cell" style="background:var(--sage)">
+      <div class="story-label" style="color:var(--forest)">Sage<br><span style="font-family:monospace;font-size:12px;opacity:.6">#96aa87</span></div>
+    </div>
+    <div class="story-cell" style="background:var(--mist)">
+      <div class="story-label" style="color:var(--forest)">Mist<br><span style="font-family:monospace;font-size:12px;opacity:.6">#c8d8be</span></div>
+    </div>
+  </div>
+
+  <!-- hover band -->
+  <div class="palette-band">
+    <div class="swatch" style="background:var(--forest)">
+      <div class="swatch-info"><div class="swatch-name">Forest</div><div class="swatch-hex">#2e3d2b</div></div>
+    </div>
+    <div class="swatch" style="background:var(--moss)">
+      <div class="swatch-info"><div class="swatch-name">Moss</div><div class="swatch-hex">#4e6247</div></div>
+    </div>
+    <div class="swatch" style="background:var(--fern)">
+      <div class="swatch-info"><div class="swatch-name">Fern</div><div class="swatch-hex">#708060</div></div>
+    </div>
+    <div class="swatch" style="background:var(--sage)">
+      <div class="swatch-info"><div class="swatch-name">Sage</div><div class="swatch-hex">#96aa87</div></div>
+    </div>
+    <div class="swatch" style="background:var(--mist)">
+      <div class="swatch-info" style="background:linear-gradient(to top,rgba(0,0,0,.18),transparent)"><div class="swatch-name">Mist</div><div class="swatch-hex">#c8d8be</div></div>
+    </div>
+    <div class="swatch" style="background:var(--cream);border:1px solid rgba(78,98,71,.1)">
+      <div class="swatch-info" style="background:linear-gradient(to top,rgba(0,0,0,.12),transparent)"><div class="swatch-name">Cream</div><div class="swatch-hex">#f2f0e8</div></div>
+    </div>
+    <div class="swatch" style="background:var(--earth)">
+      <div class="swatch-info"><div class="swatch-name">Earth</div><div class="swatch-hex">#8a7b62</div></div>
+    </div>
+    <div class="swatch" style="background:var(--parchment);border:1px solid rgba(78,98,71,.08)">
+      <div class="swatch-info" style="background:linear-gradient(to top,rgba(0,0,0,.1),transparent)"><div class="swatch-name">Parchment</div><div class="swatch-hex">#e8e4d8</div></div>
+    </div>
+  </div>
+
+  <div class="palette-detail">
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--forest)"></div>
+      <div class="pd-name">Forest</div><div class="pd-hex">#2e3d2b</div>
+      <div class="pd-use">Primary dark — headlines, backgrounds, body</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--moss)"></div>
+      <div class="pd-name">Moss</div><div class="pd-hex">#4e6247</div>
+      <div class="pd-use">Subheadings, header bars, dividers</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--fern)"></div>
+      <div class="pd-name">Fern</div><div class="pd-hex">#708060</div>
+      <div class="pd-use">Section labels, accent borders, icons</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--sage)"></div>
+      <div class="pd-name">Sage</div><div class="pd-hex">#96aa87</div>
+      <div class="pd-use">Price highlights, CTAs, logo accent</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--mist)"></div>
+      <div class="pd-name">Mist</div><div class="pd-hex">#c8d8be</div>
+      <div class="pd-use">Secondary text on dark, symbol fill</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--cream);border:1px solid rgba(78,98,71,.1)"></div>
+      <div class="pd-name">Cream</div><div class="pd-hex">#f2f0e8</div>
+      <div class="pd-use">Page background, reversed text</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--earth)"></div>
+      <div class="pd-name">Earth</div><div class="pd-hex">#8a7b62</div>
+      <div class="pd-use">Warm grounding accent; sparing use</div>
+    </div>
+    <div class="pd-item">
+      <div class="pd-sw" style="background:var(--parchment);border:1px solid rgba(78,98,71,.08)"></div>
+      <div class="pd-name">Parchment</div><div class="pd-hex">#e8e4d8</div>
+      <div class="pd-use">Card backgrounds, subtle section tints</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ TYPOGRAPHY ══ -->
+<section style="background:var(--parchment)">
+  <div class="section-label">04 — Typography</div>
+  <div class="section-title">Type System</div>
+
+  <div class="type-block">
+    <div class="type-meta">
+      <span class="type-role">Display / Headers / Wordmark</span>
+      <span class="type-name" style="color:var(--fern)">Cormorant SC — SIL Open Font License</span>
+    </div>
+    <hr class="type-divider">
+    <div class="specimen-display">Rooted in<br>the Earth</div>
+    <div style="display:flex;gap:28px;margin-top:20px;flex-wrap:wrap;">
+      <div><div style="font-family:var(--ff-display);font-size:20px;font-weight:300;color:var(--forest)">Light 300</div><div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fern);margin-top:4px">Display</div></div>
+      <div><div style="font-family:var(--ff-display);font-size:20px;font-weight:400;color:var(--forest)">Regular 400</div><div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fern);margin-top:4px">Subheadings</div></div>
+      <div><div style="font-family:var(--ff-display);font-size:20px;font-weight:500;color:var(--forest)">Medium 500</div><div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fern);margin-top:4px">Emphasis</div></div>
+    </div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">
+      <span class="type-role">Calligraphic Accent / Taglines / Pull Quotes</span>
+      <span class="type-name" style="color:var(--fern)">Pinyon Script — SIL Open Font License</span>
+    </div>
+    <hr class="type-divider">
+    <div class="specimen-script">Breathe deep,<br>grow still</div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">
+      <span class="type-role">Body / Labels / Pricing / Navigation</span>
+      <span class="type-name" style="color:var(--fern)">Jost — SIL Open Font License</span>
+    </div>
+    <hr class="type-divider">
+    <div class="specimen-body">
+      Our studio is a sanctuary for all bodies, all levels, and all stages of the journey. Whether you are stepping onto the mat for the first time or deepening a longtime practice, you are welcome here — in this green and quiet space.
+    </div>
+  </div>
+
+  <!-- live pairing -->
+  <div class="type-pair-demo">
+    <div class="tpd-eyebrow">Class Packages</div>
+    <div class="tpd-heading">Membership Plans</div>
+    <div class="tpd-script">find what flows for you</div>
+    <div class="tpd-body">
+      Every plan includes unlimited mat storage, shower access, and our seasonal herbal tea ritual after each session. New students receive a complimentary orientation class.
+    </div>
+    <div class="tpd-prices">
+      <div class="tpd-row"><span class="tpd-class">Drop-In Class</span><span class="tpd-price">Rp 75.000</span></div>
+      <div class="tpd-row"><span class="tpd-class">5-Class Pack</span><span class="tpd-price">Rp 325.000</span></div>
+      <div class="tpd-row"><span class="tpd-class">10-Class Pack</span><span class="tpd-price">Rp 600.000</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:2px">
+        <span class="tpd-class">Monthly Unlimited</span><span class="tpd-price">Rp 550.000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ BRAND RULES ══ -->
+<section>
+  <div class="section-label">05 — Voice & Guidelines</div>
+  <div class="section-title">Brand Rules</div>
+  <div class="voice-grid">
+    <div class="voice-cell vc-do">
+      <div class="vc-title">Do</div>
+      <ul class="vc-list">
+        <li>Lead with Forest or Moss on dark backgrounds — they anchor the green identity</li>
+        <li>Use the full green gradient (Forest → Moss → Fern → Sage → Mist) for depth</li>
+        <li>Pair Cormorant SC headers with Jost body for schedules and pricing</li>
+        <li>Use Pinyon Script as a single accent line — never for body copy</li>
+        <li>Earth and Parchment add warmth; use them to break up all-green compositions</li>
+        <li>Give the symbol generous clear space — 1× its own height on all sides minimum</li>
+        <li>Use botanical line-art details (leaves, stems) as supporting texture only</li>
+      </ul>
+    </div>
+    <div class="voice-cell vc-dont">
+      <div class="vc-title">Don't</div>
+      <ul class="vc-list">
+        <li>Never use neon or lime greens — stay within the muted, earthy green family</li>
+        <li>Don't use Sage text on Mist backgrounds — contrast is too low</li>
+        <li>Avoid stretching, recolouring, or rotating the logo mark</li>
+        <li>Don't place the logo on heavily patterned or photographic backgrounds without buffer</li>
+        <li>Never use Pinyon Script for pricing, navigation, or any text longer than 8 words</li>
+        <li>Avoid generic wellness photography — favour warm natural-light, minimal editing</li>
+        <li>Don't centre-align body copy blocks longer than 3 lines</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ MOCKUPS ══ -->
+<section style="background:var(--forest)">
+  <div class="section-label" style="color:var(--sage)">06 — In Use</div>
+  <div class="section-title" style="color:var(--cream)">Brand Applications</div>
+
+  <div class="mockup-row">
+
+    <!-- Price card -->
+    <div class="card-mockup">
+      <div class="card-eyebrow">Oeni Yoga Studio · Bandung</div>
+      <div class="card-title">Class Packages</div>
+      <div class="card-script">invest in your practice</div>
+      <div class="card-line"></div>
+      <div class="price-row"><span class="price-name">Drop-In</span><span class="price-val">Rp 75.000</span></div>
+      <div class="price-row"><span class="price-name">5-Class Pack</span><span class="price-val">Rp 325.000</span></div>
+      <div class="price-row"><span class="price-name">10-Class Pack</span><span class="price-val">Rp 600.000</span></div>
+      <div class="price-row"><span class="price-name">Monthly Unlimited</span><span class="price-val">Rp 550.000</span></div>
+      <div class="price-row"><span class="price-name">Private Session</span><span class="price-val">Rp 250.000</span></div>
+      <div class="card-line"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:var(--ff-body);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fern);">oeniyoga.id</div>
+        <svg width="22" height="22" viewBox="0 0 110 110" fill="none">
+          <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="1" opacity="0.4"/>
+          <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="1" fill="none"/>
+          <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+          <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+          <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+          <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Social post -->
+    <div class="social-mockup">
+      <div class="sm-header">
+        <svg width="38" height="38" viewBox="0 0 110 110" fill="none">
+          <circle cx="55" cy="55" r="52" fill="#4e6247" opacity="0.5"/>
+          <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+          <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+          <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+          <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+        </svg>
+        <div>
+          <div class="sm-handle">@oeniyoga</div>
+          <div style="font-size:9px;color:var(--mist);letter-spacing:.1em;opacity:.7">Bandung, West Java</div>
+        </div>
+      </div>
+      <div class="sm-body">
+        <div class="sm-visual">
+          <div style="text-align:center">
+            <div style="font-family:var(--ff-display);font-size:30px;font-weight:300;letter-spacing:.18em;color:var(--cream);line-height:1">Morning Flow</div>
+            <div style="font-family:var(--ff-script);font-size:19px;color:rgba(200,216,190,.65);margin-top:5px">every day · 06:00</div>
+          </div>
+        </div>
+        <div class="sm-caption">
+          <em>Start before the world wakes up.</em><br>
+          Our Morning Flow class opens at 06.00 — gentle breath, grounding sequence, and the quiet kind of energy that carries you through the whole day. Open to all levels. Mats provided.
+        </div>
+        <div class="sm-tags">#oeniyoga &nbsp;#yogabandung &nbsp;#morningflow &nbsp;#greenstudio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<div class="brand-footer">
+  <div>
+    <div class="bf-name">Oeni</div>
+    <div class="bf-sub">yoga studio</div>
+  </div>
+  <div class="bf-note">Brand Identity System · All rights reserved</div>
+  <svg width="44" height="44" viewBox="0 0 110 110" fill="none">
+    <circle cx="55" cy="55" r="52" stroke="#96aa87" stroke-width="0.7" opacity="0.35"/>
+    <path d="M 38 22 A 38 38 0 1 1 38 88 A 26 26 0 1 0 38 22 Z" stroke="#c8d8be" stroke-width="0.8" fill="none"/>
+    <circle cx="57" cy="38" r="5.5" fill="#c8d8be"/>
+    <path d="M 51 48 Q 57 44 63 48 L 67 62 Q 57 68 47 62 Z" fill="#c8d8be"/>
+    <path d="M 47 62 Q 38 66 36 72 Q 45 74 52 68" fill="#c8d8be"/>
+    <path d="M 67 62 Q 76 66 78 72 Q 69 74 62 68" fill="#c8d8be"/>
+    <path d="M 52 52 Q 44 48 40 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M 62 52 Q 70 48 74 43" stroke="#c8d8be" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </svg>
+</div>
+
+</body>
+</html>

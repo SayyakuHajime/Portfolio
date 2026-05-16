@@ -21,9 +21,11 @@ Provide context, motivation, or history for the topic. Keep it short — a few s
 > Formal definition of a term or concept.  
 > Example: A **perceptron** is a linear binary classifier $f(x) = \text{sign}(w^T x + b)$.
 
+
 ---
 
 ## 2. Core Concepts
+
 
 ### 2.a First Concept
 
@@ -41,6 +43,7 @@ Where:
 
 > [!insight] Key Insight
 > The hidden state $\mathbf{h}_t$ carries information from all previous timesteps — this is the "memory" of the network.
+
 
 ### 2.b Second Concept
 
@@ -85,9 +88,12 @@ $$
 > Gradients decay exponentially over time: $\|\partial h_t / \partial h_0\| \approx \lambda^t$ where $|\lambda| < 1$.  
 > LSTM mitigates this via the cell-state highway $c_t$.
 
+
 ---
 
+
 ## 4. Derivations
+
 
 ### 4.a Gradient of Loss
 
@@ -101,6 +107,7 @@ The $(1 - h_t^2)$ term is the derivative of $\tanh$.
 
 > [!success] Shortcut
 > For exam derivations, start from the chain rule and work backwards. Always write the computation graph first.
+
 
 ### 4.b Parameter Update
 
@@ -136,7 +143,9 @@ def lstm_step(x, h_prev, c_prev, params):
 > [!note] PyTorch Equivalent
 > `nn.LSTMCell(input_size, hidden_size)` handles all of the above in one line.
 
+
 ---
+
 
 ## 6. Exam Tips & Quick Reference
 

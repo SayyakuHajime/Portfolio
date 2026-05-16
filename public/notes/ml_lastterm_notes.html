@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Last Term Notes — Sayyaku</title>
+  <script src="../js/theme-init.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      chtml: { scale: 1.05, matchFontHeight: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+          integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+
+  <!-- Portfolio styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+  <!-- Modular note styles -->
+  <link rel="stylesheet" href="../css/notes/notes.css" />
+</head>
+<body class="notes-layout-article">
+
+<!-- Cursor effects -->
+<canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
+<div class="cursor-pointer" id="cursorPointer"></div>
+
+<div class="site-wrapper">
+
+  <!-- ── LEFT SIDEBAR (notes nav) ── -->
+  <aside class="sidebar-left">
+    <div class="sidebar-logo">
+      <a href="../notes.html" class="notes-back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>All Notes</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="../projects/RNN_LSTM_Calculator.html" class="nav-item" data-abbr="RNN">
+        <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
+      </a>
+      <a href="ml_lastterm_notes.html" class="nav-item active" data-abbr="ML2">
+        <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
+      </a>
+      <a href="ml_midterm_notes.html" class="nav-item" data-abbr="ML1">
+        <div><div class="nav-label">ML Midterm Notes</div><div class="nav-sub">IF3270</div></div>
+      </a>
+      <a href="md-viewer.html" class="nav-item" data-abbr="MD">
+        <div><div class="nav-label">MD Viewer</div><div class="nav-sub">tool</div></div>
+      </a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle-label">Light</span>
+    </button>
+    <div class="sidebar-profile">
+      <div class="avatar">S</div>
+      <div class="profile-info">
+        <div class="profile-name">Sayyaku</div>
+        <div class="profile-handle">@SayyakuHajime</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT (notes) ── -->
+  <main class="main-content" style="max-width: none; flex: 1; min-width: 0;">
+
+    <!-- Sticky page header -->
+    <div class="page-header">
+      <span class="page-title">ML Last Term Notes</span>
+      <span class="header-meta">IF3270 &middot; Final Term Study Notes</span>
+    </div>
+
+    <!-- Notes cover -->
+    <div class="notes-cover">
+      <div class="cover-label">IF3270 Pembelajaran Mesin &middot; Final Study Notes</div>
+      <h1>Sequential Models &amp;<br>Advanced Architectures</h1>
+      <div class="cover-sub">CNN Backprop &middot; RNN &middot; LSTM &middot; BPTT</div>
+      <div class="cover-topics">
+        <span class="topic-chip">CNN Backprop</span>
+        <span class="topic-chip">RNN</span>
+        <span class="topic-chip">Vanishing Gradient</span>
+        <span class="topic-chip">LSTM</span>
+        <span class="topic-chip">Gated Architectures</span>
+        <span class="topic-chip">BPTT</span>
+        <span class="topic-chip">Sequential Data</span>
+      </div>
+      <div class="refs-note">References: Goodfellow et al. (2016) &middot; Hochreiter & Schmidhuber (1997) &middot; Lecture Decks 5, 6, 7</div>
+    </div>
+
+    <!-- Notes content (scoped) -->
+    <div class="notes-scope">
+
+      <!-- ══════════════ PART 1 — CNN BACKPROP ══════════════ -->
+      <div id="cnn-backprop" class="part-header purple">
+        <div class="part-num">01 &middot; CNN Backpropagation</div>
+        <h2>Backpropagation on CNN</h2>
+        <p>Extending the gradient descent algorithm to update kernels and weights in a convolutional architecture. This involves propagating gradients through pooling and convolutional layers using the chain rule.</p>
+      </div>
+
+      <h3>1.1 Forward Pass Recap</h3>
+      <p>Before understanding the backward pass, we must define the computational flow of a CNN layer:</p>
+      <div class="term-grid">
+        <div class="term-card"><div class="term-name">Convolution Layer</div><div class="term-def">\(net_c = X * K\). The linear operation between input \(X\) and kernel \(K\).</div></div>
+        <div class="term-card"><div class="term-name">Detector Layer</div><div class="term-def">\(H = ReLU(net_c)\). Applies non-linearity, typically zeroing out negative values.</div></div>
+        <div class="term-card"><div class="term-name">Pooling Layer</div><div class="term-def">Reduksi dimensi (Max/Average) untuk efisiensi komputasi dan mencegah <em>overfitting</em>.</div></div>
+        <div class="term-card"><div class="term-name">Fully Connected (FC)</div><div class="term-def">\(O = Softmax(H \cdot W + b)\). The final classification layer.</div></div>
+      </div>
+
+      <h3>1.2 Backward Mechanism</h3>
+      <p>Gradien dihitung menggunakan <strong>Chain Rule</strong> untuk memperbarui parameter di setiap tahapan:</p>
+
+      <div class="formula-block purple">
+        <div class="formula-label">Update Weights FC (W)</div>
+        \[ \frac{\partial E}{\partial w_{ji}} = \frac{\partial E}{\partial o_j} \cdot \frac{\partial o_j}{\partial net_j} \cdot \frac{\partial net_j}{\partial w_{ji}} \]
+        \[ \Delta W = -(target - output) \cdot Output(1-Output) \cdot H \]
+        <div class="formula-desc">Standard backpropagation applied to the dense layers at the end of the network.</div>
+      </div>
+
+      <div class="formula-block blue">
+        <div class="formula-label">Update Kernel Konvolusi (K)</div>
+        \[ \frac{\partial E}{\partial K} = \frac{\partial E}{\partial net_j} \cdot \frac{\partial net_j}{\partial H} \cdot \frac{\partial H}{\partial net_c} \cdot \frac{\partial net_c}{\partial K} \]
+        <div class="formula-desc">Gradien harus dirambatkan mundur melewati Pooling, Aktivasi (ReLU), dan akhirnya ke parameter Kernel.</div>
+      </div>
+
+      <div class="callout note">
+        <strong>Notes on Pooling:</strong> Pada Max Pooling, gradien hanya diteruskan ke unit yang memiliki nilai maksimum saat <em>forward pass</em>. Unit lainnya menerima gradien nol.
+      </div>
+
+      <div class="formula-block orange">
+        <div class="formula-label">Parameter Counting with Weight Sharing</div>
+        \[ \text{Params} = (\text{FilterWidth} \times \text{FilterHeight} \times \text{Channels} + 1) \times \text{NbFilters} \]
+        <div class="formula-desc">Weight sharing allows CNNs to be significantly more efficient compared to standard FFNNs.</div>
+      </div>
+
+      <!-- ══════════════ PART 2 — RNN ══════════════ -->
+      <div id="rnn" class="part-header green">
+        <div class="part-num">02 &middot; Recurrent Neural Networks</div>
+        <h2>Recurrent Neural Networks (RNN)</h2>
+        <p>A class of neural networks designed for sequential data where the order of information is crucial. Unlike FFNNs, RNNs maintain a internal state (memory) to process arbitrary sequences of inputs.</p>
+      </div>
+
+      <h3>2.1 Motivation & Unfolding</h3>
+      <p>Standard FFNNs assume inputs are independent. RNNs introduce <strong>Recurrent Connections</strong> to handle <strong>Context</strong>. Through <strong>Unfolding</strong>, we can represent the loop as a chain of units sharing the same parameters.</p>
+
+      <div class="diagram-container">
+        <div class="diagram-title">RNN Unrolling Visualization</div>
+        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" style="max-width:550px; width:100%;">
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" class="svg-arrow" />
+            </marker>
+          </defs>
+          
+          <!-- Timestep t-1 -->
+          <circle cx="100" cy="90" r="25" class="svg-fill-p svg-stroke-p" stroke-width="2" fill="#f0ecfa" stroke="#9b85d4"/>
+          <text x="100" y="95" class="svg-text-p" text-anchor="middle" font-size="12" fill="#5c3fa0">hₜ₋₁</text>
+          <text x="100" y="145" class="svg-text-muted" text-anchor="middle" font-size="10" fill="#6e6a62">xₜ₋₁</text>
+          <line x1="100" y1="130" x2="100" y2="115" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+          
+          <!-- Timestep t -->
+          <circle cx="300" cy="90" r="30" class="svg-fill-n svg-stroke-n" stroke-width="2" fill="#edf7f2" stroke="#5aa882"/>
+          <text x="300" y="95" class="svg-text-n" text-anchor="middle" font-size="14" font-weight="600" fill="#1a6b4a">hₜ</text>
+          <text x="300" y="155" class="svg-text-muted" text-anchor="middle" font-size="10" fill="#6e6a62">xₜ</text>
+          <line x1="300" y1="140" x2="300" y2="120" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+          
+          <!-- Timestep t+1 -->
+          <circle cx="500" cy="90" r="25" class="svg-fill-p svg-stroke-p" stroke-width="2" fill="#f0ecfa" stroke="#9b85d4"/>
+          <text x="500" y="95" class="svg-text-p" text-anchor="middle" font-size="12" fill="#5c3fa0">hₜ₊₁</text>
+          <text x="500" y="145" class="svg-text-muted" text-anchor="middle" font-size="10" fill="#6e6a62">xₜ₊₁</text>
+          <line x1="500" y1="130" x2="500" y2="115" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+
+          <!-- Transitions -->
+          <line x1="125" y1="90" x2="270" y2="90" class="svg-conn" stroke-width="2" stroke="#d5d0c5" marker-end="url(#arrowhead)"/>
+          <line x1="330" y1="90" x2="475" y2="90" class="svg-conn" stroke-width="2" stroke="#d5d0c5" marker-end="url(#arrowhead)"/>
+          <text x="200" y="80" class="svg-text-ink" text-anchor="middle" font-size="12" fill="#1a1814">W</text>
+          <text x="400" y="80" class="svg-text-ink" text-anchor="middle" font-size="12" fill="#1a1814">W</text>
+          
+          <!-- Outputs -->
+          <line x1="100" y1="65" x2="100" y2="40" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+          <line x1="300" y1="60" x2="300" y2="30" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+          <line x1="500" y1="65" x2="500" y2="40" class="svg-stroke-ink" stroke-width="1.5" stroke="#3d3a35" marker-end="url(#arrowhead)"/>
+          <text x="100" y="25" class="svg-text-r" text-anchor="middle" font-size="12" fill="#912b2b">yₜ₋₁</text>
+          <text x="300" y="15" class="svg-text-r" text-anchor="middle" font-size="12" fill="#912b2b">yₜ</text>
+          <text x="500" y="25" class="svg-text-r" text-anchor="middle" font-size="12" fill="#912b2b">yₜ₊₁</text>
+        </svg>
+      </div>
+
+      <h3>2.2 Forward Propagation Equations</h3>
+      <div class="formula-block green">
+        <div class="formula-label">Hidden State (hₜ)</div>
+        \[ h_t = f(Ux_t + Wh_{t-1} + b_{xh}) \]
+        <div class="formula-desc">
+          \(U\): Weight matrix input &rarr; hidden &nbsp;&middot;&nbsp; 
+          \(W\): Weight matrix hidden &rarr; hidden (Recurrent) &nbsp;&middot;&nbsp; 
+          \(f\): Biasanya fungsi \(tanh\).
+        </div>
+      </div>
+
+      <div class="formula-block green">
+        <div class="formula-label">Output (yₜ)</div>
+        \[ y_t = f(Vh_t + b_{hy}) \]
+        <div class="formula-desc">
+          \(V\): Weight matrix hidden &rarr; output &nbsp;&middot;&nbsp; 
+          \(f\): Softmax (klasifikasi) atau Linear (regresi).
+        </div>
+      </div>
+
+      <div class="diagram-container">
+        <div class="diagram-title">RNN Cell — Internal Structure</div>
+        <svg viewBox="0 0 580 265" xmlns="http://www.w3.org/2000/svg" style="max-width:540px;width:100%;">
+          <defs>
+            <marker id="rnn-a" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L8,3.5 z" class="svg-arrow" fill="#3d3a35"/>
+            </marker>
+          </defs>
+          <!-- x_t box -->
+          <rect x="30" y="178" width="84" height="44" rx="5" class="svg-fill-b svg-stroke-b" stroke-width="1.5"/>
+          <text x="72" y="205" text-anchor="middle" class="svg-text-b" font-size="14">x<tspan dy="5" font-size="10">t</tspan></text>
+          <!-- h_{t-1} box -->
+          <rect x="30" y="56" width="84" height="44" rx="5" class="svg-fill-n svg-stroke-n" stroke-width="1.5"/>
+          <text x="72" y="83" text-anchor="middle" class="svg-text-n" font-size="14">h<tspan dy="5" font-size="10">t−1</tspan></text>
+          <!-- + operator -->
+          <circle cx="240" cy="145" r="22" class="svg-fill-o svg-stroke-o" stroke-width="1.5"/>
+          <text x="240" y="153" text-anchor="middle" class="svg-text-o" font-size="20">+</text>
+          <!-- tanh box -->
+          <rect x="308" y="123" width="84" height="44" rx="5" class="svg-fill-p svg-stroke-p" stroke-width="1.5"/>
+          <text x="350" y="150" text-anchor="middle" class="svg-text-p" font-size="13">tanh</text>
+          <!-- h_t box -->
+          <rect x="458" y="123" width="84" height="44" rx="5" class="svg-fill-n svg-stroke-n" stroke-width="1.5"/>
+          <text x="500" y="150" text-anchor="middle" class="svg-text-n" font-size="14">h<tspan dy="5" font-size="10">t</tspan></text>
+          <!-- x_t → + (right then up) -->
+          <polyline points="114,200 240,200 240,167" fill="none" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#rnn-a)"/>
+          <text x="177" y="218" text-anchor="middle" class="svg-text-muted" font-size="11">W<tspan dy="3" font-size="9">x</tspan></text>
+          <!-- h_{t-1} → + (right then down) -->
+          <polyline points="114,78 240,78 240,123" fill="none" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#rnn-a)"/>
+          <text x="177" y="68" text-anchor="middle" class="svg-text-muted" font-size="11">W<tspan dy="3" font-size="9">h</tspan></text>
+          <!-- +b label -->
+          <text x="268" y="170" class="svg-text-muted" font-size="10">+b</text>
+          <!-- + → tanh → h_t -->
+          <line x1="262" y1="145" x2="306" y2="145" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#rnn-a)"/>
+          <line x1="392" y1="145" x2="456" y2="145" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#rnn-a)"/>
+          <!-- Dashed recurrent loop: h_t → up → left → down to h_{t-1} -->
+          <polyline points="542,145 562,145 562,25 72,25 72,56" fill="none" class="svg-stroke-ink" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#rnn-a)"/>
+          <text x="317" y="16" text-anchor="middle" class="svg-text-muted" font-size="10">h<tspan dy="3" font-size="8">t−1</tspan> (next step)</text>
+        </svg>
+      </div>
+
+      <h3>2.3 Architectural Variations</h3>
+      <div class="term-grid">
+        <div class="term-card"><div class="term-name">One-to-Many</div><div class="term-def">Single input, sequence output (e.g., Image Captioning).</div></div>
+        <div class="term-card"><div class="term-name">Many-to-One</div><div class="term-def">Sequence input, single output (e.g., Sentiment Analysis).</div></div>
+        <div class="term-card"><div class="term-name">Many-to-Many (Sync)</div><div class="term-def">Input length = Output length (e.g., POS Tagging).</div></div>
+        <div class="term-card"><div class="term-name">Many-to-Many (Seq2Seq)</div><div class="term-def">Encoder-Decoder pattern (e.g., Machine Translation).</div></div>
+      </div>
+
+      <div class="callout insight">
+        <strong>Bidirectional RNN (BRNN):</strong> Memiliki dua hidden layer (maju dan mundur). Output \(y_t\) bergantung pada informasi masa lalu sekaligus masa depan dalam sequence tersebut.
+      </div>
+
+      <!-- ══════════════ PART 3 — LSTM ══════════════ -->
+      <div id="lstm" class="part-header blue">
+        <div class="part-num">03 &middot; Long Short-Term Memory</div>
+        <h2>LSTM & Vanishing Gradient</h2>
+        <p>LSTM was introduced to solve the <strong>Vanishing Gradient</strong> problem in standard RNNs, allowing the network to learn long-range dependencies by maintaining a constant error flow through the <strong>Cell State</strong>.</p>
+      </div>
+
+      <h3>3.1 The Vanishing Gradient Problem</h3>
+      <p>Pada RNN standar, gradien dikalikan berulang kali dengan angka kecil (turunan \(tanh\) < 1) saat backpropagation. Hal ini menyebabkan gradien mengecil secara eksponensial, sehingga model tidak bisa mempelajari ketergantungan jangka panjang.</p>
+
+      <h3>3.2 LSTM Structure & Gates</h3>
+      <p>LSTM menggunakan mekanisme <strong>Gates</strong> untuk mengatur aliran informasi:</p>
+
+      <div class="diagram-container">
+        <div class="diagram-title">LSTM Cell — Gate Structure &amp; Cell State Highway</div>
+        <svg viewBox="0 0 680 370" xmlns="http://www.w3.org/2000/svg" style="max-width:640px;width:100%;">
+          <defs>
+            <marker id="lstm-a" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L8,3.5 z" class="svg-arrow" fill="#3d3a35"/>
+            </marker>
+          </defs>
+
+          <!-- Cell bounding box -->
+          <rect x="110" y="60" width="460" height="240" rx="10" class="svg-stroke-rule" stroke-width="1.5" stroke-dasharray="6,3" fill="none"/>
+
+          <!-- ── CELL STATE HIGHWAY (top row, y=110) ── -->
+          <!-- C_{t-1} -->
+          <circle cx="55" cy="110" r="22" class="svg-fill-p svg-stroke-p" stroke-width="1.5"/>
+          <text x="55" y="116" text-anchor="middle" class="svg-text-p" font-size="11">C<tspan dy="4" font-size="9">t−1</tspan></text>
+          <!-- × forget operator -->
+          <circle cx="200" cy="110" r="18" class="svg-fill-paper svg-stroke-ink" stroke-width="1.5"/>
+          <text x="200" y="116" text-anchor="middle" class="svg-text-ink" font-size="16">×</text>
+          <!-- + update operator -->
+          <circle cx="390" cy="110" r="18" class="svg-fill-paper svg-stroke-ink" stroke-width="1.5"/>
+          <text x="390" y="117" text-anchor="middle" class="svg-text-ink" font-size="18">+</text>
+          <!-- C_t output -->
+          <circle cx="625" cy="110" r="22" class="svg-fill-p svg-stroke-p" stroke-width="1.5"/>
+          <text x="625" y="116" text-anchor="middle" class="svg-text-p" font-size="11">C<tspan dy="4" font-size="9">t</tspan></text>
+
+          <!-- Highway arrows -->
+          <line x1="77" y1="110" x2="180" y2="110" class="svg-stroke-ink" stroke-width="2" marker-end="url(#lstm-a)"/>
+          <line x1="218" y1="110" x2="370" y2="110" class="svg-stroke-ink" stroke-width="2" marker-end="url(#lstm-a)"/>
+          <line x1="408" y1="110" x2="601" y2="110" class="svg-stroke-ink" stroke-width="2" marker-end="url(#lstm-a)"/>
+
+          <!-- ── OUTPUT BRANCH: tanh(C_t) × o_t → h_t (y=200) ── -->
+          <!-- branch from + down to tanh(C_t) -->
+          <polyline points="390,128 390,200 460,200" fill="none" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+          <!-- tanh(C_t) box -->
+          <rect x="460" y="180" width="64" height="38" rx="5" class="svg-fill-n svg-stroke-n" stroke-width="1.5"/>
+          <text x="492" y="204" text-anchor="middle" class="svg-text-n" font-size="12">tanh</text>
+          <!-- × output operator -->
+          <circle cx="570" cy="199" r="18" class="svg-fill-paper svg-stroke-ink" stroke-width="1.5"/>
+          <text x="570" y="205" text-anchor="middle" class="svg-text-ink" font-size="16">×</text>
+          <!-- tanh → × output -->
+          <line x1="524" y1="199" x2="550" y2="199" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+          <!-- h_t output -->
+          <circle cx="625" cy="199" r="22" class="svg-fill-n svg-stroke-n" stroke-width="1.5"/>
+          <text x="625" y="205" text-anchor="middle" class="svg-text-n" font-size="12">h<tspan dy="4" font-size="9">t</tspan></text>
+          <line x1="588" y1="199" x2="601" y2="199" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- ── GATES (y=290) ── -->
+          <!-- Forget gate σ_f (feeds × forget at x=200) -->
+          <rect x="162" y="268" width="76" height="36" rx="4" class="svg-fill-o svg-stroke-o" stroke-width="1.5"/>
+          <text x="200" y="291" text-anchor="middle" class="svg-text-o" font-size="12">σ forget</text>
+          <line x1="200" y1="268" x2="200" y2="130" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- × intermediate (i_t × C̃_t) feeds + at x=390, y=110 from below -->
+          <circle cx="390" cy="230" r="16" class="svg-fill-paper svg-stroke-ink" stroke-width="1.5"/>
+          <text x="390" y="236" text-anchor="middle" class="svg-text-ink" font-size="15">×</text>
+          <line x1="390" y1="214" x2="390" y2="130" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- Input gate σ_i (feeds × intermediate left) -->
+          <rect x="282" y="268" width="76" height="36" rx="4" class="svg-fill-n svg-stroke-n" stroke-width="1.5"/>
+          <text x="320" y="291" text-anchor="middle" class="svg-text-n" font-size="12">σ input</text>
+          <polyline points="320,268 320,246 373,246 373,246" fill="none" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- Candidate tanh (feeds × intermediate right) -->
+          <rect x="402" y="268" width="76" height="36" rx="4" class="svg-fill-p svg-stroke-p" stroke-width="1.5"/>
+          <text x="440" y="291" text-anchor="middle" class="svg-text-p" font-size="12">tanh C̃</text>
+          <polyline points="440,268 440,246 407,246" fill="none" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- Output gate σ_o (feeds × output at x=570) -->
+          <rect x="532" y="268" width="76" height="36" rx="4" class="svg-fill-b svg-stroke-b" stroke-width="1.5"/>
+          <text x="570" y="291" text-anchor="middle" class="svg-text-b" font-size="12">σ output</text>
+          <line x1="570" y1="268" x2="570" y2="219" class="svg-stroke-ink" stroke-width="1.5" marker-end="url(#lstm-a)"/>
+
+          <!-- ── INPUT BUS [h_{t-1}, x_t] (y=345) ── -->
+          <line x1="90" y1="345" x2="620" y2="345" class="svg-stroke-rule" stroke-width="1.5"/>
+          <text x="55" y="350" text-anchor="middle" class="svg-text-muted" font-size="10">[h<tspan dy="3" font-size="8">t−1</tspan><tspan dy="-3">, x</tspan><tspan dy="3" font-size="8">t</tspan><tspan dy="-3">]</tspan></text>
+          <!-- Bus → each gate -->
+          <line x1="200" y1="345" x2="200" y2="306" class="svg-stroke-rule" stroke-width="1.2" marker-end="url(#lstm-a)"/>
+          <line x1="320" y1="345" x2="320" y2="306" class="svg-stroke-rule" stroke-width="1.2" marker-end="url(#lstm-a)"/>
+          <line x1="440" y1="345" x2="440" y2="306" class="svg-stroke-rule" stroke-width="1.2" marker-end="url(#lstm-a)"/>
+          <line x1="570" y1="345" x2="570" y2="306" class="svg-stroke-rule" stroke-width="1.2" marker-end="url(#lstm-a)"/>
+        </svg>
+      </div>
+
+      <div class="formula-block blue">
+        <div class="formula-label">The Four Gates Logic</div>
+        \[ f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f) \quad \text{(Forget)} \]
+        \[ i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \quad \text{(Input)} \]
+        \[ \tilde{C}_t = tanh(W_c \cdot [h_{t-1}, x_t] + b_c) \quad \text{(Candidate)} \]
+        \[ o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \quad \text{(Output)} \]
+      </div>
+
+      <div class="formula-block green">
+        <div class="formula-label">State Updates</div>
+        \[ C_t = f_t * C_{t-1} + i_t * \tilde{C}_t \]
+        \[ h_t = o_t * tanh(C_t) \]
+        <div class="formula-desc">Informasi masa lalu difilter oleh forget gate, informasi baru ditambahkan oleh input gate.</div>
+      </div>
+
+      <!-- ══════════════ PART 4 — BPTT ══════════════ -->
+      <div id="bptt" class="part-header orange">
+        <div class="part-num">04 &middot; Backpropagation Through Time</div>
+        <h2>BPTT Algorithm</h2>
+        <p>BPTT is the standard algorithm for training recurrent networks by unrolling them into a deep feedforward network where each layer shares the same weights.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="algo-header">BPTT Procedure</div>
+        <div class="algo-step"><span class="step-num">1. Forward</span><span>Hitung semua \(h_t\) dan \(y_t\) untuk satu urutan penuh (sequence).</span></div>
+        <div class="algo-step"><span class="step-num">2. Error</span><span>Hitung total loss \(E = \sum E_t\) (biasanya menggunakan Cross-Entropy).</span></div>
+        <div class="algo-step"><span class="step-num">3. Backward</span><span>Kalkulasi gradien pada setiap timestep dan akumulasikan karena bobot \(U, V, W\) bersifat global.</span></div>
+      </div>
+
+      <div class="callout warn">
+        <strong>Truncated BPTT:</strong> Untuk urutan yang sangat panjang, proses backward dibatasi hanya beberapa langkah ke belakang untuk menghemat memori dan mencegah komputasi berlebih.
+      </div>
+
+      <!-- ══════════════ GLOSSARY ══════════════ -->
+      <div id="glossary" class="part-header" style="margin-top:60px;border-left-color:var(--ink);">
+        <div class="part-num">Glossary</div>
+        <h2>Sequential Modeling Terms</h2>
+        <p>Key definitions for Final Term material.</p>
+      </div>
+
+      <div class="glossary-grid">
+        <div class="glossary-item"><span class="tag">Sequence</span> Data in which the order of elements matters.</div>
+        <div class="glossary-item"><span class="tag">Recurrent Connection</span> Feedback loop that feeds hidden state back to the same unit.</div>
+        <div class="glossary-item"><span class="tag">Cell State</span> The long-term memory component of an LSTM cell.</div>
+        <div class="glossary-item"><span class="tag">Vanishing Gradient</span> When gradients become too small to update early weights.</div>
+        <div class="glossary-item"><span class="tag">Unrolling</span> Representing an RNN as a deep chain of units.</div>
+        <div class="glossary-item"><span class="tag">Parameter Sharing</span> Using the same weight matrices across all timesteps.</div>
+      </div>
+
+      <hr class="divider">
+      <p style="text-align:center;font-size:13px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;">
+        Notes based on: Goodfellow et al. (2016) &middot; Hochreiter & Schmidhuber (1997) &middot; IF3270 Lecture Slides
+        <br>IF3270 Pembelajaran Mesin &middot; Final Study Prep &middot; Tim Pengajar
+        <br>Topics: CNN Backprop &middot; RNN &middot; LSTM &middot; BPTT
+      </p>
+
+    </div>
+
+  </main>
+
+  <!-- ── RIGHT RAIL (notes TOC) ── -->
+  <aside class="sidebar-right" style="width: 240px;">
+    <div style="position: sticky; top: 0; padding-top: var(--sp-lg);">
+
+      <!-- Reading progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">Contents</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div class="notes-toc-list" style="padding-top: 8px;">
+          <a href="#cnn-backprop" class="notes-toc-item">01. CNN Backprop</a>
+          <a href="#rnn" class="notes-toc-item">02. RNN</a>
+          <a href="#rnn-motivation" class="notes-toc-item sub">&rarr; Motivation</a>
+          <a href="#rnn-forward" class="notes-toc-item sub">&rarr; Forward Prop</a>
+          <a href="#lstm" class="notes-toc-item">03. LSTM</a>
+          <a href="#lstm-vanishing" class="notes-toc-item sub">&rarr; Vanishing Grad</a>
+          <a href="#lstm-gates" class="notes-toc-item sub">&rarr; Gates Structure</a>
+          <a href="#bptt" class="notes-toc-item">04. BPTT</a>
+          <a href="#glossary" class="notes-toc-item">Glossary</a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: var(--sp-md);">
+        <div class="card-section">
+          <p class="card-title">About this note</p>
+        </div>
+        <div style="height:1px; background: var(--border-subtle);"></div>
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Course</span><span style="color: var(--text-secondary);">IF3270</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Term</span><span style="color: var(--text-secondary);">Final Term</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Version</span><span style="color: var(--text-secondary);">v1.0</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="cursorToggleBtn" class="cursor-toggle-btn" type="button" aria-pressed="false">&#9679; pointer trail</button>
+
+    </div>
+  </aside>
+
+</div>
+
+<script src="../js/app.js" defer></script>
+<script src="../js/notes-common.js"></script>
+</body>
+</html>

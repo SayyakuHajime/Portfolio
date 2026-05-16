@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Sayyaku — Portfolio"
+  description="Personal portfolio of Sayyaku — ML researcher, builder, writer from Bandung."
+  ogTitle="Sayyaku — Portfolio"
+  ogDescription="ML researcher, builder, writer."
+  activePage="home"
+>
+  <div class="page-header">
+    <span class="page-title">Home</span>
+    <span class="header-meta">Bandung, ID</span>
+  </div>
+
+  <section class="profile-hero animate-in">
+    <div class="hero-avatar">S</div>
+    <h1 class="hero-name">Sayyaku</h1>
+    <p class="hero-handle">@SayyakuHajime · Bandung, West Java</p>
+    <p class="hero-bio">
+      I do a little bit of programming and I'm still learning the basics. Starting with the fundamentals and building up from there. I enjoy exploring different areas of tech.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-value">2</span><span class="stat-label">Notes</span></div>
+      <div class="stat-item"><span class="stat-value">WIP</span><span class="stat-label">Projects</span></div>
+      <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">Years</span></div>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="recent">Recent</div>
+    <div class="tab" data-tab="writings">Writings</div>
+    <div class="tab" data-tab="projects">Projects</div>
+  </div>
+
+  <div data-panel="recent">
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Writing</span><span class="feed-date">May 2026</span></div>
+      <h2 class="feed-title"><a href={`${base}notes/ml_lastterm_notes.html`} class="feed-title-link">Final Study Notes: Advanced Neural Architectures</a></h2>
+      <p class="feed-excerpt">Deep dive into CNN Backpropagation, RNN dynamics, LSTM gating mechanisms, and Backpropagation Through Time (BPTT).</p>
+      <div class="feed-footer">
+        <span class="feed-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>32 min read</span>
+        <span class="feed-action">Study Notes</span>
+      </div>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Writing</span><span class="feed-date">Mar 2025</span></div>
+      <h2 class="feed-title"><a href={`${base}notes/ml_midterm_notes.html`} class="feed-title-link">Midterm Study Notes: ML Fundamentals</a></h2>
+      <p class="feed-excerpt">Complete ML midterm notes with perceptron, FFNN, backpropagation, optimization, and CNN fundamentals in one structured page.</p>
+      <div class="feed-footer">
+        <span class="feed-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min read</span>
+        <span class="feed-action">Study Notes</span>
+      </div>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Project</span><span class="feed-date">Now</span></div>
+      <h2 class="feed-title"><a href={`${base}projects.html`} class="feed-title-link">Projects page is currently in progress</a></h2>
+      <p class="feed-excerpt">Project cards are being curated. The dedicated Projects page currently shows a WIP placeholder while I prepare final writeups.</p>
+      <div class="feed-footer"><span class="feed-action">WIP</span></div>
+    </article>
+  </div>
+
+  <div data-panel="writings" style="display:none;">
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">WIP</span><span class="feed-date">Now</span></div>
+      <h2 class="feed-title"><a href={`${base}writings.html`} class="feed-title-link">Writings page is being curated</a></h2>
+      <p class="feed-excerpt">I'm currently selecting and polishing long-form essays and research notes.</p>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Study Notes</span><span class="feed-date">May 2026</span></div>
+      <h2 class="feed-title"><a href={`${base}notes/ml_lastterm_notes.html`} class="feed-title-link">ML Final Term Notes</a></h2>
+      <p class="feed-excerpt">Advanced architectures covering CNN backward pass, RNNs, and LSTM cells.</p>
+      <div class="feed-footer"><span class="feed-action">IF3270</span><span class="feed-action">Sequential Models</span></div>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Overview</span></div>
+      <h2 class="feed-title"><a href={`${base}notes.html`} class="feed-title-link">Open full notes archive</a></h2>
+      <p class="feed-excerpt">Browse the dedicated Notes page for the full collection of study references.</p>
+    </article>
+  </div>
+
+  <div data-panel="projects" style="display:none;">
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">WIP</span><span class="feed-date">Now</span></div>
+      <h2 class="feed-title"><a href={`${base}projects.html`} class="feed-title-link">Projects page is being prepared</a></h2>
+      <p class="feed-excerpt">The project section is intentionally concise on Home. The dedicated page currently shows a WIP placeholder until project cards are finalized.</p>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Brand Design</span></div>
+      <h2 class="feed-title"><a href={`${base}projects/oeni-brand-guide-green.html`} class="feed-title-link">Oeni Yoga Studio — Brand Guide</a></h2>
+      <p class="feed-excerpt">Visual brand identity system for Oeni Yoga Studio, featuring a forest-green palette, custom logo mark, and typography pairing.</p>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Brand Design</span></div>
+      <h2 class="feed-title"><a href={`${base}projects/penyucon-brand-guide.html`} class="feed-title-link">Penyucon — Brand Guide</a></h2>
+      <p class="feed-excerpt">Brand identity guide for Penyucon.</p>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">External</span></div>
+      <h2 class="feed-title"><a href="https://github.com/SayyakuHajime" class="feed-title-link" target="_blank" rel="noopener noreferrer">View GitHub profile</a></h2>
+      <p class="feed-excerpt">Current repositories are available directly on GitHub while this Projects page is under construction.</p>
+    </article>
+  </div>
+
+  <div slot="right-rail">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search…" />
+    </div>
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Currently studying</p></div>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <span class="skill-chip">Machine Learning</span>
+        <span class="skill-chip">Mobile Development</span>
+        <span class="skill-chip">UI/UX Design</span>
+        <span class="skill-chip">Technical Writing</span>
+      </div>
+      <div style="height: var(--sp-sm)"></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Tech stack</p></div>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <span class="skill-chip">Python</span><span class="skill-chip">React</span>
+        <span class="skill-chip">SQL</span><span class="skill-chip">Docker</span>
+        <span class="skill-chip">C</span><span class="skill-chip">C++</span>
+        <span class="skill-chip">Kotlin</span>
+      </div>
+      <div style="height: var(--sp-sm)"></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Connect</p></div>
+      <div class="divider"></div>
+      <div class="contact-links">
+        <a href="https://x.com/SayyakuHajime" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          @SayyakuHajime
+        </a>
+        <a href="https://github.com/SayyakuHajime" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          @SayyakuHajime
+        </a>
+        <a href="https://www.linkedin.com/in/muhammadhazimrp/" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zM7.119 20.452H3.555V9h3.564zM22.225 0H1.771C.792 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          @muhammadhazimrp
+        </a>
+        <a href="mailto:hazimprajoda@protonmail.com" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          hazimprajoda@protonmail.com
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

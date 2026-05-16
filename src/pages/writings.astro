@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Writings — Sayyaku"
+  description="Essays, notes, and long-form writing on ML, systems thinking, and ideas."
+  activePage="writings"
+>
+  <div class="page-header">
+    <span class="page-title">Writings</span>
+    <span class="header-meta">work in progress</span>
+  </div>
+
+  <div class="writings-intro animate-in">
+    <h2>Ideas deserve<br>proper space.</h2>
+    <p>I am currently refining my long-form essays and research notes. This page will feature my best writing once the archive is ready.</p>
+  </div>
+
+  <section class="wip-wrap animate-in">
+    <article class="wip-card">
+      <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
+      <h2 class="wip-title">Writings archive is being curated.</h2>
+      <p class="wip-text">I'm selecting and editing to ensure they meet the quality I want for this portfolio. Check back soon for the full collection.</p>
+      <div class="wip-actions">
+        <a href={`${base}`} class="wip-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Home
+        </a>
+        <a href={`${base}notes.html`} class="wip-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+          Browse Study Notes
+        </a>
+      </div>
+      <p class="wip-kitty">pen scratching noises in progress</p>
+    </article>
+  </section>
+
+  <div slot="right-rail">
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Writing Desk</p></div>
+      <div class="divider"></div>
+      <div class="wip-side-note"><p><strong>Status:</strong> Drafts being polished.</p><p>Focusing on quality over quantity.</p></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-section"><p class="card-title">Topics</p></div>
+      <div class="divider"></div>
+      <div class="wip-side-note"><p>ML Theory, NLP, and general tech observations.</p></div>
+    </div>
+  </div>
+</BaseLayout>
