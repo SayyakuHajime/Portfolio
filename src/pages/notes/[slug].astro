@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+import NotesLayout from '../../layouts/NotesLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL;
+
+const pageMeta = [data.course, data.exam].filter(Boolean).join(' · ');
+const coverLabel = [data.course, data.subject, data.exam].filter(Boolean).join(' · ');
+---
+
+<NotesLayout
+  title={`${data.title} — Sayyaku`}
+  activeSlug={entry.slug}
+  pageTitle={data.title}
+  pageMeta={pageMeta}
+  useKatex={true}
+>
+  <!-- Cover block -->
+  <div class="notes-cover">
+    {coverLabel && <div class="cover-label">{coverLabel}</div>}
+    <h1>{data.title}</h1>
+    {data.topics && data.topics.length > 0 && (
+      <div class="cover-topics">
+        {data.topics.map(t => <span class="topic-chip">{t}</span>)}
+      </div>
+    )}
+    {data.references && (
+      <div class="refs-note">References: {data.references}</div>
+    )}
+  </div>
+
+  <!-- Rendered markdown -->
+  <div class="notes-scope">
+    <Content />
+  </div>
+
+  <!-- TOC in right rail -->
+  <div slot="right-rail">
+    <div class="card" style="margin-bottom:var(--sp-md);">
+      <div class="card-section"><p class="card-title">Contents</p></div>
+      <div style="height:1px;background:var(--border-subtle);"></div>
+      <div class="notes-toc-list" style="padding-top:8px;">
+        {headings
+          .filter(h => h.depth === 2 || h.depth === 3)
+          .map(h => (
+            <a
+              href={`#${h.slug}`}
+              class:list={['notes-toc-item', { sub: h.depth === 3 }]}
+            >
+              {h.text}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</NotesLayout>

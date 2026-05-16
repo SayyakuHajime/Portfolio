@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
+const collectionNotes = (await getCollection('notes')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title="Notes - Sayyaku" description="Modular notes archive and templates." activePage="notes">
@@ -14,6 +16,23 @@ const base = import.meta.env.BASE_URL;
     <p>A collection of notes from various subjects.</p>
   </section>
 
+  <!-- Notes from content collections (Markdown) -->
+  {collectionNotes.map(note => (
+    <article class="note-item animate-in">
+      <div>
+        <h2 class="note-title">
+          <a href={`${base}/notes/${note.slug}.html`} class="note-title-link">{note.data.title}</a>
+        </h2>
+        {note.data.subject && <p class="note-desc">{note.data.subject}</p>}
+        <div class="note-meta">
+          {note.data.course && <span class="tag">{note.data.course}</span>}
+          {note.data.topics && note.data.topics.map(t => <span class="tag">{t}</span>)}
+        </div>
+      </div>
+    </article>
+  ))}
+
+  <!-- Legacy static HTML notes -->
   <article class="note-item animate-in">
     <div>
       <h2 class="note-title"><a href={`${base}/projects/RNN_LSTM_Calculator.html`} class="note-title-link">RNN &amp; LSTM Calculator</a></h2>
