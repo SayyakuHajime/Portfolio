@@ -66,6 +66,31 @@
     figure.note-figure.wrap-left, figure.note-figure.wrap-right,
     img.img-wrap-left, img.img-wrap-right { float: none; width: 100%; max-width: 100%; margin: 16px 0; }
   }
+
+  /* ── SVG DIAGRAM HELPER CLASSES ────────────────────────── */
+  .svg-fill-p    { fill: var(--accent-p-bg); }
+  .svg-fill-n    { fill: var(--accent-n-bg); }
+  .svg-fill-b    { fill: var(--accent-b-bg); }
+  .svg-fill-o    { fill: var(--accent-o-bg); }
+  .svg-fill-r    { fill: var(--accent-r-bg); }
+  .svg-fill-paper { fill: var(--paper); }
+  .svg-stroke-p   { stroke: var(--accent-p-mid); }
+  .svg-stroke-n   { stroke: var(--accent-n-mid); }
+  .svg-stroke-b   { stroke: var(--accent-b-mid); }
+  .svg-stroke-o   { stroke: var(--accent-o-mid); }
+  .svg-stroke-r   { stroke: var(--accent-r-mid); }
+  .svg-stroke-ink  { stroke: var(--ink-soft); }
+  .svg-stroke-rule { stroke: var(--rule); }
+  .svg-text-p    { fill: var(--accent-p); }
+  .svg-text-n    { fill: var(--accent-n); }
+  .svg-text-b    { fill: var(--accent-b); }
+  .svg-text-o    { fill: var(--accent-o); }
+  .svg-text-r    { fill: var(--accent-r); }
+  .svg-text-ink   { fill: var(--ink); }
+  .svg-text-muted { fill: var(--ink-faint); }
+  .svg-arrow     { fill: var(--ink-soft); }
+  .svg-conn      { stroke: var(--rule); }
+  .svg-conn-bias  { stroke: var(--accent-o-mid); }
 }
 
 .theme-dark:is(.notes-layout-article, .notes-layout-modular) .notes-scope {
@@ -140,6 +165,7 @@
 
   .diagram-container { margin: 18px 0; padding: 20px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 4px; text-align: center; overflow-x: auto; }
   .diagram-container .diagram-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+  .diagram-container .diagram-credit { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .04em; color: var(--ink-faint); margin-top: 8px; }
 
   .diagram-wrap { margin: 20px 0; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
   .diagram-wrap .diagram-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); padding: 9px 16px 0; }
