@@ -33,8 +33,8 @@
   strong { color: var(--ink); }
   em { font-style: italic; }
   img { max-width: 100%; height: auto; }
-  mjx-container { user-select: text; -webkit-user-select: text; cursor: text; }
-  mjx-container * { user-select: text !important; -webkit-user-select: text !important; }
+  mjx-container { user-select: text !important; -webkit-user-select: text !important; pointer-events: auto !important; cursor: text !important; }
+  mjx-container * { user-select: text !important; -webkit-user-select: text !important; pointer-events: auto !important; }
 
   figure.note-figure { margin: 18px 0; }
   figure.note-figure > img,
@@ -311,4 +311,20 @@
   --code-ink: #f3efe8;  --code-comment: #b4aa98;
   --code-keyword: #d7b6ff; --code-function: #8dc6ff; --code-operator: #ffbe75;
   --code-string: #9ce5b5;  --code-number: #ff9e9e;
+}
+
+/* ── MATHJAX TEXT SELECTION ───────────────────────────────── */
+/* Top-level rules (outside CSS nesting) so custom-element selectors
+   apply reliably across all browsers. pointer-events + user-select
+   override MathJax's own injected stylesheet. */
+mjx-container {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+  cursor: text !important;
+}
+mjx-container * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
 }

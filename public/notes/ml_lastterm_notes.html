@@ -15,7 +15,17 @@
   <script>
     MathJax = {
       tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
-      chtml: { scale: 1.05, matchFontHeight: false }
+      chtml: { scale: 1.05, matchFontHeight: false },
+      startup: {
+        ready() {
+          MathJax.startup.defaultReady();
+          MathJax.startup.promise.then(function() {
+            var s = document.createElement('style');
+            s.textContent = 'mjx-container,mjx-container *{user-select:text!important;-webkit-user-select:text!important;pointer-events:auto!important;}mjx-container{cursor:text!important;}';
+            document.head.appendChild(s);
+          });
+        }
+      }
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
