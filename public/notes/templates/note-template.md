@@ -5,6 +5,8 @@ subject: Subject Name
 exam: Midterm
 topics: [Topic A, Topic B, Topic C]
 references: Author (Year) — Book Title, Lecture Slides Week N
+order: 1
+date: "2025-01-01"
 ---
 
 ## 1. Overview
