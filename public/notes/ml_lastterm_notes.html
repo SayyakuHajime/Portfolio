@@ -15,21 +15,11 @@
   <script>
     MathJax = {
       tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
-      chtml: { scale: 1.05, matchFontHeight: false },
-      startup: {
-        ready() {
-          MathJax.startup.defaultReady();
-          MathJax.startup.promise.then(function() {
-            var s = document.createElement('style');
-            s.textContent = 'mjx-container,mjx-container *{user-select:text!important;-webkit-user-select:text!important;pointer-events:auto!important;}mjx-container{cursor:text!important;}';
-            document.head.appendChild(s);
-          });
-        }
-      }
+      svg: { scale: 1.05, fontCache: 'global' }
     };
   </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
-          integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"
+          integrity="sha384-KKWa9jJ1MZvssLeOoXG6FiOAZfAgmzsIIfw8BXwI9+kYm0lPCbC6yTQPBC00F1/L" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/notes/notes.css" />
 </head>
@@ -346,14 +336,14 @@
       </div>
 
       <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start;margin:1.5rem 0;">
-        <div class="diagram-container" style="background:#faf8f4;flex:0 1 220px;">
+        <div class="diagram-container" style="background:#faf8f4;flex:0 1 260px;">
           <div class="diagram-title">Scaled Dot-Product Attention</div>
-          <img src="../assets/images/diagrams/nntikz_dot_product_attention.png" alt="Scaled dot-product attention: Q, K, V → MatMul → Scale → Softmax → MatMul" style="height:auto;"/>
+          <img src="../assets/images/diagrams/nntikz_dot_product_attention.png" alt="Scaled dot-product attention: Q, K, V → MatMul → Scale → Softmax → MatMul" style="height:360px;width:auto;max-width:none;"/>
           <div class="diagram-credit">via <a href="https://github.com/fraserlove/nntikz" target="_blank" rel="noopener">NNTikZ</a></div>
         </div>
         <div class="diagram-container" style="background:#faf8f4;flex:1 1 300px;">
           <div class="diagram-title">Transformer Architecture — Encoder &amp; Decoder</div>
-          <img src="../assets/images/diagrams/nntikz_transformer.png" alt="Transformer: encoder (multi-head attention + FFN) and decoder (masked attention + cross-attention + FFN)" style="height:auto;"/>
+          <img src="../assets/images/diagrams/nntikz_transformer.png" alt="Transformer: encoder (multi-head attention + FFN) and decoder (masked attention + cross-attention + FFN)" style="height:360px;width:auto;max-width:none;"/>
           <div class="diagram-credit">via <a href="https://github.com/fraserlove/nntikz" target="_blank" rel="noopener">NNTikZ</a></div>
         </div>
       </div>

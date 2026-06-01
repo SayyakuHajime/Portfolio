@@ -33,8 +33,6 @@
   strong { color: var(--ink); }
   em { font-style: italic; }
   img { max-width: 100%; height: auto; }
-  mjx-container { user-select: text !important; -webkit-user-select: text !important; pointer-events: auto !important; cursor: text !important; }
-  mjx-container * { user-select: text !important; -webkit-user-select: text !important; pointer-events: auto !important; }
 
   figure.note-figure { margin: 18px 0; }
   figure.note-figure > img,
@@ -125,7 +123,7 @@
   .formula-block.orange { background: var(--accent-o-bg); }
   .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; }
 
-  .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; }
+  .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; overflow-x: auto; }
   .callout.note    { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
   .callout.warn    { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
   .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
