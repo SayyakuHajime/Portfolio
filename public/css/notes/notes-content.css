@@ -217,6 +217,58 @@
   @media (min-width: 980px)  { .glossary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (min-width: 1320px) { .glossary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
+  /* ── MARKDOWN-GENERATED CONTENT ──────────────────────────── */
+  /* Maps standard HTML elements (from .md files) to the same
+     visual components used in hand-authored .html notes.      */
+
+  /* h1 — content title inside .notes-scope */
+  h1 {
+    font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+    line-height: 1.2; color: var(--ink); margin: 0 0 20px;
+  }
+
+  /* h2 not inside .part-header — render as a section block.
+     :nth-of-type auto-cycles purple → green → blue → orange. */
+  h2:not(:where(.part-header *)) {
+    margin: 48px 0 0; padding: 20px 24px;
+    border: 1px solid var(--rule); border-radius: 4px; background: var(--paper-warm);
+  }
+  h2:not(:where(.part-header *)):nth-of-type(4n+1) { background: var(--accent-p-bg); border-color: var(--accent-p-mid); }
+  h2:not(:where(.part-header *)):nth-of-type(4n+2) { background: var(--accent-n-bg); border-color: var(--accent-n-mid); }
+  h2:not(:where(.part-header *)):nth-of-type(4n+3) { background: var(--accent-b-bg); border-color: var(--accent-b-mid); }
+  h2:not(:where(.part-header *)):nth-of-type(4n)   { background: var(--accent-o-bg); border-color: var(--accent-o-mid); }
+
+  /* blockquote — default note/blue callout.
+     Variants (insight/warn/success) added via rehype alert plugin
+     using > [!INSIGHT], > [!WARN], > [!SUCCESS] syntax in .md.   */
+  blockquote {
+    margin: 18px 0; padding: 14px 18px; border-radius: 4px;
+    border: 1px solid var(--accent-b-mid); background: var(--accent-b-bg);
+    color: var(--accent-b); font-size: 13px; line-height: 1.7; overflow-x: auto;
+  }
+  blockquote > p { margin-bottom: 0; color: inherit; }
+  blockquote > p:not(:last-child) { margin-bottom: 8px; }
+  blockquote strong { color: inherit; }
+
+  /* hr — section divider */
+  hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+
+  /* KaTeX display math block — formula-block appearance */
+  .math.math-display {
+    margin: 18px 0; background: var(--paper-cream);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 16px 20px; overflow-x: auto; text-align: center;
+  }
+
+  /* Standalone image paragraph — diagram-container appearance.
+     Markdown: ![alt](src) on its own line → <p><img></p>       */
+  p:has(> img:only-child) {
+    text-align: center; background: var(--paper-warm);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 20px; margin: 18px 0;
+  }
+  p:has(> img:only-child) > img { max-width: 60%; height: auto; display: block; margin: 0 auto; }
+
   @media (max-width: 900px) {
     .two-col, .compare-row { grid-template-columns: 1fr; }
   }
