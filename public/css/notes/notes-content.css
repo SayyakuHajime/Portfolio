@@ -123,7 +123,7 @@
   .formula-block.orange { background: var(--accent-o-bg); }
   .formula-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; }
 
-  .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; overflow-x: auto; }
+  .callout { margin: 18px 0; padding: 14px 18px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; overflow-x: auto; display: flex; gap: 12px; align-items: flex-start; }
   .callout.note    { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
   .callout.warn    { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
   .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
@@ -246,6 +246,7 @@
     border: 1px solid var(--accent-b-mid); background: var(--accent-b-bg);
     color: var(--accent-b); font-size: 13px; line-height: 1.7; overflow-x: auto;
   }
+  blockquote.callout { display: block; }
   blockquote > p { margin-bottom: 0; color: inherit; }
   blockquote > p:not(:last-child) { margin-bottom: 8px; }
   blockquote strong { color: inherit; }
@@ -304,7 +305,7 @@
   .topic-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .15em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 5px; display: block; }
   .topic-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.2; color: var(--ink); }
 
-  .callout { margin: 16px 0; padding: 14px 16px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; }
+  .callout { margin: 16px 0; padding: 14px 16px; border-radius: 4px; border: 1px solid; font-size: 13px; line-height: 1.7; overflow-x: auto; display: flex; gap: 10px; align-items: flex-start; }
   .callout.info   { background: var(--accent-b-bg); border-color: var(--accent-b-mid); color: var(--accent-b); }
   .callout.tip    { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
   .callout.danger { background: var(--accent-r-bg); border-color: var(--accent-r-mid); color: var(--accent-r); }
