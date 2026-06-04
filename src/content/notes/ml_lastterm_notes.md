@@ -1,5 +1,5 @@
 ---
-title: IF3270 ML — Sequential Models & Advanced Architectures
+title: ML Last Term Notes
 course: IF3270
 subject: Pembelajaran Mesin
 exam: Final Term
