@@ -367,6 +367,58 @@
   --code-string: #9ce5b5;  --code-number: #ff9e9e;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   FLAT FALLBACK RULES — element selectors extracted from nesting
+   blocks so they apply regardless of CSS nesting browser support.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Shared scope: headings, text, tables */
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope h3 {
+  font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600;
+  margin: 36px 0 10px; color: var(--ink);
+  border-bottom: 1px solid var(--rule); padding-bottom: 7px;
+}
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope h4 {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin: 20px 0 7px;
+}
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope p { margin-bottom: 12px; color: var(--ink-soft); }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope a { color: var(--accent-b); text-decoration: none; }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope a:hover { text-decoration: underline; }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope strong { color: var(--ink); }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope em { font-style: italic; }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope img { max-width: 100%; height: auto; }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope td {
+  padding: 10px 14px; border: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top;
+}
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope tr:nth-child(even) td { background: var(--paper-warm); }
+:is(.notes-layout-article, .notes-layout-modular) .notes-scope th {
+  background: var(--paper-cream); font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .08em; padding: 10px 14px;
+  border: 1px solid var(--rule); text-align: left; color: var(--ink);
+}
+
+/* Article scope: h2 font, table, pre/code, lists */
+.notes-layout-article .notes-scope h2 {
+  font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+  line-height: 1.2; color: var(--ink);
+}
+.notes-layout-article .notes-scope table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.notes-layout-article .notes-scope pre,
+.notes-layout-article .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.notes-layout-article .notes-scope code {
+  background: var(--paper-cream); border: 1px solid var(--rule);
+  padding: 1px 5px; border-radius: 3px;
+}
+.notes-layout-article .notes-scope pre {
+  background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 14px 18px; overflow-x: auto; line-height: 1.6;
+}
+.notes-layout-article .notes-scope pre code { background: none; border: none; padding: 0; }
+.notes-layout-article .notes-scope ul,
+.notes-layout-article .notes-scope ol { padding-left: 22px; margin-bottom: 12px; color: var(--ink-soft); }
+.notes-layout-article .notes-scope li { margin-bottom: 5px; font-size: 14px; line-height: 1.7; }
+
 /* ── MATHJAX TEXT SELECTION ───────────────────────────────── */
 /* Top-level rules (outside CSS nesting) so custom-element selectors
    apply reliably across all browsers. pointer-events + user-select
