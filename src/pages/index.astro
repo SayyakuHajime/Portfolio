@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
+const noteCount = (await getCollection('notes')).length + 2; // +2 for legacy midterm + md-viewer tool
 ---
 
 <BaseLayout
@@ -23,7 +25,7 @@ const base = import.meta.env.BASE_URL;
       I do a little bit of programming and I'm still learning the basics. Starting with the fundamentals and building up from there. I enjoy exploring different areas of tech.
     </p>
     <div class="hero-stats">
-      <div class="stat-item"><span class="stat-value">2</span><span class="stat-label">Notes</span></div>
+      <div class="stat-item"><span class="stat-value">{noteCount}</span><span class="stat-label">Notes</span></div>
       <div class="stat-item"><span class="stat-value">WIP</span><span class="stat-label">Projects</span></div>
       <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">Years</span></div>
     </div>

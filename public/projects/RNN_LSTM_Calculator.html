@@ -28,12 +28,13 @@
 
   .ck-tweaks{
     position: sticky; top: 76px; align-self:start;
-    height: calc(100vh - 96px); overflow-y: scroll;
+    height: calc(100vh - 96px); overflow-y: auto;
+    overscroll-behavior: contain;
     padding-right: 4px;
     display:flex; flex-direction:column; gap: 12px;
   }
   @media (max-width: 960px){
-    .ck-tweaks{ position:static; height:auto; overflow-y:visible; }
+    .ck-tweaks{ position:static; height:auto; overflow-y:visible; overscroll-behavior:auto; }
   }
   .ck-tweaks::-webkit-scrollbar{width:6px}
   .ck-tweaks::-webkit-scrollbar-track{background:var(--paper-cream); border-radius:3px}
@@ -185,13 +186,14 @@
     overflow:hidden;
   }
   .ck-diagram-meta{
-    display:flex; justify-content:space-between; align-items:center;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    flex-wrap: wrap; gap: 6px;
     padding: 9px 16px;
     border-bottom: 1px solid var(--rule);
     font-family: 'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
     color: var(--ink-faint);
   }
-  .ck-legend{ display:flex; gap:14px; }
+  .ck-legend{ display:flex; gap:10px; flex-wrap: wrap; }
   .ck-legend span{ display:inline-flex; align-items:center; gap:6px; }
   .ck-legend i{ width:10px; height:10px; border-radius:50%; display:inline-block; border:1px solid var(--rule); }
   .ck-diagram{ position: relative; background: var(--paper-warm); min-height: 100px; }
@@ -251,12 +253,13 @@
   .rf-h-label{ color: var(--ink); font-family: 'Playfair Display', serif; font-style: italic; font-weight:700; font-size: 15px; }
 
   /* equations */
-  .ck-eqs{ padding: 14px 18px; display:flex; flex-direction:column; gap: 10px; }
+  .ck-eqs{ padding: 14px 18px; display:flex; flex-direction:column; gap: 10px; overflow-x: auto; }
   .ck-eq{
     display:flex; align-items:center; gap: 12px; flex-wrap:wrap;
     background: var(--paper-cream); border:1px solid var(--rule); border-left: 3px solid var(--accent-p);
     padding: 10px 14px; border-radius: 0 4px 4px 0;
-    font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink-soft); line-height: 1.7;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7;
+    overflow-x: auto; min-width: 0; word-break: break-all;
   }
   .ck-eq .lbl{
     font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing:.12em; text-transform: uppercase;
@@ -276,15 +279,16 @@
   .ck-stat{
     display:flex; justify-content:space-between; align-items:baseline;
     border-bottom: 1px dotted var(--rule);
-    padding: 6px 0;
+    padding: 6px 0; gap: 8px; min-width: 0;
   }
   .ck-stat:last-child{ border-bottom: 0; }
   .ck-stat .n{
-    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing:.07em; text-transform:uppercase;
-    color: var(--ink-faint);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing:.06em; text-transform:uppercase;
+    color: var(--ink-faint); flex-shrink: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .ck-stat .v{
-    font-family: 'Playfair Display', serif; font-weight: 600; font-size: 17px; color: var(--ink);
+    font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; color: var(--ink);
+    flex-shrink: 0; white-space: nowrap;
   }
   .ck-stat .v small{ font-family:'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-faint); margin-left: 5px; font-weight:400; }
 
@@ -382,8 +386,8 @@
   .ck-num::-webkit-outer-spin-button, .ck-num::-webkit-inner-spin-button { appearance:none; margin:0; }
   .ck-num:focus { outline: none; border-color: var(--accent-p); }
 
-  /* mobile formula/stats stack */
-  @media (max-width: 700px){
+  /* formula/stats stack — collapse sooner to prevent text overflow */
+  @media (max-width: 860px){
     .ck-panel-row { grid-template-columns: 1fr !important; }
   }
 
