@@ -20,8 +20,8 @@ Use the section numbering style that fits your course. This template uses number
 Provide context, motivation, or history for the topic. Keep it short — a few sentences at most.
 
 > [!note] Definition
-> Formal definition of a term or concept.  
-> Example: A **perceptron** is a linear binary classifier $f(x) = \text{sign}(w^T x + b)$.
+> Formal definition of a term or concept.
+> Example: A **perceptron** is a linear binary classifier $f(x) = \text{sign}(w^{\top} x + b)$.
 
 
 ---
@@ -87,7 +87,7 @@ $$
 $$
 
 > [!warn] Vanishing Gradient
-> Gradients decay exponentially over time: $\|\partial h_t / \partial h_0\| \approx \lambda^t$ where $|\lambda| < 1$.  
+> Gradients decay exponentially over time: $\|\partial h_t / \partial h_0\| \approx \lambda^t$ where $|\lambda| < 1$.
 > LSTM mitigates this via the cell-state highway $c_t$.
 
 

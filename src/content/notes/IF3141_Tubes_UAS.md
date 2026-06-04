@@ -5,7 +5,7 @@ subject: Sistem Informasi
 exam: UAS / Tubes
 topics: [Problem Analysis, Solution Design, Input Output Process Design, Legal & Ethical, Professional Responsibility, Peer Assessment]
 references: Dokumen Tugas Besar K01 G03 — PT Berkah Melano Indonesia, UU PDP No. 27 Tahun 2022, ISO/IEC 27001
-order: 2
+order: 3
 date: "2026-03-12"
 ---
 
