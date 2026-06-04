@@ -254,11 +254,14 @@
   /* hr — section divider */
   hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
 
-  /* KaTeX display math block — formula-block appearance */
-  .math.math-display {
+  /* KaTeX display math block — formula-block appearance.
+     rehype-katex v7 wraps display math in a plain <p> (no class),
+     so we target a <p> whose only element child is a .katex span. */
+  p:has(> .katex:only-child) {
     margin: 18px 0; background: var(--paper-cream);
     border: 1px solid var(--rule); border-radius: 4px;
     padding: 16px 20px; overflow-x: auto; text-align: center;
+    color: var(--ink);
   }
 
   /* Standalone image paragraph — diagram-container appearance.

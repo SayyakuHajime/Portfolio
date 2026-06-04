@@ -2,10 +2,10 @@ import { defineConfig } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
-/** Transforms > [!NOTE] / [!INSIGHT] / [!WARN] / [!SUCCESS] blockquotes
- *  into <blockquote class="callout note|insight|warn|success">.
- *  Mirrors the .callout.* classes already in notes-content.css.       */
-function rehypeAlerts() {
+/** Transforms > [!TYPE] Title\nbody blockquotes in mdast (remark stage).
+ *  Sets hProperties.className so remark-rehype emits the right class,
+ *  and wraps the title text in a <strong> node.               */
+function remarkAlerts() {
   const TYPE = {
     NOTE: 'note', INSIGHT: 'insight',
     WARN: 'warn', WARNING: 'warn', CAUTION: 'warn',
@@ -13,29 +13,39 @@ function rehypeAlerts() {
   };
   const RE = /^\[!(NOTE|INSIGHT|WARN|WARNING|CAUTION|SUCCESS|TIP)\]\s*/i;
 
-  function walk(node) {
-    if (!node.children) return;
-    for (const child of node.children) {
-      if (child.type === 'element' && child.tagName === 'blockquote') {
-        const p = child.children?.find(c => c.type === 'element' && c.tagName === 'p');
-        if (p) {
-          const t = p.children?.[0];
-          if (t?.type === 'text') {
-            const m = t.value.match(RE);
-            if (m) {
-              child.properties = { ...(child.properties ?? {}), className: ['callout', TYPE[m[1].toUpperCase()]] };
-              t.value = t.value.slice(m[0].length);
-              if (!t.value.trim() && p.children.length === 1) {
-                child.children = child.children.filter(c => c !== p);
+  return (tree) => {
+    function walk(node) {
+      if (!node.children) return;
+      for (const child of node.children) {
+        if (child.type === 'blockquote') {
+          const para = child.children?.find(c => c.type === 'paragraph');
+          if (para) {
+            const t = para.children?.[0];
+            if (t?.type === 'text') {
+              const m = t.value.match(RE);
+              if (m) {
+                const cls = TYPE[m[1].toUpperCase()];
+                child.data = child.data ?? {};
+                child.data.hProperties = { ...(child.data.hProperties ?? {}), className: ['callout', cls] };
+
+                const rest = t.value.slice(m[0].length);
+                const nlIdx = rest.indexOf('\n');
+                const title = nlIdx >= 0 ? rest.slice(0, nlIdx) : rest;
+                const body  = nlIdx >= 0 ? rest.slice(nlIdx + 1) : '';
+
+                const newNodes = [];
+                if (title.trim()) newNodes.push({ type: 'strong', children: [{ type: 'text', value: title }] });
+                if (body.trim()) newNodes.push({ type: 'text', value: (title.trim() ? ' ' : '') + body });
+                para.children.splice(0, 1, ...newNodes);
               }
             }
           }
         }
+        walk(child);
       }
-      walk(child);
     }
-  }
-  return walk;
+    walk(tree);
+  };
 }
 
 export default defineConfig({
@@ -47,8 +57,8 @@ export default defineConfig({
   },
   trailingSlash: 'never',
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex, rehypeAlerts],
+    remarkPlugins: [remarkMath, remarkAlerts],
+    rehypePlugins: [rehypeKatex],
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',
