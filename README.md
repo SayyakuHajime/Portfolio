@@ -88,6 +88,9 @@ Portfolio/
 │   └── content/
 │       ├── config.ts              ← notes collection schema
 │       └── notes/                 ← DROP YOUR .md FILES HERE
+│           ├── IF3141_StudyNote.md
+│           ├── ml_lastterm_notes.md
+│           └── IF3141_Tubes_UAS.md
 │
 ├── public/                        ← copied as-is to dist/, no processing
 │   ├── css/
@@ -106,12 +109,11 @@ Portfolio/
 │   │   ├── theme-init.js          ← anti-FOUC theme bootstrap (blocking)
 │   │   └── notes-common.js        ← TOC, reading progress, cursor trail
 │   ├── notes/
-│   │   ├── ml_lastterm_notes.html ← legacy HTML note (edit directly here)
 │   │   ├── ml_midterm_notes.html  ← legacy HTML note (edit directly here)
 │   │   └── templates/
 │   │       └── note-template.md   ← downloaded by MD Viewer "Template" button
-│   ├── projects/                  ← static project HTML files
-│   ├── assets/images/             ← images and media
+│   ├── projects/                  ← static project HTML files (RNN/LSTM Calculator etc.)
+│   ├── assets/images/             ← images, diagrams, media
 │   ├── favicon.ico / favicon-*.png / apple-touch-icon.png
 │   ├── sw.js                      ← service worker (offline cache)
 │   └── search-index.json          ← static search index
@@ -179,19 +181,20 @@ course: IF3270
 subject: Machine Learning
 exam: Final Exam
 topics: [CNN, RNN, LSTM]
+references: Author (Year) — Book Title
 order: 1
+date: "2025-01-01"
 ---
 
 ## Section One
 
 Write content here in normal Markdown.
-One blank line before a heading is enough. Single newlines = line breaks.
 
 ## Math
 
 Inline: $\sigma(x) = \frac{1}{1 + e^{-x}}$
 
-Display:
+Display (gets cream box automatically):
 $$
 \frac{\partial L}{\partial W} = \frac{1}{m} X^T (A - Y)
 $$
@@ -205,12 +208,11 @@ def relu(x):
 
 ## Callout
 
-<div class="callout note">
-  <div class="callout-body">
-    <div class="callout-title">Note</div>
-    <div class="callout-text"><p>Content here.</p></div>
-  </div>
-</div>
+> [!note] Title
+> Content here. Supports **bold**, *italic*, and $inline math$.
+
+> [!warn] Warning
+> Common mistake or pitfall.
 ```
 
 ### Step 3 — Push
@@ -232,28 +234,43 @@ That's it. The note automatically appears in the sidebar and notes list.
 | `subject` | no | Subject shown in cover label |
 | `exam` | no | Exam type shown in cover label |
 | `topics` | no | Array of topic chips shown in cover |
-| `order` | no | Sidebar sort order (default: 99, lower = higher) |
+| `order` | no | Sidebar sort order (default: 99, lower = higher) — must be unique |
 | `references` | no | Reference text shown in cover |
+| `date` | no | Date string shown in cover (e.g. `"2025-01-01"`) |
 
 ### What renders automatically
 
-- Math → KaTeX (build-time, no client JS)
+- Math → KaTeX (build-time, no client JS) — display `$$` blocks get a styled cream box
 - Code blocks → Shiki syntax highlighting (github-dark)
-- `##` / `###` headings → TOC in right rail
-- Frontmatter → cover block (title, course, topics)
+- `##` headings → colored section boxes cycling purple → green → blue → orange
+- `###` headings → underlined subheading
+- `##` / `###` headings → TOC in right rail auto-generated
+- Frontmatter → cover block (title, course, topics, references)
+- `> [!type]` blockquotes → styled callout boxes
 - Dark/light theme
 
 ### Callout types
 
-Replace `note` with any of: `note`, `warn`, `success`, `insight`
+```markdown
+> [!note] Title
+> Blue information box.
 
-```html
-<div class="callout warn">
-  <div class="callout-body">
-    <div class="callout-title">Warning</div>
-    <div class="callout-text"><p>Common mistake or pitfall.</p></div>
-  </div>
-</div>
+> [!warn] Title
+> Orange warning box.
+
+> [!insight] Title
+> Purple insight box.
+
+> [!success] Title
+> Green success box.
+```
+
+### Image paths
+
+Images in `public/assets/images/` use `/assets/images/...` — the build pipeline prepends `/Portfolio` automatically for GitHub Pages.
+
+```markdown
+![Alt text](/assets/images/diagrams/my-diagram.png)
 ```
 
 <div align="right"><a href="#readme-top">↑ Back to top</a></div>
