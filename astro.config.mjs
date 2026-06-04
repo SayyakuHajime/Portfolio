@@ -2,9 +2,27 @@ import { defineConfig } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+const BASE = '/Portfolio';
+
+/** Prepends the site base to absolute image paths (/assets/...) in mdast.
+ *  Without this, images 404 on GitHub Pages (base=/Portfolio). */
+function remarkFixPaths() {
+  return (tree) => {
+    function walk(node) {
+      if (node.type === 'image' && typeof node.url === 'string') {
+        if (node.url.startsWith('/') && !node.url.startsWith(BASE)) {
+          node.url = BASE + node.url;
+        }
+      }
+      if (node.children) node.children.forEach(walk);
+    }
+    walk(tree);
+  };
+}
+
 /** Transforms > [!TYPE] Title\nbody blockquotes in mdast (remark stage).
  *  Sets hProperties.className so remark-rehype emits the right class,
- *  and wraps the title text in a <strong> node.               */
+ *  and wraps the title text in a <strong> node. */
 function remarkAlerts() {
   const TYPE = {
     NOTE: 'note', INSIGHT: 'insight',
@@ -48,17 +66,38 @@ function remarkAlerts() {
   };
 }
 
+/** Adds class="math-block" to <p> elements that contain only a KaTeX span
+ *  (display math). Runs after rehypeKatex so the .katex span already exists.
+ *  Property mutations on existing nodes work in Astro 5's rehype pipeline. */
+function rehypeMarkMathBlocks() {
+  return (tree) => {
+    function walk(node) {
+      if (!node.children) return;
+      for (const child of node.children) {
+        if (child.type === 'element' && child.tagName === 'p') {
+          const elChildren = child.children?.filter(c => c.type === 'element') ?? [];
+          if (elChildren.length === 1 && elChildren[0].properties?.className?.includes?.('katex')) {
+            child.properties = { ...(child.properties ?? {}), className: ['math-block'] };
+          }
+        }
+        walk(child);
+      }
+    }
+    walk(tree);
+  };
+}
+
 export default defineConfig({
   site: 'https://sayyakuhajime.github.io',
-  base: '/Portfolio',
+  base: BASE,
   output: 'static',
   build: {
     format: 'file',
   },
   trailingSlash: 'never',
   markdown: {
-    remarkPlugins: [remarkMath, remarkAlerts],
-    rehypePlugins: [rehypeKatex],
+    remarkPlugins: [remarkMath, remarkAlerts, remarkFixPaths],
+    rehypePlugins: [rehypeKatex, rehypeMarkMathBlocks],
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',

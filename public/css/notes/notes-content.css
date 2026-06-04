@@ -267,8 +267,8 @@
 /* hr */
 .notes-layout-article .notes-scope hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
 
-/* KaTeX display math — rehype-katex v7 produces plain <p><span.katex></p> */
-.notes-layout-article .notes-scope p:has(> .katex:only-child) {
+/* KaTeX display math — rehypeMarkMathBlocks adds class="math-block" to display-math <p> */
+.notes-layout-article .notes-scope .math-block {
   margin: 18px 0; background: var(--paper-cream);
   border: 1px solid var(--rule); border-radius: 4px;
   padding: 16px 20px; overflow-x: auto; text-align: center;
