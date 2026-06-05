@@ -434,28 +434,28 @@
   <!-- LEFT SIDEBAR (notes nav) -->
   <aside class="sidebar-left">
     <div class="sidebar-logo">
-      <a href="../notes.html" class="notes-back-link">
+      <a href="/Portfolio/notes.html" class="notes-back-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         <span>All Notes</span>
       </a>
     </div>
     <nav class="sidebar-nav">
-      <a href="../notes/if3141_studynote.html" class="nav-item" data-abbr="SI">
+      <a href="/Portfolio/notes/if3141_studynote.html" class="nav-item" data-abbr="IF3">
         <div><div class="nav-label">IF3141 Sistem Informasi — Rangkuman Ujian</div><div class="nav-sub">IF3141</div></div>
       </a>
-      <a href="../notes/ml_lastterm_notes.html" class="nav-item" data-abbr="ML2">
+      <a href="/Portfolio/notes/ml_lastterm_notes.html" class="nav-item" data-abbr="ML_">
         <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="../notes/if3141_tubes_uas.html" class="nav-item" data-abbr="TB">
-        <div><div class="nav-label">IF3141 — Pertanyaan Tugas Besar</div><div class="nav-sub">IF3141</div></div>
+      <a href="/Portfolio/notes/if3141_tubes_uas.html" class="nav-item" data-abbr="IF3">
+        <div><div class="nav-label">IF3141 — Pertanyaan Tugas Besar (PT Berkah Melano Indonesia)</div><div class="nav-sub">IF3141</div></div>
       </a>
-      <a href="RNN_LSTM_Calculator.html" class="nav-item active" data-abbr="RNN">
+      <a href="/Portfolio/projects/RNN_LSTM_Calculator.html" class="nav-item active" data-abbr="RNN">
         <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="../notes/ml_midterm_notes.html" class="nav-item" data-abbr="ML1">
+      <a href="/Portfolio/notes/ml_midterm_notes.html" class="nav-item" data-abbr="ML1">
         <div><div class="nav-label">ML Midterm Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
-      <a href="../notes/md-viewer.html" class="nav-item" data-abbr="MD">
+      <a href="/Portfolio/notes/md-viewer.html" class="nav-item" data-abbr="MD">
         <div><div class="nav-label">MD Viewer</div><div class="nav-sub">tool</div></div>
       </a>
     </nav>
@@ -547,8 +547,8 @@
                 <input class="ck-slider" type="range" min="2" max="1024" value="128" data-knob="hiddenDim" />
               </div>
               <div class="ck-field">
-                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>y</sub></span> output</span><input class="ck-num" id="outputDimVal" type="number" min="1" max="512" value="10" data-sync="outputDim" /></div>
-                <input class="ck-slider" type="range" min="1" max="512" value="10" data-knob="outputDim" />
+                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>y</sub></span> output</span><input class="ck-num" id="outputDimVal" type="number" min="1" max="10" value="2" data-sync="outputDim" /></div>
+                <input class="ck-slider" type="range" min="1" max="10" value="2" data-knob="outputDim" />
               </div>
               <div class="ck-field">
                 <div class="ck-row"><span class="ck-label"><span class="sym">T</span> seq length</span><input class="ck-num" id="seqLenVal" type="number" min="2" max="32" value="8" data-sync="seqLen" /></div>
@@ -744,7 +744,7 @@
 <script>
 const state = {
   mode: 'rnn', activation: 'tanh', gateActivation: 'sigmoid',
-  inputDim: 64, hiddenDim: 128, outputDim: 10, seqLen: 8, batch: 32, layers: 1,
+  inputDim: 64, hiddenDim: 128, outputDim: 2, seqLen: 8, batch: 32, layers: 1,
   direction: 'uni', seqMode: 'm2o', bias: 'on',
   peephole: false, forgetBias: true, layerNorm: false, residual: false,
   dropIn: 0, dropRec: 0, init: 'xavier', clip: 10,
@@ -1123,14 +1123,29 @@ function renderFormulas(){
   const peepF = state.peephole ? ' <span class="op">+</span> <i>p<sub>f</sub>·c<sub>t-1</sub></i>' : '';
   const peepO = state.peephole ? ' <span class="op">+</span> <i>p<sub>o</sub>·c<sub>t</sub></i>' : '';
   let html;
+  const {inputDim:dx, hiddenDim:dh, outputDim:dy, layers:L, bias} = state;
+  const dirMul = state.direction==='bi' ? 2 : 1;
+  const biasOn = bias==='on';
   if(!isLSTM){
+    const recur = dh*(dx + dh + (biasOn?1:0));
+    const outp  = dy*(dh*dirMul + (biasOn?1:0));
+    const paramFormula = biasOn
+      ? `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
+      : `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
     html = `
       <div class="ck-eq f-h"><span class="lbl">hidden</span><i>h<sub>t</sub></i> <span class="op">=</span> ${aSym}( <i>W<sub>xh</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hh</sub></i><i>h<sub>t-1</sub></i> ${biasH} )</div>
       <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>hy</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
       ${state.layerNorm?`<div class="ck-eq f-o"><span class="lbl">norm</span><i>h<sub>t</sub></i> <span class="op">=</span> LN( <i>h<sub>t</sub></i> )</div>`:''}
       ${state.residual?`<div class="ck-eq f-g"><span class="lbl">resid</span><i>h<sub>t</sub></i> <span class="op">=</span> <i>h<sub>t</sub></i> <span class="op">+</span> <i>x<sub>t</sub></i></div>`:''}
+      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?`${L} <span class="op">×</span> `:''}${paramFormula}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(recur*L*dirMul + outp)}</b></div>
     `;
   } else {
+    const recur = 4*dh*(dx + dh + (biasOn?1:0));
+    const peeph = state.peephole ? 3*dh : 0;
+    const outp  = dy*(dh*dirMul + (biasOn?1:0));
+    const paramFormula = biasOn
+      ? `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
+      : `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
     html = `
       <div class="ck-eq f-i"><span class="lbl">input</span><i>i<sub>t</sub></i> <span class="op">=</span> ${gSym}( <i>W<sub>xi</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hi</sub></i><i>h<sub>t-1</sub></i>${peepI} ${biasI} )</div>
       <div class="ck-eq f-f"><span class="lbl">forget</span><i>f<sub>t</sub></i> <span class="op">=</span> ${gSym}( <i>W<sub>xf</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hf</sub></i><i>h<sub>t-1</sub></i>${peepF} ${biasF} )</div>
@@ -1139,6 +1154,7 @@ function renderFormulas(){
       <div class="ck-eq f-c"><span class="lbl">cell</span><i>c<sub>t</sub></i> <span class="op">=</span> <i>f<sub>t</sub></i> <span class="op">⊙</span> <i>c<sub>t-1</sub></i> <span class="op">+</span> <i>i<sub>t</sub></i> <span class="op">⊙</span> <i>g̃<sub>t</sub></i></div>
       <div class="ck-eq f-h"><span class="lbl">hidden</span><i>h<sub>t</sub></i> <span class="op">=</span> <i>o<sub>t</sub></i> <span class="op">⊙</span> ${aSym}( <i>c<sub>t</sub></i> )</div>
       <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>hy</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
+      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?`${L} <span class="op">×</span> `:''}${paramFormula}${state.peephole?' <span class="op">+</span> 3<i>d<sub>h</sub></i>':''}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(recur*L*dirMul + peeph*L*dirMul + outp)}</b></div>
     `;
   }
   document.getElementById('formulas').innerHTML = html;
