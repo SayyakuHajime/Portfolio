@@ -1,5 +1,5 @@
 ---
-title: IF3141 — Pertanyaan Tugas Besar (PT Berkah Melano Indonesia)
+title: IF3141 — Pertanyaan Tugas Besar 
 course: IF3141
 subject: Sistem Informasi
 exam: UAS / Tubes
