@@ -135,7 +135,7 @@
   .callout-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
   .callout-text { font-size: 13px; margin-bottom: 0; color: inherit; }
 
-  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  table { width: auto; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
   pre, code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
   pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 18px; overflow-x: auto; line-height: 1.6; }
   ul, ol { padding-left: 20px; margin-bottom: 12px; color: var(--ink-soft); }
@@ -404,7 +404,7 @@
   font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
   line-height: 1.2; color: var(--ink);
 }
-.notes-layout-article .notes-scope table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.notes-layout-article .notes-scope table { width: auto; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
 .notes-layout-article .notes-scope pre,
 .notes-layout-article .notes-scope code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
 .notes-layout-article .notes-scope code {
