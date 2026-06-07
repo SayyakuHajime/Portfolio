@@ -21,8 +21,8 @@
   .calc-shell{
     display:grid;
     grid-template-columns: 300px 1fr;
-    gap: 20px;
-    padding: 20px 20px 64px;
+
+    padding: 20px 20px;
   }
   @media (max-width: 960px){ .calc-shell{ grid-template-columns: 1fr; gap: 16px; } }
 
@@ -217,7 +217,7 @@
   }
   .rf-node.cell-body{
     background: var(--paper-cream);
-    border: 1px solid var(--rule);
+    border: 1.5px solid var(--ink-faint);
     border-radius: 14px;
     padding: 0;
     box-shadow: none;
@@ -326,7 +326,7 @@
   /* timeline */
   .ck-timeline{
     padding: 12px 18px 16px;
-    overflow-x: auto; display:flex; gap: 10px;
+    display:flex; flex-wrap: wrap; gap: 10px;
   }
   .ck-tcell{
     min-width: 110px; flex-shrink: 0;
@@ -542,9 +542,9 @@
                 <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>x</sub></span> input</span><input class="ck-num" id="inputDimVal" type="number" min="1" max="512" value="64" data-sync="inputDim" /></div>
                 <input class="ck-slider" type="range" min="1" max="512" value="64" data-knob="inputDim" />
               </div>
-              <div class="ck-field">
-                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>h</sub></span> hidden</span><input class="ck-num" id="hiddenDimVal" type="number" min="2" max="1024" value="128" data-sync="hiddenDim" /></div>
-                <input class="ck-slider" type="range" min="2" max="1024" value="128" data-knob="hiddenDim" />
+              <div class="ck-field" id="hiddenDimsField">
+                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>h</sub></span> hidden (per layer, max 20)</span></div>
+                <div id="hiddenDimsList"></div>
               </div>
               <div class="ck-field">
                 <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>y</sub></span> output</span><input class="ck-num" id="outputDimVal" type="number" min="1" max="10" value="2" data-sync="outputDim" /></div>
@@ -604,6 +604,11 @@
               <label class="ck-check on" data-knob="forgetBias" id="forgetBiasCheck"><span class="box"></span><span>Forget-gate bias = 1.0</span></label>
               <label class="ck-check off" data-knob="layerNorm" id="lnCheck"><span class="box"></span><span>Layer normalization</span></label>
               <label class="ck-check off" data-knob="residual" id="resCheck"><span class="box"></span><span>Residual h-skip</span></label>
+              <label class="ck-check off" data-knob="dense" id="denseCheck"><span class="box"></span><span>Dense (FC) layer before output</span></label>
+              <div class="ck-field" id="denseUnitsField" style="opacity:.4;">
+                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>u</sub></span> dense units</span><input class="ck-num" id="denseUnitsVal" type="number" min="1" max="512" value="64" data-sync="denseUnits" /></div>
+                <input class="ck-slider" type="range" min="1" max="512" value="64" data-knob="denseUnits" />
+              </div>
             </div>
           </section>
 
@@ -672,7 +677,7 @@
         </aside>
 
         <!-- CALCULATOR COLUMN -->
-        <section style="display:flex; flex-direction:column; gap: 18px;">
+        <section style="display:flex; flex-direction:column; gap: 18px; min-width: 0;">
 
           <!-- key params strip -->
           <div class="ck-strip" id="strip">
@@ -744,9 +749,10 @@
 <script>
 const state = {
   mode: 'rnn', activation: 'tanh', gateActivation: 'sigmoid',
-  inputDim: 64, hiddenDim: 128, outputDim: 2, seqLen: 8, batch: 32, layers: 1,
+  inputDim: 64, hiddenDims: [8], outputDim: 2, seqLen: 8, batch: 32, layers: 1,
   direction: 'uni', seqMode: 'm2o', bias: 'on',
   peephole: false, forgetBias: true, layerNorm: false, residual: false,
+  dense: false, denseUnits: 64,
   dropIn: 0, dropRec: 0, init: 'xavier', clip: 10,
   view: 'folded', density: 'std', accentSet: 'purple',
   showWeights: true, showFormulas: true, showTimeline: true,
@@ -815,6 +821,36 @@ document.querySelectorAll('[data-step]').forEach(b=>{
   });
 });
 
+/* per-layer hidden dim inputs (delegated — list is rebuilt when layer count changes) */
+const HIDDEN_DIM_MAX = 20;
+document.getElementById('hiddenDimsList').addEventListener('input', (e)=>{
+  const t = e.target;
+  if(!t.classList.contains('ck-hidden-input')) return;
+  const idx = +t.dataset.idx;
+  const v = Math.max(1, Math.min(HIDDEN_DIM_MAX, +t.value || 1));
+  if(+t.value !== v) t.value = v;
+  state.hiddenDims[idx] = v;
+  render();
+});
+function syncHiddenDimsUI(){
+  const list = document.getElementById('hiddenDimsList');
+  while(state.hiddenDims.length < state.layers) state.hiddenDims.push(state.hiddenDims[state.hiddenDims.length-1] ?? 8);
+  state.hiddenDims.length = state.layers;
+  if(list.children.length !== state.layers){
+    list.innerHTML = state.hiddenDims.map((v,i)=>`
+      <div class="ck-row" style="margin-top:${i>0?'6px':'0'};">
+        <span class="ck-label" style="font-size:11px; text-transform:none; letter-spacing:0;">layer ${i}</span>
+        <input class="ck-num" id="hiddenDim${i}Val" type="number" min="1" max="${HIDDEN_DIM_MAX}" data-idx="${i}" value="${v}" />
+      </div>`).join('');
+    list.querySelectorAll('.ck-num').forEach(el => el.classList.add('ck-hidden-input'));
+  } else {
+    state.hiddenDims.forEach((v,i)=>{
+      const el = document.getElementById(`hiddenDim${i}Val`);
+      if(el && document.activeElement !== el) el.value = v;
+    });
+  }
+}
+
 /* helpers */
 function fmtNum(n){
   if(!isFinite(n)) return '—';
@@ -832,32 +868,40 @@ function fmtBytes(b){
 
 /* compute */
 function compute(){
-  const {mode,inputDim,hiddenDim,outputDim,layers,direction,bias,peephole,layerNorm} = state;
+  const {mode,inputDim,hiddenDims,outputDim,layers,direction,bias,peephole,layerNorm,dense,denseUnits} = state;
   const dirMul = direction==='bi' ? 2 : 1;
   const biasOn = bias==='on';
   const gates = (mode==='lstm') ? 4 : 1;
   let total = 0;
   for(let L=0; L<layers; L++){
-    const inSize = (L===0) ? inputDim : hiddenDim*dirMul;
-    let p = gates*hiddenDim*inSize + gates*hiddenDim*hiddenDim + (biasOn ? gates*hiddenDim : 0);
-    if(mode==='lstm' && peephole) p += 3*hiddenDim;
-    if(layerNorm) p += 2*gates*hiddenDim;
+    const dh = hiddenDims[L];
+    const inSize = (L===0) ? inputDim : hiddenDims[L-1]*dirMul;
+    let p = gates*dh*inSize + gates*dh*dh + (biasOn ? gates*dh : 0);
+    if(mode==='lstm' && peephole) p += 3*dh;
+    if(layerNorm) p += 2*gates*dh;
     p *= dirMul;
     total += p;
   }
-  const wy = hiddenDim*dirMul*outputDim + (biasOn ? outputDim : 0);
-  total += wy;
+  const lastH = hiddenDims[layers-1];
+  const recurOut = lastH*dirMul;
+  const denseIn = recurOut;
+  const denseParams = dense ? denseUnits*(denseIn + (biasOn?1:0)) : 0;
+  const wyIn = dense ? denseUnits : recurOut;
+  const wy = wyIn*outputDim + (biasOn ? outputDim : 0);
+  total += denseParams + wy;
   let flopsStep = 0;
   for(let L=0; L<layers; L++){
-    const inSize = (L===0) ? inputDim : hiddenDim*dirMul;
-    flopsStep += 2*(gates*hiddenDim*inSize + gates*hiddenDim*hiddenDim);
+    const dh = hiddenDims[L];
+    const inSize = (L===0) ? inputDim : hiddenDims[L-1]*dirMul;
+    flopsStep += 2*(gates*dh*inSize + gates*dh*dh);
   }
   flopsStep *= dirMul;
   const stepsOut = (state.seqMode==='m2m') ? state.seqLen : 1;
-  const actPerStep = state.batch*hiddenDim*dirMul*layers*(mode==='lstm'?2:1);
+  const sumHidden = hiddenDims.reduce((a,b)=>a+b, 0);
+  const actPerStep = state.batch*sumHidden*dirMul*(mode==='lstm'?2:1);
   const totalActs = actPerStep*state.seqLen;
   const memBytes = (total + totalActs)*4;
-  return {total, wy, flopsStep, stepsOut, totalActs, memBytes, dirMul, gates};
+  return {total, wy, denseParams, flopsStep, stepsOut, totalActs, memBytes, dirMul, gates, lastH, recurOut, denseIn, wyIn};
 }
 
 /* ──────── DIAGRAMS (DOM-positioned react-flow style) ──────── */
@@ -1074,12 +1118,15 @@ function diagramBlock(host){
   const isLSTM = state.mode==='lstm';
   const VW_BLOCK = 1000, VH_BLOCK = 420;
   syncDiagramSize(host, VW_BLOCK, VH_BLOCK);
+  const dims = state.hiddenDims.join('·');
+  const lastH = state.hiddenDims[state.layers-1];
   const blocks = [
     ['Embed', `${state.inputDim}-dim`, 'b'],
-    [isLSTM?'LSTM':'RNN', `${state.hiddenDim} × ${state.layers} layer${state.layers>1?'s':''}`, 'p'],
-    state.direction==='bi' ? ['Bi-merge', `${state.hiddenDim*2}-dim`, 'b'] : null,
-    state.layerNorm ? ['LayerNorm', `${state.hiddenDim}`, 'o'] : null,
+    [isLSTM?'LSTM':'RNN', state.layers>1 ? `${dims} · ${state.layers} layers` : `${lastH}-dim`, 'p'],
+    state.direction==='bi' ? ['Bi-merge', `${lastH*2}-dim`, 'b'] : null,
+    state.layerNorm ? ['LayerNorm', `${lastH}`, 'o'] : null,
     state.dropIn>0 ? ['Dropout', `p=${(state.dropIn/100).toFixed(2)}`, 'r'] : null,
+    state.dense ? ['Dense', `→ ${state.denseUnits}`, 'o'] : null,
     ['Linear', `→ ${state.outputDim}`, 'n'],
     ['Output', state.seqMode==='m2o'?'last step':'every step', 'p'],
   ].filter(Boolean);
@@ -1110,7 +1157,7 @@ function diagramBlock(host){
 }
 
 /* equations */
-function renderFormulas(){
+function renderFormulas(c){
   const isLSTM = state.mode==='lstm';
   const aSym = actLabel();
   const gSym = state.gateActivation==='sigmoid'?'σ':state.gateActivation==='hardsig'?'hard-σ':'tanh';
@@ -1123,26 +1170,29 @@ function renderFormulas(){
   const peepF = state.peephole ? ' <span class="op">+</span> <i>p<sub>f</sub>·c<sub>t-1</sub></i>' : '';
   const peepO = state.peephole ? ' <span class="op">+</span> <i>p<sub>o</sub>·c<sub>t</sub></i>' : '';
   let html;
-  const {inputDim:dx, hiddenDim:dh, outputDim:dy, layers:L, bias} = state;
+  const {inputDim:dx, outputDim:dy, layers:L, bias, dense} = state;
+  const dh = state.hiddenDims[0];
   const dirMul = state.direction==='bi' ? 2 : 1;
   const biasOn = bias==='on';
+  const outSym = dense ? 'd' : 'h';
+  const outWSym = dense ? 'dy' : 'hy';
+  const denseEq = dense ? `<div class="ck-eq f-o"><span class="lbl">dense</span><i>d<sub>t</sub></i> <span class="op">=</span> ${aSym}( <i>W<sub>d</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>d</sub></i>':''} )</div>` : '';
+  const denseTerm = dense ? ` <span class="op">+</span> <i>d<sub>u</sub></i>(<i>d<sub>h</sub></i><span class="op">·</span>dir <span class="op">+</span> 1)` : '';
+  const layerSizes = L>1 ? `<div class="ck-eq" style="font-size:10.5px; color:var(--ink-faint); border-left-color:var(--rule);"><span class="lbl">layers</span><i>d<sub>h</sub></i> per layer <span class="op">=</span> ${state.hiddenDims.join(' <span class="op">→</span> ')}</div>` : '';
   if(!isLSTM){
-    const recur = dh*(dx + dh + (biasOn?1:0));
-    const outp  = dy*(dh*dirMul + (biasOn?1:0));
     const paramFormula = biasOn
       ? `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
       : `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
     html = `
       <div class="ck-eq f-h"><span class="lbl">hidden</span><i>h<sub>t</sub></i> <span class="op">=</span> ${aSym}( <i>W<sub>xh</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hh</sub></i><i>h<sub>t-1</sub></i> ${biasH} )</div>
-      <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>hy</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
+      ${denseEq}
+      <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>${outWSym}</sub></i><i>${outSym}<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
       ${state.layerNorm?`<div class="ck-eq f-o"><span class="lbl">norm</span><i>h<sub>t</sub></i> <span class="op">=</span> LN( <i>h<sub>t</sub></i> )</div>`:''}
       ${state.residual?`<div class="ck-eq f-g"><span class="lbl">resid</span><i>h<sub>t</sub></i> <span class="op">=</span> <i>h<sub>t</sub></i> <span class="op">+</span> <i>x<sub>t</sub></i></div>`:''}
-      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?`${L} <span class="op">×</span> `:''}${paramFormula}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(recur*L*dirMul + outp)}</b></div>
+      ${layerSizes}
+      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?'Σ<sub style="font-size:8px;">layers</sub> ':''}${paramFormula}${dirMul===2?' <span class="op">×</span> 2':''}${denseTerm} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>
     `;
   } else {
-    const recur = 4*dh*(dx + dh + (biasOn?1:0));
-    const peeph = state.peephole ? 3*dh : 0;
-    const outp  = dy*(dh*dirMul + (biasOn?1:0));
     const paramFormula = biasOn
       ? `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
       : `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
@@ -1153,8 +1203,10 @@ function renderFormulas(){
       <div class="ck-eq f-o"><span class="lbl">output</span><i>o<sub>t</sub></i> <span class="op">=</span> ${gSym}( <i>W<sub>xo</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>ho</sub></i><i>h<sub>t-1</sub></i>${peepO} ${biasO} )</div>
       <div class="ck-eq f-c"><span class="lbl">cell</span><i>c<sub>t</sub></i> <span class="op">=</span> <i>f<sub>t</sub></i> <span class="op">⊙</span> <i>c<sub>t-1</sub></i> <span class="op">+</span> <i>i<sub>t</sub></i> <span class="op">⊙</span> <i>g̃<sub>t</sub></i></div>
       <div class="ck-eq f-h"><span class="lbl">hidden</span><i>h<sub>t</sub></i> <span class="op">=</span> <i>o<sub>t</sub></i> <span class="op">⊙</span> ${aSym}( <i>c<sub>t</sub></i> )</div>
-      <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>hy</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
-      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?`${L} <span class="op">×</span> `:''}${paramFormula}${state.peephole?' <span class="op">+</span> 3<i>d<sub>h</sub></i>':''}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(recur*L*dirMul + peeph*L*dirMul + outp)}</b></div>
+      ${denseEq}
+      <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>${outWSym}</sub></i><i>${outSym}<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
+      ${layerSizes}
+      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?'Σ<sub style="font-size:8px;">layers</sub> ':''}${paramFormula}${state.peephole?' <span class="op">+</span> 3<i>d<sub>h</sub></i>':''}${dirMul===2?' <span class="op">×</span> 2':''}${denseTerm} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>
     `;
   }
   document.getElementById('formulas').innerHTML = html;
@@ -1163,17 +1215,19 @@ function renderFormulas(){
 
 function renderStats(c){
   const seqOutShape = state.seqMode==='m2o' ? `[B, ${state.outputDim}]` : `[B, T, ${state.outputDim}]`;
-  const flopsTotal = c.flopsStep*state.seqLen*state.batch + 2*state.hiddenDim*c.dirMul*state.outputDim*c.stepsOut*state.batch;
+  const denseFlops = state.dense ? 2*c.denseIn*state.denseUnits*c.stepsOut*state.batch : 0;
+  const flopsTotal = c.flopsStep*state.seqLen*state.batch + denseFlops + 2*c.wyIn*state.outputDim*c.stepsOut*state.batch;
   document.getElementById('stats').innerHTML = `
     <div class="ck-stat"><span class="n">Trainable params</span><span class="v">${fmtNum(c.total)}<small>weights</small></span></div>
-    <div class="ck-stat"><span class="n">Recurrent params</span><span class="v">${fmtNum(c.total - c.wy)}</span></div>
+    <div class="ck-stat"><span class="n">Recurrent params</span><span class="v">${fmtNum(c.total - c.wy - c.denseParams)}</span></div>
+    ${state.dense?`<div class="ck-stat"><span class="n">Dense (FC) params</span><span class="v">${fmtNum(c.denseParams)}</span></div>`:''}
     <div class="ck-stat"><span class="n">Output proj</span><span class="v">${fmtNum(c.wy)}</span></div>
     <div class="ck-stat"><span class="n">FLOPs / step</span><span class="v">${fmtNum(c.flopsStep)}</span></div>
     <div class="ck-stat"><span class="n">FLOPs / fwd batch</span><span class="v">${fmtNum(flopsTotal)}</span></div>
     <div class="ck-stat"><span class="n">Activation memory</span><span class="v">${fmtBytes(c.totalActs*4)}</span></div>
     <div class="ck-stat"><span class="n">Total memory (fp32)</span><span class="v">${fmtBytes(c.memBytes)}</span></div>
     <div class="ck-stat"><span class="n">Output shape</span><span class="v" style="font-family:'IBM Plex Mono',monospace; font-size:13px;">${seqOutShape}</span></div>
-    <div class="ck-stat"><span class="n">Effective hidden</span><span class="v">${state.hiddenDim*c.dirMul}<small>${c.dirMul===2?'(bi)':''}</small></span></div>
+    <div class="ck-stat"><span class="n">Effective hidden</span><span class="v">${c.recurOut}<small>${c.dirMul===2?'(bi)':''}</small></span></div>
   `;
 }
 
@@ -1183,19 +1237,24 @@ function renderMatrices(c){
   const gateColor = {i:'b', f:'r', g:'n', o:'o', h:'p', y:'p'};
   const items = [];
   for(let L=0; L<state.layers; L++){
-    const inSize = (L===0) ? state.inputDim : state.hiddenDim*c.dirMul;
+    const dh = state.hiddenDims[L];
+    const inSize = (L===0) ? state.inputDim : state.hiddenDims[L-1]*c.dirMul;
     gates.forEach(g=>{
-      items.push({name:`W<sub>x${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: state.hiddenDim, cols: inSize, color: gateColor[g], kind:'W'});
-      items.push({name:`W<sub>h${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: state.hiddenDim, cols: state.hiddenDim, color: gateColor[g], kind:'W'});
+      items.push({name:`W<sub>x${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: dh, cols: inSize, color: gateColor[g], kind:'W'});
+      items.push({name:`W<sub>h${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: dh, cols: dh, color: gateColor[g], kind:'W'});
       if(state.bias==='on'){
-        items.push({name:`b<sub>${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: state.hiddenDim, cols: 1, color: gateColor[g], kind:'b'});
+        items.push({name:`b<sub>${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: dh, cols: 1, color: gateColor[g], kind:'b'});
       }
     });
     if(isLSTM && state.peephole){
-      ['i','f','o'].forEach(g=>items.push({name:`p<sub>${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: state.hiddenDim, cols: 1, color: gateColor[g], kind:'p'}));
+      ['i','f','o'].forEach(g=>items.push({name:`p<sub>${g}</sub>${state.layers>1?`<sup>(${L})</sup>`:''}`, rows: dh, cols: 1, color: gateColor[g], kind:'p'}));
     }
   }
-  items.push({name:`W<sub>hy</sub>`, rows: state.outputDim, cols: state.hiddenDim*c.dirMul, color: gateColor.y, kind:'W'});
+  if(state.dense){
+    items.push({name:`W<sub>d</sub>`, rows: state.denseUnits, cols: c.denseIn, color: 'o', kind:'W'});
+    if(state.bias==='on') items.push({name:`b<sub>d</sub>`, rows: state.denseUnits, cols: 1, color: 'o', kind:'b'});
+  }
+  items.push({name:`W<sub>${state.dense?'dy':'hy'}</sub>`, rows: state.outputDim, cols: c.wyIn, color: gateColor.y, kind:'W'});
   if(state.bias==='on') items.push({name:`b<sub>y</sub>`, rows: state.outputDim, cols: 1, color: gateColor.y, kind:'b'});
 
   document.getElementById('matrices').innerHTML = items.map(it=>{
@@ -1258,10 +1317,12 @@ function syncDiagramSize(host, VW, VH) {
   const maxH = Math.min(Math.round(window.innerHeight * 0.42), 400);
 
   if (state.view === 'unrolled' && VW > frameW) {
-    // wider than frame → horizontal scroll, fixed pixel dimensions
+    // wider than frame → fixed pixel dimensions, let .ck-diagram-frame scroll horizontally
     host.style.width = VW + 'px';
     host.style.height = VH + 'px';
-    host.style.marginLeft = '';
+    host.style.marginLeft = '0';
+    host.style.marginRight = '0';
+    host.style.display = 'block';
   } else {
     let w = frameW;
     let h = Math.round(w / VW * VH);
@@ -1282,10 +1343,11 @@ function syncDiagramSize(host, VW, VH) {
 /* main render */
 function render(){
   // sync number inputs with state
-  ['inputDimVal','hiddenDimVal','outputDimVal','seqLenVal'].forEach(id => {
+  ['inputDimVal','outputDimVal','seqLenVal','denseUnitsVal'].forEach(id => {
     const el = document.getElementById(id);
     if (el && el.tagName === 'INPUT') el.value = state[el.dataset.sync];
   });
+  syncHiddenDimsUI();
   document.getElementById('dropInVal').textContent = (state.dropIn/100).toFixed(2);
   document.getElementById('dropRecVal').textContent = (state.dropRec/100).toFixed(2);
   document.getElementById('clipVal').textContent = (state.clip/10).toFixed(1);
@@ -1303,6 +1365,8 @@ function render(){
   // mode-dep
   document.getElementById('peepholeCheck').style.opacity = state.mode==='lstm'?1:0.4;
   document.getElementById('forgetBiasCheck').style.opacity = state.mode==='lstm'?1:0.4;
+  document.getElementById('denseUnitsField').style.opacity = state.dense?1:0.4;
+  document.getElementById('denseUnitsField').querySelectorAll('input').forEach(el => el.disabled = !state.dense);
 
   document.getElementById('sModel').textContent = state.mode.toUpperCase()+(state.direction==='bi'?' · Bi':'');
 
@@ -1331,7 +1395,7 @@ function render(){
       : `Figure 1.d — Computation as a sequential block diagram.`;
 
   document.getElementById('formulasPanel').style.display = state.showFormulas?'':'none';
-  if(state.showFormulas) renderFormulas();
+  if(state.showFormulas) renderFormulas(c);
   renderStats(c);
   document.getElementById('matricesPanel').style.display = state.showWeights?'':'none';
   if(state.showWeights) renderMatrices(c);
