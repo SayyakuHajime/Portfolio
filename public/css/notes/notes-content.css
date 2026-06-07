@@ -270,7 +270,8 @@
 /* KaTeX display math — rehypeMarkMathBlocks adds class="math-block" to display-math <p> */
 .notes-layout-article .notes-scope .math-block {
   margin: 18px 0; background: var(--paper-cream);
-  border: 1px solid var(--rule); border-radius: 4px;
+  border-style: solid; border-color: var(--rule);
+  border-width: 1px 40px; border-radius: 4px;
   padding: 16px 20px; overflow-x: auto; text-align: center;
   color: var(--ink);
 }
