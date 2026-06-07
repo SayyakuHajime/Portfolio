@@ -616,8 +616,8 @@
               </div>
               <label class="ck-check off" data-knob="dense" id="denseCheck"><span class="box"></span><span>Dense (FC) layer before output</span></label>
               <div class="ck-field" id="denseUnitsField" style="opacity:.4;">
-                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>u</sub></span> dense units</span><input class="ck-num" id="denseUnitsVal" type="number" min="1" max="512" value="64" data-sync="denseUnits" /></div>
-                <input class="ck-slider" type="range" min="1" max="512" value="64" data-knob="denseUnits" />
+                <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>u</sub></span> dense units</span><input class="ck-num" id="denseUnitsVal" type="number" min="1" max="512" value="4" data-sync="denseUnits" /></div>
+                <input class="ck-slider" type="range" min="1" max="512" value="4" data-knob="denseUnits" />
               </div>
             </div>
           </section>
@@ -750,10 +750,10 @@
 <script>
 const state = {
   mode: 'rnn', activation: 'tanh', gateActivation: 'sigmoid',
-  inputDim: 64, hiddenDims: [8], outputDim: 2, seqLen: 8, batch: 32, layers: 1,
+  inputDim: 4, hiddenDims: [8], outputDim: 2, seqLen: 3, batch: 32, layers: 1,
   direction: 'uni', seqMode: 'm2o', bias: 'on',
   peephole: false, forgetBias: true, layerNorm: false, residual: false,
-  dense: false, denseUnits: 64,
+  dense: false, denseUnits: 4,
   dropIn: 0, dropRec: 0, init: 'xavier', clip: 10,
   view: 'folded', density: 'std',
   showWeights: true, showFormulas: true, showTimeline: true, paramDetail: false, showRegularization: false,
