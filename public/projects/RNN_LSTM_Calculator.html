@@ -943,10 +943,10 @@ function diagramFolded(host){
     const cellY = by + 60;
     const hLineY = by + bh - 60;
     const gateY = by + bh - 130;
-    const fX = bx + 150;   // forget σ
-    const iX = bx + 260;   // input σ
-    const gX = bx + 360;   // candidate tanh
-    const oX = bx + 510;   // output σ
+    const fX = bx + 140;   // forget σ
+    const iX = bx + 270;   // input σ
+    const gX = bx + 390;   // candidate tanh
+    const oX = bx + 520;   // output σ
     const mulF = fX, addC = (iX+gX)/2;
     const tanhX = oX + 110, tanhY = cellY + 80;
     const mulO = oX + 110, mulOY = hLineY;
@@ -1021,10 +1021,15 @@ function diagramFolded(host){
     </svg>
   `;
 
-  const nodeHTML = nodes.map(n=>nodeHTMLFor(n, sx, sy, VW, VH)).join('');
+  // cell-body is the background frame: draw it first so the svg edges (the
+  // c-line / h-line / gate taps that run through the cell) paint over it
+  // instead of being hidden underneath its opaque fill, and the gate/op/io
+  // nodes stack on top of both.
+  const cellHTML = nodeHTMLFor(nodes[0], sx, sy, VW, VH);
+  const restHTML = nodes.slice(1).map(n=>nodeHTMLFor(n, sx, sy, VW, VH)).join('');
   const labelHTML = labels.map(l=>`<div class="rf-label ${l.cls||''}" style="left:${l.x*100/VW}%; top:${l.y*100/VH}%;">${l.text}</div>`).join('');
 
-  host.innerHTML = edgeSVG + nodeHTML + labelHTML;
+  host.innerHTML = cellHTML + edgeSVG + restHTML + labelHTML;
 }
 
 function P(points, kind){ return {points, arrow: kind==='arrow'}; }
