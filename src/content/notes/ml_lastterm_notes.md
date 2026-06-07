@@ -14,6 +14,15 @@ date: "2025-01-01"
 > [youtube.com/watch?v=CqOfi41LfDw&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1](https://www.youtube.com/watch?v=CqOfi41LfDw&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1)
 > Tonton dulu sebelum belajar dari catatan ini kalau butuh intuisi/contoh numerik yang lebih konkret.
 
+> [!important] Materi Ujian (Resmi)
+> Cakupan ujian akhir yang dikonfirmasi hanya:
+> 1. **Konsep RNN, LSTM, Transformer**
+> 2. **RNN sync many-to-many**
+> 3. **Encoder-Decoder & Attention**
+> 4. **Reinforcement Learning**
+>
+> Bagian lain di catatan ini (CNN Backprop, Word2Vec, Decoder/Encoder-Only Transformer, RLHF, BPTT) adalah **referensi tambahan** dari video — boleh dibaca untuk konteks/intuisi, tapi **tidak wajib** untuk ujian.
+
 ## 1. CNN Backpropagation
 
 > [!danger] Tidak Keluar di Ujian
@@ -345,8 +354,8 @@ Even though decoder-only models "get all the hype," encoder-only context-aware e
 
 ## 7. Backpropagation Through Time (BPTT)
 
-> [!danger] Tidak Keluar di Ujian
-> Menurut info terbaru, BPTT **tidak akan keluar** di ujian — bagian ini boleh dilewati/tidak perlu dipelajari lagi.
+> [!danger] Tidak Keluar di Ujian — Dikonfirmasi
+> BPTT **dipastikan tidak keluar di ujian sama sekali** ("gak ada backtracking sama sekali") — bagian ini boleh dilewati sepenuhnya, tidak perlu dipelajari lagi.
 
 BPTT trains recurrent networks by unrolling them into a deep feed-forward network (with shared weights), then applying standard backpropagation.
 
