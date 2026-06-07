@@ -128,6 +128,7 @@
   .callout.warn    { background: var(--accent-o-bg); border-color: var(--accent-o-mid); color: var(--accent-o); }
   .callout.insight { background: var(--accent-p-bg); border-color: var(--accent-p-mid); color: var(--accent-p); }
   .callout.success { background: var(--accent-n-bg); border-color: var(--accent-n-mid); color: var(--accent-n); }
+  .callout.danger  { background: var(--accent-r-bg); border-color: var(--accent-r-mid); color: var(--accent-r); }
   .callout strong { color: inherit; }
   .callout-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; }
   .callout-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }

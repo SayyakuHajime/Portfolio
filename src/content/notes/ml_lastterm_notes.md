@@ -221,6 +221,9 @@ Division by $\sqrt{D_q}$ prevents dot-products from growing large and saturating
 
 ## 6. Backpropagation Through Time (BPTT)
 
+> [!danger] Tidak Keluar di Ujian
+> Menurut info terbaru, BPTT **tidak akan keluar** di ujian — bagian ini boleh dilewati/tidak perlu dipelajari lagi.
+
 BPTT trains recurrent networks by unrolling them into a deep feed-forward network (with shared weights), then applying standard backpropagation.
 
 ### 6.a BPTT Procedure

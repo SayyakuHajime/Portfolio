@@ -28,8 +28,9 @@ function remarkAlerts() {
     NOTE: 'note', INSIGHT: 'insight',
     WARN: 'warn', WARNING: 'warn', CAUTION: 'warn',
     SUCCESS: 'success', TIP: 'success',
+    DANGER: 'danger',
   };
-  const RE = /^\[!(NOTE|INSIGHT|WARN|WARNING|CAUTION|SUCCESS|TIP)\]\s*/i;
+  const RE = /^\[!(NOTE|INSIGHT|WARN|WARNING|CAUTION|SUCCESS|TIP|DANGER)\]\s*/i;
 
   return (tree) => {
     function walk(node) {
