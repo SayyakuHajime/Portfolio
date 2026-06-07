@@ -61,6 +61,20 @@
   .ck-card-h .h-meta{ color: var(--ink-faint); font-weight:400; }
   .ck-card-body{ padding: 14px; display:flex; flex-direction:column; gap: 14px; }
 
+  /* visual density */
+  body.density-airy .ck-card-body{ padding: 20px; gap: 20px; }
+  body.density-airy .ck-field{ gap: 9px; }
+  body.density-airy .ck-eqs{ padding: 20px 24px; gap: 16px; }
+  body.density-airy .ck-eq{ padding: 14px 18px; }
+  body.density-airy .ck-stats{ padding: 16px 20px; gap: 10px; }
+  body.density-airy .ck-stat{ padding: 7px 0; }
+  body.density-dense .ck-card-body{ padding: 9px 11px; gap: 9px; }
+  body.density-dense .ck-field{ gap: 4px; }
+  body.density-dense .ck-eqs{ padding: 9px 12px; gap: 6px; }
+  body.density-dense .ck-eq{ padding: 6px 10px; font-size: 11px; }
+  body.density-dense .ck-stats{ padding: 7px 12px 8px; gap: 3px; }
+  body.density-dense .ck-stat{ padding: 2px 0; }
+
   .ck-field{ display:flex; flex-direction:column; gap: 6px; }
   .ck-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
   .ck-label{
@@ -146,12 +160,6 @@
   .ck-check.off{ opacity: .45; }
 
   /* swatches */
-  .ck-swatches{ display:flex; gap:8px; flex-wrap:wrap; }
-  .ck-sw{
-    width:24px; height:24px; border-radius:50%; cursor:pointer; position:relative;
-    border:1px solid var(--rule);
-  }
-  .ck-sw.on{ box-shadow: 0 0 0 1.5px var(--paper), 0 0 0 3px currentColor; }
 
   /* ────── headline strip ────── */
   .ck-strip{
@@ -600,10 +608,12 @@
                   <button data-v="off">no bias</button>
                 </div>
               </div>
-              <label class="ck-check off" data-knob="peephole" id="peepholeCheck"><span class="box"></span><span>Peephole connections (LSTM)</span></label>
-              <label class="ck-check on" data-knob="forgetBias" id="forgetBiasCheck"><span class="box"></span><span>Forget-gate bias = 1.0</span></label>
-              <label class="ck-check off" data-knob="layerNorm" id="lnCheck"><span class="box"></span><span>Layer normalization</span></label>
-              <label class="ck-check off" data-knob="residual" id="resCheck"><span class="box"></span><span>Residual h-skip</span></label>
+              <div id="advTopologyToggles" style="display:flex; flex-direction:column; gap:14px;">
+                <label class="ck-check off" data-knob="peephole" id="peepholeCheck"><span class="box"></span><span>Peephole connections (LSTM)</span></label>
+                <label class="ck-check on" data-knob="forgetBias" id="forgetBiasCheck"><span class="box"></span><span>Forget-gate bias = 1.0</span></label>
+                <label class="ck-check off" data-knob="layerNorm" id="lnCheck"><span class="box"></span><span>Layer normalization</span></label>
+                <label class="ck-check off" data-knob="residual" id="resCheck"><span class="box"></span><span>Residual h-skip</span></label>
+              </div>
               <label class="ck-check off" data-knob="dense" id="denseCheck"><span class="box"></span><span>Dense (FC) layer before output</span></label>
               <div class="ck-field" id="denseUnitsField" style="opacity:.4;">
                 <div class="ck-row"><span class="ck-label"><span class="sym">d<sub>u</sub></span> dense units</span><input class="ck-num" id="denseUnitsVal" type="number" min="1" max="512" value="64" data-sync="denseUnits" /></div>
@@ -655,16 +665,6 @@
                   <button data-v="airy">airy</button>
                   <button data-v="std" class="on">std</button>
                   <button data-v="dense">dense</button>
-                </div>
-              </div>
-              <div class="ck-field">
-                <span class="ck-label">Accent palette</span>
-                <div class="ck-swatches" data-knob="accentSet">
-                  <div class="ck-sw on" style="background: var(--accent-p); color: var(--accent-p);" data-v="purple"></div>
-                  <div class="ck-sw" style="background: var(--accent-n); color: var(--accent-n);" data-v="green"></div>
-                  <div class="ck-sw" style="background: var(--accent-b); color: var(--accent-b);" data-v="blue"></div>
-                  <div class="ck-sw" style="background: var(--accent-o); color: var(--accent-o);" data-v="orange"></div>
-                  <div class="ck-sw" style="background: var(--accent-r); color: var(--accent-r);" data-v="red"></div>
                 </div>
               </div>
               <label class="ck-check off" data-knob="showRegularization"><span class="box"></span><span>Show regularization card</span></label>
@@ -755,7 +755,7 @@ const state = {
   peephole: false, forgetBias: true, layerNorm: false, residual: false,
   dense: false, denseUnits: 64,
   dropIn: 0, dropRec: 0, init: 'xavier', clip: 10,
-  view: 'folded', density: 'std', accentSet: 'purple',
+  view: 'folded', density: 'std',
   showWeights: true, showFormulas: true, showTimeline: true, paramDetail: false, showRegularization: false,
 };
 
@@ -768,13 +768,6 @@ tweaks.querySelectorAll('[data-knob]').forEach(group => {
       btn.addEventListener('click', ()=>{
         group.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
         btn.classList.add('on'); state[knob] = btn.dataset.v; render();
-      });
-    });
-  } else if(group.classList.contains('ck-swatches')){
-    group.querySelectorAll('.ck-sw').forEach(sw=>{
-      sw.addEventListener('click', ()=>{
-        group.querySelectorAll('.ck-sw').forEach(s=>s.classList.remove('on'));
-        sw.classList.add('on'); state[knob] = sw.dataset.v; render();
       });
     });
   } else if(group.tagName==='INPUT' && group.type==='range'){
@@ -1405,13 +1398,7 @@ function render(){
   document.getElementById('actLabel').textContent = state.activation;
   document.getElementById('gateActLabel').textContent = state.gateActivation==='sigmoid'?'σ':state.gateActivation==='hardsig'?'h-σ':'tanh';
 
-  // accent override
-  const apMap = {purple:'p', green:'n', blue:'b', orange:'o', red:'r'};
-  const a = apMap[state.accentSet] || 'p';
-  document.documentElement.style.setProperty('--ck-accent', `var(--accent-${a})`);
-  document.documentElement.style.setProperty('--ck-accent-bg', `var(--accent-${a}-bg)`);
-  // remap segment .on color via inline style block
-  document.body.style.setProperty('--accent-pp', `var(--accent-${a})`);
+  document.getElementById('advTopologyToggles').style.display = state.paramDetail?'':'none';
 
   // mode-dep
   document.getElementById('peepholeCheck').style.opacity = state.mode==='lstm'?1:0.4;
@@ -1454,7 +1441,8 @@ function render(){
   document.getElementById('timelinePanel').style.display = state.showTimeline?'':'none';
   if(state.showTimeline) renderTimeline();
 
-  document.body.style.fontSize = state.density==='dense'?'14px':state.density==='airy'?'16px':'15px';
+  document.body.classList.toggle('density-airy', state.density==='airy');
+  document.body.classList.toggle('density-dense', state.density==='dense');
 }
 
 window.addEventListener('resize', ()=>{
