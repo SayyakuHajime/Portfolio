@@ -1348,9 +1348,6 @@ function render(){
     if (el && el.tagName === 'INPUT') el.value = state[el.dataset.sync];
   });
   syncHiddenDimsUI();
-  document.getElementById('dropInVal').textContent = (state.dropIn/100).toFixed(2);
-  document.getElementById('dropRecVal').textContent = (state.dropRec/100).toFixed(2);
-  document.getElementById('clipVal').textContent = (state.clip/10).toFixed(1);
   document.getElementById('actLabel').textContent = state.activation;
   document.getElementById('gateActLabel').textContent = state.gateActivation==='sigmoid'?'σ':state.gateActivation==='hardsig'?'h-σ':'tanh';
 
