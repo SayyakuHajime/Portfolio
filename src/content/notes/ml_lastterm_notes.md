@@ -3,8 +3,8 @@ title: ML Last Term Notes
 course: IF3270
 subject: Pembelajaran Mesin
 exam: Final Term
-topics: [CNN Backprop, RNN, LSTM, Attention, Encoder-Decoder, Transformer, Self-Attention, BPTT, Reinforcement Learning]
-references: Goodfellow et al. (2016), Hochreiter & Schmidhuber (1997), Bahdanau et al. (2015), Vaswani et al. (2017), Sutton & Barto (2018), Lecture Decks 5–9, NNTikZ — Fraser Love (2024)
+topics: [CNN Backprop, RNN, LSTM, Word2Vec, Attention, Encoder-Decoder, Transformer, Self-Attention, Decoder-Only Transformer, Encoder-Only Transformer, BPTT, Reinforcement Learning, RLHF]
+references: Goodfellow et al. (2016), Hochreiter & Schmidhuber (1997), Mikolov et al. (2013), Bahdanau et al. (2015), Vaswani et al. (2017), Ouyang et al. (2022), Sutton & Barto (2018), Lecture Decks 5–9, NNTikZ — Fraser Love (2024), StatQuest — Josh Starmer
 order: 2
 date: "2025-01-01"
 ---
@@ -60,6 +60,9 @@ Standard supervised learning assumes data samples are **Independent and Identica
 > [!insight] RNN Solution
 > A recurrent connection feeds the hidden state $h^{(t-1)}$ back into the computation at step $t$, encoding the sequence history into a running "memory" vector.
 
+> [!example] Why Not Just Use a FFNN? (StatQuest "StatLand" Walkthrough)
+> A feedforward net needs a *fixed* number of inputs — "no more, no less." But stock-price histories differ in length per company (9 prior days vs. 5 prior days). A toy example scales prices to low=0, medium=0.5, high=1, then feeds yesterday's value in first and today's second: the feedback loop carries yesterday's activation output ($y_1 \times w_2$) into the same summation that receives today's input ($\times w_1$), so **both timesteps jointly shape tomorrow's prediction**. The same small recurrent unit handles sequences of any length — that's the whole point of the loop.
+
 ### 2.b Sequence Modeling Types
 
 | Type | Description | Example |
@@ -86,6 +89,17 @@ Where:
 
 RNN cells can be stacked: the hidden state of layer $\ell$ becomes the input of layer $\ell+1$. In Keras, intermediate layers require `return_sequences=True`. The defining property is **parameter sharing** — the same $W_{xh}, W_{hh}, W_{ho}$ are used at every timestep, enabling variable-length inputs and efficient parameter use.
 
+### 2.e Unrolling & the Exploding/Vanishing Gradient (Concrete Mechanic)
+
+**Unrolling** = make a copy of the network for each timestep and redirect the recurrent connection from copy $t$'s output into copy $t{+}1$'s summation, "plugging values in from oldest to newest." No matter how many copies exist, the *trained* weights ($W_{xh}, W_{hh}, W_{ho}$) stay identical across all of them — unrolling never increases parameter count, it only reuses them.
+
+> [!danger] The $w_{hh}^{T}$ Mechanic
+> Because of unrolling, the same recurrent weight gets multiplied into the gradient once per timestep — i.e., raised to the power of the sequence length $T$:
+> - $w_{hh} = 2,\; T=50 \Rightarrow 2^{50}$ (huge) → gradient **explodes**, optimization steps overshoot and the loss "bounces around" instead of converging.
+> - $w_{hh} = 0.5,\; T=50 \Rightarrow 0.5^{50} \approx 0$ → gradient **vanishes**, steps shrink to nothing and training stalls before convergence.
+>
+> Constraining $|w_{hh}| < 1$ to avoid exploding *guarantees* vanishing over long sequences — a single shared recurrent weight cannot avoid both. This exact tension is what motivates the LSTM's separate cell-state highway (§3).
+
 ---
 
 ## 3. LSTM & Vanishing Gradient
@@ -95,6 +109,9 @@ LSTM was designed to solve the **vanishing gradient** problem in standard RNNs b
 ### 3.a Vanishing Gradient Problem
 
 During BPTT, gradients are multiplied repeatedly by $W_{hh}$ and $\tanh'(\cdot) < 1$. For long sequences this product approaches zero exponentially — the network cannot learn long-range dependencies. The cell state in LSTM keeps this product near 1 when the forget gate is open.
+
+> [!insight] Two-Path Memory (the headline analogy)
+> LSTM splits memory into a **cell state** (long-term memory highway) and a **hidden state** (short-term memory). The crucial structural trick: the cell state path has **no weight matrices multiplying it directly** — only elementwise multiplication (forget gate) and addition (input gate's contribution). No repeated weight-multiplication ⇒ no exponential shrink/blowup, so long-range information survives across many unrolled steps. The hidden state, by contrast, *is* wired directly to trainable weights — hence "short-term."
 
 ### 3.b Gate Equations
 
@@ -123,6 +140,14 @@ $\odot$ = element-wise multiplication. $f_t \approx 1$ keeps old cell state; $f_
 | Candidate $\tilde{C}_t$ | Proposed new values for cell state via $\tanh$ of concatenated input |
 | Output $o_t$ | Filters what fraction of $C^{(t)}$ is exposed as hidden state $h^{(t)}$ |
 
+> [!example] Worked Numeric Walkthrough (StatQuest gate-by-gate)
+> Sigmoid → "percentage to keep": $\sigma(10) \approx 0.999995$ (keep ~everything), $\sigma(-5) \approx 0.01$ (forget ~everything). Tanh squashes to $(-1,1)$: $\tanh(2) = 0.96$.
+> 1. **Forget gate**: weighted sum $= 5.95 \Rightarrow \sigma(5.95) = 0.997$ → new long-term memory $= 2 \times 0.997 = 1.99$ (kept 99.7%).
+> 2. **Input gate**: candidate $\tilde C_t = \tanh(2.03) = 0.97$; "how much to add" $= \sigma(4.27) = 1.0$ → long-term memory updates to $1.99 + (1.0 \times 0.97) = 2.96$.
+> 3. **Output gate**: $\tanh(2.96) = 0.99$ (potential short-term memory) $\times\, \sigma(\cdot) = 0.99$ → new hidden state $= 0.99 \times 0.99 = 0.98$, which **is** the LSTM unit's output.
+>
+> All three gating decisions reuse the *identical* sigmoid "percentage-to-keep" mechanism — only the weights, biases, and inputs differ.
+
 ![LSTM Cell — Gate Structure & Cell State Highway](/assets/images/diagrams/lstm_cell.png)
 
 ### 3.c Parameter Counting
@@ -137,18 +162,55 @@ $m$ = input dim, $n$ = LSTM units, $k$ = output classes. Factor 4 = four gates (
 
 ---
 
-## 4. Attention Mechanism
+## 4. Word Embedding & Word2Vec
+
+A **word embedding** represents each vocabulary token as a vector of numbers, positioned so that semantically/contextually similar words end up close together in vector space.
+
+### 4.a Why Not One-Hot or Random Numbers?
+
+Assigning each word an arbitrary scalar (e.g., "great!" → 4.2, "awesome!" → −32.1) means the network can't transfer what it learns about one word to a similar one — *"learning how to use 'great!' won't help it learn 'awesome!'"* A single number per word also can't capture context-dependent meaning (sincere vs. sarcastic "great"). This motivates **multi-dimensional** embeddings: more than one learned number per word.
+
+### 4.b Training a Word2Vec Embedding
+
+> [!insight] The Central Definitional Insight
+> Build a tiny network: one one-hot input node per vocabulary word → $N$ **identity-activation** nodes (the activation "does nothing except give us a place to do addition") → softmax output (one node per vocabulary word), trained with cross-entropy to **predict a nearby word**. The **trained weights connecting the one-hot inputs to the identity layer ARE the word embedding** — $N$ = embedding dimensionality.
+
+Backpropagation pulls the embeddings of words that share contexts (e.g., "Troll 2" and "Gymkata," both followed by "is... great!") closer together in embedding space, even though they start from unrelated random weights.
+
+| Strategy | Predicts | Example |
+|----------|----------|---------|
+| **CBOW** (Continuous Bag of Words) | middle word from surrounding words | "Troll 2" + "great!" → "is" |
+| **Skip-gram** | surrounding words from the middle word | "is" → "Troll 2", "great!", "Gymkata" |
+
+### 4.c Scale & Negative Sampling
+
+Real Word2Vec: ~100+ dimensions × ~3 million-word vocabulary → roughly $3{,}000{,}000 \times 100 \times 2 = 600$ **million** weights to optimize per step — intractable directly.
+
+> [!note] Negative Sampling Trick
+> 1. A one-hot input has a single active "1," so all weights from "off" input words contribute zero gradient and can be skipped (~halves the cost).
+> 2. Instead of softmax/cross-entropy over all 3M outputs, randomly sample a handful of "negative" words (2–20 in practice) plus the true target, and update weights only for those outputs.
+>
+> Net effect: roughly **300 weights** updated per step instead of 600 million — the same "approximate the expensive computation cheaply" spirit seen later in attention (dot product ≈ cosine similarity) and RLHF (learned reward scale).
+
+---
+
+## 5. Attention Mechanism
 
 Attention was introduced to overcome the information bottleneck of a fixed-length context vector in vanilla Encoder-Decoder networks. The decoder now *dynamically focuses* on different encoder positions at each decoding step.
 
-### 4.a Encoder-Decoder Without Attention
+### 5.a Encoder-Decoder Without Attention
 
 The vanilla seq2seq model compresses the entire input sequence into a **single fixed vector** $c = h^{(T_x)}$. The decoder generates output from only this vector. For long sequences, this bottleneck causes severe information loss.
 
 > [!warn] Bottleneck Problem
-> For a 50-word sentence, all information must fit into one fixed-size vector. Empirically, translation quality degrades sharply as input length grows.
+> For a 50-word sentence, all information must fit into one fixed-size vector. Empirically, translation quality degrades sharply as input length grows. StatQuest's vivid illustration: forgetting just the first word turns *"**Don't** eat the delicious looking and smelling pizza"* into *"Eat the delicious looking and smelling pizza"* — **two sentences with completely opposite meanings**. Even LSTMs with separate long/short-term paths can lose early tokens once "a lot of data" has to travel through both paths.
 
-### 4.b Bahdanau (Additive) Attention
+> [!note] Precise Definition: Context Vector & Teacher Forcing (StatQuest "Let's go" → "Vamos" example)
+> - **Context vector** = the *last* cell **and** hidden states from *both layers* of the encoder's stacked LSTM — this full bundle *initializes* (not just feeds) the decoder's separate LSTMs (own weights, own target-language embedding/vocabulary).
+> - Decoding runs token-by-token until **`<EOS>`** ("end of sentence") is produced or a max length is hit. Note: Sutskever et al.'s original manuscript actually *starts* decoding by feeding in `<EOS>` itself, rather than a separate `<SOS>` token — a common point of confusion.
+> - **Teacher forcing**: during training, feed the decoder the *known correct* token at each step (not its own possibly-wrong prediction), and force the output length to match the *known* target length. This stabilizes training by preventing early mistakes from cascading.
+
+### 5.b Bahdanau (Additive) Attention
 
 At each decoder step $t$, a *different* context vector $c_t$ is computed as a weighted sum over all encoder hidden states $\{h_j\}$:
 
@@ -163,7 +225,7 @@ $s_{t-1}$: previous decoder hidden state — $h_j$: encoder state at position $j
 > [!insight] Alignment Matrix $\alpha_{tj}$
 > Visualizing all $\alpha_{tj}$ values reveals which source positions each output token attends to — giving interpretable word alignments in translation tasks.
 
-### 4.c Luong (Multiplicative) Attention
+### 5.c Luong (Multiplicative) Attention
 
 Luong et al. compute the alignment score *after* the decoder step, using the *current* hidden state $h_t$:
 
@@ -175,15 +237,23 @@ $$\text{score}(h_t, \bar{h}_s) = \begin{cases} h_t^\top \bar{h}_s & \text{dot} \
 | Formula type | Additive | Multiplicative |
 | Context scope | Many-to-one or many-to-many | Same |
 
+> [!example] Worked Numeric Walkthrough (StatQuest "Let's go" → "Vamos")
+> Decoder feeds `<EOS>` into its embedding/LSTMs, then computes a **similarity score** between each encoder step's hidden states and the decoder's current output:
+> 1. **Cosine similarity → dot product**: StatQuest first shows cosine similarity, then notes attention typically keeps just its *numerator* — the **dot product** — because it's cheap, preserves the sign/ranking ("large positive ⇒ similar, large negative ⇒ opposite"), and the denominator's normalization is moot when always comparing the same number of cells. Concretely: encoder("let's") $=(-0.76, 0.75)$, decoder(`<EOS>`) $=(0.91, 0.38)$ → cosine sim $=-0.39$, dot product $=-0.41$ (same conclusion); dot("go", `<EOS>`) $= 0.01$.
+> 2. **Softmax → attention weights**: turns similarity scores into percentages summing to 1 — *"what percentage of each encoded input word we should use when decoding."* Result: 40% on "let's," 60% on "go" (since "go" was more similar to `<EOS>`).
+> 3. **Scale-and-sum → context vector**: $0.4 \times \text{enc(``let's'')} + 0.6 \times \text{enc(``go'')}$ = the attention values for this decoding step. Feed these (plus the `<EOS>` encoding) into a FC layer → softmax → "vamos"; repeat until `<EOS>` is produced.
+>
+> StatQuest's caveat: *"there are conventions, but no rules for how attention should be added"* — Bahdanau and Luong are two illustrative conventions among many possible wirings. Once attention gives the decoder direct access to every encoder position, *"it turns out we don't need [the LSTMs]"* — the seed of the Transformer (§6).
+
 ![Bahdanau Attention — Bidirectional Encoder + Attention Weights](/assets/images/diagrams/nntikz_attention.png)
 
 ---
 
-## 5. Self-Attention & Transformer
+## 6. Self-Attention & Transformer
 
 The Transformer (Vaswani et al. 2017) replaces recurrent cells with **self-attention** layers entirely, enabling fully parallel computation and direct long-range dependency modeling.
 
-### 5.a Q / K / V Self-Attention
+### 6.a Q / K / V Self-Attention
 
 For input sequence $X = [x_1,\ldots,x_N]$, three linear projections create Query, Key, and Value vectors per position:
 
@@ -199,9 +269,14 @@ $$a[x_m, x_n] = \text{softmax}_m\!\left[\frac{k_m^\top q_n}{\sqrt{D_q}}\right]$$
 
 $$\text{Sa}[X] = V \cdot \text{Softmax}\!\left[\frac{K^\top Q}{\sqrt{D_q}}\right]$$
 
-Division by $\sqrt{D_q}$ prevents dot-products from growing large and saturating softmax. Each position receives a weighted sum of *all* value vectors.
+Division by $\sqrt{D_q}$ prevents dot-products from growing large and saturating softmax — StatQuest: *"scaling the dot product helped encode and decode long and complicated phrases."* Each position receives a weighted sum of *all* value vectors.
 
-### 5.b Transformer vs RNN Encoder-Decoder
+> [!note] The Full Transformer Pipeline (StatQuest summary line)
+> word embedding (→ numbers) → positional encoding (→ word order, via alternating sine/cosine "squiggles" added to embeddings, since self-attention itself is order-agnostic) → **self-attention** (→ in-phrase relationships via Q/K/V dot products + softmax) → **multi-head attention** (multiple independent self-attention "cells" — 8 in the original paper — each learning different relationships, concatenated) → **residual connections** (bypass paths adding earlier-stage values, e.g. positional encoding output, back onto later outputs, e.g. self-attention output — *"allowing the self-attention layer to establish relationships among input words without having to also preserve the word embedding and positional coding information"*) → **layer normalization** (stabilizes training for larger vocabularies/longer sequences) → **encoder-decoder attention** (decoder's Queries attend to encoder's Keys/Values, so the decoder *"keeps track of the significant words in the input"* — same "don't eat the pizza" stakes as §5.a) → FC + softmax output.
+>
+> **Masked self-attention**: in the original encoder-decoder Transformer, masking (restricting attention to the current + preceding tokens) is applied only to the *decoder's* self-attention during training, so it can't "cheat" by looking ahead at future tokens.
+
+### 6.b Transformer vs RNN Encoder-Decoder
 
 | | RNN | Transformer |
 |-|-----|-------------|
@@ -217,16 +292,42 @@ Division by $\sqrt{D_q}$ prevents dot-products from growing large and saturating
 
 ![Transformer Architecture — Encoder & Decoder](/assets/images/diagrams/nntikz_transformer.png)
 
+### 6.c Decoder-Only Transformers (GPT-style)
+
+A decoder-only Transformer (e.g., GPT/ChatGPT's architecture) collapses the encoder-decoder split into a **single autoregressive unit**.
+
+> [!insight] Three Structural Differences vs. a Full Encoder-Decoder Transformer
+> 1. **One unit, not two** — a single block does both "encoding" the prompt and generating the output, instead of separate encoder + decoder units.
+> 2. **One attention type, not two** — only **masked self-attention** is used; there is no separate encoder-decoder attention.
+> 3. **Masking applies everywhere, always** — the full Transformer masks only the *decoder's* self-attention during training; decoder-only models apply masked self-attention to *both* input and output, at all times, *"allowing the Transformer to learn how to generate the correct output without cheating and looking ahead."*
+
+**Masked self-attention** = each token compares itself only to itself and *preceding* tokens — hence **autoregressive**. Training objective: next-token prediction over known documents (e.g., predict "awesome `<EOS>`" from context — both tokens' math computed simultaneously since the target is known in advance, unlike step-by-step generation). At inference, each generated token is fed back through the embedding layer and the loop repeats until `<EOS>`.
+
+### 6.d Encoder-Only Transformers (BERT-style)
+
+> [!note] Historical Framing
+> The original 2017 Transformer was a full encoder-decoder translation ("seq2seq") model. Researchers later found each *half* works alone: decoder-only → generative LLMs (ChatGPT); **encoder-only → BERT-style models** for embeddings, classification, and retrieval.
+
+An encoder-only Transformer keeps just the three foundational building blocks — **word embedding** (→ numbers), **positional encoding** (→ word order), **self-attention** (→ in-phrase relationships) — with *no* masking and *no* encoder-decoder attention.
+
+> [!insight] Context-Aware (Contextualized) Embeddings
+> Stacking these three layers produces, for each token, *"a new kind of embedding that takes position and relationships among words into account"* — a **context-aware / contextualized embedding**. This is the term that distinguishes BERT-style output from a plain Word2Vec embedding (§4), and is the foundation of three downstream uses:
+> 1. **Clustering** similar sentences/documents.
+> 2. **RAG (Retrieval-Augmented Generation)**: chunk a document → embed each chunk with the encoder → embed the user's prompt → retrieve the most-similar chunks by vector similarity.
+> 3. **Classification**: feed context-aware embeddings into a classifier network or as predictors in logistic regression (e.g., sentiment analysis).
+
+Even though decoder-only models "get all the hype," encoder-only context-aware embeddings remain the workhorse behind clustering, classification, and RAG retrieval.
+
 ---
 
-## 6. Backpropagation Through Time (BPTT)
+## 7. Backpropagation Through Time (BPTT)
 
 > [!danger] Tidak Keluar di Ujian
 > Menurut info terbaru, BPTT **tidak akan keluar** di ujian — bagian ini boleh dilewati/tidak perlu dipelajari lagi.
 
 BPTT trains recurrent networks by unrolling them into a deep feed-forward network (with shared weights), then applying standard backpropagation.
 
-### 6.a BPTT Procedure
+### 7.a BPTT Procedure
 
 1. **Forward** — Compute all $h^{(t)}$ and $o^{(t)}$ for the full sequence.
 2. **Loss** — Compute total loss $E = \sum_t E_t$ (e.g., cross-entropy at each output step).
@@ -238,11 +339,11 @@ BPTT trains recurrent networks by unrolling them into a deep feed-forward networ
 
 ---
 
-## 7. Reinforcement Learning
+## 8. Reinforcement Learning
 
 RL is a paradigm where an **agent** learns a **policy** through interaction with an **environment**, using **reward signals** as the only feedback. No labeled examples — the agent discovers good behavior via trial and error.
 
-### 7.a RL vs Supervised Learning
+### 8.a RL vs Supervised Learning
 
 | | Supervised Learning | Reinforcement Learning |
 |-|---------------------|------------------------|
@@ -254,7 +355,7 @@ RL is a paradigm where an **agent** learns a **policy** through interaction with
 > [!note] Reward Hypothesis
 > All goals can be described as maximizing the expected cumulative reward. Central hypothesis of RL.
 
-### 7.b Agent-Environment Loop
+### 8.b Agent-Environment Loop
 
 At each timestep $t$: agent observes $S_t$, selects action $A_t$, environment returns reward $R_{t+1}$ and next state $S_{t+1}$.
 
@@ -264,7 +365,7 @@ $$S_t^a = f(H_t)$$
 
 Agent state is any function of the history. In fully observable environments $S_t^a = S_t^e$.
 
-### 7.c Return & Discounted Return
+### 8.c Return & Discounted Return
 
 **Undiscounted:**
 
@@ -276,7 +377,7 @@ $$G_t = \sum_{k=0}^{\infty} \gamma^k\, R_{t+k+1}, \quad 0 \leq \gamma \leq 1$$
 
 $\gamma = 0$: only immediate reward. $\gamma \to 1$: all future rewards equally valued. Ensures sum converges; reflects that near-term rewards are more certain.
 
-### 7.d Value Functions & Policy
+### 8.d Value Functions & Policy
 
 $$v(s) = \mathbb{E}\!\left[G_t \;\middle|\; S_t = s\right] \quad\text{(state-value)}$$
 
@@ -293,7 +394,7 @@ $$A = \pi(S) \quad\text{(deterministic)} \qquad \pi(A \mid S) = P(A_t = a \mid S
 | Model-Free | Learns from raw experience (Q-learning, SARSA) |
 | Model-Based | Builds environment model to plan ahead |
 
-### 7.e Q-Learning & SARSA
+### 8.e Q-Learning & SARSA
 
 Both learn an **action-value function** $Q(s,a)$. The only difference is *which next-step value is used as the bootstrap target*:
 
@@ -326,7 +427,7 @@ Bootstraps from the value of the *next action actually chosen* by the current po
 
 ![Q-Learning vs SARSA — Bootstrap Target Comparison](/assets/images/diagrams/qlearning_sarsa.png)
 
-### 7.f Optimal Policy & Grid World
+### 8.f Optimal Policy & Grid World
 
 After training, $\pi^*$ selects $\arg\max_a Q(s,a)$ in each state. A single episode updates only visited states — the rest remain unchanged.
 
@@ -335,9 +436,35 @@ After training, $\pi^*$ selects $\arg\max_a Q(s,a)$ in each state. A single epis
 
 ![Grid World — Optimal Policy Before & After One Episode](/assets/images/diagrams/rl_gridworld.png)
 
+### 8.g Policy Gradients: RL with Neural Networks
+
+Q-tables only work for discrete, enumerable state spaces. To handle **continuous** states, replace the table with a **policy network**: it takes the state directly as input (e.g., a continuous "hunger level" $\in [0,1]$) and outputs **action probabilities** (via sigmoid/softmax) — no Q-values needed.
+
+> [!insight] The "Guess-Then-Correct" Trick
+> Standard backprop needs a target/error to compute a derivative — but in RL we don't *know* the ideal action in advance (was going to Norm's or Squatch's the better call?). The fix: **make a guess** that the action just taken *was* the ideal one (set its target probability to 1.0), compute the ordinary cross-entropy derivative from that guess, then **multiply the derivative by the reward** ($+1$ if the guess paid off, $-1$ if not). A wrong guess gets its derivative *flipped* by the negative reward — turning an unsupervised problem into something gradient descent can consume. Reward magnitude scales the step size too (e.g., $\pm 2.0$ doubles it), so rewards need not be literally $\pm 1$, just correctly signed and scaled.
+
+**Worked mechanic** (StatQuest): sample an action from $P(\text{action})$ → assume it was correct (target $=1.0$) → cross-entropy $C = -\log(P)$ → chain-rule derivative $\dfrac{\partial C}{\partial b} = \dfrac{\partial C}{\partial P}\cdot\dfrac{\partial P}{\partial x}\cdot\dfrac{\partial x}{\partial b}$ (where $x = \text{input}\times w + b$ feeds a sigmoid) → `updated_derivative = derivative × reward` → `step = lr × updated_derivative` → `new_bias = old_bias − step`. Identical chain-rule machinery to ordinary backprop — the *only* new ingredient is the reward multiplication. After convergence, the network outputs a smooth probability curve over the entire continuous state range (something a finite Q-table structurally cannot do).
+
 ---
 
-## 8. Glossary
+## 9. Reinforcement Learning with Human Feedback (RLHF)
+
+RLHF is the pipeline that turns a raw next-token-prediction model into an **aligned**, helpful assistant (e.g., ChatGPT, DeepSeek) — *"alignment"* meaning the model's behavior matches how humans actually want to use it.
+
+> [!note] The Four-Stage Pipeline
+> 1. **Pre-training**: train an untrained decoder-only Transformer (§6.c) to predict the next token over a massive corpus (e.g., all of Wikipedia). Result: fluent but **unaligned** — asked "What is StatQuest?" it might just continue with "blah blah blah" instead of answering.
+> 2. **Supervised Fine-Tuning (SFT)**: fine-tune on a small, *expensive* set of (prompt, ideal human-written response) pairs via ordinary backprop. Aligns the model somewhat, but the dataset is too small to generalize — the model **overfits**, answering trained prompts well and novel ones poorly.
+> 3. **Reward Model Training**: writing full ideal responses by hand doesn't scale ("would cost a super huge amount of money"), but **ranking pairs of responses** ("which do you prefer?") is cheap. Copy the SFT model, swap its unembedding layer for a single scalar output, and train it on these human preference comparisons to output high reward for preferred responses and low/negative reward for rejected ones.
+> 4. **RL Fine-Tuning (PPO)**: use the trained reward model as the reward signal to further train the SFT model via reinforcement learning (typically PPO) on *fresh* prompts — generating responses, scoring them with the reward model, and updating the policy. This sidesteps the need for a second giant hand-labeled dataset.
+
+> [!insight] Reward-Model Loss — Learning the Reward Scale
+> From Ouyang et al. (2022, InstructGPT): loss $\propto -\log\,\sigma(r_{\text{better}} - r_{\text{worse}})$. If $r_{\text{better}}$ is positive and $r_{\text{worse}}$ is negative, their difference is large positive → $\sigma(\cdot) \approx 1$ → $\log(\cdot) \approx 0$ (high) → negate for gradient *descent* (which minimizes, but we want to *maximize* the gap). The elegant payoff: **the model learns the actual numeric reward scale on its own** from relative comparisons — no need to hand-define "good response = 8.3 points." This mirrors the same "let the model learn the scale, don't hand-specify it" spirit as the guess-then-correct trick in §8.g.
+
+**Exam soundbite**: *RLHF lets a model learn what "good" looks like from comparative human judgments (cheap to collect at scale) rather than needing exhaustive human-authored gold-standard answers (expensive to collect).*
+
+---
+
+## 10. Glossary
 
 | Term | Definition |
 |------|------------|
@@ -356,7 +483,16 @@ After training, $\pi^*$ selects $\arg\max_a Q(s,a)$ in each state. A single epis
 | Q-Learning | Off-policy TD: bootstraps from $\max_a Q(s',a)$ — converges to $Q^*$ |
 | SARSA | On-policy TD: bootstraps from $Q(s',a')$ where $a'$ is actually taken |
 | TD Error $\delta_t$ | $r_{t+1} + \gamma\,Q(s_{t+1},\cdot) - Q(s_t,a_t)$ — correction signal for both algorithms |
+| Word Embedding | Multi-dimensional vector representation of a word; trained weights from one-hot input → identity-activation layer |
+| Word2Vec / CBOW / Skip-gram | Embedding training schemes — CBOW predicts the middle word from context, skip-gram predicts context from the middle word |
+| Negative Sampling | Approximation trick: update weights only for a true target + a few random "negative" words instead of the full vocabulary softmax |
+| Teacher Forcing | Training trick: feed the decoder the *known correct* token (not its own prediction) at each step, to stabilize learning |
+| Masked Self-Attention | Restricts attention to the current + preceding tokens — enables autoregressive (left-to-right) generation |
+| Context-Aware (Contextualized) Embedding | BERT-style per-token embedding produced by stacking word embedding + positional encoding + self-attention; foundation of RAG, clustering, classification |
+| Policy Gradient | RL method where a neural net outputs action probabilities directly; trained via the "guess the action was ideal, then multiply the derivative by the reward" trick |
+| RLHF | Pipeline (pretrain → SFT → reward model from human preference comparisons → PPO fine-tuning) that aligns an LLM's behavior to human preferences |
+| Alignment | How well a model's behavior matches how humans actually want to use it — the goal of SFT + RLHF |
 
 ---
 
-*Goodfellow et al. (2016) · Hochreiter & Schmidhuber (1997) · Bahdanau et al. (2015) · Vaswani et al. (2017) · Sutton & Barto (2018) · IF3270 Lecture Decks 5–9 · Attention & Transformer diagrams: Fraser Love, NNTikZ (2024)*
+*Goodfellow et al. (2016) · Hochreiter & Schmidhuber (1997) · Mikolov et al. (2013) · Bahdanau et al. (2015) · Vaswani et al. (2017) · Ouyang et al. (2022) · Sutton & Barto (2018) · IF3270 Lecture Decks 5–9 · Attention & Transformer diagrams: Fraser Love, NNTikZ (2024) · StatQuest (Josh Starmer) video explainers — RNN, LSTM, Word2Vec, Seq2Seq, Attention, Transformer, RL & RLHF*
