@@ -9,7 +9,15 @@ order: 2
 date: "2025-01-01"
 ---
 
+> [!tip] Pendahuluan — Referensi Video
+> Sebagian besar materi di bawah ini (RNN, LSTM, Word2Vec, Seq2Seq, Attention, Transformer, RL, RLHF) dijelaskan dengan sangat jelas oleh StatQuest (Josh Starmer) di playlist berikut — video ke-**15 sampai 25**:
+> [youtube.com/watch?v=CqOfi41LfDw&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1](https://www.youtube.com/watch?v=CqOfi41LfDw&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1)
+> Tonton dulu sebelum belajar dari catatan ini kalau butuh intuisi/contoh numerik yang lebih konkret.
+
 ## 1. CNN Backpropagation
+
+> [!danger] Tidak Keluar di Ujian
+> Menurut info terbaru, CNN Backpropagation **tidak akan keluar** di ujian — bagian ini boleh dilewati/tidak perlu dipelajari lagi.
 
 Extending gradient descent to update kernels and weights in a convolutional architecture. Gradients propagate through pooling and convolutional layers via the chain rule.
 
@@ -46,6 +54,7 @@ $$\text{Params} = (\text{FilterW} \times \text{FilterH} \times \text{Channels} +
 Weight sharing makes CNNs far more parameter-efficient than FFNNs on the same input size.
 
 ![CNN Architecture — Conv2D Blocks → GlobalAvgPool → Dense](/assets/images/diagrams/cnn_arch.png)
+*CNN Architecture — Conv2D Blocks → GlobalAvgPool → Dense*
 
 ---
 
@@ -84,6 +93,7 @@ Where:
 - $f_h$: typically $\tanh$ — $f_y$: softmax (classification) or linear (regression)
 
 ![RNN Cell — Internal Structure](/assets/images/diagrams/rnn_cell.png)
+*RNN Cell — Internal Structure*
 
 ### 2.d Multi-Layer RNN & Parameter Sharing
 
@@ -149,6 +159,7 @@ $\odot$ = element-wise multiplication. $f_t \approx 1$ keeps old cell state; $f_
 > All three gating decisions reuse the *identical* sigmoid "percentage-to-keep" mechanism — only the weights, biases, and inputs differ.
 
 ![LSTM Cell — Gate Structure & Cell State Highway](/assets/images/diagrams/lstm_cell.png)
+*LSTM Cell — Gate Structure & Cell State Highway*
 
 ### 3.c Parameter Counting
 
@@ -246,6 +257,7 @@ $$\text{score}(h_t, \bar{h}_s) = \begin{cases} h_t^\top \bar{h}_s & \text{dot} \
 > StatQuest's caveat: *"there are conventions, but no rules for how attention should be added"* — Bahdanau and Luong are two illustrative conventions among many possible wirings. Once attention gives the decoder direct access to every encoder position, *"it turns out we don't need [the LSTMs]"* — the seed of the Transformer (§6).
 
 ![Bahdanau Attention — Bidirectional Encoder + Attention Weights](/assets/images/diagrams/nntikz_attention.png)
+*Bahdanau Attention — Bidirectional Encoder + Attention Weights*
 
 ---
 
@@ -288,9 +300,20 @@ Division by $\sqrt{D_q}$ prevents dot-products from growing large and saturating
 > [!insight] Why This Matters
 > In an RNN, information from step 1 must survive $T{-}1$ transformations to reach step $T$. In a Transformer, every pair of positions attends to each other directly in a single layer — drastically reducing the path length for long-range information.
 
+<div style="display:flex; gap:1.25rem; flex-wrap:wrap; align-items:flex-start;">
+<figure style="flex:1; min-width:240px; margin:0;">
+
 ![Scaled Dot-Product Attention](/assets/images/diagrams/nntikz_dot_product_attention.png)
 
+<figcaption><em>Scaled Dot-Product Attention</em></figcaption>
+</figure>
+<figure style="flex:1; min-width:240px; margin:0;">
+
 ![Transformer Architecture — Encoder & Decoder](/assets/images/diagrams/nntikz_transformer.png)
+
+<figcaption><em>Transformer Architecture — Encoder & Decoder</em></figcaption>
+</figure>
+</div>
 
 ### 6.c Decoder-Only Transformers (GPT-style)
 
@@ -426,6 +449,7 @@ Bootstraps from the value of the *next action actually chosen* by the current po
 | Differ when | $a_{t+1} \neq \arg\max_a Q(s_{t+1},a)$ | Same condition |
 
 ![Q-Learning vs SARSA — Bootstrap Target Comparison](/assets/images/diagrams/qlearning_sarsa.png)
+*Q-Learning vs SARSA — Bootstrap Target Comparison*
 
 ### 8.f Optimal Policy & Grid World
 
@@ -435,6 +459,7 @@ After training, $\pi^*$ selects $\arg\max_a Q(s,a)$ in each state. A single epis
 > Path $(2,1) \to (2,2) \to (3,2) \to (3,3)$ with $\alpha=0.5,\, \gamma=0.7$. Only $Q((2,1),R)$, $Q((2,2),D)$, $Q((3,2),R)$ are updated. Policy at $(3,2)$ changes from "↑ or →" to "↑ only" because $Q((3,2), R)$ falls sharply from reward $-10$.
 
 ![Grid World — Optimal Policy Before & After One Episode](/assets/images/diagrams/rl_gridworld.png)
+*Grid World — Optimal Policy Before & After One Episode*
 
 ### 8.g Policy Gradients: RL with Neural Networks
 
