@@ -611,8 +611,7 @@
               </div>
             </div>
           </section>
-<!-- 
-          <section class="ck-card">
+          <section class="ck-card" id="regularizationPanel">
             <div class="ck-card-h"><span><span class="h-num">04</span> · Regularization</span></div>
             <div class="ck-card-body">
               <div class="ck-field">
@@ -637,10 +636,10 @@
                 <input class="ck-slider" type="range" min="0" max="100" value="10" data-knob="clip" />
               </div>
             </div>
-          </section> -->
+          </section>
 
           <section class="ck-card">
-            <div class="ck-card-h"><span><span class="h-num">04</span> · Visual</span></div>
+            <div class="ck-card-h"><span><span class="h-num">05</span> · Visual</span></div>
             <div class="ck-card-body">
               <div class="ck-field">
                 <span class="ck-label">Diagram view</span>
@@ -668,8 +667,10 @@
                   <div class="ck-sw" style="background: var(--accent-r); color: var(--accent-r);" data-v="red"></div>
                 </div>
               </div>
+              <label class="ck-check off" data-knob="showRegularization"><span class="box"></span><span>Show regularization card</span></label>
               <label class="ck-check on" data-knob="showWeights"><span class="box"></span><span>Show weight matrices</span></label>
               <label class="ck-check on" data-knob="showFormulas"><span class="box"></span><span>Show formulas</span></label>
+              <label class="ck-check off" data-knob="paramDetail"><span class="box"></span><span>Detailed computation breakdown</span></label>
               <label class="ck-check on" data-knob="showTimeline"><span class="box"></span><span>Show unrolled timeline</span></label>
             </div>
           </section>
@@ -755,7 +756,7 @@ const state = {
   dense: false, denseUnits: 64,
   dropIn: 0, dropRec: 0, init: 'xavier', clip: 10,
   view: 'folded', density: 'std', accentSet: 'purple',
-  showWeights: true, showFormulas: true, showTimeline: true,
+  showWeights: true, showFormulas: true, showTimeline: true, paramDetail: false, showRegularization: false,
 };
 
 /* knob wiring */
@@ -873,13 +874,16 @@ function compute(){
   const biasOn = bias==='on';
   const gates = (mode==='lstm') ? 4 : 1;
   let total = 0;
+  const layerBreakdown = [];
   for(let L=0; L<layers; L++){
     const dh = hiddenDims[L];
     const inSize = (L===0) ? inputDim : hiddenDims[L-1]*dirMul;
-    let p = gates*dh*inSize + gates*dh*dh + (biasOn ? gates*dh : 0);
-    if(mode==='lstm' && peephole) p += 3*dh;
-    if(layerNorm) p += 2*gates*dh;
-    p *= dirMul;
+    const wParams = gates*dh*inSize + gates*dh*dh;
+    const bParams = biasOn ? gates*dh : 0;
+    const peepParams = (mode==='lstm' && peephole) ? 3*dh : 0;
+    const lnParams = layerNorm ? 2*gates*dh : 0;
+    const p = (wParams + bParams + peepParams + lnParams) * dirMul;
+    layerBreakdown.push({idx:L, dh, inSize, wParams, bParams, peepParams, lnParams, params:p});
     total += p;
   }
   const lastH = hiddenDims[layers-1];
@@ -901,7 +905,7 @@ function compute(){
   const actPerStep = state.batch*sumHidden*dirMul*(mode==='lstm'?2:1);
   const totalActs = actPerStep*state.seqLen;
   const memBytes = (total + totalActs)*4;
-  return {total, wy, denseParams, flopsStep, stepsOut, totalActs, memBytes, dirMul, gates, lastH, recurOut, denseIn, wyIn};
+  return {total, wy, denseParams, flopsStep, stepsOut, totalActs, memBytes, dirMul, gates, lastH, recurOut, denseIn, wyIn, layerBreakdown};
 }
 
 /* ──────── DIAGRAMS (DOM-positioned react-flow style) ──────── */
@@ -1059,28 +1063,46 @@ function nodeHTMLFor(n, sx, sy, VW, VH){
 /* unrolled view */
 function diagramUnrolled(host){
   const isLSTM = state.mode==='lstm';
+  const bidir = state.direction==='bi';
+  const seqMode = state.seqMode;
   const T = Math.min(state.seqLen, 9);
   const VW = Math.max(1000, T*120 + 60), VH = 480;
   syncDiagramSize(host, VW, VH);
   const W = host.clientWidth, H = host.clientHeight;
   const cellW = 90, cellH = 70, gap = (VW-60-T*cellW)/Math.max(1,T-1);
+  const fwdY = VH/2 - cellH/2 - (bidir ? 14 : 0);
   let nodes=[], edges=[], labels=[];
   for(let t=0;t<T;t++){
     const x = 30 + t*(cellW + gap);
     const cx = x + cellW/2;
-    const y = VH/2 - cellH/2;
+    const y = fwdY;
     nodes.push({type:'unroll-cell', x, y, w:cellW, h:cellH, idx:t, isLSTM});
-    // x_t below
-    nodes.push({type:'io-x-sm', x: cx, y: y + cellH + 70, idx:t});
-    edges.push(P([[cx, y+cellH+40],[cx, y+cellH+5]], 'arrow'));
-    // y_t above
-    nodes.push({type:'io-y-sm', x: cx, y: y - 60, idx:t});
-    edges.push(P([[cx, y-5],[cx, y-30]], 'arrow'));
-    // recurrent edge to next
+    // x_t below — only where this sequencing mode actually feeds an input
+    const hasX = seqMode!=='o2m' || t===0;
+    if(hasX){
+      nodes.push({type:'io-x-sm', x: cx, y: y + cellH + 70, idx:t});
+      edges.push(P([[cx, y+cellH+40],[cx, y+cellH+5]], 'arrow'));
+    }
+    // y_t above — only where this sequencing mode actually emits an output
+    const hasY = seqMode!=='m2o' || t===T-1;
+    if(hasY){
+      nodes.push({type:'io-y-sm', x: cx, y: y - 60, idx:t});
+      edges.push(P([[cx, y-5],[cx, y-30]], 'arrow'));
+    }
+    // forward recurrent edge to next
     if(t<T-1){
       const x2 = 30 + (t+1)*(cellW + gap) + cellW/2;
       edges.push(P([[x+cellW, y+cellH/2],[x2-cellW/2, y+cellH/2]], 'arrow'));
+      // backward recurrent edge (bidirectional): info flows from t+1 back to t
+      if(bidir){
+        const yB = y + cellH + 20;
+        edges.push({points:[[x2-cellW/2, yB],[x+cellW, yB]], arrow:true, dash:true, color:'var(--accent-b)'});
+      }
     }
+  }
+  if(bidir){
+    labels.push({x: 30, y: fwdY - 36, text: '→ forward pass', cls:'rf-h-label'});
+    labels.push({x: 30, y: fwdY + cellH + 44, text: '← backward pass', cls:'rf-h-label', color:'var(--accent-b)'});
   }
   const edgeSVG = `
     <svg viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
@@ -1088,9 +1110,13 @@ function diagramUnrolled(host){
         <marker id="rfArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/>
         </marker>
+        <marker id="rfArrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-b)"/>
+        </marker>
       </defs>
-      ${edges.map(e=>`<polyline points="${e.points.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--ink-soft)" stroke-width="1.6" ${e.arrow?'marker-end="url(#rfArr)"':''} />`).join('')}
+      ${edges.map(e=>`<polyline points="${e.points.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${e.color||'var(--ink-soft)'}" stroke-width="1.6" ${e.dash?'stroke-dasharray="4 3"':''} ${e.arrow?`marker-end="url(#${e.color?'rfArrB':'rfArr'})"`:''} />`).join('')}
     </svg>`;
+  const labelHTML = labels.map(l=>`<div class="${l.cls||''}" style="position:absolute; left:${l.x*100/VW}%; top:${l.y*100/VH}%; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:${l.color||'var(--ink-faint)'};">${l.text}</div>`).join('');
   const nodeHTML = nodes.map(n=>{
     const left = (x)=> (x*100/VW)+'%';
     const top  = (y)=> (y*100/VH)+'%';
@@ -1110,7 +1136,7 @@ function diagramUnrolled(host){
     }
     return '';
   }).join('');
-  host.innerHTML = edgeSVG + nodeHTML;
+  host.innerHTML = edgeSVG + nodeHTML + labelHTML;
 }
 
 /* block view */
@@ -1179,10 +1205,29 @@ function renderFormulas(c){
   const denseEq = dense ? `<div class="ck-eq f-o"><span class="lbl">dense</span><i>d<sub>t</sub></i> <span class="op">=</span> ${aSym}( <i>W<sub>d</sub></i><i>h<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>d</sub></i>':''} )</div>` : '';
   const denseTerm = dense ? ` <span class="op">+</span> <i>d<sub>u</sub></i>(<i>d<sub>h</sub></i><span class="op">·</span>dir <span class="op">+</span> 1)` : '';
   const layerSizes = L>1 ? `<div class="ck-eq" style="font-size:10.5px; color:var(--ink-faint); border-left-color:var(--rule);"><span class="lbl">layers</span><i>d<sub>h</sub></i> per layer <span class="op">=</span> ${state.hiddenDims.join(' <span class="op">→</span> ')}</div>` : '';
+
+  // ── clarified Σ summand: shows exactly what's being summed per layer (l) ──
+  const gatesPrefix = isLSTM ? '4' : '';
+  const lp = L>1 ? '<sup>(l)</sup>' : '';
+  const peepSummand = (isLSTM && state.peephole) ? ` <span class="op">+</span> 3<i>d<sub>h</sub></i>${lp}` : '';
+  const lnSummand = state.layerNorm ? ` <span class="op">+</span> ${2*c.gates}<i>d<sub>h</sub></i>${lp}` : '';
+  const inSym = L>1 ? '<i>d<sub>in</sub></i><sup>(l)</sup>' : '<i>d<sub>x</sub></i>';
+  const recurSummand = `${gatesPrefix}<i>d<sub>h</sub></i>${lp}(${inSym} <span class="op">+</span> <i>d<sub>h</sub></i>${lp}${biasOn?' <span class="op">+</span> 1':''})${peepSummand}${lnSummand}`;
+  const recurTerm = L>1 ? `Σ<sub style="font-size:8px;">l=0…${L-1}</sub> [ ${recurSummand} ]` : recurSummand;
+  const sumDef = L>1 ? `<div class="ck-eq" style="font-size:10px; color:var(--ink-faint); border-left-color:var(--rule);"><span class="lbl">where</span><i>d<sub>in</sub></i><sup>(l)</sup> <span class="op">=</span> <i>d<sub>x</sub></i> <span style="opacity:.6">if l=0</span>,&nbsp; <i>d<sub>h</sub></i><sup>(l-1)</sup><span class="op">·</span>dir <span style="opacity:.6">if l&gt;0</span></div>` : '';
+  const lastDhSym = L>1 ? `<i>d<sub>h</sub></i><sup>(${L-1})</sup>` : '<i>d<sub>h</sub></i>';
+  const outTerm = `<i>d<sub>y</sub></i>(${lastDhSym}${dirMul===2?'<span class="op">·</span>dir':''}${biasOn?' <span class="op">+</span> 1':''})`;
+  const recurTotal = c.layerBreakdown.reduce((a,r)=>a+r.params, 0);
+  const detailHTML = state.paramDetail ? `
+    <div class="ck-eq" style="font-size:10px; color:var(--ink-faint); border-left-color:var(--rule); display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+      <span class="lbl" style="margin-bottom:1px;">breakdown</span>
+      ${c.layerBreakdown.map(r=>`<div><i>l=${r.idx}</i>: <i>d<sub>h</sub></i>=${r.dh}, <i>d<sub>in</sub></i>=${r.inSize} <span class="op">→</span> ${gatesPrefix||1}<span class="op">·</span>${r.dh}<span class="op">·</span>(${r.inSize}${biasOn?'<span class="op">+</span>'+r.dh+'<span class="op">+</span>1':'<span class="op">+</span>'+r.dh})${r.peepParams?` <span class="op">+</span> 3<span class="op">·</span>${r.dh}`:''}${r.lnParams?` <span class="op">+</span> ${2*c.gates}<span class="op">·</span>${r.dh}`:''}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(r.params)}</b></div>`).join('')}
+      <div style="border-top:1px dashed var(--rule); padding-top:4px; margin-top:1px;">Σ recurrent <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(recurTotal)}</b>${state.dense?` &nbsp;<span class="op">+</span> dense <b style="color:var(--ink);">${fmtNum(c.denseParams)}</b>`:''} &nbsp;<span class="op">+</span> output-proj <b style="color:var(--ink);">${fmtNum(c.wy)}</b> &nbsp;<span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>
+    </div>
+  ` : '';
+  const paramsLine = `<div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${recurTerm}${dirMul===2?' <span class="op">×</span> 2':''} <span class="op">+</span> ${outTerm}${denseTerm} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>`;
+
   if(!isLSTM){
-    const paramFormula = biasOn
-      ? `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
-      : `<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
     html = `
       <div class="ck-eq f-h"><span class="lbl">hidden</span><i>h<sub>t</sub></i> <span class="op">=</span> ${aSym}( <i>W<sub>xh</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hh</sub></i><i>h<sub>t-1</sub></i> ${biasH} )</div>
       ${denseEq}
@@ -1190,12 +1235,11 @@ function renderFormulas(c){
       ${state.layerNorm?`<div class="ck-eq f-o"><span class="lbl">norm</span><i>h<sub>t</sub></i> <span class="op">=</span> LN( <i>h<sub>t</sub></i> )</div>`:''}
       ${state.residual?`<div class="ck-eq f-g"><span class="lbl">resid</span><i>h<sub>t</sub></i> <span class="op">=</span> <i>h<sub>t</sub></i> <span class="op">+</span> <i>x<sub>t</sub></i></div>`:''}
       ${layerSizes}
-      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?'Σ<sub style="font-size:8px;">layers</sub> ':''}${paramFormula}${dirMul===2?' <span class="op">×</span> 2':''}${denseTerm} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>
+      ${sumDef}
+      ${paramsLine}
+      ${detailHTML}
     `;
   } else {
-    const paramFormula = biasOn
-      ? `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i> <span class="op">+</span> 1) <span class="op">+</span> <i>d<sub>y</sub></i>(<i>d<sub>h</sub></i> <span class="op">+</span> 1)`
-      : `4<i>d<sub>h</sub></i>(<i>d<sub>x</sub></i> <span class="op">+</span> <i>d<sub>h</sub></i>) <span class="op">+</span> <i>d<sub>y</sub></i><i>d<sub>h</sub></i>`;
     html = `
       <div class="ck-eq f-i"><span class="lbl">input</span><i>i<sub>t</sub></i> <span class="op">=</span> ${gSym}( <i>W<sub>xi</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hi</sub></i><i>h<sub>t-1</sub></i>${peepI} ${biasI} )</div>
       <div class="ck-eq f-f"><span class="lbl">forget</span><i>f<sub>t</sub></i> <span class="op">=</span> ${gSym}( <i>W<sub>xf</sub></i><i>x<sub>t</sub></i> <span class="op">+</span> <i>W<sub>hf</sub></i><i>h<sub>t-1</sub></i>${peepF} ${biasF} )</div>
@@ -1206,7 +1250,9 @@ function renderFormulas(c){
       ${denseEq}
       <div class="ck-eq f-c"><span class="lbl">output</span><i>y<sub>t</sub></i> <span class="op">=</span> <i>W<sub>${outWSym}</sub></i><i>${outSym}<sub>t</sub></i> ${state.bias==='on'?'<span class="op">+</span> <i>b<sub>y</sub></i>':''}</div>
       ${layerSizes}
-      <div class="ck-eq" style="border-left-color:var(--ink-soft);"><span class="lbl">params</span><i>P</i> <span class="op">=</span> ${L>1?'Σ<sub style="font-size:8px;">layers</sub> ':''}${paramFormula}${state.peephole?' <span class="op">+</span> 3<i>d<sub>h</sub></i>':''}${dirMul===2?' <span class="op">×</span> 2':''}${denseTerm} <span class="op">=</span> <b style="color:var(--ink);">${fmtNum(c.total)}</b></div>
+      ${sumDef}
+      ${paramsLine}
+      ${detailHTML}
     `;
   }
   document.getElementById('formulas').innerHTML = html;
@@ -1217,17 +1263,20 @@ function renderStats(c){
   const seqOutShape = state.seqMode==='m2o' ? `[B, ${state.outputDim}]` : `[B, T, ${state.outputDim}]`;
   const denseFlops = state.dense ? 2*c.denseIn*state.denseUnits*c.stepsOut*state.batch : 0;
   const flopsTotal = c.flopsStep*state.seqLen*state.batch + denseFlops + 2*c.wyIn*state.outputDim*c.stepsOut*state.batch;
+  const detail = state.paramDetail;
   document.getElementById('stats').innerHTML = `
     <div class="ck-stat"><span class="n">Trainable params</span><span class="v">${fmtNum(c.total)}<small>weights</small></span></div>
     <div class="ck-stat"><span class="n">Recurrent params</span><span class="v">${fmtNum(c.total - c.wy - c.denseParams)}</span></div>
-    ${state.dense?`<div class="ck-stat"><span class="n">Dense (FC) params</span><span class="v">${fmtNum(c.denseParams)}</span></div>`:''}
+    ${(detail && state.dense)?`<div class="ck-stat"><span class="n">Dense (FC) params</span><span class="v">${fmtNum(c.denseParams)}</span></div>`:''}
     <div class="ck-stat"><span class="n">Output proj</span><span class="v">${fmtNum(c.wy)}</span></div>
+    ${detail?`
     <div class="ck-stat"><span class="n">FLOPs / step</span><span class="v">${fmtNum(c.flopsStep)}</span></div>
     <div class="ck-stat"><span class="n">FLOPs / fwd batch</span><span class="v">${fmtNum(flopsTotal)}</span></div>
     <div class="ck-stat"><span class="n">Activation memory</span><span class="v">${fmtBytes(c.totalActs*4)}</span></div>
     <div class="ck-stat"><span class="n">Total memory (fp32)</span><span class="v">${fmtBytes(c.memBytes)}</span></div>
+    `:''}
     <div class="ck-stat"><span class="n">Output shape</span><span class="v" style="font-family:'IBM Plex Mono',monospace; font-size:13px;">${seqOutShape}</span></div>
-    <div class="ck-stat"><span class="n">Effective hidden</span><span class="v">${c.recurOut}<small>${c.dirMul===2?'(bi)':''}</small></span></div>
+    ${detail?`<div class="ck-stat"><span class="n">Effective hidden</span><span class="v">${c.recurOut}<small>${c.dirMul===2?'(bi)':''}</small></span></div>`:''}
   `;
 }
 
@@ -1391,6 +1440,7 @@ function render(){
       ? `Figure 1.c — Unrolled view across T = ${state.seqLen} timesteps; recurrent edge dashed.`
       : `Figure 1.d — Computation as a sequential block diagram.`;
 
+  document.getElementById('regularizationPanel').style.display = state.showRegularization?'':'none';
   document.getElementById('formulasPanel').style.display = state.showFormulas?'':'none';
   if(state.showFormulas) renderFormulas(c);
   renderStats(c);
