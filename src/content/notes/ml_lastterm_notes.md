@@ -465,10 +465,23 @@ Bootstraps from the value of the *next action actually chosen* by the current po
 After training, $\pi^*$ selects $\arg\max_a Q(s,a)$ in each state. A single episode updates only visited states — the rest remain unchanged.
 
 > [!note] Episode Example
-> Path $(2,1) \to (2,2) \to (3,2) \to (3,3)$ with $\alpha=0.5,\, \gamma=0.7$. Only $Q((2,1),R)$, $Q((2,2),D)$, $Q((3,2),R)$ are updated. Policy at $(3,2)$ changes from "↑ or →" to "↑ only" because $Q((3,2), R)$ falls sharply from reward $-10$.
+> Path $(2,1) \to (2,2) \to (3,2) \to (3,3)$ with $\alpha=0.5,\, \gamma=0.7$, $R=0$ except $R((1,3),D)=10$, $R((2,2),D)=-5$, $R((3,2),R)=-10$. Only $Q((2,1),R)$, $Q((2,2),D)$, $Q((3,2),R)$ are updated. Policy at $(3,2)$ changes from "↑ or →" to "↑ only" because $Q((3,2), R)$ falls sharply from reward $-10$.
 
-![Grid World — Optimal Policy Before & After One Episode](/assets/images/diagrams/rl_gridworld.png)
-*Grid World — Optimal Policy Before & After One Episode*
+> [!example] Hand-worked Updates (TD Q-Learning vs SARSA)
+> **TD Q-Learning** — $Q(s,a) \leftarrow Q(s,a) + \alpha[R + \gamma\max_{a'}Q(s',a') - Q(s,a)]$:
+> - $Q((2,1),R) = 2 + 0.5[0 + 0.7\max(2,2,1,-1) - 2] = 2 + 0.5(0.7{\cdot}2 - 2) = \mathbf{1.7}$
+> - $Q((2,2),D) = -1 + 0.5[-5 + 0.7\max(2,1,2,-) - (-1)] = -1 + 0.5(-5 + 1.4 + 1) = \mathbf{-2.3}$
+> - $Q((3,2),R) = 2 + 0.5[-10 + 0.7{\cdot}0 - 2] = 2 + 0.5(-12) = \mathbf{-4}$ (next state $(3,3)$ is terminal $\Rightarrow \max_{a'}Q=0$)
+>
+> **SARSA** — $Q(s,a) \leftarrow Q(s,a) + \alpha[R + \gamma Q(s',a') - Q(s,a)]$, bootstrapping off the action *actually taken* next ($a'_{(2,2)}=D$, $a'_{(3,2)}=R$):
+> - $Q((2,1),R) = 2 + 0.5[0 + 0.7{\cdot}Q((2,2),D){=}{-1} - 2] = 2 + 0.5(-0.7 - 2) = \mathbf{0.65}$ — *differs from Q-Learning* because the episode's actual next action ($D$, value $-1$) isn't the greedy max ($R$ or $L$, value $2$)
+> - $Q((2,2),D) = -1 + 0.5[-5 + 0.7{\cdot}Q((3,2),R){=}2 - (-1)] = \mathbf{-2.3}$ — coincides with Q-Learning since the actual next action $R$ *is* the greedy max at $(3,2)$
+> - $Q((3,2),R) = \mathbf{-4}$ — identical to Q-Learning (terminal next state, both bootstrap off $0$)
+>
+> Net result: **the resulting optimal policy is identical** for both methods (only the magnitude of $Q((2,1),\to)$ differs, $1.7$ vs $0.65$ — the arrow direction doesn't flip).
+
+![Grid World — Q-values and optimal policy after the episode (2,1)→(2,2)→(3,2)→(3,3), TD Q-Learning numbers shown; SARSA yields an identical policy](/assets/images/diagrams/rl_gridworld_qvalues_policy.png)
+*Grid World — Q-values & Optimal Policy after the Episode (border-point dual-arrow view; values updated by the episode highlighted in red)*
 
 ### 8.g Policy Gradients: RL with Neural Networks
 
