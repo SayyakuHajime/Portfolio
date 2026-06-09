@@ -16,7 +16,7 @@ const projectCount = allProjects.length;
 function noteCommitDate(id: string): string {
   try {
     return execSync(
-      `git log -1 --format="%aI" -- "src/content/notes/${id}"`,
+      `git log --follow --diff-filter=A --format="%aI" -- "src/content/notes/${id}"`,
       { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }
     ).trim();
   } catch {
