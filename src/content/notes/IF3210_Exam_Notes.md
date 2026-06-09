@@ -105,6 +105,9 @@ Fragment removed/destroyed:
 - **`onDestroyView()`** — View hierarchy removed.
 - **`onDetach()`** — Fragment no longer attached to host.
 
+> [!warn] Common Bug
+> Fragment **object** lifecycle and Fragment **view** lifecycle are not the same. After `onDestroyView()`, the view is gone but the Fragment object may still exist. Storing a reference to any view after `onDestroyView()` causes memory leaks or crashes — always clear view binding references in `onDestroyView()`.
+
 ### 2.d Saving Fragment State
 
 ```kotlin
@@ -114,6 +117,10 @@ onSaveInstanceState(outState: Bundle)
 // Retrieve in any of:
 onCreate() / onCreateView() / onViewCreated()
 ```
+
+**Where to restore state:**
+- Data not tied to a view (IDs, flags, counters): `onCreate()`
+- View-related data (scroll position, field content): `onViewCreated()`
 
 ---
 
@@ -326,14 +333,28 @@ suspend fun get(url: String) {
 
 Must run coroutines inside a scope. Key scopes: `GlobalScope`, `viewModelScope`, `lifecycleScope`.
 
+| Builder | Returns | Use when |
+|---------|---------|---------|
+| `launch` | `Job` (no value) | Fire-and-forget: DB write, analytics |
+| `async` | `Deferred<T>` | Need the result; call `.await()` to get it |
+
 ```kotlin
 // launch — no result needed
 fun loadUI() {
-    launch { fetchDocs() }
+    viewModelScope.launch { fetchDocs() }
 }
 
-// async — returns a result (Deferred)
+// async — returns a Deferred; use .await() to get the value
+fun loadTwo() {
+    viewModelScope.launch {
+        val a = async { fetchA() }
+        val b = async { fetchB() }
+        process(a.await(), b.await()) // runs fetchA and fetchB concurrently
+    }
+}
 ```
+
+Cancellation: when a `CoroutineScope` is cancelled, all child coroutines are cancelled automatically. This is why `viewModelScope` cancellation on ViewModel clear prevents leaks.
 
 ```kotlin
 class ColorViewModel(val dao: ColorDao, application: Application) : AndroidViewModel(application) {
@@ -613,7 +634,32 @@ val retrofit = Retrofit.Builder()
 
 **Repository Pattern:** Encapsulates network/data operations behind a clean API. Callers don't need to know how data is stored. Isolates future storage changes.
 
-### 9.e Checking Network State
+### 9.e Surviving Configuration Changes
+
+When the device rotates or the system recreates the Activity, network calls must not restart and UI state must not be lost.
+
+| Mechanism | Purpose |
+|-----------|---------|
+| `ViewModel` | Survives rotation; holds live data and triggers network calls |
+| `viewModelScope` | Network calls launched here survive rotation automatically |
+| `SavedStateHandle` | Small UI state that must survive process death (not just rotation) |
+| `LiveData` / `StateFlow` | Observed by UI; receives result regardless of when Activity is recreated |
+
+```kotlin
+class UserViewModel(
+    private val repo: UserRepository,
+    private val savedState: SavedStateHandle
+) : ViewModel() {
+    val user = liveData {
+        emit(repo.getUserById(savedState.get<String>("userId") ?: ""))
+    }
+}
+```
+
+> [!note]
+> `ViewModel` survives rotation but NOT process death. Use `SavedStateHandle` (or the database) for anything that must survive the OS killing the app.
+
+### 9.f Checking Network State
 
 ```kotlin
 // Check all networks
@@ -634,9 +680,12 @@ fun isOnline(): Boolean {
     return caps.hasCapability(NET_CAPABILITY_INTERNET) &&
            caps.hasCapability(NET_CAPABILITY_VALIDATED)
 }
+// NET_CAPABILITY_VALIDATED is essential: a device can be "connected" to Wi-Fi
+// but have no real internet (e.g., captive portal requiring login). VALIDATED
+// confirms the system has successfully probed the network for internet access.
 ```
 
-### 9.f Listening to Network Events
+### 9.g Listening to Network Events
 
 ```kotlin
 connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
@@ -651,7 +700,7 @@ connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.
 > `BroadcastReceiver` + `CONNECTIVITY_ACTION` is **broken in background** since API 26. `NetworkCallback` is the **only correct modern approach**.
 > Always `unregisterNetworkCallback()` in `onStop()` to avoid leaks.
 
-### 9.g Preference Library
+### 9.h Preference Library
 
 AndroidX library that renders settings UI and **automatically** persists values to `SharedPreferences`.
 
@@ -692,7 +741,18 @@ override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) 
 // Register in onResume(), unregister in onPause() to avoid memory leaks!
 ```
 
-### 9.h Radio State & Network Optimization
+### 9.i Managing Network Usage — User Settings
+
+Apps that transfer significant data should offer user controls:
+- Toggle for **WiFi-only** uploads/downloads
+- Configurable **sync frequency** (hourly, daily, manual)
+- Option to **allow/deny roaming**
+- Respect **Data Saver mode** (`restrictBackgroundStatus`)
+- Manual refresh button as fallback
+
+These are surfaced via the Preference Library (see §9.h) and read from `SharedPreferences` before starting transfers.
+
+### 9.j Radio State & Network Optimization
 
 **AT&T's Radio State Machine:** Radio transitions through IDLE → STANDBY → FULL POWER. Unbundled data (1 second every 18 seconds) keeps the radio perpetually active.
 
@@ -752,6 +812,26 @@ final gravity = Gravity();     // set once, object can be mutable
 
 **Memory:** Garbage collector frees unreferenced heap objects. No `free()` needed.
 
+**User Input (CLI / dart:io):**
+```dart
+import 'dart:io';
+
+void main() {
+  String? name = stdin.readLineSync(); // returns null if EOF
+  if (name != null) {
+    print('Hello $name');
+  }
+}
+```
+
+**Comment types:**
+```dart
+// Single-line comment
+/* Multi-line
+   comment */
+/// Documentation comment — used by IDEs and doc generators
+```
+
 ### 10.d Lists, Maps, Generics
 
 ```dart
@@ -763,6 +843,15 @@ myList.removeAt(0);
 Map<String, String> myMap = {'lang': 'Dart', 'client': 'Flutter'};
 myMap['store'] = 'Google Play';
 myMap.remove('server');
+```
+
+**Iterating a Map:**
+```dart
+for (var e in myList) { print(e); }
+
+for (var e in myMap.entries) {
+  print('${e.key}: ${e.value}');
+}
 ```
 
 ### 10.e Functions
@@ -820,6 +909,37 @@ class Student extends Person {
     Student({required super.name, required super.age, required this.university});
     @override
     void displayInfo() { super.displayInfo(); print('University: $university'); }
+}
+```
+
+### 10.h Entering Flutter
+
+Flutter apps are built as a **widget tree**. Every piece of UI is a widget.
+
+```
+lib/main.dart  ← entry point; calls runApp()
+     └─ MaterialApp  ← provides Material Design, routing
+          └─ Screen widget
+               └─ Child widgets (buttons, images, text…)
+```
+
+Key concepts:
+- Every widget has a `build(BuildContext context)` method that returns the UI.
+- Callback functions (e.g., `onPressed`) are passed down as closures.
+- State changes trigger `build()` to re-run on `StatefulWidget`.
+- Images, buttons, text are all widgets — compose them rather than subclassing.
+
+```dart
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: DiceRoller());
+  }
 }
 ```
 
@@ -985,6 +1105,15 @@ class _CounterWidgetState extends State<CounterWidget> {
 **Navigation & State Lifting:**
 - Lift state up to a shared parent widget (e.g., `Quiz`).
 - Define a callback that changes state; pass it down as a closure.
+
+```
+Quiz (owns state: activeScreen, answers)
+├── StartScreen   ← receives onStart callback
+├── QuestionsScreen ← receives onAnswerSelected callback
+└── ResultsScreen   ← receives answers list
+```
+
+Flow: child button tap → calls callback → parent runs `setState()` → parent re-builds with new screen shown.
 
 **Data Models:** Plain old Dart objects (PODO) — no business logic, just data structure. Can be immutable. Can have getters/setters.
 
