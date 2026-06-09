@@ -607,11 +607,7 @@ val retrofit = Retrofit.Builder()
     .build()
 ```
 
-**End-to-end flow:**
-```
-App UI → ViewModel → Retrofit Service → Converter (Moshi/Gson) → Server Web API
-                ←                    ← HTTP Response (JSON)     ←
-```
+![E2E Diagram](/assets/images/diagrams/E2E_diagram.png)
 
 **Moshi** — JSON library. Configure with `Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))`.
 
