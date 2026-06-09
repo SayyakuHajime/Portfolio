@@ -257,6 +257,21 @@ $$\text{score}(h_t, \bar{h}_s) = \begin{cases} h_t^\top \bar{h}_s & \text{dot} \
 | Formula type | Additive | Multiplicative |
 | Context scope | Many-to-one or many-to-many | Same |
 
+**Formula lengkap update hidden state & output (Luong):**
+
+$$h_t = \text{RNN}(h_{t-1},\, y_{t-1}) \quad\text{(1 -- decoder maju \emph{lebih dulu}, \emph{tanpa} context vector)}$$
+
+$$e_{ts} = \text{score}(h_t, \bar{h}_s), \qquad \alpha_{ts} = \frac{\exp(e_{ts})}{\sum_{k=1}^{T_x}\exp(e_{tk})}, \qquad c_t = \sum_{s=1}^{T_x} \alpha_{ts}\, \bar{h}_s \quad\text{(2 -- attention dihitung dari $h_t$ saat ini)}$$
+
+$$\boxed{s_t \;=\; \tilde{h}_t \;=\; \tanh\!\big(W_c\,[\,c_t \,;\, h_t\,]\big)} \quad\text{(3 -- "attentional hidden state": gabungan } c_t \text{ dan } h_t\text{)}$$
+
+$$\boxed{y_t \;=\; g(\tilde{h}_t) \;=\; \text{softmax}(W_s\, \tilde{h}_t)}\quad\text{(4 -- output diproyeksikan dari } \tilde h_t\text{, bukan langsung dari } h_t\text{)}$$
+
+> [!important] Beda Krusial dari Bahdanau — Bukan Cuma Soal Kapan Skor Dihitung
+> - **Bahdanau**: $c_t$ ikut **masuk ke dalam** komputasi hidden state berikutnya — $s_t = f(s_{t-1}, y_{t-1}, c_t)$ — sehingga $s_t$ *sekaligus* menjadi hidden state untuk langkah berikutnya **dan** dasar prediksi $y_t$.
+> - **Luong**: $h_t$ dihitung **dulu** lewat RNN biasa (tanpa $c_t$); $c_t$ baru dipakai **setelahnya** untuk membentuk *representasi terpisah* $\tilde h_t = s_t$ (= "attentional hidden state") yang **hanya** dipakai untuk memprediksi $y_t$ — bukan untuk hidden state RNN langkah berikutnya (yang tetap $h_t$ polos, tanpa attention). Konsekuensinya: $W_c$ dan $W_s$ adalah **bobot baru** yang tidak ada pada decoder vanilla / Bahdanau.
+> - Variasi populer "**input feeding**": $\tilde h_{t-1}$ (bukan cuma $y_{t-1}$) ikut diumpankan sebagai input langkah berikutnya, supaya model "ingat" keputusan attention sebelumnya.
+
 > [!example] Worked Numeric Walkthrough (StatQuest "Let's go" → "Vamos")
 > Decoder feeds `<EOS>` into its embedding/LSTMs, then computes a **similarity score** between each encoder step's hidden states and the decoder's current output:
 > 1. **Cosine similarity → dot product**: StatQuest first shows cosine similarity, then notes attention typically keeps just its *numerator* — the **dot product** — because it's cheap, preserves the sign/ranking ("large positive ⇒ similar, large negative ⇒ opposite"), and the denominator's normalization is moot when always comparing the same number of cells. Concretely: encoder("let's") $=(-0.76, 0.75)$, decoder(`<EOS>`) $=(0.91, 0.38)$ → cosine sim $=-0.39$, dot product $=-0.41$ (same conclusion); dot("go", `<EOS>`) $= 0.01$.
@@ -267,6 +282,9 @@ $$\text{score}(h_t, \bar{h}_s) = \begin{cases} h_t^\top \bar{h}_s & \text{dot} \
 
 ![Bahdanau Attention — Bidirectional Encoder + Attention Weights](/assets/images/diagrams/nntikz_attention.png)
 *Bahdanau Attention — Bidirectional Encoder + Attention Weights*
+
+![Luong Attention — alur komputasi: h_t dihitung lebih dulu (tanpa context vector), baru menentukan skor/alpha/c_t, lalu digabung jadi attentional hidden state h-tilde_t = s_t yang dipakai utk memprediksi y_t](/assets/images/diagrams/luong_attention.png)
+*Luong Attention — perhatikan urutan alur (① → ④): $h_t$ dihitung lebih dulu tanpa $c_t$, baru dipakai untuk menentukan attention weights, lalu digabung ($\tilde h_t = s_t$) untuk memprediksi $y_t$. Bandingkan dengan diagram Bahdanau di atas, di mana $c_t$ langsung mengalir ke dalam komputasi hidden state berikutnya.*
 
 ---
 
