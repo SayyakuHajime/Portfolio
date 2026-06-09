@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { execSync } from 'child_process';
 const base = import.meta.env.BASE_URL;
 
 const allNotes = (await getCollection('notes')).sort((a, b) => a.data.order - b.data.order);
@@ -12,9 +13,20 @@ const allWritings = (await getCollection('writings')).sort((a, b) =>
 const noteCount = allNotes.length + 2;
 const projectCount = allProjects.length;
 
+function noteCommitDate(id: string): string {
+  try {
+    return execSync(
+      `git log -1 --format="%aI" -- "src/content/notes/${id}"`,
+      { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }
+    ).trim();
+  } catch {
+    return '';
+  }
+}
+
 const recentAll = [
   ...allNotes.map(n => ({
-    date: n.data.date ?? '',
+    date: noteCommitDate(n.id),
     title: n.data.title,
     excerpt: n.data.subject ?? (n.data.topics?.slice(0, 2).join(', ') ?? ''),
     tag: n.data.course ?? 'Note',
@@ -44,7 +56,7 @@ const legacyProjectItems = [
 
 function fmtDate(s?: string) {
   if (!s) return '';
-  const d = new Date(s + 'T00:00:00');
+  const d = new Date(s);
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 ---
