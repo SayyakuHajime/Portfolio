@@ -611,9 +611,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | Requirements traceability | bagian RM |
 | **Requirement prioritization** | ✓ bagian dari Requirements Analysis, bukan RM |
 
-> **Yang bukan RM: Requirement prioritization.** Requirements Management = mengelola requirements setelah didefinisikan (perubahan, versi, traceability). Prioritization dilakukan saat Requirements Analysis.
-
----
+![E2E Diagram](/assets/images/diagrams/E2E_diagram.png)
 
 ## 6. Desain Sistem Informasi
 
