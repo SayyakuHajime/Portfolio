@@ -2,7 +2,51 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
-const noteCount = (await getCollection('notes')).length + 2; // +2 for legacy midterm + md-viewer tool
+
+const allNotes = (await getCollection('notes')).sort((a, b) => a.data.order - b.data.order);
+const allProjects = (await getCollection('projects')).sort((a, b) =>
+  (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+const allWritings = (await getCollection('writings')).sort((a, b) =>
+  (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+
+const noteCount = allNotes.length + 2;
+const projectCount = allProjects.length;
+
+const recentAll = [
+  ...allNotes.map(n => ({
+    date: n.data.date ?? '',
+    title: n.data.title,
+    excerpt: n.data.subject ?? (n.data.topics?.slice(0, 2).join(', ') ?? ''),
+    tag: n.data.course ?? 'Note',
+    url: `${base}/notes/${n.slug}.html`,
+  })),
+  ...allProjects.map(p => ({
+    date: p.data.date ?? '',
+    title: p.data.title,
+    excerpt: p.data.description ?? '',
+    tag: p.data.tags?.[0] ?? 'Project',
+    url: p.data.url ?? `${base}/projects/${p.slug}.html`,
+  })),
+  ...allWritings.map(w => ({
+    date: w.data.date ?? '',
+    title: w.data.title,
+    excerpt: w.data.excerpt ?? w.data.description ?? '',
+    tag: 'Writing',
+    url: `${base}/writings/${w.slug}.html`,
+  })),
+].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+
+const legacyProjectItems = [
+  { tag: 'Brand Design', title: 'Oeni Yoga Studio — Brand Guide', url: `${base}/projects/oeni-brand-guide-green.html`, excerpt: 'Visual brand identity system for Oeni Yoga Studio, featuring a forest-green palette, custom logo mark, and typography pairing.' },
+  { tag: 'Brand Design', title: 'Penyucon — Brand Guide', url: `${base}/projects/penyucon-brand-guide.html`, excerpt: 'Brand identity guide for Penyucon.' },
+  { tag: 'External', title: 'View GitHub profile', url: 'https://github.com/SayyakuHajime', excerpt: 'Current repositories are available directly on GitHub while this Projects page is under construction.', external: true },
+];
+
+function fmtDate(s?: string) {
+  if (!s) return '';
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
 ---
 
 <BaseLayout
@@ -26,84 +70,115 @@ const noteCount = (await getCollection('notes')).length + 2; // +2 for legacy mi
     </p>
     <div class="hero-stats">
       <div class="stat-item"><span class="stat-value">{noteCount}</span><span class="stat-label">Notes</span></div>
-      <div class="stat-item"><span class="stat-value">WIP</span><span class="stat-label">Projects</span></div>
+      <div class="stat-item"><span class="stat-value">{projectCount > 0 ? projectCount : 'WIP'}</span><span class="stat-label">Projects</span></div>
       <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">Years</span></div>
     </div>
   </section>
 
   <div class="tabs">
     <div class="tab active" data-tab="recent">Recent</div>
-    <div class="tab" data-tab="writings">Writings</div>
+    <div class="tab" data-tab="notes">Notes</div>
     <div class="tab" data-tab="projects">Projects</div>
   </div>
 
+  <!-- Recent: latest from notes + projects + writings combined -->
   <div data-panel="recent">
+    {recentAll.length > 0 ? recentAll.map(item => (
+      <article class="feed-item animate-in">
+        <div class="feed-meta">
+          <span class="feed-tag">{item.tag}</span>
+          {item.date && <span class="feed-date">{fmtDate(item.date)}</span>}
+        </div>
+        <h2 class="feed-title"><a href={item.url} class="feed-title-link">{item.title}</a></h2>
+        {item.excerpt && <p class="feed-excerpt">{item.excerpt}</p>}
+      </article>
+    )) : (
+      <article class="feed-item animate-in">
+        <div class="feed-meta"><span class="feed-tag">Archive</span></div>
+        <h2 class="feed-title"><a href={`${base}/notes.html`} class="feed-title-link">Browse the notes archive</a></h2>
+        <p class="feed-excerpt">Nothing dated yet. Browse the full notes page for the complete collection.</p>
+      </article>
+    )}
+  </div>
+
+  <!-- Notes: all collection notes + legacy hardcoded -->
+  <div data-panel="notes" style="display:none;">
+    {allNotes.map(note => (
+      <article class="feed-item animate-in">
+        <div class="feed-meta">
+          {note.data.course && <span class="feed-tag">{note.data.course}</span>}
+          {note.data.date && <span class="feed-date">{fmtDate(note.data.date)}</span>}
+        </div>
+        <h2 class="feed-title">
+          <a href={`${base}/notes/${note.slug}.html`} class="feed-title-link">{note.data.title}</a>
+        </h2>
+        {note.data.subject && <p class="feed-excerpt">{note.data.subject}</p>}
+        {note.data.topics && (
+          <div class="feed-footer">
+            {note.data.topics.slice(0, 3).map(t => <span class="feed-action">{t}</span>)}
+          </div>
+        )}
+      </article>
+    ))}
     <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Writing</span><span class="feed-date">May 2026</span></div>
-      <h2 class="feed-title"><a href={`${base}/notes/ml_lastterm_notes.html`} class="feed-title-link">ML Last Term Notes</a></h2>
-      <p class="feed-excerpt">Deep dive into CNN Backpropagation, RNN dynamics, LSTM gating mechanisms, and Backpropagation Through Time (BPTT).</p>
-      <div class="feed-footer">
-        <span class="feed-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>32 min read</span>
-        <span class="feed-action">Study Notes</span>
-      </div>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Writing</span><span class="feed-date">Mar 2025</span></div>
+      <div class="feed-meta"><span class="feed-tag">IF3270</span><span class="feed-date">Mar 2025</span></div>
       <h2 class="feed-title"><a href={`${base}/notes/ml_midterm_notes.html`} class="feed-title-link">ML Midterm Notes</a></h2>
-      <p class="feed-excerpt">Complete ML midterm notes with perceptron, FFNN, backpropagation, optimization, and CNN fundamentals in one structured page.</p>
-      <div class="feed-footer">
-        <span class="feed-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min read</span>
-        <span class="feed-action">Study Notes</span>
-      </div>
+      <p class="feed-excerpt">Complete ML midterm notes with perceptron, FFNN, backpropagation, optimization, and CNN fundamentals.</p>
     </article>
     <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Project</span><span class="feed-date">Now</span></div>
-      <h2 class="feed-title"><a href={`${base}/projects.html`} class="feed-title-link">Projects page is currently in progress</a></h2>
-      <p class="feed-excerpt">Project cards are being curated. The dedicated Projects page currently shows a WIP placeholder while I prepare final writeups.</p>
-      <div class="feed-footer"><span class="feed-action">WIP</span></div>
+      <div class="feed-meta"><span class="feed-tag">IF3270</span></div>
+      <h2 class="feed-title"><a href={`${base}/projects/RNN_LSTM_Calculator.html`} class="feed-title-link">RNN &amp; LSTM Calculator</a></h2>
+      <p class="feed-excerpt">Interactive construction kit for Vanilla RNN and LSTM cells.</p>
+    </article>
+    <article class="feed-item animate-in">
+      <div class="feed-meta"><span class="feed-tag">Archive</span></div>
+      <h2 class="feed-title"><a href={`${base}/notes.html`} class="feed-title-link">Open full notes archive →</a></h2>
+      <p class="feed-excerpt">Browse the dedicated Notes page for the complete collection.</p>
     </article>
   </div>
 
-  <div data-panel="writings" style="display:none;">
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">WIP</span><span class="feed-date">Now</span></div>
-      <h2 class="feed-title"><a href={`${base}/writings.html`} class="feed-title-link">Writings page is being curated</a></h2>
-      <p class="feed-excerpt">I'm currently selecting and polishing long-form essays and research notes.</p>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Study Notes</span><span class="feed-date">May 2026</span></div>
-      <h2 class="feed-title"><a href={`${base}/notes/ml_lastterm_notes.html`} class="feed-title-link">ML Last Term Notes</a></h2>
-      <p class="feed-excerpt">Advanced architectures covering CNN backward pass, RNNs, and LSTM cells.</p>
-      <div class="feed-footer"><span class="feed-action">IF3270</span><span class="feed-action">Sequential Models</span></div>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Overview</span></div>
-      <h2 class="feed-title"><a href={`${base}/notes.html`} class="feed-title-link">Open full notes archive</a></h2>
-      <p class="feed-excerpt">Browse the dedicated Notes page for the full collection of study references.</p>
-    </article>
-  </div>
-
+  <!-- Projects: collection items, fallback to legacy when empty -->
   <div data-panel="projects" style="display:none;">
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">WIP</span><span class="feed-date">Now</span></div>
-      <h2 class="feed-title"><a href={`${base}/projects.html`} class="feed-title-link">Projects page is being prepared</a></h2>
-      <p class="feed-excerpt">The project section is intentionally concise on Home. The dedicated page currently shows a WIP placeholder until project cards are finalized.</p>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Brand Design</span></div>
-      <h2 class="feed-title"><a href={`${base}/projects/oeni-brand-guide-green.html`} class="feed-title-link">Oeni Yoga Studio — Brand Guide</a></h2>
-      <p class="feed-excerpt">Visual brand identity system for Oeni Yoga Studio, featuring a forest-green palette, custom logo mark, and typography pairing.</p>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">Brand Design</span></div>
-      <h2 class="feed-title"><a href={`${base}/projects/penyucon-brand-guide.html`} class="feed-title-link">Penyucon — Brand Guide</a></h2>
-      <p class="feed-excerpt">Brand identity guide for Penyucon.</p>
-    </article>
-    <article class="feed-item animate-in">
-      <div class="feed-meta"><span class="feed-tag">External</span></div>
-      <h2 class="feed-title"><a href="https://github.com/SayyakuHajime" class="feed-title-link" target="_blank" rel="noopener noreferrer">View GitHub profile</a></h2>
-      <p class="feed-excerpt">Current repositories are available directly on GitHub while this Projects page is under construction.</p>
-    </article>
+    {allProjects.map(project => (
+      <article class="feed-item animate-in">
+        <div class="feed-meta">
+          <span class="feed-tag">{project.data.tags?.[0] ?? 'Project'}</span>
+          {project.data.date && <span class="feed-date">{fmtDate(project.data.date)}</span>}
+        </div>
+        <h2 class="feed-title">
+          <a href={project.data.url ?? `${base}/projects/${project.slug}.html`} class="feed-title-link">{project.data.title}</a>
+        </h2>
+        {project.data.description && <p class="feed-excerpt">{project.data.description}</p>}
+        {project.data.tags && project.data.tags.length > 1 && (
+          <div class="feed-footer">
+            {project.data.tags.slice(1).map(t => <span class="feed-action">{t}</span>)}
+          </div>
+        )}
+      </article>
+    ))}
+    {allProjects.length === 0 && (
+      <article class="feed-item animate-in">
+        <div class="feed-meta"><span class="feed-tag">WIP</span><span class="feed-date">Now</span></div>
+        <h2 class="feed-title"><a href={`${base}/projects.html`} class="feed-title-link">Projects page is being prepared</a></h2>
+        <p class="feed-excerpt">Project cards are being curated. The dedicated Projects page currently shows a WIP placeholder until project writeups are finalized.</p>
+      </article>
+    )}
+    {allProjects.length === 0 && legacyProjectItems.map(p => (
+      <article class="feed-item animate-in">
+        <div class="feed-meta"><span class="feed-tag">{p.tag}</span></div>
+        <h2 class="feed-title">
+          <a href={p.url} class="feed-title-link" {...(p.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{p.title}</a>
+        </h2>
+        <p class="feed-excerpt">{p.excerpt}</p>
+      </article>
+    ))}
+    {allProjects.length > 0 && (
+      <article class="feed-item animate-in">
+        <div class="feed-meta"><span class="feed-tag">External</span></div>
+        <h2 class="feed-title"><a href="https://github.com/SayyakuHajime" class="feed-title-link" target="_blank" rel="noopener noreferrer">View GitHub profile →</a></h2>
+        <p class="feed-excerpt">More work available on GitHub.</p>
+      </article>
+    )}
   </div>
 
   <div slot="right-rail">

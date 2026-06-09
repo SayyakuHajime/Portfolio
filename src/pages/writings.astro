@@ -1,6 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
+
+const allWritings = (await getCollection('writings')).sort((a, b) =>
+  (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+
+function fmtDate(s?: string) {
+  if (!s) return '';
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
 ---
 
 <BaseLayout
@@ -10,38 +20,58 @@ const base = import.meta.env.BASE_URL;
 >
   <div class="page-header">
     <span class="page-title">Writings</span>
-    <span class="header-meta">work in progress</span>
+    <span class="header-meta">{allWritings.length > 0 ? `${allWritings.length} pieces` : 'work in progress'}</span>
   </div>
 
   <div class="writings-intro animate-in">
     <h2>Ideas deserve<br>proper space.</h2>
-    <p>I am currently refining my long-form essays and research notes. This page will feature my best writing once the archive is ready.</p>
+    <p>{allWritings.length > 0 ? 'Long-form essays and research notes.' : 'I am currently refining my long-form essays and research notes. This page will feature my best writing once the archive is ready.'}</p>
   </div>
 
-  <section class="wip-wrap animate-in">
-    <article class="wip-card">
-      <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
-      <h2 class="wip-title">Writings archive is being curated.</h2>
-      <p class="wip-text">I'm selecting and editing to ensure they meet the quality I want for this portfolio. Check back soon for the full collection.</p>
-      <div class="wip-actions">
-        <a href={`${base}/`} class="wip-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to Home
-        </a>
-        <a href={`${base}/notes.html`} class="wip-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
-          Browse Study Notes
-        </a>
+  {allWritings.map(w => (
+    <article class="note-item animate-in">
+      <div>
+        <h2 class="note-title">
+          <a href={`${base}/writings/${w.slug}.html`} class="note-title-link">{w.data.title}</a>
+        </h2>
+        {(w.data.excerpt ?? w.data.description) && <p class="note-desc">{w.data.excerpt ?? w.data.description}</p>}
+        <div class="note-meta">
+          {w.data.tags?.map(t => <span class="tag">{t}</span>)}
+          {w.data.date && <span class="tag">{fmtDate(w.data.date)}</span>}
+        </div>
       </div>
-      <p class="wip-kitty">pen scratching noises in progress</p>
     </article>
-  </section>
+  ))}
+
+  {allWritings.length === 0 && (
+    <section class="wip-wrap animate-in">
+      <article class="wip-card">
+        <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
+        <h2 class="wip-title">Writings archive is being curated.</h2>
+        <p class="wip-text">I'm selecting and editing to ensure they meet the quality I want for this portfolio. Check back soon for the full collection.</p>
+        <div class="wip-actions">
+          <a href={`${base}/`} class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Home
+          </a>
+          <a href={`${base}/notes.html`} class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+            Browse Study Notes
+          </a>
+        </div>
+        <p class="wip-kitty">pen scratching noises in progress</p>
+      </article>
+    </section>
+  )}
 
   <div slot="right-rail">
     <div class="card animate-in">
       <div class="card-section"><p class="card-title">Writing Desk</p></div>
       <div class="divider"></div>
-      <div class="wip-side-note"><p><strong>Status:</strong> Drafts being polished.</p><p>Focusing on quality over quantity.</p></div>
+      <div class="wip-side-note">
+        <p><strong>Status:</strong> {allWritings.length > 0 ? `${allWritings.length} pieces published.` : 'Drafts being polished.'}</p>
+        <p>{allWritings.length > 0 ? 'More coming soon.' : 'Focusing on quality over quantity.'}</p>
+      </div>
     </div>
     <div class="card animate-in">
       <div class="card-section"><p class="card-title">Topics</p></div>

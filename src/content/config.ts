@@ -14,4 +14,27 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { notes };
+const projects = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    date: z.string().optional(),
+    url: z.string().optional(),
+    status: z.string().optional().default('published'),
+  }),
+});
+
+const writings = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    excerpt: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    date: z.string().optional(),
+  }),
+});
+
+export const collections = { notes, projects, writings };

@@ -1,43 +1,82 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
+
+const allProjects = (await getCollection('projects')).sort((a, b) =>
+  (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+
+function fmtDate(s?: string) {
+  if (!s) return '';
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
 ---
 
 <BaseLayout title="Projects — Sayyaku" activePage="projects">
   <div class="page-header">
     <span class="page-title">Projects</span>
-    <span class="header-meta">work in progress</span>
+    <span class="header-meta">{allProjects.length > 0 ? `${allProjects.length} projects` : 'work in progress'}</span>
   </div>
 
-  <div class="projects-intro animate-in">
-    <h2>Project garden is sleeping,<br>for now.</h2>
-    <p>This page is being rebuilt. I will publish projects here once I finish curating the list and writing proper notes for each build.</p>
-  </div>
+  {allProjects.length > 0 && (
+    <section class="notes-intro animate-in">
+      <h2>Things I've built.</h2>
+      <p>A collection of projects and experiments.</p>
+    </section>
+  )}
 
-  <section class="wip-wrap animate-in">
-    <article class="wip-card">
-      <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
-      <h2 class="wip-title">Projects section is under construction.</h2>
-      <p class="wip-text">I am currently preparing cleaner writeups and project summaries. No public project cards are shown yet on this page.</p>
-      <div class="wip-actions">
-        <a href={`${base}/`} class="wip-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to Home
-        </a>
-        <a href="https://github.com/SayyakuHajime" class="wip-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          GitHub profile
-        </a>
+  {allProjects.map(project => (
+    <article class="note-item animate-in">
+      <div>
+        <h2 class="note-title">
+          <a href={project.data.url ?? `${base}/projects/${project.slug}.html`} class="note-title-link">{project.data.title}</a>
+        </h2>
+        {project.data.description && <p class="note-desc">{project.data.description}</p>}
+        <div class="note-meta">
+          {project.data.tags?.map(t => <span class="tag">{t}</span>)}
+          {project.data.date && <span class="tag">{fmtDate(project.data.date)}</span>}
+        </div>
       </div>
-      <p class="wip-kitty">tiny workshop noises in progress</p>
     </article>
-  </section>
+  ))}
+
+  {allProjects.length === 0 && (
+    <div class="projects-intro animate-in">
+      <h2>Project garden is sleeping,<br>for now.</h2>
+      <p>This page is being rebuilt. I will publish projects here once I finish curating the list and writing proper notes for each build.</p>
+    </div>
+  )}
+
+  {allProjects.length === 0 && (
+    <section class="wip-wrap animate-in">
+      <article class="wip-card">
+        <div class="wip-chip"><span class="wip-chip-dot"></span>WIP</div>
+        <h2 class="wip-title">Projects section is under construction.</h2>
+        <p class="wip-text">I am currently preparing cleaner writeups and project summaries. No public project cards are shown yet on this page.</p>
+        <div class="wip-actions">
+          <a href={`${base}/`} class="wip-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Home
+          </a>
+          <a href="https://github.com/SayyakuHajime" class="wip-link" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub profile
+          </a>
+        </div>
+        <p class="wip-kitty">tiny workshop noises in progress</p>
+      </article>
+    </section>
+  )}
 
   <div slot="right-rail">
     <div class="card animate-in">
       <div class="card-section"><p class="card-title">Project board</p></div>
       <div class="divider"></div>
-      <div class="wip-side-note"><p><strong>Status:</strong> in progress.</p><p>I am curating what to showcase first.</p></div>
+      <div class="wip-side-note">
+        <p><strong>Status:</strong> {allProjects.length > 0 ? `${allProjects.length} projects published.` : 'in progress.'}</p>
+        <p>{allProjects.length > 0 ? 'More coming soon.' : 'I am curating what to showcase first.'}</p>
+      </div>
     </div>
     <div class="card animate-in">
       <div class="card-section"><p class="card-title">Soon</p></div>
