@@ -520,14 +520,7 @@ mNotifyManager.notify(NOTIFICATION_ID, myNotification);
 
 **What is a Content Provider?** A component that manages access to a structured set of data, enabling secure **data sharing between apps**.
 
-**Architecture diagram:**
-```
-Activity/Adapter
-      ↓ (uses)
-ContentResolver  →  ContentProvider  →  Data (SQLite)
-      ↑
-   Returns Cursor (rows & columns)
-```
+![Content Providers and Resolvers](/assets/images/diagrams/Content Providers and Resolvers.png)
 
 1. Activity/Adapter uses `ContentResolver` to query `ContentProvider`.
 2. `ContentProvider` retrieves data.
