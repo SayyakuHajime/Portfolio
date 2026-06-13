@@ -240,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    const base = window.__PORTFOLIO_BASE__ || '';
+    navigator.serviceWorker.register(base + '/sw.js', { scope: base + '/' }).catch(() => {});
   });
 }

@@ -10,7 +10,7 @@ const allProjects = (await getCollection('projects')).sort((a, b) =>
 const allWritings = (await getCollection('writings')).sort((a, b) =>
   (b.data.date ?? '').localeCompare(a.data.date ?? ''));
 
-const noteCount = allNotes.length + 2;
+const noteCount = allNotes.length + 1; // +1 for RNN LSTM legacy tool
 const projectCount = allProjects.length;
 
 function noteCommitDate(id: string): string {

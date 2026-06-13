@@ -33,7 +33,9 @@ const collectionNotes = (await getCollection('notes'))
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
-  <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
   <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32x32.png`} />
   <link rel="icon" type="image/png" sizes="16x16" href={`${base}/favicon-16x16.png`} />
@@ -136,6 +138,7 @@ const collectionNotes = (await getCollection('notes'))
 
 </div>
 
+<script is:inline define:vars={{ portfolioBase: base }}>window.__PORTFOLIO_BASE__ = portfolioBase;</script>
 <script is:inline src={`${base}/js/app.js`} defer></script>
 <script is:inline src={`${base}/js/notes-common.js`}></script>
 </body>
