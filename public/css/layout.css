@@ -341,4 +341,5 @@ ul { list-style: none; }
 @media (max-width: 480px) {
   :root { --sp-lg: 16px; }
   .mobile-nav-trigger { top: 10px; left: 10px; width: 38px; height: 38px; }
+  .page-header { display: none; }
 }
