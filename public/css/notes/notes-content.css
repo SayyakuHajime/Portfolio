@@ -425,6 +425,16 @@
 .notes-layout-article .notes-scope ol { padding-left: 22px; margin-bottom: 12px; color: var(--ink-soft); }
 .notes-layout-article .notes-scope li { margin-bottom: 5px; font-size: 14px; line-height: 1.7; }
 
+@media (max-width: 820px) {
+  .notes-layout-article .notes-scope table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+}
+@media (max-width: 760px) {
+  :is(.notes-layout-article, .notes-layout-modular) .notes-scope { padding: 28px 20px; }
+}
+@media (max-width: 480px) {
+  :is(.notes-layout-article, .notes-layout-modular) .notes-scope { padding: 20px 14px; }
+}
+
 /* ── MATHJAX TEXT SELECTION ───────────────────────────────── */
 /* Top-level rules (outside CSS nesting) so custom-element selectors
    apply reliably across all browsers. pointer-events + user-select
