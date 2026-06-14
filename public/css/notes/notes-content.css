@@ -140,7 +140,11 @@
   pre, code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
   pre { background: var(--paper-cream); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 18px; overflow-x: auto; line-height: 1.6; }
   ul, ol { padding-left: 20px; margin-bottom: 12px; color: var(--ink-soft); }
+  ul { list-style: disc; }
+  ol { list-style: decimal; }
   li { margin-bottom: 6px; font-size: 14px; line-height: 1.7; }
+  li > ul { list-style: circle; margin-top: 4px; }
+  li > ol { margin-top: 4px; }
 
   .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
   .term-card { border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); padding: 12px 14px; }
