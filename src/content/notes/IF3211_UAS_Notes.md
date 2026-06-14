@@ -49,6 +49,21 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 - Serat otot putih manusia dapat menghasilkan laktat bahkan dalam kondisi aerob (cepat tetapi tidak efisien)
 - Fermentasi asam laktat oleh jamur/bakteri digunakan untuk membuat keju dan yogurt
 
+<details>
+<summary>Hands-On M7 — Komputasi Respirasi Seluler (ATP, Inhibitor, Fermentasi)</summary>
+
+**Neraca ATP modern (P/O ratio):**
+- NADH → 2.5 ATP; FADH₂ → 1.5 ATP
+- 10 NADH × 2.5 + 2 FADH₂ × 1.5 + 4 ATP (substrat) = **32 ATP** per glukosa
+
+**Asam lemak vs glukosa:** Asam lemak lebih padat energi per massa karena derajat reduksi C–H lebih tinggi. β-oksidasi menghasilkan FADH₂ + NADH per siklus → lebih banyak ATP per karbon.
+
+**DNP (uncoupler):** Membawa H⁺ melewati membran dalam mitokondria tanpa melalui ATP sintase → gradien proton bocor → ATP sintase kehilangan driving force → RTE tetap berjalan dan O₂ tetap dikonsumsi, tetapi ATP tidak terbentuk. Energi terbuang sebagai panas.
+
+**Fermentasi butirat (NIM):** ATP total ≈ 2–3 (hanya glikolisis). Walaupun jauh lebih sedikit dari respirasi aerobik (~30–32 ATP), fermentasi penting saat O₂ drop mendadak — meregenerasi NAD⁺ agar glikolisis tetap berlanjut dan sel mendapat sumber ATP cepat.
+
+</details>
+
 ---
 
 ## Bab 9 — Siklus Sel
@@ -103,6 +118,20 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 - Tumor terlokalisasi: diobati dengan radiasi; tumor metastatik: diobati dengan **kemoterapi**
 - Efek samping kemoterapi karena obat juga memengaruhi sel normal yang sering membelah
 
+<details>
+<summary>Hands-On M8 — Komputasi Siklus Sel (Simulasi Populasi & Checkpoint)</summary>
+
+**Proporsi sel per fase ∝ durasi fase** (asumsi steady-state populasi):
+$$P_{\text{fase}} = t_{\text{fase}} / T_{\text{total}}$$
+
+Parameter NIM 13523009: G₁=12j (41.4%), S=11j (37.9%), G₂=6j (20.7%), M=2j (6.9%), total=29j.
+
+**Checkpoint G₂ delay:** G₂ bertambah 6j→8j → total siklus 29j→31j → proporsi G₂ naik 20.7%→25.8% → semua fase lain turun. Pertumbuhan populasi melambat karena satu siklus lebih lama; sel yang lolos tanpa checkpoint lengkap → instabilitas kromosom.
+
+**Refleksi:** Fase lebih lama → proporsi lebih besar, seperti kendaraan lambat lebih sering terlihat di pos observasi. Checkpoint G₁ mencegah replikasi DNA rusak; G₂ mencegah pembelahan dengan DNA tidak lengkap; M (spindle assembly) mencegah salah distribusi kromosom. Fase M terlalu singkat → aneuploidi; terlalu panjang → pertumbuhan terhambat.
+
+</details>
+
 ---
 
 ## Bab 19 — Evolusi: Penurunan dengan Modifikasi
@@ -139,6 +168,25 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 - Evolusi konvergen (fitur analogis): sugar glider vs. tupai terbang — BUKAN bukti leluhur bersama
 - **Biogeografi** = ilmu tentang distribusi geografis spesies
 
+<details>
+<summary>Hands-On M11 — Komputasi Evolusi Populasi (Hardy-Weinberg & Seleksi)</summary>
+
+**Hardy–Weinberg (null model):** $f_{AA}=p^2,\; f_{Aa}=2pq,\; f_{aa}=q^2$. Tanpa evolusi, frekuensi alel *invariant* ($|p'-p|<10^{-12}$). Deviasi dari HWE = tanda evolusi sedang terjadi.
+
+**3 mode seleksi — fitness genotipe & ekuilibrium:**
+
+| Mode | $w_{AA}$ | $w_{Aa}$ | $w_{aa}$ | $p^*$ | Stabil? |
+|------|----------|----------|----------|-------|---------|
+| Directional | 1 | $1-hs$ | $1-s$ | 1 | Ya |
+| Heterozygote advantage | $1-s_1$ | 1 | $1-s_2$ | $s_2/(s_1+s_2)$ | Ya |
+| Underdominance | 1 | $1-s$ | 1 | 0.5 | Tidak |
+
+**Wright–Fisher:** $k \sim \text{Binom}(2N, p')$. Drift mendominasi saat $Ns < 1$.
+
+**Heterozygote advantage (sickle-cell):** Ss memiliki resistansi malaria + tidak anemia → fitness tertinggi di daerah endemik. Ekuilibrium stabil mempertahankan kedua alel. Seleksi directional (NIM 13523009, mode 0): 50 trajektori WF konvergen ke $p^*=1$ dalam ~50–150 generasi; sebagian mencapai fiksasi lebih cepat akibat drift positif.
+
+</details>
+
 ---
 
 ## Bab 20 — Filogeni dan Pohon Kehidupan
@@ -169,6 +217,25 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 - Simpul/cabang internal tanpa label dapat merepresentasikan kelompok yang telah punah
 - Hanya **homologi** (BUKAN analogi) yang dapat digunakan untuk menyimpulkan hubungan filogenetik
 - Analogi = kemiripan dari evolusi konvergen → TIDAK menunjukkan leluhur bersama
+
+<details>
+<summary>Hands-On M12 — Komputasi Filogeni (Tumbuhan Darat)</summary>
+
+**Dataset tumbuhan:** Charophyte · Moss · Fern · Pine · Sunflower; karakter biner: Cuticle, Vascular tissue, Seeds, Pollen, Flowers.
+
+**Karakter ancestral vs derived:**
+- *Shared derived (synapomorfi):* Vascular tissue (Tracheophyta); Seeds (Spermatophyta)
+- *Shared ancestral (plesiomorfi):* Cuticle — semua ingroup memilikinya → tidak informatif untuk memisahkan subclade
+- *Ambigu:* Pollen — distribusi identik dengan Seeds, tidak menambah informasi
+
+**Jarak Hamming:** Terkecil = Pine–Sunflower (1) → sister taxa; Terbesar = Charophyte–Sunflower (5).
+
+**UPGMA — Newick:** `((Pine:0.50,Sunflower:0.50):1.25,(Fern:0.75,(Charophyte:0.50,Moss:0.50):0.25):1.00);`
+Keterbatasan: mengasumsikan molecular clock konstan; tidak mempertimbangkan homoplasi.
+
+**Refleksi kritis:** Homologi > analogi karena mencerminkan warisan nyata, bukan konvergensi kebetulan. Outgroup menentukan akar (kondisi ancestral vs derived). Terlalu sedikit karakter → hasil tidak stabil; data morfologi tetap berguna untuk fosil yang tidak punya DNA.
+
+</details>
 
 ---
 
@@ -223,6 +290,24 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 - **Suksesi sekunder**: dimulai di mana gangguan menyingkirkan sebagian besar tetapi TIDAK semua organisme (mis. setelah kebakaran)
 - Aktivitas manusia = gangguan **terkuat** pada ekosistem; umumnya **mengurangi** keanekaragaman spesies
 
+<details>
+<summary>Hands-On M13 — Komputasi Ekologi Komunitas (Stepa Mongolia)</summary>
+
+**Model Lotka-Volterra dengan K (logistik):**
+$$\frac{dx}{dt} = r_x x\!\left(1-\frac{x}{K}\right) - \alpha xy, \quad \frac{dy}{dt} = \beta xy - \gamma y$$
+
+Ekuilibrium: $x^* = \gamma/\beta$, $y^* = r(1-x^*/K)/\alpha$. Model logistik meredam osilasi → konvergen ke titik tetap (berbeda dari LV klasik tanpa K yang berosilasi netral).
+
+**Indeks Shannon:** $H' = -\sum p_i \ln p_i$; evenness $J = H'/\ln S$. Komunitas dengan richness lebih tinggi bisa memiliki H' lebih rendah jika distribusi sangat tidak merata.
+
+**Island Biogeography:** $S = cA^z$; nilai $z$ tipikal 0.20–0.35. Fragmentasi hutan 100 km² → 4 fragmen 25 km² masing-masing hanya mempertahankan ~71% spesies semula ($(25/100)^{0.246}$); penurunan nyata bisa jauh lebih besar karena edge effect.
+
+**Keystone species (Serigala Abu-abu, Stepa Mongolia):** out-degree tinggi (memangsa 4 spesies herbivora) tanpa predator di atasnya. Hilangnya serigala → *trophic cascade*: herbivora meledak → overgrazing → desertifikasi. Selaras dengan studi reintroduksi serigala Yellowstone.
+
+**IDH di Terumbu Karang:** Badai sedang mencegah dominansi karang masif tunggal, membuka ruang bagi karang bercabang → keanekaragaman optimal.
+
+</details>
+
 ---
 
 ## Bab 42 — Ekosistem dan Energi
@@ -276,6 +361,28 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 - Tumbuhan mengendalikan jumlah nutrien yang meninggalkan ekosistem hutan utuh
 - **Bioremediasi** = penggunaan organisme (prokariota, jamur, tumbuhan) untuk mendetoksifikasi ekosistem tercemar
 - **Augmentasi biologis** = penggunaan organisme untuk **menambahkan** bahan esensial ke ekosistem yang terdegradasi (mis. lupin pengikat nitrogen untuk menambah N; simbiont mikoriza untuk meningkatkan akses nutrien)
+
+<details>
+<summary>Hands-On M14 — Komputasi Ekosistem (Temperate Grassland)</summary>
+
+**Aliran Energi (NPP = 600 g/m²/yr, efisiensi 12%):**
+
+| Level | Energi (kJ/m²/yr) | % dari NPP |
+|-------|-------------------|-----------|
+| Produsen (NPP) | 12 000 | 100% |
+| Konsumen primer | 1 440 | 12% |
+| Konsumen sekunder | 172.8 | 1.44% |
+| Konsumen tersier | 20.7 | 0.17% |
+
+**Salt Marsh Teal (1962):** GPP rumput / solar = 5.76%; NPP/solar = 1.10%; respirasi rumput = 27 995 kcal/m²/yr.
+
+**R1 — Energi mengalir, bukan berdaur:** Setiap transfer energi kehilangan ~88% (hukum termodinamika II) sebagai panas → tidak dapat digunakan ulang. Atom N, C, P bersiklus karena tidak rusak saat digunakan.
+
+**R2 — Faktor pembatas NPP Temperate Grassland:** (1) Ketersediaan air (curah hujan 400–900 mm/yr vs >2000 mm/yr hutan hujan); (2) Musim dingin — suhu rendah menghentikan fotosintesis beberapa bulan per tahun.
+
+**R4 — Restorasi Succulent Karoo (augmentasi biologis):** Spesies sukulen asli + legum ditambahkan untuk memulihkan jalur nitrifikasi dan amonifikasi yang rusak akibat overgrazing. Ini *augmentasi biologis* (menambahkan fungsi), bukan bioremediation (mendetoksifikasi polutan).
+
+</details>
 
 ---
 
