@@ -3,7 +3,7 @@ import NotesLayout from '../../layouts/NotesLayout.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<NotesLayout title="Notes Viewer — Sayyaku" activeNote="md-viewer" hideHeader={true}>
+<NotesLayout title="Notes Viewer — Sayyaku" activeNote="md-viewer">
   <Fragment slot="head">
     <script is:inline>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{scale:1.05,fontCache:'global'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
     <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"

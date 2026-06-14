@@ -5,9 +5,6 @@ interface Props {
   title: string;
   activeNote?: string;
   activeSlug?: string;
-  pageTitle?: string;
-  pageMeta?: string;
-  hideHeader?: boolean;
   useKatex?: boolean;
   ogTitle?: string;
   ogDescription?: string;
@@ -17,9 +14,6 @@ const {
   title,
   activeNote = '',
   activeSlug = '',
-  pageTitle = '',
-  pageMeta = '',
-  hideHeader = false,
   useKatex = false,
   ogTitle,
   ogDescription,
@@ -125,12 +119,6 @@ const collectionNotes = (await getCollection('notes'))
 
   <!-- MAIN -->
   <main class="main-content" id="main-content" style="max-width:none;flex:1;min-width:0;">
-    {!hideHeader && (
-      <div class="page-header">
-        <span class="page-title" id="pg-title">{pageTitle}</span>
-        <span class="header-meta" id="pg-meta">{pageMeta}</span>
-      </div>
-    )}
     <slot />
   </main>
 
