@@ -49,8 +49,10 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 - Serat otot putih manusia dapat menghasilkan laktat bahkan dalam kondisi aerob (cepat tetapi tidak efisien)
 - Fermentasi asam laktat oleh jamur/bakteri digunakan untuk membuat keju dan yogurt
 
+### Hands-On M7 — Komputasi Respirasi Seluler
+
 <details>
-<summary>Hands-On M7 — Komputasi Respirasi Seluler (ATP, Inhibitor, Fermentasi)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Neraca ATP — Metode Perhitungan Modern (P/O ratio):**
 - NADH → 2.5 ATP; FADH₂ → 1.5 ATP
@@ -133,8 +135,10 @@ Semua jenis fermentasi hanya menghasilkan 2 ATP neto (dari glikolisis saja). Nam
 - Tumor terlokalisasi: diobati dengan radiasi; tumor metastatik: diobati dengan **kemoterapi**
 - Efek samping kemoterapi karena obat juga memengaruhi sel normal yang sering membelah
 
+### Hands-On M8 — Komputasi Siklus Sel
+
 <details>
-<summary>Hands-On M8 — Komputasi Siklus Sel (Simulasi Populasi & Checkpoint)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Model Komputasional 1 — Proporsi Sel per Fase:**
 
@@ -196,8 +200,10 @@ $g$ = growth factor (jumlah sel anak per sel induk). Ketika siklus memanjang (mi
 - Evolusi konvergen (fitur analogis): sugar glider vs. tupai terbang — BUKAN bukti leluhur bersama
 - **Biogeografi** = ilmu tentang distribusi geografis spesies
 
+### Hands-On M11 — Komputasi Evolusi Populasi
+
 <details>
-<summary>Hands-On M11 — Komputasi Evolusi Populasi (Hardy-Weinberg, Seleksi, Drift)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Hardy–Weinberg sebagai Null Model:**
 
@@ -258,8 +264,10 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 - Hanya **homologi** (BUKAN analogi) yang dapat digunakan untuk menyimpulkan hubungan filogenetik
 - Analogi = kemiripan dari evolusi konvergen → TIDAK menunjukkan leluhur bersama
 
+### Hands-On M12 — Komputasi Filogeni
+
 <details>
-<summary>Hands-On M12 — Komputasi Filogeni (Pohon Evolusi, UPGMA, Jarak Sekuens)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Membaca Pohon Filogenetik:**
 - **Clade** = leluhur bersama + semua keturunannya
@@ -349,8 +357,10 @@ Homologi mencerminkan pewarisan dari leluhur bersama → mengikuti sejarah evolu
 - **Suksesi sekunder**: dimulai di mana gangguan menyingkirkan sebagian besar tetapi TIDAK semua organisme (mis. setelah kebakaran)
 - Aktivitas manusia = gangguan **terkuat** pada ekosistem; umumnya **mengurangi** keanekaragaman spesies
 
+### Hands-On M13 — Komputasi Ekologi Komunitas
+
 <details>
-<summary>Hands-On M13 — Komputasi Ekologi Komunitas (Lotka-Volterra, Shannon, Food Web)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Model Lotka-Volterra dengan Daya Dukung (K):**
 $$\frac{dx}{dt} = r_x x\!\left(1-\frac{x}{K}\right) - \alpha xy \quad \text{(prey)}, \qquad \frac{dy}{dt} = \beta xy - \gamma y \quad \text{(predator)}$$
@@ -437,8 +447,10 @@ Nilai $z$ tipikal: 0.20–0.35. Fragmentasi habitat memotong konektivitas dan me
 - **Bioremediasi** = penggunaan organisme (prokariota, jamur, tumbuhan) untuk mendetoksifikasi ekosistem tercemar
 - **Augmentasi biologis** = penggunaan organisme untuk **menambahkan** bahan esensial ke ekosistem yang terdegradasi (mis. lupin pengikat nitrogen untuk menambah N; simbiont mikoriza untuk meningkatkan akses nutrien)
 
+### Hands-On M14 — Komputasi Ekosistem
+
 <details>
-<summary>Hands-On M14 — Komputasi Ekosistem (Aliran Energi, Siklus Nutrien, Restorasi)</summary>
+<summary>Buka penjelasan komputasional</summary>
 
 **Menghitung Piramida Energi:**
 1. Konversi NPP: $\text{NPP}_{kJ} = \text{NPP}_{g} \times 20\, \text{kJ/g}$ (1 g dry mass biomassa ≈ 20 kJ)
