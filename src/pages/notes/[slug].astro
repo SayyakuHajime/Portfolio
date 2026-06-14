@@ -25,6 +25,8 @@ const coverLabel = [data.course, data.subject, data.exam].filter(Boolean).join('
   pageTitle={data.title}
   pageMeta={pageMeta}
   useKatex={true}
+  ogTitle={`${data.title} — Sayyaku Notes`}
+  ogDescription={data.subject ?? data.topics?.slice(0, 3).join(', ')}
 >
   <!-- Cover block -->
   <div class="notes-cover">

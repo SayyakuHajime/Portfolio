@@ -1,13 +1,13 @@
-const CACHE = 'portfolio-v1';
+const CACHE = 'portfolio-v2';
+const BASE = '/Portfolio';
 const STATIC = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/css/notes/notes.css',
-  '/js/app.js',
-  '/js/theme-init.js',
-  '/js/notes-common.js',
-  '/404.html',
+  BASE + '/',
+  BASE + '/index.html',
+  BASE + '/css/style.css',
+  BASE + '/css/notes/notes.css',
+  BASE + '/js/app.js',
+  BASE + '/js/notes-common.js',
+  BASE + '/404.html',
 ];
 
 self.addEventListener('install', e => {
@@ -34,7 +34,7 @@ self.addEventListener('fetch', e => {
     e.respondWith(
       fetch(request)
         .then(r => { caches.open(CACHE).then(c => c.put(request, r.clone())); return r; })
-        .catch(() => caches.match(request).then(r => r || caches.match('/404.html')))
+        .catch(() => caches.match(request).then(r => r || caches.match(BASE + '/404.html')))
     );
     return;
   }

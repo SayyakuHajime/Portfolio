@@ -21,7 +21,8 @@ const base = import.meta.env.BASE_URL;
   {ogTitle && <meta property="og:title" content={ogTitle} />}
   {ogDescription && <meta property="og:description" content={ogDescription} />}
   {(ogTitle || ogDescription) && <meta property="og:type" content="website" />}
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';" />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
@@ -38,6 +39,7 @@ const base = import.meta.env.BASE_URL;
   <script is:inline define:vars={{ portfolioBase: base }}>window.__PORTFOLIO_BASE__ = portfolioBase;</script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <div class="site-wrapper">
 
@@ -46,7 +48,7 @@ const base = import.meta.env.BASE_URL;
     <div class="sidebar-logo">
       <a href={`${base}/`} class="sidebar-site-name" aria-label="Home">Sayyaku</a>
     </div>
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" aria-label="Site navigation">
       <a href={`${base}/`} class:list={['nav-item', { active: activePage === 'home' }]} data-page="index.html">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
         <span class="nav-label">Home</span>
@@ -72,17 +74,17 @@ const base = import.meta.env.BASE_URL;
       <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
       <span class="theme-toggle-label">Light</span>
     </button>
-    <div class="sidebar-profile">
-      <div class="avatar">S</div>
+    <a href={`${base}/about.html`} class="sidebar-profile" aria-label="About Sayyaku">
+      <div class="avatar" aria-hidden="true">S</div>
       <div class="profile-info">
         <div class="profile-name">Sayyaku</div>
         <div class="profile-handle">@SayyakuHajime</div>
       </div>
-    </div>
+    </a>
   </aside>
 
   <!-- ── MAIN ── -->
-  <main class="main-content">
+  <main class="main-content" id="main-content">
     <slot />
   </main>
 

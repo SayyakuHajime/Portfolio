@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
@@ -67,6 +68,19 @@ function remarkAlerts() {
   };
 }
 
+/** Adds loading="lazy" to all <img> elements in rendered markdown. */
+function rehypeAddLazyLoading() {
+  return (tree) => {
+    function walk(node) {
+      if (node.type === 'element' && node.tagName === 'img') {
+        node.properties = { ...(node.properties ?? {}), loading: 'lazy' };
+      }
+      if (node.children) node.children.forEach(walk);
+    }
+    walk(tree);
+  };
+}
+
 /** Adds class="math-block" to <p> elements that contain only a KaTeX span
  *  (display math). Runs after rehypeKatex so the .katex span already exists.
  *  Property mutations on existing nodes work in Astro 5's rehype pipeline. */
@@ -92,13 +106,14 @@ export default defineConfig({
   site: 'https://sayyakuhajime.github.io',
   base: BASE,
   output: 'static',
+  integrations: [sitemap()],
   build: {
     format: 'file',
   },
   trailingSlash: 'never',
   markdown: {
     remarkPlugins: [remarkMath, remarkAlerts, remarkFixPaths],
-    rehypePlugins: [rehypeKatex, rehypeMarkMathBlocks],
+    rehypePlugins: [rehypeKatex, rehypeAddLazyLoading, rehypeMarkMathBlocks],
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',

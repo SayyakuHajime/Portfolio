@@ -5,7 +5,13 @@ const base = import.meta.env.BASE_URL;
 const collectionNotes = (await getCollection('notes')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="Notes - Sayyaku" description="Modular notes archive and templates." activePage="notes">
+<BaseLayout
+  title="Notes — Sayyaku"
+  description="Study notes and modular reference material for computer science courses — ML, mobile dev, algorithms, and more."
+  ogTitle="Notes — Sayyaku"
+  ogDescription="Study notes and modular reference material for CS courses."
+  activePage="notes"
+>
   <div class="page-header">
     <span class="page-title">Notes</span>
     <span class="header-meta">modular archive</span>

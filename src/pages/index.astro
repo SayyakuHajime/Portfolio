@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 const base = import.meta.env.BASE_URL;
 
 const allNotes = (await getCollection('notes')).sort((a, b) => a.data.order - b.data.order);
@@ -15,10 +15,12 @@ const projectCount = allProjects.length;
 
 function noteCommitDate(id: string): string {
   try {
-    return execSync(
-      `git log --follow --diff-filter=A --format="%aI" -- "src/content/notes/${id}"`,
+    const result = spawnSync(
+      'git',
+      ['log', '--follow', '--diff-filter=A', '--format=%aI', '--', `src/content/notes/${id}`],
       { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }
-    ).trim();
+    );
+    return result.stdout?.trim() ?? '';
   } catch {
     return '';
   }

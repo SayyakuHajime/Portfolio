@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sayyakuhajime.github.io/Portfolio/sitemap-index.xml

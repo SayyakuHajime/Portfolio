@@ -9,6 +9,8 @@ interface Props {
   pageMeta?: string;
   hideHeader?: boolean;
   useKatex?: boolean;
+  ogTitle?: string;
+  ogDescription?: string;
 }
 
 const {
@@ -19,6 +21,8 @@ const {
   pageMeta = '',
   hideHeader = false,
   useKatex = false,
+  ogTitle,
+  ogDescription,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -36,6 +40,10 @@ const collectionNotes = (await getCollection('notes'))
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+  {ogTitle && <meta property="og:title" content={ogTitle} />}
+  {ogDescription && <meta property="og:description" content={ogDescription} />}
+  {(ogTitle || ogDescription) && <meta property="og:type" content="article" />}
   <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
   <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32x32.png`} />
   <link rel="icon" type="image/png" sizes="16x16" href={`${base}/favicon-16x16.png`} />
@@ -62,6 +70,7 @@ const collectionNotes = (await getCollection('notes'))
   <link rel="stylesheet" href={`${base}/css/notes/notes.css`} />
 </head>
 <body class="notes-layout-article">
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <canvas class="cursor-trail-canvas" id="cursorTrailCanvas"></canvas>
 <div class="cursor-pointer" id="cursorPointer"></div>
@@ -76,7 +85,7 @@ const collectionNotes = (await getCollection('notes'))
         <span>All Notes</span>
       </a>
     </div>
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" aria-label="Notes navigation">
       <!-- Dynamic: content collection notes -->
       {collectionNotes.map(note => (
         <a
@@ -105,17 +114,17 @@ const collectionNotes = (await getCollection('notes'))
       <span class="theme-toggle-icon" aria-hidden="true">&#9728;</span>
       <span class="theme-toggle-label">Light</span>
     </button>
-    <div class="sidebar-profile">
-      <div class="avatar">S</div>
+    <a href={`${base}/about.html`} class="sidebar-profile" aria-label="About Sayyaku">
+      <div class="avatar" aria-hidden="true">S</div>
       <div class="profile-info">
         <div class="profile-name">Sayyaku</div>
         <div class="profile-handle">@SayyakuHajime</div>
       </div>
-    </div>
+    </a>
   </aside>
 
   <!-- MAIN -->
-  <main class="main-content" style="max-width:none;flex:1;min-width:0;">
+  <main class="main-content" id="main-content" style="max-width:none;flex:1;min-width:0;">
     {!hideHeader && (
       <div class="page-header">
         <span class="page-title" id="pg-title">{pageTitle}</span>
@@ -140,6 +149,6 @@ const collectionNotes = (await getCollection('notes'))
 
 <script is:inline define:vars={{ portfolioBase: base }}>window.__PORTFOLIO_BASE__ = portfolioBase;</script>
 <script is:inline src={`${base}/js/app.js`} defer></script>
-<script is:inline src={`${base}/js/notes-common.js`}></script>
+<script is:inline src={`${base}/js/notes-common.js`} defer></script>
 </body>
 </html>
