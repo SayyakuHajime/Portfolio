@@ -79,6 +79,43 @@ Uncoupler berbeda dari inhibitor: RTE tetap berjalan dan O₂ tetap dikonsumsi, 
 **Fermentasi — Mengapa Penting Meski Tidak Efisien:**
 Semua jenis fermentasi hanya menghasilkan 2 ATP neto (dari glikolisis saja). Namun fungsinya adalah **meregenerasi NAD⁺** agar glikolisis dapat terus berlanjut saat O₂ tidak tersedia. Tanpa regenerasi NAD⁺, glikolisis berhenti total dan sel tidak dapat menghasilkan ATP sama sekali.
 
+**Kode — Neraca ATP per glukosa:**
+```python
+ATP_PER_NADH, ATP_PER_FADH2 = 2.5, 1.5          # modern P/O ratio
+
+total_nadh  = 2 + 2 + 6   # glikolisis + oks-piruvat + krebs (×2 putaran)
+total_fadh2 = 2            # krebs saja
+atp_substrate = 4          # glikolisis (2) + krebs substrate-level (2)
+total_atp = atp_substrate + total_nadh * ATP_PER_NADH + total_fadh2 * ATP_PER_FADH2
+# = 4 + 25.0 + 3.0 = 32.0 ATP per glukosa
+```
+
+**Kode — β-Oksidasi Asam Lemak:**
+```python
+def hitung_atp_fatty_acid(chain_len, n_betaox, n_acetylCoA):
+    atp_bo    = n_betaox * (ATP_PER_NADH + ATP_PER_FADH2)        # per siklus
+    atp_krebs = n_acetylCoA * (1 + 3*ATP_PER_NADH + ATP_PER_FADH2)  # 10 per asetil-CoA
+    return atp_bo + atp_krebs - 2    # −2 biaya aktivasi (ATP ekuivalen)
+# Contoh C16: n_betaox=7, n_acetylCoA=8 → 106.0 ATP total (6.625 ATP/karbon vs 5.33 glukosa)
+```
+
+**Kode — Simulasi Inhibitor:**
+```python
+inhibitors = {
+    'Oligomisin':      {'target': 'ATP Synthase',         'blocks': 'FosOks'},
+    'Rotenon':         {'target': 'Kompleks I (NADH-DH)', 'blocks': 'FosOks'},
+    'DNP (uncoupler)': {'target': 'Membran gradien H⁺',  'blocks': 'FosOks'},
+}
+blocked_atp = atp_ox_total * (red_pct / 100)
+atp_with_inhibitor = total_atp - blocked_atp
+```
+
+![Alur respirasi seluler: Glikolisis → Krebs → FosOks](/img/notes/if3211/respirasi_alur.png)
+![Distribusi produksi ATP per komponen (P/O modern)](/img/notes/if3211/neraca_atp.png)
+![ATP per karbon: asam lemak vs glukosa](/img/notes/if3211/atp_per_karbon_fa_vs_glukosa.png)
+![Dampak inhibitor terhadap total ATP](/img/notes/if3211/simulasi_inhibitor_atp.png)
+![Perbandingan total ATP: aerobik vs fermentasi](/img/notes/if3211/komparasi_aerob_vs_fermentasi.png)
+
 </details>
 
 ---
@@ -162,6 +199,35 @@ $g$ = growth factor (jumlah sel anak per sel induk). Ketika siklus memanjang (mi
 
 **Implikasi Kanker:** Sel kanker tidak merespons checkpoint → proliferasi tanpa batas. Kemoterapi menyerang sel yang membelah cepat (termasuk sel normal yang sering membelah = efek samping).
 
+**Kode — Proporsi Fase & Pertumbuhan Populasi:**
+```python
+def proporsi_fase(durations):
+    total = sum(durations.values())
+    return {fase: dur / total for fase, dur in durations.items()}
+# Misal {G1:11, S:8, G2:4, M:2} → G1=44%, S=32%, G2=16%, M=8%
+
+def simulasi_populasi(initial_cells, cycle_hours, growth_factor, observation_hours):
+    waktu, sel = [0], [initial_cells]
+    t, n = 0, initial_cells
+    while t + cycle_hours <= observation_hours:
+        t += cycle_hours
+        n *= growth_factor
+        waktu.append(t)
+        sel.append(n)
+    return waktu, sel
+# g=1.9 per siklus, cycle=25h, obs=72h → 2 siklus selesai
+
+def checkpoint_delay(durations, checkpoint_type):
+    perturbed = durations.copy()
+    delays = {'g1_delay': ('G1', 2), 's_delay': ('S', 2),
+              'g2_delay': ('G2', 2), 'm_delay': ('M', 1)}
+    if checkpoint_type in delays:
+        fase, dt = delays[checkpoint_type]
+        perturbed[fase] += dt
+    return perturbed
+# Delay memperpanjang siklus → laju pertumbuhan populasi menurun
+```
+
 </details>
 
 ---
@@ -230,6 +296,29 @@ Pola: $Ns \ll 1$ → drift mendominasi; $Ns \gg 1$ → seleksi mendominasi. Pada
 Saat frekuensi A terlalu tinggi, frekuensi AA naik dan rata-rata fitness turun (karena $w_{AA} < w_{Aa}$). Saat A terlalu rendah, frekuensi aa naik dan fitness juga turun. Sistem memiliki satu titik ekuilibrium stabil yang memaksimalkan $\bar{w}$.
 
 Contoh sickle-cell: Ss (heterozigot) → resistansi malaria + tidak anemia berat. Di daerah endemik malaria, alel $s$ dipertahankan ~20% karena manfaat Ss melebihi kerugian ss.
+
+**Kode — Seleksi Deterministik & Genetic Drift:**
+```python
+def next_p(p, w11, w12, w22):
+    q    = 1 - p
+    wbar = p**2*w11 + 2*p*q*w12 + q**2*w22
+    return (p**2*w11 + p*q*w12) / wbar   # rekursif satu generasi
+
+def wf_step(p, N, w11, w12, w22, rng):
+    p_sel = next_p(p, w11, w12, w22)     # koreksi seleksi dulu
+    k     = rng.binomial(2*N, p_sel)     # sampling stokastik (2N alel)
+    return k / (2*N)
+
+# R=50 ulangan, iterasi G generasi
+trajs = np.empty((R, G+1))
+for r in range(R):
+    trajs[r, 0] = p0
+    for t in range(G):
+        trajs[r, t+1] = wf_step(trajs[r, t], N, w11, w12, w22, rng)
+
+fixation_pr   = np.mean(trajs[:, -1] == 1.0)   # Pr(alel A terfiksasi)
+extinction_pr = np.mean(trajs[:, -1] == 0.0)   # Pr(alel A punah)
+```
 
 </details>
 
@@ -301,6 +390,33 @@ Homologi mencerminkan pewarisan dari leluhur bersama → mengikuti sejarah evolu
 **Outgroup wajib untuk rooting:** Tanpa outgroup, kita tidak dapat membedakan kondisi ancestral dari derived → arah evolusi karakter tidak dapat ditentukan.
 
 **Kapan data morfologi masih berguna:** Untuk organisme fosil yang tidak memiliki DNA yang dapat disequencing, dan sebagai verifikasi independen terhadap hasil molekuler.
+
+**Kode — Hamming Distance & UPGMA:**
+```python
+def hamming_from_character_table(df):
+    taxa = list(df.index)
+    dist = {a: {b: int((df.loc[a] != df.loc[b]).sum()) for b in taxa} for a in taxa}
+    return dist
+# Takson dengan jarak terkecil = kandidat sister taxa
+
+def pairwise_seq_distance(seqs):
+    taxa = list(seqs.keys())
+    dist = {a: {b: sum(x != y for x, y in zip(seqs[a], seqs[b])) for b in taxa} for a in taxa}
+    return dist
+
+def upgma(distance_df):
+    # Greedy: gabungkan dua kluster titerdekat, perbarui jarak (rata-rata)
+    # Tinggi cabang = jarak_minimum / 2
+    # Output: Newick string, misal "(Lancelet:0.50,(Lamprey:0.25,Bass:0.25):0.25);"
+    clusters = {name: [name] for name in distance_df.index}
+    while len(clusters) > 1:
+        a, b = min(((i,j) for i in clusters for j in clusters if i<j),
+                   key=lambda p: distance_df.loc[p[0], p[1]])
+        new_h = distance_df.loc[a, b] / 2
+        # update jarak ke kluster baru = rata-rata tertimbang
+        clusters[a+'+'+b] = clusters.pop(a) + clusters.pop(b)
+    # return Newick string
+```
 
 </details>
 
@@ -390,6 +506,32 @@ Nilai $z$ tipikal: 0.20–0.35. Fragmentasi habitat memotong konektivitas dan me
 - Gangguan sedang → mencegah monopoli, membuka ceruk → H' **maksimal**
 
 **Suksesi Ekologi & Shannon:** H' cenderung naik selama suksesi awal (pioneer membuka ceruk bagi spesies baru). Pada suksesi akhir, spesies klimaks kompetitif bisa mendominasi dan menekan H'.
+
+**Kode — Lotka-Volterra, Shannon, Food Web:**
+```python
+def lotka_volterra(state, t, r, K, alpha, beta, gamma):
+    x, y = state              # x=prey, y=predator
+    dxdt = r*x*(1 - x/K) - alpha*x*y
+    dydt = beta*x*y - gamma*y
+    return [dxdt, dydt]
+# Ekuilibrium: x*=γ/β, y*=r(1−x*/K)/α
+# sol = odeint(lotka_volterra, [200, 20], t, args=(0.4, 1000, 0.04, 0.005, 0.3))
+
+def shannon_diversity(counts):
+    p = np.array(counts, dtype=float); p = p[p > 0] / p.sum()
+    return -np.sum(p * np.log(p))
+
+def species_evenness(H, S):
+    return H / np.log(S) if S > 1 else 0.0   # J ∈ [0,1]
+
+# Food web — connectance
+G = nx.DiGraph(); G.add_edges_from(food_web_edges)
+C = G.number_of_edges() / G.number_of_nodes()**2   # C = E/N²
+
+# Species-Area Curve (log-log regresi)
+slope, intercept, r2, p = linregress(np.log10(A), np.log10(S))
+# log(S) = intercept + slope × log(A);  slope = z (tipikal 0.20–0.35)
+```
 
 </details>
 
@@ -487,6 +629,32 @@ Faktor pembatas NPP: **cahaya, air, suhu, nutrien**. Di darat: nitrogen paling s
 |----------|------------|--------|
 | Bioremediation | Organisme mengurai/menetralkan polutan | *Shewanella* mereduksi uranium terlarut |
 | Augmentasi biologis | Organisme memulihkan *fungsi* ekosistem yang hilang | Legum pengikat N₂, mikoriza untuk akses nutrien |
+
+**Kode — Piramida Energi & Analisis Salt Marsh:**
+```python
+# Piramida energi: transfer antar level trofik
+npp_kJ   = npp_g * 20             # 1 g dry mass ≈ 20 kJ
+eff      = eff_pct / 100          # misal 0.10 (10%)
+energies = [npp_kJ * eff**i for i in range(n_levels)]
+# Contoh Temperate Grassland (NPP=600 g): 12000 → 1200 → 120 kJ
+
+# Perbandingan NPP (data Campbell Bab 55)
+df_npp = pd.DataFrame(EKOSISTEM_LIST, columns=["Ekosistem", "NPP (g/m²/yr)"])
+df_npp = df_npp.sort_values("NPP (g/m²/yr)", ascending=True)
+
+# Analisis Salt Marsh Teal (1962)
+solar, GPP_grass, NPP_grass = 600000, 34580, 6585
+GPP_ins, detritus           = 305, 3671
+pct_GPP      = GPP_grass / solar * 100          # 5.76% — efisiensi fotosintesis
+pct_NPP      = NPP_grass / solar * 100          # 1.10%
+resp_grass   = GPP_grass - NPP_grass            # 27995 kcal — respirasi produsen
+pct_detritus = detritus / NPP_grass * 100       # 55.7% NPP masuk jalur detritivor
+eff_trophic  = GPP_ins / GPP_grass * 100        # 0.88% transfer rumput → serangga
+```
+
+![Piramida energi per level trofik](/img/notes/if3211/piramida_energi.png)
+![Perbandingan NPP antar ekosistem](/img/notes/if3211/perbandingan_npp.png)
+![Diagram siklus nutrisi](/img/notes/if3211/siklus_nutrisi.png)
 
 </details>
 
