@@ -25,9 +25,10 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 | Tahap | Lokasi | Produk Utama |
 |-------|--------|--------------|
 | Glikolisis | Sitosol | 2 ATP (neto) + 2 NADH + 2 piruvat |
-| Oksidasi piruvat + Siklus Asam Sitrat (Siklus Krebs) | Matriks mitokondria | 2 ATP + 8 NADH + 2 FADH₂ |
-| Fosforilasi oksidatif (RTE + kemiosmosis) | Membran dalam mitokondria | ~26–28 ATP |
-| **Total** | | **~30 atau 32 ATP per glukosa** |
+| Oksidasi Piruvat | Matriks mitokondria | 2 NADH + **2 CO₂** + 2 Asetil-CoA |
+| Siklus Asam Sitrat (Krebs) | Matriks mitokondria | 2 ATP + 6 NADH + 2 FADH₂ + **4 CO₂** |
+| Fosforilasi oksidatif (RTE + kemiosmosis) | Membran dalam mitokondria | ~26–28 ATP + H₂O |
+| **Total** | | **~30 atau 32 ATP + 6 CO₂** |
 
 ### Fakta Kunci — Respirasi
 - Glikolisis = **2 ATP** neto (fosforilasi tingkat substrat); berlangsung di **sitosol**
