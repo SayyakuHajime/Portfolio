@@ -4,6 +4,6 @@ description: "CV-based applicant tracking system using KMP, Boyer-Moore, and Aho
 tags: ["Python", "MySQL", "PyQt", "Pattern Matching"]
 date: "2025-06"
 url: "https://github.com/SayyakuHajime/Tubes3_hrdtulis"
-image: "https://github.com/user-attachments/assets/a18034b1-4ac5-4aaf-a3ca-aaa0618c62f1"
+image: "/img/projects/ats-system.png"
 status: "published"
 ---

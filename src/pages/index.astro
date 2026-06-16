@@ -58,7 +58,7 @@ const legacyProjectItems = [
 
 function fmtDate(s?: string) {
   if (!s) return '';
-  const d = new Date(s);
+  const d = new Date(s.length === 7 ? s + '-01T00:00:00' : s);
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 ---
@@ -183,9 +183,9 @@ function fmtDate(s?: string) {
     ))}
     {allProjects.length > 0 && (
       <article class="feed-item animate-in">
-        <div class="feed-meta"><span class="feed-tag">External</span></div>
-        <h2 class="feed-title"><a href="https://github.com/SayyakuHajime" class="feed-title-link" target="_blank" rel="noopener noreferrer">View GitHub profile →</a></h2>
-        <p class="feed-excerpt">More work available on GitHub.</p>
+        <div class="feed-meta"><span class="feed-tag">All</span></div>
+        <h2 class="feed-title"><a href={`${base}/projects.html`} class="feed-title-link">View all {allProjects.length} projects →</a></h2>
+        <p class="feed-excerpt">Full project cards with descriptions and images on the projects page.</p>
       </article>
     )}
   </div>

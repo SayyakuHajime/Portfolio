@@ -4,6 +4,6 @@ description: "Command-line Travelling Salesman Problem solver using Bitmask Dyna
 tags: ["Scala", "Dynamic Programming", "Algorithms"]
 date: "2025-06"
 url: "https://github.com/SayyakuHajime/Tugas-IF2211-TSPSolver-13523009"
-image: "https://github.com/user-attachments/assets/63018d90-3bec-4dc6-b626-61f67e45e236"
+image: "/img/projects/tsp-solver.png"
 status: "published"
 ---
