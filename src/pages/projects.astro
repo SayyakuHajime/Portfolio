@@ -8,8 +8,14 @@ const allProjects = (await getCollection('projects')).sort((a, b) =>
 
 function fmtDate(s?: string) {
   if (!s) return '';
-  const d = new Date(s + 'T00:00:00');
+  const d = new Date(s + '-01T00:00:00');
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function resolveImage(img?: string) {
+  if (!img) return null;
+  if (img.startsWith('http')) return img;
+  return `${base}${img}`;
 }
 ---
 
@@ -26,26 +32,47 @@ function fmtDate(s?: string) {
   </div>
 
   {allProjects.length > 0 && (
-    <section class="notes-intro animate-in">
+    <section class="projects-intro animate-in">
       <h2>Things I've built.</h2>
-      <p>A collection of projects and experiments.</p>
+      <p>A collection of projects and experiments — algorithms, ML systems, and tools.</p>
     </section>
   )}
 
-  {allProjects.map(project => (
-    <article class="note-item animate-in">
-      <div>
-        <h2 class="note-title">
-          <a href={project.data.url ?? `${base}/projects/${project.slug}.html`} class="note-title-link">{project.data.title}</a>
-        </h2>
-        {project.data.description && <p class="note-desc">{project.data.description}</p>}
-        <div class="note-meta">
-          {project.data.tags?.map(t => <span class="tag">{t}</span>)}
-          {project.data.date && <span class="tag">{fmtDate(project.data.date)}</span>}
-        </div>
-      </div>
-    </article>
-  ))}
+  {allProjects.map(project => {
+    const imgSrc = resolveImage(project.data.image);
+    const href = project.data.url ?? `${base}/projects/${project.slug}.html`;
+    return (
+      <article class="project-item animate-in">
+        <a href={href} class="project-title-link" target={project.data.url ? '_blank' : '_self'} rel={project.data.url ? 'noopener noreferrer' : undefined}>
+          <div class="project-header">
+            <div class="project-body">
+              <h2 class="project-name">{project.data.title}</h2>
+              {project.data.description && <p class="project-desc">{project.data.description}</p>}
+            </div>
+            {imgSrc ? (
+              <div class="project-thumb">
+                <img src={imgSrc} alt={project.data.title} loading="lazy" />
+              </div>
+            ) : (
+              <div class="project-thumb-placeholder">{'</>'}</div>
+            )}
+          </div>
+          <div class="project-footer">
+            <div class="project-stack">
+              {project.data.tags?.map(t => <span class="tag">{t}</span>)}
+              {project.data.date && <span class="tag">{fmtDate(project.data.date)}</span>}
+            </div>
+            {project.data.url && (
+              <span class="project-link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                GitHub
+              </span>
+            )}
+          </div>
+        </a>
+      </article>
+    );
+  })}
 
   {allProjects.length === 0 && (
     <div class="projects-intro animate-in">
@@ -80,14 +107,23 @@ function fmtDate(s?: string) {
       <div class="card-section"><p class="card-title">Project board</p></div>
       <div class="divider"></div>
       <div class="wip-side-note">
-        <p><strong>Status:</strong> {allProjects.length > 0 ? `${allProjects.length} projects published.` : 'in progress.'}</p>
-        <p>{allProjects.length > 0 ? 'More coming soon.' : 'I am curating what to showcase first.'}</p>
+        <p><strong>Status:</strong> {allProjects.length} projects published.</p>
+        <p>More coming soon.</p>
       </div>
     </div>
     <div class="card animate-in">
-      <div class="card-section"><p class="card-title">Soon</p></div>
+      <div class="card-section"><p class="card-title">Stack</p></div>
       <div class="divider"></div>
-      <div class="wip-side-note"><p>Expect concise cards with links, stack, and short build notes.</p></div>
+      <div class="skills-grid">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">NumPy</span>
+        <span class="skill-chip">JavaScript</span>
+        <span class="skill-chip">Java</span>
+        <span class="skill-chip">C++</span>
+        <span class="skill-chip">Scala</span>
+        <span class="skill-chip">Next.js</span>
+        <span class="skill-chip">PyQt5</span>
+      </div>
     </div>
   </div>
 </BaseLayout>
