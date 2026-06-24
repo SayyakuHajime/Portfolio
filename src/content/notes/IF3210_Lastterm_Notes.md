@@ -1,5 +1,5 @@
 ---
-title: IF3210 Mobile App Development — Comprehensive Exam Notes
+title: IF3210 Mobile App Development - Comprehensive Exam Notes
 course: IF3210
 subject: Mobile Application Development
 exam: Final Exam (80 MCQ + 5 Essay)
@@ -17,7 +17,7 @@ The lifecycle exists to help you:
 - Preserve user data/state when the user temporarily leaves, gets interrupted (phone call), or rotates the device.
 - Avoid memory leaks and app crashes.
 
-### 1.b Activity Lifecycle — Full Diagram
+### 1.b Activity Lifecycle - Full Diagram
 
 ```
 Activity launched
@@ -41,23 +41,23 @@ Activity launched
 > | Resumed | `onResume()` | Activity has input focus; user can interact. |
 > | Paused | `onPause()` | Activity lost focus (not in foreground), still visible. Counterpart to `onResume()`. |
 > | Stopped | `onStop()` | Activity no longer visible. Release unneeded resources; save persistent state. |
-> | Destroyed | `onDestroy()` | Activity about to be destroyed (user dismissed or config change). Final cleanup. **Don't rely on this to save data — do it earlier.** |
+> | Destroyed | `onDestroy()` | Activity about to be destroyed (user dismissed or config change). Final cleanup. **Don't rely on this to save data - do it earlier.** |
 
 ### 1.c Key Callback Details
 
-**`onCreate()`** — Activity is created. Inflate UI and do startup logic. Receives the saved Bundle on restart.
+**`onCreate()`** - Activity is created. Inflate UI and do startup logic. Receives the saved Bundle on restart.
 
-**`onStart()`** — Called after `onCreate()` OR after `onRestart()` (if activity was previously stopped).
+**`onStart()`** - Called after `onCreate()` OR after `onRestart()` (if activity was previously stopped).
 
-**`onResume()`** — Activity stays in resumed state until system triggers pause.
+**`onResume()`** - Activity stays in resumed state until system triggers pause.
 
-**`onPause()`** — User is not actively interacting, but activity may still be visible. Keep it fast.
+**`onPause()`** - User is not actively interacting, but activity may still be visible. Keep it fast.
 
-**`onStop()`** — Good place to save persistent state the user is editing.
+**`onStop()`** - Good place to save persistent state the user is editing.
 
-**`onDestroy()`** — Caused by: activity finished/dismissed OR configuration change (rotation). Final cleanup only.
+**`onDestroy()`** - Caused by: activity finished/dismissed OR configuration change (rotation). Final cleanup only.
 
-### 1.d Saving State — Bundle
+### 1.d Saving State - Bundle
 
 > [!insight] Key Insight
 > After a config change or termination, the activity is destroyed and restarted. The user expects the UI to look the same.
@@ -99,14 +99,14 @@ Fragment removed/destroyed:
 
 ### 2.c Key Fragment-Specific Callbacks
 
-- **`onAttach()`** — Fragment attached to its context (Activity). Immediately before `onCreate()`.
-- **`onCreateView()`** — Inflate the fragment layout here. Return the root view.
-- **`onViewCreated()`** — View hierarchy already created. Restore state from Bundle here.
-- **`onDestroyView()`** — View hierarchy removed.
-- **`onDetach()`** — Fragment no longer attached to host.
+- **`onAttach()`** - Fragment attached to its context (Activity). Immediately before `onCreate()`.
+- **`onCreateView()`** - Inflate the fragment layout here. Return the root view.
+- **`onViewCreated()`** - View hierarchy already created. Restore state from Bundle here.
+- **`onDestroyView()`** - View hierarchy removed.
+- **`onDetach()`** - Fragment no longer attached to host.
 
 > [!warn] Common Bug
-> Fragment **object** lifecycle and Fragment **view** lifecycle are not the same. After `onDestroyView()`, the view is gone but the Fragment object may still exist. Storing a reference to any view after `onDestroyView()` causes memory leaks or crashes — always clear view binding references in `onDestroyView()`.
+> Fragment **object** lifecycle and Fragment **view** lifecycle are not the same. After `onDestroyView()`, the view is gone but the Fragment object may still exist. Storing a reference to any view after `onDestroyView()` causes memory leaks or crashes - always clear view binding references in `onDestroyView()`.
 
 ### 2.d Saving Fragment State
 
@@ -130,9 +130,9 @@ onCreate() / onCreateView() / onViewCreated()
 
 Components that adjust behavior based on activity/fragment lifecycle state. Uses `androidx.lifecycle` library.
 
-- **`Lifecycle`** — Tracks lifecycle state; dispatches lifecycle events on state changes.
-- **`LifecycleOwner`** — Interface that says "this class has a lifecycle." Must implement `getLifecycle()`. Examples: `Fragment`, `AppCompatActivity`.
-- **`LifecycleObserver`** — Observes lifecycle events.
+- **`Lifecycle`** - Tracks lifecycle state; dispatches lifecycle events on state changes.
+- **`LifecycleOwner`** - Interface that says "this class has a lifecycle." Must implement `getLifecycle()`. Examples: `Fragment`, `AppCompatActivity`.
+- **`LifecycleObserver`** - Observes lifecycle events.
 
 ```kotlin
 class MyObserver : LifecycleObserver {
@@ -174,7 +174,7 @@ You can modify Back button behavior to pop multiple destinations at once (e.g., 
 
 ---
 
-## 5. App Architecture — Persistence
+## 5. App Architecture - Persistence
 
 ### 5.a Ways to Store Data
 
@@ -285,7 +285,7 @@ abstract class ColorDatabase : RoomDatabase() {
 
 ---
 
-## 6. Asynchronous Programming — Coroutines
+## 6. Asynchronous Programming - Coroutines
 
 ### 6.a Why Async?
 
@@ -302,8 +302,8 @@ Benefits: lightweight, fewer memory leaks, built-in cancellation, Jetpack integr
 
 ### 6.c Suspend and Resume
 
-- **`suspend`** — Pauses execution, saves local variables.
-- **`resume`** — Loads saved state, continues from where it paused.
+- **`suspend`** - Pauses execution, saves local variables.
+- **`resume`** - Loads saved state, continues from where it paused.
 
 ```kotlin
 // Mark DAO methods as suspend:
@@ -339,12 +339,12 @@ Must run coroutines inside a scope. Key scopes: `GlobalScope`, `viewModelScope`,
 | `async` | `Deferred<T>` | Need the result; call `.await()` to get it |
 
 ```kotlin
-// launch — no result needed
+// launch - no result needed
 fun loadUI() {
     viewModelScope.launch { fetchDocs() }
 }
 
-// async — returns a Deferred; use .await() to get the value
+// async - returns a Deferred; use .await() to get the value
 fun loadTwo() {
     viewModelScope.launch {
         val a = async { fetchA() }
@@ -367,7 +367,7 @@ class ColorViewModel(val dao: ColorDao, application: Application) : AndroidViewM
 ```
 
 > [!warn] Common Mistake
-> `viewModelScope` is automatically canceled when the ViewModel is cleared — this prevents memory leaks.
+> `viewModelScope` is automatically canceled when the ViewModel is cleared - this prevents memory leaks.
 
 ---
 
@@ -423,17 +423,17 @@ Use `Room.inMemoryDatabaseBuilder()` for tests (no real file, fast).
 - `sendBroadcast()` → delivered to **all** apps registered for that intent.
 
 **Types of Broadcasts:**
-- **System broadcasts** — sent automatically on events:
+- **System broadcasts** - sent automatically on events:
   - `android.intent.action.BOOT_COMPLETED` (after boot)
   - `android.net.wifi.WIFI_STATE_CHANGED`
 - **Custom broadcasts:**
-  - `sendBroadcast()` — asynchronous
-  - `sendOrderedBroadcast()` — synchronous
+  - `sendBroadcast()` - asynchronous
+  - `sendOrderedBroadcast()` - synchronous
   - Example: `android.example.com.CUSTOM_ACTION`
 
 > [!warn] Security Concerns
-> - Receivers cross app boundaries — use unique namespaces.
-> - Other apps can send broadcasts to your receiver — use permissions.
+> - Receivers cross app boundaries - use unique namespaces.
+> - Other apps can send broadcasts to your receiver - use permissions.
 > - Use `LocalBroadcastManager` for broadcasts only within your own app (no security issues).
 
 ```java
@@ -465,7 +465,7 @@ LocalBroadcastManager.registerReceiver(receiver, filter);
 
 **Foreground Services:**
 - User is actively aware of them (e.g., music player).
-- Higher priority — unlikely to be killed.
+- Higher priority - unlikely to be killed.
 - **Must display a notification** that the user cannot dismiss while running.
 
 **Stopping a service:**
@@ -480,8 +480,8 @@ LocalBroadcastManager.registerReceiver(receiver, filter);
 **Components:** Small icon + Title + Detail text.
 
 **Two key classes:**
-- `NotificationCompat.Builder` — specifies UI and actions; `.build()` creates the Notification.
-- `NotificationManager` / `NotificationManagerCompat` — `.notify()` issues the notification.
+- `NotificationCompat.Builder` - specifies UI and actions; `.build()` creates the Notification.
+- `NotificationManager` / `NotificationManagerCompat` - `.notify()` issues the notification.
 
 ```java
 // Step 1: Define variables
@@ -512,9 +512,9 @@ mNotifyManager.notify(NOTIFICATION_ID, myNotification);
 - **Use lowest priority possible.**
 
 **Notification Layout Styles:**
-- `BigTextStyle` — for longer text
-- `ProgressBar` — for download progress
-- `MediaStyle` — for media playback controls
+- `BigTextStyle` - for longer text
+- `ProgressBar` - for download progress
+- `MediaStyle` - for media playback controls
 
 ### 8.d Content Providers
 
@@ -534,10 +534,10 @@ mNotifyManager.notify(NOTIFICATION_ID, myNotification);
 - Standardized way of accessing data.
 - Required to work with `CursorLoaders`.
 
-**Many apps can share one Content Provider** — e.g., a Hat Store Content Provider serving both a "red hats" app and a "fancy hats" app via separate `ContentResolver` queries.
+**Many apps can share one Content Provider** - e.g., a Hat Store Content Provider serving both a "red hats" app and a "fancy hats" app via separate `ContentResolver` queries.
 
 **Implementing a Content Provider:**
-1. Data — commonly SQLite.
+1. Data - commonly SQLite.
 2. Write a **contract** (public class documenting the API).
 3. Subclass `ContentProvider` and implement methods.
 4. Get data using `ContentResolver`.
@@ -589,10 +589,10 @@ IP-based: GPRS/EDGE/3G/HSDPA/LTE/5G, Wi-Fi, Bluetooth, NFC, Telephony/SMS. Third
 - Consider a Network Security Configuration (custom CAs).
 
 **HTTP Clients:**
-- `HttpsURLConnection` — built-in, supports TLS, streaming, timeouts, IPv6, connection pooling.
-- **Retrofit** — turns HTTP API into Kotlin/Java interface; handles JSON/XML parsing.
-- **OkHttp** — industry-standard; HTTP/2, connection pooling, caching.
-- **Volley** — good for downloading files, especially images.
+- `HttpsURLConnection` - built-in, supports TLS, streaming, timeouts, IPv6, connection pooling.
+- **Retrofit** - turns HTTP API into Kotlin/Java interface; handles JSON/XML parsing.
+- **OkHttp** - industry-standard; HTTP/2, connection pooling, caching.
+- **Volley** - good for downloading files, especially images.
 
 ### 9.d Retrofit
 
@@ -623,7 +623,7 @@ val retrofit = Retrofit.Builder()
 
 ![E2E Diagram](/assets/images/diagrams/E2E_diagram.png)
 
-**Moshi** — JSON library. Configure with `Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))`.
+**Moshi** - JSON library. Configure with `Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))`.
 
 **Repository Pattern:** Encapsulates network/data operations behind a clean API. Callers don't need to know how data is stored. Isolates future storage changes.
 
@@ -734,7 +734,7 @@ override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) 
 // Register in onResume(), unregister in onPause() to avoid memory leaks!
 ```
 
-### 9.i Managing Network Usage — User Settings
+### 9.i Managing Network Usage - User Settings
 
 Apps that transfer significant data should offer user controls:
 - Toggle for **WiFi-only** uploads/downloads
@@ -760,7 +760,7 @@ These are surfaced via the Preference Library (see §9.h) and read from `SharedP
 
 ---
 
-## 10. Dart & Flutter — Part I
+## 10. Dart & Flutter - Part I
 
 ### 10.a Evolution of Dart
 
@@ -785,11 +785,11 @@ These are surfaced via the Preference Library (see §9.h) and read from `SharedP
 ### 10.c Basic Dart Language
 
 **Terms:**
-- **Statement** — command ending with `;`
-- **Expression** — evaluated to a single value
-- **Keyword** — reserved word (`int`, `String`, `if`, `for`, `static`, `final`)
-- **Identifier** — name of variable/function/class
-- **Literal** — value written directly in source (`3.14`)
+- **Statement** - command ending with `;`
+- **Expression** - evaluated to a single value
+- **Keyword** - reserved word (`int`, `String`, `if`, `for`, `static`, `final`)
+- **Identifier** - name of variable/function/class
+- **Literal** - value written directly in source (`3.14`)
 
 **Variables:**
 ```dart
@@ -801,7 +801,7 @@ final gravity = Gravity();     // set once, object can be mutable
 
 **Built-in types:** `bool`, `int`, `double`, `num` (int or double), `String`, `runes`, `List`, `Set`, `Map`, `Function`. All types are object types extending `Object`.
 
-**Immutable types:** `bool`, `int`, `double`, `String` — behave like value types (new object created on operations).
+**Immutable types:** `bool`, `int`, `double`, `String` - behave like value types (new object created on operations).
 
 **Memory:** Garbage collector frees unreferenced heap objects. No `free()` needed.
 
@@ -822,7 +822,7 @@ void main() {
 // Single-line comment
 /* Multi-line
    comment */
-/// Documentation comment — used by IDEs and doc generators
+/// Documentation comment - used by IDEs and doc generators
 ```
 
 ### 10.d Lists, Maps, Generics
@@ -882,7 +882,7 @@ var myList2 = myList.map((e) => e * 2).toList();
 
 ### 10.f Scoping, Closures, and Captured Variables
 
-- **Lexical scoping** — scope determined at compile time, not runtime.
+- **Lexical scoping** - scope determined at compile time, not runtime.
 - **Closures** capture and retain variables from their lexical scope (even after outer function exits).
 - Dart closures in loops capture their own copy of the variable (no "bad closure" issue like JS).
 
@@ -920,7 +920,7 @@ Key concepts:
 - Every widget has a `build(BuildContext context)` method that returns the UI.
 - Callback functions (e.g., `onPressed`) are passed down as closures.
 - State changes trigger `build()` to re-run on `StatefulWidget`.
-- Images, buttons, text are all widgets — compose them rather than subclassing.
+- Images, buttons, text are all widgets - compose them rather than subclassing.
 
 ```dart
 void main() {
@@ -938,7 +938,7 @@ class MyApp extends StatelessWidget {
 
 ---
 
-## 11. Dart & Flutter — Part II
+## 11. Dart & Flutter - Part II
 
 ### 11.a `final` vs `const`
 
@@ -946,19 +946,19 @@ class MyApp extends StatelessWidget {
 |--|---------|---------|
 | When set | At runtime, once | At compile time |
 | Object mutability | Referenced object can be mutable | Object is compile-time constant (immutable) |
-| Memory | New object per instantiation | Canonicalized — only one copy |
-| Flutter benefit | — | Const widgets rebuild faster |
+| Memory | New object per instantiation | Canonicalized - only one copy |
+| Flutter benefit | - | Const widgets rebuild faster |
 
 ```dart
 final date = DateTime.now();   // OK
-const date = DateTime.now();   // ERROR — not compile-time
+const date = DateTime.now();   // ERROR - not compile-time
 const pi = 3.14;               // OK
 ```
 
 ### 11.b `Object` vs `dynamic`
 
-- **`Object`** — compile-time type safety; only Object methods available.
-- **`dynamic`** — bypasses compile-time checks; risks runtime errors.
+- **`Object`** - compile-time type safety; only Object methods available.
+- **`dynamic`** - bypasses compile-time checks; risks runtime errors.
 
 ```dart
 Object obj = 'Hello';
@@ -1063,9 +1063,9 @@ var combinedList = [
 | Unused callback params | `_` |
 | Imports | `dart:` first, then alphabetically |
 
-**Composition over Inheritance** — widgets stay loosely coupled and reusable.
+**Composition over Inheritance** - widgets stay loosely coupled and reusable.
 
-### 11.g Flutter — Stateless vs. Stateful Widgets
+### 11.g Flutter - Stateless vs. Stateful Widgets
 
 **Stateless:** No mutable state. `build()` is called once and does not change.
 
@@ -1108,7 +1108,7 @@ Quiz (owns state: activeScreen, answers)
 
 Flow: child button tap → calls callback → parent runs `setState()` → parent re-builds with new screen shown.
 
-**Data Models:** Plain old Dart objects (PODO) — no business logic, just data structure. Can be immutable. Can have getters/setters.
+**Data Models:** Plain old Dart objects (PODO) - no business logic, just data structure. Can be immutable. Can have getters/setters.
 
 **Filtering lists:**
 ```dart
@@ -1118,8 +1118,8 @@ final numCorrect = summaryData.where((data) {
 ```
 
 **Image opacity:**
-- `Opacity` widget — applies to entire subtree (rendered offscreen first).
-- `color` property of `Image` — GPU-accelerated tint.
+- `Opacity` widget - applies to entire subtree (rendered offscreen first).
+- `color` property of `Image` - GPU-accelerated tint.
 
 **Scrolling:** Wrap overflow content in `SingleChildScrollView` + `Expanded`. Flutter doesn't auto-scroll or wrap overflowed widgets.
 
@@ -1135,12 +1135,12 @@ Smartphones store: accounts, files, location history, OTPs, passkeys, photos, wo
 
 ### 12.b Threat Landscape
 
-- **Physical theft** — attacker accesses device data/credentials.
-- **Malicious apps** — abuse permissions, exploit vulnerabilities, steal data.
-- **Sideloading** — apps from untrusted sources bypass ecosystem protections.
-- **Insecure communication** — interception, MitM attacks on public networks.
-- **Social engineering** — phishing, fake instructions.
-- **Outdated systems** — unpatched vulnerabilities.
+- **Physical theft** - attacker accesses device data/credentials.
+- **Malicious apps** - abuse permissions, exploit vulnerabilities, steal data.
+- **Sideloading** - apps from untrusted sources bypass ecosystem protections.
+- **Insecure communication** - interception, MitM attacks on public networks.
+- **Social engineering** - phishing, fake instructions.
+- **Outdated systems** - unpatched vulnerabilities.
 
 ### 12.c Android Security Philosophy
 
@@ -1179,10 +1179,10 @@ Security is distributed across multiple layers:
 
 If one protection fails, others still limit the damage.
 
-- **Least privilege** — apps/processes get only the access they need.
-- **Isolation and containment** — sandbox prevents unauthorized interaction.
-- **System integrity** — boot and runtime protections ensure trusted software.
-- **User control** — permissions, authentication, privacy controls.
+- **Least privilege** - apps/processes get only the access they need.
+- **Isolation and containment** - sandbox prevents unauthorized interaction.
+- **System integrity** - boot and runtime protections ensure trusted software.
+- **User control** - permissions, authentication, privacy controls.
 
 ### 12.h Layers of Trust
 
@@ -1197,45 +1197,45 @@ If one protection fails, others still limit the damage.
 Android uses **Security-Enhanced Linux (SELinux)** system-wide.
 
 - Controls what **every** process may access (even highly privileged processes).
-- **Default deny** — access blocked unless explicitly allowed.
+- **Default deny** - access blocked unless explicitly allowed.
 - Restricts access to files, sockets, system logs, services, other processes.
 - Helps contain damage if one component is compromised.
 - Separates core Android from vendor-specific components.
 
 ### 12.j Trusted Execution Environment (TEE) and Keystore
 
-- **TEE** — isolated environment for sensitive operations.
+- **TEE** - isolated environment for sensitive operations.
 - Main Android OS is treated as **less trusted** than the TEE.
-- **Android Keystore** — generates, stores, and uses cryptographic keys in hardware-backed environments.
+- **Android Keystore** - generates, stores, and uses cryptographic keys in hardware-backed environments.
 - Key material **does not leave** the secure environment.
 - Supports: encryption, decryption, signing, auth, biometrics, key attestation.
 
 > [!insight] Key Idea
 > Apps request cryptographic operations but do **not** directly receive the secret key.
 
-**StrongBox** — keys in a dedicated, tamper-resistant security chip.
-**Key Attestation** — cryptographic proof about the key and device state.
-**Version Binding** — ties key validity to OS version or security patch level.
+**StrongBox** - keys in a dedicated, tamper-resistant security chip.
+**Key Attestation** - cryptographic proof about the key and device state.
+**Version Binding** - ties key validity to OS version or security patch level.
 These protect against key extraction, fake device identity, and downgrade attacks.
 
 ### 12.k File-Based Encryption (FBE)
 
 - Different directories can use different keys.
-- **Device Encrypted (DE)** storage — available after boot, before unlock.
-- **Credential Encrypted (CE)** storage — available only after user authentication.
+- **Device Encrypted (DE)** storage - available after boot, before unlock.
+- **Credential Encrypted (CE)** storage - available only after user authentication.
 - CE keys protected by lock screen credentials + hardware-backed anti-brute-force.
-- **Metadata encryption** — protects file sizes, directory layout, timestamps.
+- **Metadata encryption** - protects file sizes, directory layout, timestamps.
 
 ### 12.l App Signing
 
 - **Every** Android app must be digitally signed.
 - Signature identifies the author and verifies the app hasn't been modified.
 - Updates only allowed when signing lineage proves continuity from original developer.
-- **Signature-based permissions** — controlled sharing between apps with a common signer.
-- **Google Play App Signing** — manages keys, key upgrades, key rotation.
+- **Signature-based permissions** - controlled sharing between apps with a common signer.
+- **Google Play App Signing** - manages keys, key upgrades, key rotation.
 
 > [!warn] Developer Note
-> Signing is not just a publishing step — it is part of Android's trust and update model.
+> Signing is not just a publishing step - it is part of Android's trust and update model.
 
 ### 12.m Runtime Permissions
 
@@ -1250,16 +1250,16 @@ These protect against key extraction, fake device identity, and downgrade attack
 - Background location restrictions.
 - Foreground restrictions on background camera/microphone/sensor access.
 - Privacy indicators and dashboard.
-- **Scoped storage** — limits broad file access, reduces data leakage.
+- **Scoped storage** - limits broad file access, reduces data leakage.
 
 ### 12.o Network Traffic Security
 
 Protections: **TLS by default**, DNS over TLS/HTTPS, certificate management, MAC randomization.
 
 **VPN:**
-- **Per-app VPN** — routes only selected work apps through the tunnel.
-- **Full-device VPN** — all traffic through tunnel (corporate-owned devices).
-- **VPN lockdown** — prevents traffic leaking when tunnel is inactive.
+- **Per-app VPN** - routes only selected work apps through the tunnel.
+- **Full-device VPN** - all traffic through tunnel (corporate-owned devices).
+- **VPN lockdown** - prevents traffic leaking when tunnel is inactive.
 
 ### 12.p Memory Safety
 
@@ -1270,43 +1270,43 @@ Protections: **TLS by default**, DNS over TLS/HTTPS, certificate management, MAC
 
 ### 12.q Google Play Protect and App Review
 
-- **Google Play Protect** — scans apps for malware and harmful behavior (Play and sideloaded apps).
-- **Play Integrity API** — lets backends verify requests come from genuine apps on trusted devices.
+- **Google Play Protect** - scans apps for malware and harmful behavior (Play and sideloaded apps).
+- **Play Integrity API** - lets backends verify requests come from genuine apps on trusted devices.
 - App review, developer vetting, policy enforcement.
-- **App Defense Alliance** — shared threat intelligence across ecosystem.
+- **App Defense Alliance** - shared threat intelligence across ecosystem.
 
 ### 12.r Security Updates
 
-- **Android Security Bulletins** — monthly fixes.
-- **Project Treble** — separates framework and vendor concerns to accelerate fix delivery.
-- **Google Play System Updates** — update modular system components without a full OS upgrade.
+- **Android Security Bulletins** - monthly fixes.
+- **Project Treble** - separates framework and vendor concerns to accelerate fix delivery.
+- **Google Play System Updates** - update modular system components without a full OS upgrade.
 - Enterprise can enforce patch-level requirements and block outdated devices.
 
 ---
 
-## 13. Quick Reference — Exam Tips
+## 13. Quick Reference - Exam Tips
 
 > [!insight] What to Know Cold
-> 1. **Activity lifecycle callbacks in order** — `onCreate → onStart → onResume → onPause → onStop → onDestroy`
-> 2. **Fragment extra callbacks** — `onAttach / onCreateView / onViewCreated / onDestroyView / onDetach`
-> 3. **Room annotations** — `@Entity`, `@PrimaryKey`, `@ColumnInfo`, `@Dao`, `@Database`, `@Query`, `@Insert`, `@Update`, `@Delete`
-> 4. **Coroutine Dispatchers** — Main (UI), IO (network/disk), Default (CPU)
-> 5. **Broadcast Receiver** — responds in 5 seconds; `onReceive()` only
-> 6. **Service types** — started (stopSelf/stopService) vs. bound (clients unbind)
-> 7. **Notification building** — `NotificationCompat.Builder` + `NotificationManager.notify()`
-> 8. **Content Provider** — needs ContentResolver; returns Cursor; permissions needed
-> 9. **Dangerous permissions** — must prompt user at runtime
-> 10. **Null safety in Dart** — `?` nullable, `!` force-unwrap, `??` default, `??=` assign if null
-> 11. **StatefulWidget** — needs `setState()` to update UI
-> 12. **Android Security layers** — sandbox + UID isolation + signing + permissions + SELinux + TEE + FBE
+> 1. **Activity lifecycle callbacks in order** - `onCreate → onStart → onResume → onPause → onStop → onDestroy`
+> 2. **Fragment extra callbacks** - `onAttach / onCreateView / onViewCreated / onDestroyView / onDetach`
+> 3. **Room annotations** - `@Entity`, `@PrimaryKey`, `@ColumnInfo`, `@Dao`, `@Database`, `@Query`, `@Insert`, `@Update`, `@Delete`
+> 4. **Coroutine Dispatchers** - Main (UI), IO (network/disk), Default (CPU)
+> 5. **Broadcast Receiver** - responds in 5 seconds; `onReceive()` only
+> 6. **Service types** - started (stopSelf/stopService) vs. bound (clients unbind)
+> 7. **Notification building** - `NotificationCompat.Builder` + `NotificationManager.notify()`
+> 8. **Content Provider** - needs ContentResolver; returns Cursor; permissions needed
+> 9. **Dangerous permissions** - must prompt user at runtime
+> 10. **Null safety in Dart** - `?` nullable, `!` force-unwrap, `??` default, `??=` assign if null
+> 11. **StatefulWidget** - needs `setState()` to update UI
+> 12. **Android Security layers** - sandbox + UID isolation + signing + permissions + SELinux + TEE + FBE
 
 ### Key Comparisons for MCQ
 
 | Feature | Activity | Fragment |
 |---------|----------|---------|
 | UI creation callback | `onCreate()` | `onCreateView()` |
-| View setup | — | `onViewCreated()` |
-| Attach to host | — | `onAttach()` / `onDetach()` |
+| View setup | - | `onViewCreated()` |
+| Attach to host | - | `onAttach()` / `onDetach()` |
 | Save state | `onSaveInstanceState()` | `onSaveInstanceState()` |
 
 | Service Type | Start Method | End Method |
@@ -1327,8 +1327,8 @@ Protections: **TLS by default**, DNS over TLS/HTTPS, certificate management, MAC
 
 ## References
 
-- Android Developer Fundamentals (ADF) — google-developer-training.gitbooks.io
-- Android Development with Kotlin — Google Developer Training (Apache 2 License)
-- Flutter/Dart Documentation — flutter.dev, dart.dev
-- IF3210 Lecture Slides — Hari Purnama (ITB), Tim Dosen IF3210
+- Android Developer Fundamentals (ADF) - google-developer-training.gitbooks.io
+- Android Development with Kotlin - Google Developer Training (Apache 2 License)
+- Flutter/Dart Documentation - flutter.dev, dart.dev
+- IF3210 Lecture Slides - Hari Purnama (ITB), Tim Dosen IF3210
 - Material from Shan-Hung Wu, CS, NTHU (Flutter/Dart slides)

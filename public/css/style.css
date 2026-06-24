@@ -1,12 +1,12 @@
 /* ============================================================
-   SAYYAKU PORTFOLIO — GLOBAL STYLESHEET
+   SAYYAKU PORTFOLIO - GLOBAL STYLESHEET
    Brand: Editorial Dark Academic
 
    This file is an aggregator. Edit the split files:
-     tokens.css     — design tokens & theme
-     layout.css     — structural layout & sidebar
-     components.css — UI components & pages
-     animations.css — keyframes & entrance animations
+     tokens.css     - design tokens & theme
+     layout.css     - structural layout & sidebar
+     components.css - UI components & pages
+     animations.css - keyframes & entrance animations
    ============================================================ */
 
 @import './tokens.css';

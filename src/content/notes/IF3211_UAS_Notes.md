@@ -1,8 +1,8 @@
 ---
-title: IF3211 Komputasi Domain-Spesifik — Catatan UAS (Benar/Salah)
+title: IF3211 Komputasi Domain-Spesifik - Catatan UAS (Benar/Salah)
 course: IF3211
 subject: Komputasi Domain-Spesifik (Biologi)
-exam: UAS — Benar/Salah, 60 soal, 50 detik/soal
+exam: UAS - Benar/Salah, 60 soal, 50 detik/soal
 topics: [Respirasi Seluler, Siklus Sel, Evolusi, Filogeni, Komunitas Ekologi, Ekosistem]
 references: Campbell Biology in Focus 3rd Ed. (Ch. 7, 9, 19, 20, 41, 42)
 order: 1
@@ -15,7 +15,7 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 
 ---
 
-## Bab 7 — Respirasi Seluler & Fermentasi
+## Bab 7 - Respirasi Seluler & Fermentasi
 
 ### Persamaan Inti
 - Keseluruhan: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energi (ATP + panas)
@@ -30,7 +30,7 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 | Fosforilasi oksidatif (RTE + kemiosmosis) | Membran dalam mitokondria | ~26–28 ATP + H₂O |
 | **Total** | | **~30 atau 32 ATP + 6 CO₂** |
 
-### Fakta Kunci — Respirasi
+### Fakta Kunci - Respirasi
 - Glikolisis = **2 ATP** neto (fosforilasi tingkat substrat); berlangsung di **sitosol**
 - Sintesis DNA TIDAK terjadi dalam glikolisis; glukosa → 2 piruvat
 - Oksidasi = pelepasan elektron; Reduksi = penerimaan elektron (OIL RIG)
@@ -50,15 +50,15 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 - Serat otot putih manusia dapat menghasilkan laktat bahkan dalam kondisi aerob (cepat tetapi tidak efisien)
 - Fermentasi asam laktat oleh jamur/bakteri digunakan untuk membuat keju dan yogurt
 
-### Hands-On M7 — Komputasi Respirasi Seluler
+### Hands-On M7 - Komputasi Respirasi Seluler
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
 
-**Neraca ATP — Metode Perhitungan Modern (P/O ratio):**
+**Neraca ATP - Metode Perhitungan Modern (P/O ratio):**
 - NADH → 2.5 ATP; FADH₂ → 1.5 ATP
 - Dari 1 glukosa: 10 NADH × 2.5 = 25; 2 FADH₂ × 1.5 = 3; 4 ATP substrat level → **total ≈ 32 ATP**
-- Hasilnya *perkiraan*, bukan tepat — fosforilasi tidak terikat satu-satu dengan reaksi redoks
+- Hasilnya *perkiraan*, bukan tepat - fosforilasi tidak terikat satu-satu dengan reaksi redoks
 
 **β-Oksidasi Asam Lemak vs Glukosa:**
 - Asam lemak lebih padat energi per gram karena rantai C–H lebih tereduksi
@@ -73,14 +73,14 @@ Setiap fakta adalah **pernyataan BENAR** dari slide. Jika soal ujian bertentanga
 | Sianida (CN⁻), CO | Kompleks IV | Blokir transfer elektron ke O₂ |
 | Rotenon | Kompleks I | Blokir NADH → koenzim Q |
 | Oligomisin | ATP sintase (F₀) | Blokir saluran proton rotor |
-| DNP, CCCP | Membran mitokondria | *Uncoupler* — bocorkan H⁺, energi jadi panas |
+| DNP, CCCP | Membran mitokondria | *Uncoupler* - bocorkan H⁺, energi jadi panas |
 
 Uncoupler berbeda dari inhibitor: RTE tetap berjalan dan O₂ tetap dikonsumsi, tetapi ATP tidak terbentuk karena gradien proton tidak dapat dipertahankan.
 
-**Fermentasi — Mengapa Penting Meski Tidak Efisien:**
+**Fermentasi - Mengapa Penting Meski Tidak Efisien:**
 Semua jenis fermentasi hanya menghasilkan 2 ATP neto (dari glikolisis saja). Namun fungsinya adalah **meregenerasi NAD⁺** agar glikolisis dapat terus berlanjut saat O₂ tidak tersedia. Tanpa regenerasi NAD⁺, glikolisis berhenti total dan sel tidak dapat menghasilkan ATP sama sekali.
 
-**Kode — Neraca ATP per glukosa:**
+**Kode - Neraca ATP per glukosa:**
 ```python
 ATP_PER_NADH, ATP_PER_FADH2 = 2.5, 1.5          # modern P/O ratio
 
@@ -91,7 +91,7 @@ total_atp = atp_substrate + total_nadh * ATP_PER_NADH + total_fadh2 * ATP_PER_FA
 # = 4 + 25.0 + 3.0 = 32.0 ATP per glukosa
 ```
 
-**Kode — β-Oksidasi Asam Lemak:**
+**Kode - β-Oksidasi Asam Lemak:**
 ```python
 def hitung_atp_fatty_acid(chain_len, n_betaox, n_acetylCoA):
     atp_bo    = n_betaox * (ATP_PER_NADH + ATP_PER_FADH2)        # per siklus
@@ -100,7 +100,7 @@ def hitung_atp_fatty_acid(chain_len, n_betaox, n_acetylCoA):
 # Contoh C16: n_betaox=7, n_acetylCoA=8 → 106.0 ATP total (6.625 ATP/karbon vs 5.33 glukosa)
 ```
 
-**Kode — Simulasi Inhibitor:**
+**Kode - Simulasi Inhibitor:**
 ```python
 inhibitors = {
     'Oligomisin':      {'target': 'ATP Synthase',         'blocks': 'FosOks'},
@@ -121,7 +121,7 @@ atp_with_inhibitor = total_atp - blocked_atp
 
 ---
 
-## Bab 9 — Siklus Sel
+## Bab 9 - Siklus Sel
 
 ### Fase Siklus Sel
 - Siklus sel = kehidupan sel sejak terbentuk hingga pembelahannya sendiri
@@ -131,11 +131,11 @@ atp_with_inhibitor = total_atp - blocked_atp
 - G₁ = sel tumbuh; G₂ = sel mempersiapkan pembelahan; S = replikasi DNA
 
 ### Fase Mitosis (secara berurutan)
-1. **Profase** — kromosom memadat; gelendong mulai terbentuk
-2. **Prometafase** — selubung nukleus hancur; mikrotubulus kinetokor melekat
-3. **Metafase** — sentromer berbaris di lempeng metafase (titik tengah antara dua kutub)
-4. **Anafase** — kromatid saudara terpisah; bergerak ke kutub berlawanan
-5. **Telofase** — selubung nukleus terbentuk kembali; kromosom mengendur
+1. **Profase** - kromosom memadat; gelendong mulai terbentuk
+2. **Prometafase** - selubung nukleus hancur; mikrotubulus kinetokor melekat
+3. **Metafase** - sentromer berbaris di lempeng metafase (titik tengah antara dua kutub)
+4. **Anafase** - kromatid saudara terpisah; bergerak ke kutub berlawanan
+5. **Telofase** - selubung nukleus terbentuk kembali; kromosom mengendur
 
 ### Gelendong Mitotik
 - Gelendong mitotik = mikrotubulus + protein terkait; mengendalikan pergerakan kromosom
@@ -173,19 +173,19 @@ atp_with_inhibitor = total_atp - blocked_atp
 - Tumor terlokalisasi: diobati dengan radiasi; tumor metastatik: diobati dengan **kemoterapi**
 - Efek samping kemoterapi karena obat juga memengaruhi sel normal yang sering membelah
 
-### Hands-On M8 — Komputasi Siklus Sel
+### Hands-On M8 - Komputasi Siklus Sel
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
 
-**Model Komputasional 1 — Proporsi Sel per Fase:**
+**Model Komputasional 1 - Proporsi Sel per Fase:**
 
 Dalam populasi sel yang tumbuh steady-state, proporsi sel yang teramati pada suatu fase **sebanding dengan durasi** fase tersebut:
 $$P_{\text{fase}} = \frac{t_{\text{fase}}}{T_{\text{total}}}$$
 
-Intuisi: seperti mengamati kendaraan di jalan — kendaraan lebih lambat akan lebih sering terlihat di titik observasi mana pun. Karena itu dalam preparat histologis, lebih banyak sel di G₁ (terlama) daripada di M (terpendek).
+Intuisi: seperti mengamati kendaraan di jalan - kendaraan lebih lambat akan lebih sering terlihat di titik observasi mana pun. Karena itu dalam preparat histologis, lebih banyak sel di G₁ (terlama) daripada di M (terpendek).
 
-**Model Komputasional 2 — Pertumbuhan Populasi Diskrit:**
+**Model Komputasional 2 - Pertumbuhan Populasi Diskrit:**
 $$N_{t+1} = N_t \times g \quad \text{(setiap satu siklus penuh selesai)}$$
 
 $g$ = growth factor (jumlah sel anak per sel induk). Ketika siklus memanjang (mis. karena checkpoint delay), interval antar pembelahan bertambah → laju pertumbuhan efektif menurun.
@@ -200,7 +200,7 @@ $g$ = growth factor (jumlah sel anak per sel induk). Ketika siklus memanjang (mi
 
 **Implikasi Kanker:** Sel kanker tidak merespons checkpoint → proliferasi tanpa batas. Kemoterapi menyerang sel yang membelah cepat (termasuk sel normal yang sering membelah = efek samping).
 
-**Kode — Proporsi Fase & Pertumbuhan Populasi:**
+**Kode - Proporsi Fase & Pertumbuhan Populasi:**
 ```python
 def proporsi_fase(durations):
     total = sum(durations.values())
@@ -233,7 +233,7 @@ def checkpoint_delay(durations, checkpoint_type):
 
 ---
 
-## Bab 19 — Evolusi: Penurunan dengan Modifikasi
+## Bab 19 - Evolusi: Penurunan dengan Modifikasi
 
 ### Darwin & Sejarah
 - Darwin menerbitkan *On the Origin of Species* pada **1859**
@@ -243,13 +243,13 @@ def checkpoint_delay(durations, checkpoint_type):
 - Evolusi = "**penurunan dengan modifikasi**" (*descent with modification*)
 - "Penurunan" = leluhur bersama; "Modifikasi" = akumulasi perbedaan antarGenerasi
 - **Georges Cuvier** mengembangkan paleontologi; fosil ditemukan di lapisan batuan sedimen (lebih muda = atas)
-- **Lamarck** mengusulkan penggunaan/tidak-penggunaan + pewarisan sifat yang diperoleh — **TIDAK didukung**
+- **Lamarck** mengusulkan penggunaan/tidak-penggunaan + pewarisan sifat yang diperoleh - **TIDAK didukung**
 
 ### Seleksi Alam
 - Seleksi alam: individu dengan sifat **herediter** yang menguntungkan bertahan hidup dan bereproduksi lebih banyak
 - **Populasi** (BUKAN individu) yang berevolusi
 - Seleksi alam hanya bekerja pada sifat **herediter** yang berbeda antar individu
-- Seleksi alam **TIDAK menciptakan** sifat baru — memilih dari variasi herediter yang sudah ada
+- Seleksi alam **TIDAK menciptakan** sifat baru - memilih dari variasi herediter yang sudah ada
 - Sifat yang adaptif bervariasi menurut tempat dan waktu
 - Evolusi terjadi lebih cepat pada spesies dengan waktu generasi singkat
 - **Seleksi buatan**: pemuliaan selektif untuk sifat yang diinginkan (mis. sawi liar → brokoli, kol, kale)
@@ -264,10 +264,10 @@ def checkpoint_delay(durations, checkpoint_type):
 - MRSA: *S. aureus* menjadi resisten terhadap penisilin dalam **2 tahun** penggunaan luas (pada 1945); lalu resistensi metisillin juga berevolusi dalam 2 tahun
 - Transisi fosil (evolusi paus): Pakicetus → Rodhocetus → Dorudon → Cetacea modern
 - Homologi ≠ Analogi: **Homologi** = berasal dari leluhur bersama; **Analogi** = evolusi konvergen
-- Evolusi konvergen (fitur analogis): sugar glider vs. tupai terbang — BUKAN bukti leluhur bersama
+- Evolusi konvergen (fitur analogis): sugar glider vs. tupai terbang - BUKAN bukti leluhur bersama
 - **Biogeografi** = ilmu tentang distribusi geografis spesies
 
-### Hands-On M11 — Komputasi Evolusi Populasi
+### Hands-On M11 - Komputasi Evolusi Populasi
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
@@ -279,7 +279,7 @@ $$f_{AA}=p^2, \quad f_{Aa}=2pq, \quad f_{aa}=q^2$$
 
 Tanpa evolusi, $p$ invariant lintas generasi. Deviasi dari HWE = bukti salah satu kondisi dilanggar = evolusi sedang terjadi.
 
-**Seleksi Deterministik — Persamaan Rekursif:**
+**Seleksi Deterministik - Persamaan Rekursif:**
 $$\bar{w} = p^2 w_{11} + 2pq\, w_{12} + q^2 w_{22}, \qquad p' = \frac{p^2 w_{11} + pq\, w_{12}}{\bar{w}}$$
 
 | Mode | Fitness AA / Aa / aa | Ekuilibrium $p^*$ | Stabil? | Interpretasi |
@@ -288,17 +288,17 @@ $$\bar{w} = p^2 w_{11} + 2pq\, w_{12} + q^2 w_{22}, \qquad p' = \frac{p^2 w_{11}
 | Heterozygote advantage | $1{-}s_1 / 1 / 1{-}s_2$ | $s_2/(s_1+s_2)$ | Ya | Polimorfisme stabil |
 | Underdominance | $1 / 1{-}s / 1$ | 0.5 | Tidak | Sistem bistable, tergantung kondisi awal |
 
-**Genetic Drift — Wright-Fisher:**
+**Genetic Drift - Wright-Fisher:**
 $$k \sim \text{Binomial}(2N,\, p') \quad \Rightarrow \quad p_{\text{baru}} = k/(2N)$$
 
 Pola: $Ns \ll 1$ → drift mendominasi; $Ns \gg 1$ → seleksi mendominasi. Pada populasi kecil, alel menguntungkan pun bisa hilang secara kebetulan.
 
-**Heterozygote Advantage — Mengapa Mempertahankan Polimorfisme:**
+**Heterozygote Advantage - Mengapa Mempertahankan Polimorfisme:**
 Saat frekuensi A terlalu tinggi, frekuensi AA naik dan rata-rata fitness turun (karena $w_{AA} < w_{Aa}$). Saat A terlalu rendah, frekuensi aa naik dan fitness juga turun. Sistem memiliki satu titik ekuilibrium stabil yang memaksimalkan $\bar{w}$.
 
 Contoh sickle-cell: Ss (heterozigot) → resistansi malaria + tidak anemia berat. Di daerah endemik malaria, alel $s$ dipertahankan ~20% karena manfaat Ss melebihi kerugian ss.
 
-**Kode — Seleksi Deterministik & Genetic Drift:**
+**Kode - Seleksi Deterministik & Genetic Drift:**
 ```python
 def next_p(p, w11, w12, w22):
     q    = 1 - p
@@ -325,7 +325,7 @@ extinction_pr = np.mean(trajs[:, -1] == 0.0)   # Pr(alel A punah)
 
 ---
 
-## Bab 20 — Filogeni dan Pohon Kehidupan
+## Bab 20 - Filogeni dan Pohon Kehidupan
 
 ### Klasifikasi
 - **Filogeni** = sejarah evolusi suatu spesies atau kelompok
@@ -349,12 +349,12 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 - **Titik percabangan** = divergensi dua silsilah dari leluhur bersama
 - **Taksa saudara** = kelompok yang berbagi leluhur bersama secara langsung
 - Cabang DAPAT dirotasi tanpa mengubah hubungan yang digambarkan
-- Pohon dapat digambar secara horizontal, vertikal, atau diagonal — hubungan tidak berubah
+- Pohon dapat digambar secara horizontal, vertikal, atau diagonal - hubungan tidak berubah
 - Simpul/cabang internal tanpa label dapat merepresentasikan kelompok yang telah punah
 - Hanya **homologi** (BUKAN analogi) yang dapat digunakan untuk menyimpulkan hubungan filogenetik
 - Analogi = kemiripan dari evolusi konvergen → TIDAK menunjukkan leluhur bersama
 
-### Hands-On M12 — Komputasi Filogeni
+### Hands-On M12 - Komputasi Filogeni
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
@@ -369,8 +369,8 @@ Mnemonik: "**S**aya **G**uru **F**avorit **O**rang **K**elas **F**ilum **K**ingd
 
 | Tipe | Nama Teknis | Kegunaannya |
 |------|-------------|-------------|
-| Shared derived | Synapomorfi | Mendefinisikan clade — **informatif** untuk filogeni |
-| Shared ancestral | Plesiomorfi | Dimiliki semua ingroup — **tidak informatif** untuk memisahkan subclade |
+| Shared derived | Synapomorfi | Mendefinisikan clade - **informatif** untuk filogeni |
+| Shared ancestral | Plesiomorfi | Dimiliki semua ingroup - **tidak informatif** untuk memisahkan subclade |
 | Karakter ambigu | Homoplasi | Muncul lebih dari sekali secara independen (evolusi konvergen) |
 
 **Jarak Hamming (dari data karakter biner):**
@@ -392,7 +392,7 @@ Homologi mencerminkan pewarisan dari leluhur bersama → mengikuti sejarah evolu
 
 **Kapan data morfologi masih berguna:** Untuk organisme fosil yang tidak memiliki DNA yang dapat disequencing, dan sebagai verifikasi independen terhadap hasil molekuler.
 
-**Kode — Hamming Distance & UPGMA:**
+**Kode - Hamming Distance & UPGMA:**
 ```python
 def hamming_from_character_table(df):
     taxa = list(df.index)
@@ -423,7 +423,7 @@ def upgma(distance_df):
 
 ---
 
-## Bab 41 — Komunitas Ekologi
+## Bab 41 - Komunitas Ekologi
 
 ### Interaksi Antarspesies
 | Interaksi | Pengaruh | Contoh |
@@ -474,7 +474,7 @@ def upgma(distance_df):
 - **Suksesi sekunder**: dimulai di mana gangguan menyingkirkan sebagian besar tetapi TIDAK semua organisme (mis. setelah kebakaran)
 - Aktivitas manusia = gangguan **terkuat** pada ekosistem; umumnya **mengurangi** keanekaragaman spesies
 
-### Hands-On M13 — Komputasi Ekologi Komunitas
+### Hands-On M13 - Komputasi Ekologi Komunitas
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
@@ -484,14 +484,14 @@ $$\frac{dx}{dt} = r_x x\!\left(1-\frac{x}{K}\right) - \alpha xy \quad \text{(pre
 
 Ekuilibrium stabil: $x^* = \gamma/\beta$, $y^* = r(1-x^*/K)/\alpha$.
 
-Perbedaan dengan LV klasik (tanpa K): LV klasik menghasilkan osilasi *netral* (amplitudo bergantung kondisi awal). LV + K: osilasi *meredam* dan konvergen ke ekuilibrium (lebih realistis). Predator selalu memuncak dengan *time lag* setelah prey — karena butuh waktu untuk merespons kelimpahan mangsa via reproduksi.
+Perbedaan dengan LV klasik (tanpa K): LV klasik menghasilkan osilasi *netral* (amplitudo bergantung kondisi awal). LV + K: osilasi *meredam* dan konvergen ke ekuilibrium (lebih realistis). Predator selalu memuncak dengan *time lag* setelah prey - karena butuh waktu untuk merespons kelimpahan mangsa via reproduksi.
 
 **Indeks Diversitas Shannon:**
 $$H' = -\sum_{i=1}^{S} p_i \ln p_i, \qquad J = \frac{H'}{\ln S} \quad \text{(evenness, 0–1)}$$
 
-Richness tinggi tidak otomatis berarti H' tinggi — komunitas dengan satu spesies dominan memiliki J rendah meski richness besar. Komunitas lebih rentan jika J rendah (tergantung pada satu spesies dominan).
+Richness tinggi tidak otomatis berarti H' tinggi - komunitas dengan satu spesies dominan memiliki J rendah meski richness besar. Komunitas lebih rentan jika J rendah (tergantung pada satu spesies dominan).
 
-**Struktur Food Web — Connectance:**
+**Struktur Food Web - Connectance:**
 $$C = \frac{E}{N^2} \quad (E = \text{jumlah link}, N = \text{jumlah spesies})$$
 
 Keystone species ≠ dominant species: Keystone species memiliki *pengaruh yang tidak proporsional* terhadap strukturnya (out-degree tinggi atau peran ekologi kritis), tetapi biomasa/kelimpahannya bisa rendah. Hilang 1 keystone species → *trophic cascade* ke seluruh jaring makanan.
@@ -508,7 +508,7 @@ Nilai $z$ tipikal: 0.20–0.35. Fragmentasi habitat memotong konektivitas dan me
 
 **Suksesi Ekologi & Shannon:** H' cenderung naik selama suksesi awal (pioneer membuka ceruk bagi spesies baru). Pada suksesi akhir, spesies klimaks kompetitif bisa mendominasi dan menekan H'.
 
-**Kode — Lotka-Volterra, Shannon, Food Web:**
+**Kode - Lotka-Volterra, Shannon, Food Web:**
 ```python
 def lotka_volterra(state, t, r, K, alpha, beta, gamma):
     x, y = state              # x=prey, y=predator
@@ -525,7 +525,7 @@ def shannon_diversity(counts):
 def species_evenness(H, S):
     return H / np.log(S) if S > 1 else 0.0   # J ∈ [0,1]
 
-# Food web — connectance
+# Food web - connectance
 G = nx.DiGraph(); G.add_edges_from(food_web_edges)
 C = G.number_of_edges() / G.number_of_nodes()**2   # C = E/N²
 
@@ -538,13 +538,13 @@ slope, intercept, r2, p = linregress(np.log10(A), np.log10(S))
 
 ---
 
-## Bab 42 — Ekosistem dan Energi
+## Bab 42 - Ekosistem dan Energi
 
 ### Dasar-dasar Ekosistem
 - Ekosistem = semua organisme dalam suatu komunitas + **faktor abiotik** yang berinteraksi dengannya
 - Dua sifat emergent utama: **aliran energi** + **daur kimia**
 - Energi **MENGALIR** melalui ekosistem (tidak didaur ulang); bahan kimia **BERDAUR** dalam ekosistem
-- Hukum termodinamika ke-1: energi tidak dapat diciptakan atau dimusnahkan — hanya dipindahkan/ditransformasi
+- Hukum termodinamika ke-1: energi tidak dapat diciptakan atau dimusnahkan - hanya dipindahkan/ditransformasi
 - Hukum termodinamika ke-2: setiap pertukaran energi meningkatkan entropi; sebagian energi selalu hilang sebagai **panas**
 - Hukum kekekalan massa: materi tidak dapat diciptakan/dimusnahkan; unsur kimia **DAPAT** didaur ulang
 
@@ -574,7 +574,7 @@ slope, intercept, r2, p = linregress(np.log10(A), np.log10(S))
 
 ### Nutrien Pembatas
 - **Nutrien pembatas** = unsur yang, jika ditambahkan, meningkatkan produksi
-- **Laut**: nitrogen (N) dan fosfor (P) paling sering membatasi produksi; **besi (Fe)** juga membatasi di beberapa wilayah (mis. Laut Sargasso — penambahan N + P + Fe meningkatkan produksi 12×)
+- **Laut**: nitrogen (N) dan fosfor (P) paling sering membatasi produksi; **besi (Fe)** juga membatasi di beberapa wilayah (mis. Laut Sargasso - penambahan N + P + Fe meningkatkan produksi 12×)
 - **Daratan**: nitrogen membatasi pertumbuhan tanaman paling besar secara **global**; fosfor juga dapat membatasi (terutama tanah tua)
 - Penambahan nutrien pembatas hanya meningkatkan produksi sampai nutrien lain menjadi pembatas
 - Penetrasi cahaya di akuatik: setengah radiasi matahari diserap dalam **15 m pertama**; hanya 5–10% yang mencapai **75 m**
@@ -590,7 +590,7 @@ slope, intercept, r2, p = linregress(np.log10(A), np.log10(S))
 - **Bioremediasi** = penggunaan organisme (prokariota, jamur, tumbuhan) untuk mendetoksifikasi ekosistem tercemar
 - **Augmentasi biologis** = penggunaan organisme untuk **menambahkan** bahan esensial ke ekosistem yang terdegradasi (mis. lupin pengikat nitrogen untuk menambah N; simbiont mikoriza untuk meningkatkan akses nutrien)
 
-### Hands-On M14 — Komputasi Ekosistem
+### Hands-On M14 - Komputasi Ekosistem
 
 <details>
 <summary>Buka penjelasan komputasional</summary>
@@ -614,13 +614,13 @@ slope, intercept, r2, p = linregress(np.log10(A), np.log10(S))
 
 Faktor pembatas NPP: **cahaya, air, suhu, nutrien**. Di darat: nitrogen paling sering membatasi. Di laut: N, P, dan Fe.
 
-**Salt Marsh Teal (1962) — Analisis Energi:**
+**Salt Marsh Teal (1962) - Analisis Energi:**
 - GPP rumput / energi matahari = 34 580 / 600 000 = **5.76%** (efisiensi fotosintesis)
 - NPP / energi matahari = 6 585 / 600 000 = **1.10%**
 - Respirasi rumput = GPP − NPP = **27 995 kcal/m²/yr** (energi yang dipakai produsen sendiri)
 - NPP yang keluar sebagai detritus = 3 671/6 585 = **55.7%** (sebagian besar NPP masuk jalur detritivor, bukan herbivori)
 
-**Energi Mengalir, Nutrien Bersiklus — Mengapa?**
+**Energi Mengalir, Nutrien Bersiklus - Mengapa?**
 - Energi: setiap transfer kehilangan sebagian besar (~90%) sebagai panas (hukum termodinamika II) → tidak dapat digunakan ulang → harus selalu ada input baru dari matahari
 - Nutrien (N, C, P): atom tidak rusak saat digunakan, dilepas kembali saat dekomposisi → dapat digunakan ulang oleh organisme baru → bersiklus
 
@@ -631,7 +631,7 @@ Faktor pembatas NPP: **cahaya, air, suhu, nutrien**. Di darat: nitrogen paling s
 | Bioremediation | Organisme mengurai/menetralkan polutan | *Shewanella* mereduksi uranium terlarut |
 | Augmentasi biologis | Organisme memulihkan *fungsi* ekosistem yang hilang | Legum pengikat N₂, mikoriza untuk akses nutrien |
 
-**Kode — Piramida Energi & Analisis Salt Marsh:**
+**Kode - Piramida Energi & Analisis Salt Marsh:**
 ```python
 # Piramida energi: transfer antar level trofik
 npp_kJ   = npp_g * 20             # 1 g dry mass ≈ 20 kJ
@@ -646,9 +646,9 @@ df_npp = df_npp.sort_values("NPP (g/m²/yr)", ascending=True)
 # Analisis Salt Marsh Teal (1962)
 solar, GPP_grass, NPP_grass = 600000, 34580, 6585
 GPP_ins, detritus           = 305, 3671
-pct_GPP      = GPP_grass / solar * 100          # 5.76% — efisiensi fotosintesis
+pct_GPP      = GPP_grass / solar * 100          # 5.76% - efisiensi fotosintesis
 pct_NPP      = NPP_grass / solar * 100          # 1.10%
-resp_grass   = GPP_grass - NPP_grass            # 27995 kcal — respirasi produsen
+resp_grass   = GPP_grass - NPP_grass            # 27995 kcal - respirasi produsen
 pct_detritus = detritus / NPP_grass * 100       # 55.7% NPP masuk jalur detritivor
 eff_trophic  = GPP_ins / GPP_grass * 100        # 0.88% transfer rumput → serangga
 ```
@@ -675,7 +675,7 @@ eff_trophic  = GPP_ins / GPP_grass * 100        # 0.88% transfer rumput → sera
 | "Fitur analogis menunjukkan leluhur bersama" | Hanya fitur HOMOLOGIS yang menunjukkan leluhur bersama |
 | "Epitet spesifik saja sudah menamai spesies" | KEDUA bagian (genus + epitet spesifik) bersama-sama menamai spesies |
 | "Energi berdaur dalam ekosistem" | Energi MENGALIR; bahan kimia yang BERDAUR |
-| "Efisiensi 10% berarti 90% terbuang" | BENAR — hanya ~10% yang dipindahkan ke tingkat tropik berikutnya |
+| "Efisiensi 10% berarti 90% terbuang" | BENAR - hanya ~10% yang dipindahkan ke tingkat tropik berikutnya |
 | "Spesies kunci sangat berlimpah" | Spesies kunci mengendalikan melalui PERAN, bukan kelimpahan |
 | "Suksesi primer terjadi setelah kebakaran" | Kebakaran = suksesi sekunder; primer = daerah tidak bernyawa |
 | "Pos G₂ paling penting" | Pos G₁ yang paling penting (titik restriksi) |
@@ -744,7 +744,7 @@ eff_trophic  = GPP_ins / GPP_grass * 100        # 0.88% transfer rumput → sera
 | Respirasi Anaerob | Anaerobic Respiration | Respirasi yang menggunakan akseptor elektron akhir selain O₂ (mis. SO₄²⁻); TETAP menggunakan RTE |
 | Respirasi Seluler | Cellular Respiration | Proses oksidasi glukosa menjadi CO₂ dan H₂O untuk menghasilkan ATP; terdiri dari glikolisis, siklus krebs, dan fosforilasi oksidatif |
 | Rosot Karbon | Carbon Sink | Ekosistem dengan PEB > 0 yang memperoleh lebih banyak karbon dari atmosfer daripada yang dilepaskan |
-| RTE | ETC (Electron Transport Chain) | Rantai Transpor Elektron — rangkaian protein di membran dalam mitokondria yang memindahkan elektron dan memompa H⁺ |
+| RTE | ETC (Electron Transport Chain) | Rantai Transpor Elektron - rangkaian protein di membran dalam mitokondria yang memindahkan elektron dan memompa H⁺ |
 | Seleksi Alam | Natural Selection | Mekanisme evolusi di mana individu dengan sifat herediter menguntungkan bereproduksi lebih banyak |
 | Sentromer | Centromere | Daerah penyempitan kromosom tempat dua kromatid saudara menyatu dan kinetokor melekat |
 | Sentrosom | Centrosome | Pusat pengorganisasian mikrotubulus pada sel hewan; menduplikasi diri saat interfase |

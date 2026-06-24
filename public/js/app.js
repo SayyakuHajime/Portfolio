@@ -1,5 +1,5 @@
 /* ============================================================
-   SAYYAKU PORTFOLIO — APP SCRIPT
+   SAYYAKU PORTFOLIO - APP SCRIPT
    ============================================================ */
 
 const THEME_STORAGE_KEY = 'portfolio-theme';

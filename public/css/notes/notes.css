@@ -1,10 +1,10 @@
 /* ============================================================
-   NOTES — aggregator
+   NOTES - aggregator
 
    Edit the split files:
-     cursor.css        — cursor trail & pointer dot
-     notes-layout.css  — cover, TOC, progress, mobile drawer, print
-     notes-content.css — typography, callouts, components
+     cursor.css        - cursor trail & pointer dot
+     notes-layout.css  - cover, TOC, progress, mobile drawer, print
+     notes-content.css - typography, callouts, components
    ============================================================ */
 
 @import './cursor.css';

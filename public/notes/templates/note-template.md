@@ -4,7 +4,7 @@ course: COURSE_CODE
 subject: Subject Name
 exam: Midterm
 topics: [Topic A, Topic B, Topic C]
-references: Author (Year) — Book Title, Lecture Slides Week N
+references: Author (Year) - Book Title, Lecture Slides Week N
 order: 1
 date: "2025-01-01"
 ---
@@ -17,7 +17,7 @@ Use the section numbering style that fits your course. This template uses number
 
 ### 1.a Background
 
-Provide context, motivation, or history for the topic. Keep it short — a few sentences at most.
+Provide context, motivation, or history for the topic. Keep it short - a few sentences at most.
 
 > [!note] Definition
 > Formal definition of a term or concept.
@@ -38,13 +38,13 @@ $$
 $$
 
 Where:
-- $\mathbf{x}_t \in \mathbb{R}^d$ — input vector at time $t$
-- $\mathbf{h}_t \in \mathbb{R}^h$ — hidden state
-- $W_x, W_h$ — learned weight matrices
-- $\mathbf{b}$ — bias vector
+- $\mathbf{x}_t \in \mathbb{R}^d$ - input vector at time $t$
+- $\mathbf{h}_t \in \mathbb{R}^h$ - hidden state
+- $W_x, W_h$ - learned weight matrices
+- $\mathbf{b}$ - bias vector
 
 > [!insight] Key Insight
-> The hidden state $\mathbf{h}_t$ carries information from all previous timesteps — this is the "memory" of the network.
+> The hidden state $\mathbf{h}_t$ carries information from all previous timesteps - this is the "memory" of the network.
 
 
 ### 2.b Second Concept
@@ -172,6 +172,6 @@ Key formulas at a glance:
 
 ## References
 
-- Hochreiter & Schmidhuber (1997) — *Long Short-Term Memory*
-- Olah (2015) — *Understanding LSTMs* (blog post)
-- Goodfellow et al. (2016) — *Deep Learning*, Ch. 10
+- Hochreiter & Schmidhuber (1997) - *Long Short-Term Memory*
+- Olah (2015) - *Understanding LSTMs* (blog post)
+- Goodfellow et al. (2016) - *Deep Learning*, Ch. 10

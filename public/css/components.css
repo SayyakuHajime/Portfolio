@@ -1,5 +1,5 @@
 /* ============================================================
-   COMPONENTS — UI primitives, feed, cards, pages
+   COMPONENTS - UI primitives, feed, cards, pages
    ============================================================ */
 
 /* ── SCROLLBAR ──────────────────────────────────────────── */
@@ -219,7 +219,7 @@
 .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default); }
 .btn-ghost:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
-/* ── PAGE — ABOUT ───────────────────────────────────────── */
+/* ── PAGE - ABOUT ───────────────────────────────────────── */
 .about-hero {
   padding: var(--sp-xl) var(--sp-lg);
   border-bottom: 1px solid var(--border-subtle);
@@ -261,7 +261,7 @@
 .value-title { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
 .value-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
 
-/* ── PAGE — NOTES / PROJECTS / WRITINGS INTROS ──────────── */
+/* ── PAGE - NOTES / PROJECTS / WRITINGS INTROS ──────────── */
 :is(.notes-intro, .projects-intro, .writings-intro) {
   padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
   border-bottom: 1px solid var(--border-subtle);
@@ -277,7 +277,7 @@
 .projects-intro p  { font-size: 0.9rem; color: var(--text-secondary); max-width: 460px; line-height: 1.7; }
 .writings-intro p  { font-size: 0.9rem; color: var(--text-secondary); max-width: 420px; line-height: 1.7; }
 
-/* ── PAGE — NOTES LIST ──────────────────────────────────── */
+/* ── PAGE - NOTES LIST ──────────────────────────────────── */
 .note-item { display: block; padding: var(--sp-lg); border-bottom: 1px solid var(--border-default); transition: background 0.15s; }
 .note-item:hover { background: var(--bg-surface); }
 .note-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; margin-bottom: 6px; color: var(--text-primary); }
@@ -286,7 +286,7 @@
 .note-desc { color: var(--text-secondary); line-height: 1.7; max-width: 580px; }
 .note-meta { margin-top: var(--sp-sm); display: flex; gap: var(--sp-sm); flex-wrap: wrap; }
 
-/* ── PAGE — WIP PATTERN (projects + writings) ───────────── */
+/* ── PAGE - WIP PATTERN (projects + writings) ───────────── */
 .wip-wrap { padding: var(--sp-xl) var(--sp-lg); display: grid; gap: var(--sp-md); }
 .wip-card {
   border: 1px dashed var(--border-strong); border-radius: var(--r-lg);

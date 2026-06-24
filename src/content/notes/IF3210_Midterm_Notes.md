@@ -1,5 +1,5 @@
 ---
-title: IF3210 Mobile App Development — Midterm Study Notes
+title: IF3210 Mobile App Development - Midterm Study Notes
 course: IF3210
 subject: Mobile Application Development
 exam: Midterm
@@ -19,28 +19,28 @@ date: "2026-06-12"
 
 ### 1.b Distinguishing Aspects of Mobile vs Stationary Computing
 
-- **Wireless Connectivity** — prevalent wireless network use; mobility and wireless connectivity are orthogonal (independent) concepts
-- **Small Size** — constrained screen real estate, limited input methods, smaller physical form factor
-- **Power Sources** — battery-powered; performance must balance power consumption
-- **Mobile Nature** — used while moving; context-based, task-oriented, situational usage
-- **Functionality for mobile user** — designed to meet unique needs and behaviors in various contexts
+- **Wireless Connectivity** - prevalent wireless network use; mobility and wireless connectivity are orthogonal (independent) concepts
+- **Small Size** - constrained screen real estate, limited input methods, smaller physical form factor
+- **Power Sources** - battery-powered; performance must balance power consumption
+- **Mobile Nature** - used while moving; context-based, task-oriented, situational usage
+- **Functionality for mobile user** - designed to meet unique needs and behaviors in various contexts
 
 ### 1.c Four Pieces of the Mobile Problem
 
-- **Mobile User** — moving, context-switching, not focused on computing task
-- **Mobile Device** — hardware with limited capabilities
-- **Mobile Application** — software optimized for mobile settings
-- **Mobile Network** — wireless, variable, potentially unreliable
+- **Mobile User** - moving, context-switching, not focused on computing task
+- **Mobile Device** - hardware with limited capabilities
+- **Mobile Application** - software optimized for mobile settings
+- **Mobile Network** - wireless, variable, potentially unreliable
 
 ### 1.d Wireless Communication Generations
 
-1. **0G (1946–1980s)** — Early mobile phones in cars/trucks. Voice only, analog, expensive.
-2. **1G (1980s→)** — Speed up to 2.4 kbps. Analog signal. Technologies: AMPS/DataTac.
-3. **2G (1990s→)** — GSM (Finland, 1991). Speed up to 64 kbps. Digital voice + SMS + data. Tech: GSM, CDMA, TDMA.
-4. **2.5G** — 2G + GPRS. Speed: 64–144 kbps. Tech: GPRS, EDGE.
-5. **3G (2000s→)** — Speed: 114 kbps – 2 Mbps. Broadband, streaming, video. Tech: W-CDMA (UMTS).
-6. **4G (late 2000s→)** — Speed: 100 Mbps – 1 Gbps. **MAGIC**: Mobile Multimedia, Anytime Anywhere, Global Mobility, Integrated Wireless, Customized Personal Services. Tech: LTE, WiMAX.
-7. **5G (2010s→)** — Higher speed & capacity. Supports IoT/CPS, edge computing. Network slicing.
+1. **0G (1946–1980s)** - Early mobile phones in cars/trucks. Voice only, analog, expensive.
+2. **1G (1980s→)** - Speed up to 2.4 kbps. Analog signal. Technologies: AMPS/DataTac.
+3. **2G (1990s→)** - GSM (Finland, 1991). Speed up to 64 kbps. Digital voice + SMS + data. Tech: GSM, CDMA, TDMA.
+4. **2.5G** - 2G + GPRS. Speed: 64–144 kbps. Tech: GPRS, EDGE.
+5. **3G (2000s→)** - Speed: 114 kbps – 2 Mbps. Broadband, streaming, video. Tech: W-CDMA (UMTS).
+6. **4G (late 2000s→)** - Speed: 100 Mbps – 1 Gbps. **MAGIC**: Mobile Multimedia, Anytime Anywhere, Global Mobility, Integrated Wireless, Customized Personal Services. Tech: LTE, WiMAX.
+7. **5G (2010s→)** - Higher speed & capacity. Supports IoT/CPS, edge computing. Network slicing.
 
 ### 1.e Mobile Application Types
 
@@ -54,28 +54,28 @@ date: "2026-06-12"
 
 ### 1.f Application Context Types
 
-- **Utility Context** — short task-based, minimal UI (Timer, Calculator, Weather)
-- **Locale Context** — location-based (Maps, navigation)
-- **Informative** — provides information (News, directory)
-- **Productivity** — task-based, priority-ordered (Address book, shopping)
-- **Immersive Fullscreen** — focuses user on app (Games)
+- **Utility Context** - short task-based, minimal UI (Timer, Calculator, Weather)
+- **Locale Context** - location-based (Maps, navigation)
+- **Informative** - provides information (News, directory)
+- **Productivity** - task-based, priority-ordered (Address book, shopping)
+- **Immersive Fullscreen** - focuses user on app (Games)
 
 ### 1.g Mobile Platform Architecture Layers
 
-- **Hardware** — Physical components: CPU, sensors, screen, radios
-- **OS / Kernel** — Core OS. Linux kernel (Android), XNU (iOS)
-- **Low-level Libraries** — Networking, file systems, multithreading, graphic rendering
-- **Runtime** — Executes code. Android Runtime (ART) replaces Dalvik.
-- **Native Libraries** — C/C++ libraries (OpenGL ES, WebKit, SQLite)
-- **Java/Kotlin API Framework** — High-level UI toolkit, Activity Manager, Content Providers, etc.
-- **System / User Apps** — Apps installed on device, including system defaults
-- **Developer Tools** — IDE (Android Studio), emulator, language (Kotlin), build tools (Gradle)
+- **Hardware** - Physical components: CPU, sensors, screen, radios
+- **OS / Kernel** - Core OS. Linux kernel (Android), XNU (iOS)
+- **Low-level Libraries** - Networking, file systems, multithreading, graphic rendering
+- **Runtime** - Executes code. Android Runtime (ART) replaces Dalvik.
+- **Native Libraries** - C/C++ libraries (OpenGL ES, WebKit, SQLite)
+- **Java/Kotlin API Framework** - High-level UI toolkit, Activity Manager, Content Providers, etc.
+- **System / User Apps** - Apps installed on device, including system defaults
+- **Developer Tools** - IDE (Android Studio), emulator, language (Kotlin), build tools (Gradle)
 
 ### 1.h Architectural Styles for Mobile Apps
 
-- **Thin-client wireless client-server** — logic on server, thin UI on device
-- **Thick-client wireless client-server** — significant logic on device too
-- **Stand-alone applications** — works fully offline, no server needed
+- **Thin-client wireless client-server** - logic on server, thin UI on device
+- **Thick-client wireless client-server** - significant logic on device too
+- **Stand-alone applications** - works fully offline, no server needed
 
 > [!note] Virtual Machine Abstraction
 > A VM (like ART on Android) abstracts hardware specificity, enabling code portability. However, performance considerations are more critical on mobile than desktop due to resource constraints.
@@ -102,10 +102,10 @@ Benefits: quality & consistency, efficiency in time and cost, easier maintenance
 
 ### 2.c Process Flow Types
 
-- **Linear Flow** — sequential; each phase completes before the next starts
-- **Iterative Flow** — phases repeat in cycles, refining the product each time
-- **Parallel Flow** — multiple activities run simultaneously in different streams
-- **Evolutionary Flow** — product evolves through releases (v1 → v2 → vN)
+- **Linear Flow** - sequential; each phase completes before the next starts
+- **Iterative Flow** - phases repeat in cycles, refining the product each time
+- **Parallel Flow** - multiple activities run simultaneously in different streams
+- **Evolutionary Flow** - product evolves through releases (v1 → v2 → vN)
 
 ### 2.d Waterfall Model
 
@@ -119,7 +119,7 @@ Classic linear process model. Each phase must *fully complete* before moving to 
 6. Perawatan (Maintenance)
 
 > [!warn] Waterfall Problems
-> Requirements almost always change — Waterfall can't handle this well. Users wait until the end to see the product. Blocking states occur where team members idle waiting for others. Not suited for complex systems with many stakeholders.
+> Requirements almost always change - Waterfall can't handle this well. Users wait until the end to see the product. Blocking states occur where team members idle waiting for others. Not suited for complex systems with many stakeholders.
 
 ### 2.e Agile Methodology
 
@@ -136,29 +136,29 @@ Agile collects requirements **iteratively and evolutionarily**. A functionality 
 
 **Agile Variants:** Scrum (sprint-based, 2-week cycles), Kanban (flow-based, continuous), Extreme Programming (XP), Feature Driven Development (FDD), DSDM, Agile Unified Process (AUP).
 
-### 2.f SDLC for Mobile Apps — 6 Phases
+### 2.f SDLC for Mobile Apps - 6 Phases
 
-1. **Planning & Requirement Analysis** — identify user needs, business goals, technical feasibility; define key features, UI/UX expectations, monetization models
-2. **UI/UX Design** — wireframing & prototyping (Figma, Adobe XD); user journey mapping; focus on mobile constraints
-3. **Development** — frontend + backend in parallel; frameworks: Flutter, React Native, or native (Swift/Kotlin); modular code
-4. **Testing & QA** — device and platform testing; automated & manual tests; beta via TestFlight (iOS) or Firebase App Distribution (Android)
-5. **Deployment & App Store Submission** — comply with Google Play Store & Apple App Store policies; ASO; prepare for approval delays
-6. **Maintenance & Update** — collect feedback via Firebase/Sentry; regular updates; ensure OS version compatibility
+1. **Planning & Requirement Analysis** - identify user needs, business goals, technical feasibility; define key features, UI/UX expectations, monetization models
+2. **UI/UX Design** - wireframing & prototyping (Figma, Adobe XD); user journey mapping; focus on mobile constraints
+3. **Development** - frontend + backend in parallel; frameworks: Flutter, React Native, or native (Swift/Kotlin); modular code
+4. **Testing & QA** - device and platform testing; automated & manual tests; beta via TestFlight (iOS) or Firebase App Distribution (Android)
+5. **Deployment & App Store Submission** - comply with Google Play Store & Apple App Store policies; ASO; prepare for approval delays
+6. **Maintenance & Update** - collect feedback via Firebase/Sentry; regular updates; ensure OS version compatibility
 
-### 2.g Adapted Agile for Mobile — 5 Practices
+### 2.g Adapted Agile for Mobile - 5 Practices
 
-- **Scrum / Kanban** — Scrum: 2-week sprints; Kanban: continuous flow-based delivery
-- **Sprint Planning** — User Stories & Epics; prioritize by business value; define MVP early
-- **CI/CD** — automate builds (GitHub Actions, Jenkins, Bitrise); feature toggling for phased rollouts
-- **User Feedback** — analytics (Mixpanel, Firebase); A/B testing; adapt backlog based on user needs
-- **Cross-functional Teams** — PM, devs, designers, QA collaborate; daily stand-ups, sprint reviews, retrospectives
+- **Scrum / Kanban** - Scrum: 2-week sprints; Kanban: continuous flow-based delivery
+- **Sprint Planning** - User Stories & Epics; prioritize by business value; define MVP early
+- **CI/CD** - automate builds (GitHub Actions, Jenkins, Bitrise); feature toggling for phased rollouts
+- **User Feedback** - analytics (Mixpanel, Firebase); A/B testing; adapt backlog based on user needs
+- **Cross-functional Teams** - PM, devs, designers, QA collaborate; daily stand-ups, sprint reviews, retrospectives
 
 **Key Terms:**
-- **MVP** — Minimum Viable Product: the smallest feature set that delivers value to users
-- **Sprint** — a fixed time-box (typically 2 weeks) for delivering a working increment
-- **Backlog** — a prioritized list of features/tasks to be completed
-- **User Story** — "As a [user], I want [feature] so that [benefit]"
-- **ASO** — App Store Optimization: improving metadata for discoverability
+- **MVP** - Minimum Viable Product: the smallest feature set that delivers value to users
+- **Sprint** - a fixed time-box (typically 2 weeks) for delivering a working increment
+- **Backlog** - a prioritized list of features/tasks to be completed
+- **User Story** - "As a [user], I want [feature] so that [benefit]"
+- **ASO** - App Store Optimization: improving metadata for discoverability
 
 ---
 
@@ -170,9 +170,9 @@ Each mobile platform has different interfaces, standards, programming languages,
 
 ### 3.b 3 Mobile Development Approaches
 
-- **Native** — platform-specific languages & tools (Android: Kotlin/Java + Android Studio; iOS: Swift/ObjC + Xcode)
-- **Mobile Web** — web technologies running in mobile browser (JS, HTML, CSS; tools: React, Vue, Angular)
-- **Cross-Platform** — single code base targeting multiple platforms (top tools: React Native, Flutter)
+- **Native** - platform-specific languages & tools (Android: Kotlin/Java + Android Studio; iOS: Swift/ObjC + Xcode)
+- **Mobile Web** - web technologies running in mobile browser (JS, HTML, CSS; tools: React, Vue, Angular)
+- **Cross-Platform** - single code base targeting multiple platforms (top tools: React Native, Flutter)
 
 **Why Use Cross-Platform?**
 - Reusable code across platforms, rapid time to market, robust performance
@@ -184,10 +184,10 @@ Open-source framework using **JavaScript + React** to build native apps for Andr
 
 **Architecture Components:**
 
-- **JSI** (JavaScript Interface) — allows JS to hold a reference to C++ objects and vice-versa; direct method invocation without serialization costs
-- **Fabric** — new rendering system; unifies render logic in C++; uses JSI to control UI directly on native side
-- **TurboModules** — let React Native interact with native platform APIs not provided by RN; uses JSI to access native modules
-- **Yoga** — embeddable layout system supporting a subset of CSS (mostly Flexbox); used by Fabric to position UI elements
+- **JSI** (JavaScript Interface) - allows JS to hold a reference to C++ objects and vice-versa; direct method invocation without serialization costs
+- **Fabric** - new rendering system; unifies render logic in C++; uses JSI to control UI directly on native side
+- **TurboModules** - let React Native interact with native platform APIs not provided by RN; uses JSI to access native modules
+- **Yoga** - embeddable layout system supporting a subset of CSS (mostly Flexbox); used by Fabric to position UI elements
 
 **Render Pipeline (3 steps):**
 ```
@@ -204,19 +204,19 @@ Open-source framework for building **natively compiled, multi-platform apps from
 
 **Architecture (Layered):**
 
-- **Dart App** — composes Widgets into UI; implements business logic; owned by developer
-- **Framework** — higher-level API: widgets, hit-testing, gestures, accessibility, text input
-- **Engine** — rasterizes composited scenes; low-level: graphics (Skia/Impeller), text layout, Dart runtime; exposes `dart:ui` API
-- **Embedder** — coordinates with OS (rendering surfaces, input, accessibility); manages event loop
-- **Runner** — composes embedder pieces into an app package; generated by `flutter create`
+- **Dart App** - composes Widgets into UI; implements business logic; owned by developer
+- **Framework** - higher-level API: widgets, hit-testing, gestures, accessibility, text input
+- **Engine** - rasterizes composited scenes; low-level: graphics (Skia/Impeller), text layout, Dart runtime; exposes `dart:ui` API
+- **Embedder** - coordinates with OS (rendering surfaces, input, accessibility); manages event loop
+- **Runner** - composes embedder pieces into an app package; generated by `flutter create`
 
 **Rendering Process (Widget → Pixels):**
-1. **Widget Tree** — everything is a Widget, stored hierarchically (stateless or stateful)
-2. **Reconciliation** — linear reconciliation (not tree-diff like React) to find which widgets need updating
-3. **Layout** — determines size and position of each widget
-4. **Painting** — assigns colors, gradients, other visual attributes onto canvas
-5. **Compositing** — combines painted widgets into final image (transparency, overlapping, layering)
-6. **Rendering** — converts composite image to platform-specific GPU instructions
+1. **Widget Tree** - everything is a Widget, stored hierarchically (stateless or stateful)
+2. **Reconciliation** - linear reconciliation (not tree-diff like React) to find which widgets need updating
+3. **Layout** - determines size and position of each widget
+4. **Painting** - assigns colors, gradients, other visual attributes onto canvas
+5. **Compositing** - combines painted widgets into final image (transparency, overlapping, layering)
+6. **Rendering** - converts composite image to platform-specific GPU instructions
 
 ### 3.e React Native vs Flutter Comparison
 
@@ -224,13 +224,13 @@ Open-source framework for building **natively compiled, multi-platform apps from
 |--------|-------------|---------|
 | Language | JavaScript | Dart |
 | By | Meta (Facebook) | Google |
-| UI Approach | Uses native components via bridge/JSI | Custom renderer (Impeller/Skia) — draws own widgets |
+| UI Approach | Uses native components via bridge/JSI | Custom renderer (Impeller/Skia) - draws own widgets |
 | Community | Very large (JS ecosystem) | Rapidly growing |
 | CI/CD | EAS (Expo) or third parties | Rich default CLI |
 | Best For | Teams with strong JS/Web background | Teams with budget for Dart learning; pixel-perfect UI |
 
 > [!insight] Framework Choice
-> Choose **React Native** if your team has strong JavaScript/web background — reuse existing skills, reduces cost and development time. Choose **Flutter** if you have enough budget and resources — consistent pixel-perfect UI across platforms.
+> Choose **React Native** if your team has strong JavaScript/web background - reuse existing skills, reduces cost and development time. Choose **Flutter** if you have enough budget and resources - consistent pixel-perfect UI across platforms.
 
 ---
 
@@ -250,22 +250,22 @@ Open-source framework for building **natively compiled, multi-platform apps from
 - Virtual devices (emulators/AVDs)
 - Documentation at developer.android.com
 
-### 4.c Kotlin — The Language for Android
+### 4.c Kotlin - The Language for Android
 
-- **Expressive & Concise** — less boilerplate than Java; modern language features
-- **Safer Code** — null safety built-in; eliminates NullPointerExceptions by default
-- **Interoperable** — 100% compatible with Java; can call Java libraries from Kotlin
-- **Structured Concurrency** — coroutines for async code without callback hell
+- **Expressive & Concise** - less boilerplate than Java; modern language features
+- **Safer Code** - null safety built-in; eliminates NullPointerExceptions by default
+- **Interoperable** - 100% compatible with Java; can call Java libraries from Kotlin
+- **Structured Concurrency** - coroutines for async code without callback hell
 
-### 4.d API Levels — Three Key SDK Versions
+### 4.d API Levels - Three Key SDK Versions
 
 ```
 minSdkVersion ≤ targetSdkVersion ≤ compileSdkVersion
 ```
 
-- **`minSdkVersion`** — device needs *at least* this API level to install the app
-- **`targetSdkVersion`** — the API version the app was designed and tested for
-- **`compileSdkVersion`** — the Android OS library version compiled *with* (usually latest)
+- **`minSdkVersion`** - device needs *at least* this API level to install the app
+- **`targetSdkVersion`** - the API version the app was designed and tested for
+- **`compileSdkVersion`** - the Android OS library version compiled *with* (usually latest)
 
 ### 4.e 4 Types of Application Components
 
@@ -278,33 +278,33 @@ minSdkVersion ≤ targetSdkVersion ≤ compileSdkVersion
 
 ### 4.f App Building Blocks
 
-- **Resources (`res/`)** — static content: layout files, images, audio, strings, colors as XML; stored separately from code for easy localization and updates
-- **AndroidManifest.xml** — metadata about the app; lists all activities, services, receivers, providers; declares permissions and hardware requirements
-- **Gradle build files** — build automation; `build.gradle (Module)`: dependencies, SDK versions; `build.gradle (Project)`: repositories, global config
+- **Resources (`res/`)** - static content: layout files, images, audio, strings, colors as XML; stored separately from code for easy localization and updates
+- **AndroidManifest.xml** - metadata about the app; lists all activities, services, receivers, providers; declares permissions and hardware requirements
+- **Gradle build files** - build automation; `build.gradle (Module)`: dependencies, SDK versions; `build.gradle (Project)`: repositories, global config
 
-### 4.g Views — Building Blocks of UI
+### 4.g Views - Building Blocks of UI
 
-*"Everything you see is a View."* Views are Android's basic UI building blocks — rectangular elements on screen.
+*"Everything you see is a View."* Views are Android's basic UI building blocks - rectangular elements on screen.
 
 **Display Views:** `TextView`, `ImageView`, `ScrollView`, `RecyclerView`
 
 **Input Views:** `Button`, `EditText`, `CheckBox`, `RadioButton`, `SeekBar`, `Switch`
 
 **View Size Options:**
-- `wrap_content` — view is only as big as its content needs to be
-- `match_parent` — view expands to fill its parent container
-- Fixed dp value — exact size, e.g., `48dp`. Use dp not px.
+- `wrap_content` - view is only as big as its content needs to be
+- `match_parent` - view expands to fill its parent container
+- Fixed dp value - exact size, e.g., `48dp`. Use dp not px.
 
-### 4.h ViewGroups — Layout Containers
+### 4.h ViewGroups - Layout Containers
 
-- **FrameLayout** — holds generally a single child View; children stacked on top of each other
-- **LinearLayout** — aligns children in a single row or column; set `android:orientation` to horizontal or vertical
-- **ConstraintLayout** — recommended default; positions views using constraints; avoids deep nesting
+- **FrameLayout** - holds generally a single child View; children stacked on top of each other
+- **LinearLayout** - aligns children in a single row or column; set `android:orientation` to horizontal or vertical
+- **ConstraintLayout** - recommended default; positions views using constraints; avoids deep nesting
 
 ### 4.i Event Handling
 
 ```kotlin
-// SAM (Single Abstract Method) — concise click listener
+// SAM (Single Abstract Method) - concise click listener
 button.setOnClickListener { view ->
     /* handle click */
 }
@@ -324,8 +324,8 @@ Contrast Ratio: Small text ≥ 4.5:1 | Large text ≥ 3.0:1
 
 - Touch target size: at least **48dp × 48dp**
 - Set `contentDescription` on images and controls for screen readers
-- Use **TalkBack** — Google's screen reader for Android
-- Use **Switch Access** — for users who cannot use touch
+- Use **TalkBack** - Google's screen reader for Android
+- Use **Switch Access** - for users who cannot use touch
 
 ---
 
@@ -333,9 +333,9 @@ Contrast Ratio: Small text ≥ 4.5:1 | Large text ≥ 3.0:1
 
 ### 5.a Size Units in Android
 
-- **sp** (scale-independent px) — use for **text size**; scaled by the user's font size preference
-- **dp** (density-independent px) — use for **everything else** (width, height, margin, padding); consistent across screen densities
-- **px** (pixels) — actual screen pixels; **not recommended** — results in different sizes on different devices
+- **sp** (scale-independent px) - use for **text size**; scaled by the user's font size preference
+- **dp** (density-independent px) - use for **everything else** (width, height, margin, padding); consistent across screen densities
+- **px** (pixels) - actual screen pixels; **not recommended** - results in different sizes on different devices
 
 ```
 dp = (width in pixels × 160) ÷ screen density (dpi)
@@ -354,19 +354,19 @@ dp = (width in pixels × 160) ÷ screen density (dpi)
 
 ### 5.c View Rendering Cycle
 
-1. **Measure** — determine the size of each view based on constraints and content
-2. **Layout** — position each view within its parent container
-3. **Draw** — render the views onto the screen
+1. **Measure** - determine the size of each view based on constraints and content
+2. **Layout** - position each view within its parent container
+3. **Draw** - render the views onto the screen
 
 ### 5.d View Spacing
 
-**Margin** — space *outside* the view's border; pushes the view away from other elements
+**Margin** - space *outside* the view's border; pushes the view away from other elements
 ```xml
 android:layout_margin="16dp"
 android:layout_marginTop="8dp"
 ```
 
-**Padding** — space *inside* the view's border; pushes content away from the edge
+**Padding** - space *inside* the view's border; pushes content away from the edge
 ```xml
 android:padding="16dp"
 android:paddingStart="8dp"
@@ -394,9 +394,9 @@ app:layout_constraint<Source>_to<Target>Of="parent | @id/view"
 ```
 
 **Widget Sizes:**
-- **Fixed** — explicit size value in dp
-- **Wrap content** — size is just large enough to fit content
-- **Match constraints (0dp)** — expands to fill available space between constraints; use **instead of** `match_parent` in ConstraintLayout children
+- **Fixed** - explicit size value in dp
+- **Wrap content** - size is just large enough to fit content
+- **Match constraints (0dp)** - expands to fill available space between constraints; use **instead of** `match_parent` in ConstraintLayout children
 
 ### 5.f Chains in ConstraintLayout
 
@@ -440,7 +440,7 @@ if (group.visibility == View.GONE) {
 
 ### 5.i Data Binding
 
-Bind UI components in layouts directly to data sources — replaces repetitive `findViewById()` calls.
+Bind UI components in layouts directly to data sources - replaces repetitive `findViewById()` calls.
 
 ```kotlin
 // 1. Enable in build.gradle
@@ -468,16 +468,16 @@ binding.name = "John"
 ```
 
 > [!note] ViewBinding vs Data Binding
-> **ViewBinding**: ties View to a Binding Class providing static access to views — but does NOT tie variables/data to views. **Data Binding**: does both. For reactive two-way binding, use Data Binding with LiveData or Observable objects. With Jetpack Compose, binding is not needed.
+> **ViewBinding**: ties View to a Binding Class providing static access to views - but does NOT tie variables/data to views. **Data Binding**: does both. For reactive two-way binding, use Data Binding with LiveData or Observable objects. With Jetpack Compose, binding is not needed.
 
 ### 5.j RecyclerView
 
 Widget for displaying lists of data. "Recycles" (reuses) item views when they scroll off-screen to make scrolling more performant.
 
 **Key Parts:**
-- **`RecyclerView.Adapter`** — supplies data and layouts; must override `getItemCount`, `onCreateViewHolder`, `onBindViewHolder`
-- **`ViewHolder`** — holds references to the views for one item; reused as items scroll in/out
-- **`LayoutManager`** — controls how items are arranged: `LinearLayoutManager` (list), `GridLayoutManager` (grid)
+- **`RecyclerView.Adapter`** - supplies data and layouts; must override `getItemCount`, `onCreateViewHolder`, `onBindViewHolder`
+- **`ViewHolder`** - holds references to the views for one item; reused as items scroll in/out
+- **`LayoutManager`** - controls how items are arranged: `LinearLayoutManager` (list), `GridLayoutManager` (grid)
 
 ```kotlin
 class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
@@ -505,15 +505,15 @@ class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHold
 
 ### 6.a Overview
 
-**Material Design (MD)** — Google's design standard for Android. Based on the "material metaphor" — digital surfaces with real-world physics, shadows, and movement.
+**Material Design (MD)** - Google's design standard for Android. Based on the "material metaphor" - digital surfaces with real-world physics, shadows, and movement.
 
-**Human Interface Guidelines (HIG)** — Apple's design standard for iOS. Focuses on simplicity, clarity, and deference to user content. Transparency and layering for depth.
+**Human Interface Guidelines (HIG)** - Apple's design standard for iOS. Focuses on simplicity, clarity, and deference to user content. Transparency and layering for depth.
 
 ### 6.b Core Design Principles
 
 | Aspect | Material Design | Human Interface Guidelines |
 |--------|-----------------|---------------------------|
-| Philosophy | Material metaphor — digital surfaces with real-world properties (shadows, depth) | Simplicity, clarity, and deference to user content |
+| Philosophy | Material metaphor - digital surfaces with real-world properties (shadows, depth) | Simplicity, clarity, and deference to user content |
 | Core Principle 1 | Material as Metaphor: realistic shadows and movement | Clarity: legible and visually distinct interface |
 | Core Principle 2 | Bold Graphics & Intentional Colors: vibrant palettes, strong contrast | Deference: UI elements support content, don't overshadow it |
 | Core Principle 3 | Meaningful Motion: animation provides visual cues for understanding | Depth through Transparency: blur and layering for hierarchy |
@@ -522,14 +522,14 @@ class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHold
 ### 6.c Navigation Patterns
 
 **Material Design:**
-- **Navigation Drawer** — side menu for quick access to app sections
-- **Top Tabs** — tabs at top of screen
-- **Back Button** — physical or on-screen button for backward navigation
+- **Navigation Drawer** - side menu for quick access to app sections
+- **Top Tabs** - tabs at top of screen
+- **Back Button** - physical or on-screen button for backward navigation
 
 **HIG (iOS):**
-- **Bottom Navigation Bar** — quick access to primary sections
-- **Hierarchical Navigation** — back button in top-left corner
-- **Swipe Gestures** — swipe left/right for navigation
+- **Bottom Navigation Bar** - quick access to primary sections
+- **Hierarchical Navigation** - back button in top-left corner
+- **Swipe Gestures** - swipe left/right for navigation
 
 ### 6.d Visual Elements
 
@@ -543,22 +543,22 @@ class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHold
 
 **Material Design:** Grid-based layout; responsive grid system with columns, gutters, margins; responsive design adapts to various screen sizes and orientations.
 
-**HIG:** Precise alignment enhances readability; consistency — elements with similar functions have uniform appearance.
+**HIG:** Precise alignment enhances readability; consistency - elements with similar functions have uniform appearance.
 
 ### 6.f UI Components Comparison
 
 | Component Type | Material Design | HIG (iOS) |
 |----------------|-----------------|-----------|
 | Buttons | Text, Elevated, Filled, Outlined (varying emphasis) | System, Detail Disclosure, Info buttons |
-| List/Card | Cards — encapsulate related info (image, text, actions) | Collection Views — similar function, different pattern |
-| Text Input | Text Fields — labels, helper text, floating hints | Text Fields — built-in auto-correction, search capabilities |
-| Navigation | Navigation Drawer — hidden side menu | Tab Bar — persistent bottom navigation |
+| List/Card | Cards - encapsulate related info (image, text, actions) | Collection Views - similar function, different pattern |
+| Text Input | Text Fields - labels, helper text, floating hints | Text Fields - built-in auto-correction, search capabilities |
+| Navigation | Navigation Drawer - hidden side menu | Tab Bar - persistent bottom navigation |
 
-### 6.g Apple Liquid Glass (2025 — new in HIG)
+### 6.g Apple Liquid Glass (2025 - new in HIG)
 
-- **Glass-like Translucency** — semi-transparent surfaces that reveal layers beneath
-- **Fluidity** — smooth, liquid-like animations and transitions
-- **Light Bending** — material that appears to refract and bend light realistically
+- **Glass-like Translucency** - semi-transparent surfaces that reveal layers beneath
+- **Fluidity** - smooth, liquid-like animations and transitions
+- **Light Bending** - material that appears to refract and bend light realistically
 
 ### 6.h Impact on UX
 
@@ -567,7 +567,7 @@ class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHold
 **iOS (HIG):** More consistent and structured experience. Uniform patterns across all iOS apps create predictable UX.
 
 > [!insight] Best Practice for Developers
-> Follow official guidelines for each platform. Cross-platform apps must consider both UI/UX paradigms. Don't just port an Android design to iOS or vice versa — adapt to each platform's conventions.
+> Follow official guidelines for each platform. Cross-platform apps must consider both UI/UX paradigms. Don't just port an Android design to iOS or vice versa - adapt to each platform's conventions.
 
 ---
 
@@ -576,18 +576,18 @@ class MyAdapter(val data: List<Int>) : RecyclerView.Adapter<MyAdapter.MyViewHold
 ### 7.a The Problem: The Billion-Dollar Mistake
 
 > [!warn] Tony Hoare's "Billion-Dollar Mistake" (1965)
-> Tony Hoare invented the null reference in 1965 for ALGOL W. He later called it his "billion-dollar mistake" — it has led to innumerable errors, vulnerabilities, and system crashes. In Java: `NullPointerException (NPE)`.
+> Tony Hoare invented the null reference in 1965 for ALGOL W. He later called it his "billion-dollar mistake" - it has led to innumerable errors, vulnerabilities, and system crashes. In Java: `NullPointerException (NPE)`.
 
 ### 7.b Kotlin's Solution: Non-Nullable by Default
 
 In Kotlin, **all reference variables are non-nullable by default**. If you want a nullable reference, you must explicitly declare it with the `?` suffix.
 
 ```kotlin
-// Non-nullable (default) — cannot be null
+// Non-nullable (default) - cannot be null
 var name: String = "Alice"
     name = null  // COMPILE ERROR
 
-// Nullable — must use ? suffix
+// Nullable - must use ? suffix
 var name: String? = "Alice"
     name = null  // OK
 ```
@@ -595,7 +595,7 @@ var name: String? = "Alice"
 ### 7.c Null Safety Operators
 
 **Safe Call Operator `A?.B`**
-Returns `A.B` if A is not null. Returns `null` if A is null — *never throws NPE*. Great for chaining: if any part is null, entire chain returns null.
+Returns `A.B` if A is not null. Returns `null` if A is null - *never throws NPE*. Great for chaining: if any part is null, entire chain returns null.
 ```kotlin
 val len = name?.length  // Int? (nullable)
 // Chaining:
@@ -614,7 +614,7 @@ val l: Int = b?.length ?: 0
 Forces a nullable value to non-nullable. **If the value IS null, throws NPE at runtime.** Use only when you are 100% certain the value is not null.
 ```kotlin
 val b = a!!  // Throws NPE if a is null
-// Use sparingly — defeats null safety purpose
+// Use sparingly - defeats null safety purpose
 ```
 
 **`lateinit var`**
@@ -637,9 +637,9 @@ Non-nullable default → A? to allow null → A?. for safe access → ?: for def
 
 | Language | Null Concept | Default Non-null? | Compile-time? | "Trust Me" Escape |
 |----------|-------------|-------------------|--------------|-------------------|
-| **Kotlin** | `null` / `T?` | Yes | Yes | `!!` — throws NPE if null |
-| **Rust** | `None` / `Option<T>` | Yes | Yes | `.unwrap()` — panics if None |
-| **Dart** | `null` / `T?` | Yes (since 2.12) | Yes | `!` suffix — throws if null |
+| **Kotlin** | `null` / `T?` | Yes | Yes | `!!` - throws NPE if null |
+| **Rust** | `None` / `Option<T>` | Yes | Yes | `.unwrap()` - panics if None |
+| **Dart** | `null` / `T?` | Yes (since 2.12) | Yes | `!` suffix - throws if null |
 | **TypeScript** | `null` / `T \| null` | Opt-in | Yes (with strictNullChecks) | Type assertions `as T` |
 | **Java** | `@Nullable / @NonNull` | No | Tools only | Any reference is nullable by default |
 | **Python** | `None` / `Optional[T]` | No | Tools only | Type hints ignored at runtime |
@@ -653,8 +653,8 @@ Non-nullable default → A? to allow null → A?. for safe access → ?: for def
 
 ## References
 
-- Android Developer Fundamentals (ADF) — Google Developers
-- IF3210 Lecture Slides — STEI ITB, Semester II 2025/2026
-- developer.android.com — Official Android Documentation
-- React Native Documentation — reactnative.dev
-- Flutter Documentation — flutter.dev
+- Android Developer Fundamentals (ADF) - Google Developers
+- IF3210 Lecture Slides - STEI ITB, Semester II 2025/2026
+- developer.android.com - Official Android Documentation
+- React Native Documentation - reactnative.dev
+- Flutter Documentation - flutter.dev

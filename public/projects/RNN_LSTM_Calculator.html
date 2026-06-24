@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
 <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RNN &amp; LSTM Calculator — Construction Kit</title>
+<title>RNN &amp; LSTM Calculator - Construction Kit</title>
 <script src="../js/theme-init.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -395,7 +395,7 @@
   .ck-num::-webkit-outer-spin-button, .ck-num::-webkit-inner-spin-button { appearance:none; margin:0; }
   .ck-num:focus { outline: none; border-color: var(--accent-p); }
 
-  /* formula/stats stack — collapse sooner to prevent text overflow */
+  /* formula/stats stack - collapse sooner to prevent text overflow */
   @media (max-width: 860px){
     .ck-panel-row { grid-template-columns: 1fr !important; }
   }
@@ -449,13 +449,13 @@
     </div>
     <nav class="sidebar-nav">
       <a href="/Portfolio/notes/if3141_studynote.html" class="nav-item" data-abbr="IF3">
-        <div><div class="nav-label">IF3141 Sistem Informasi — Rangkuman Ujian</div><div class="nav-sub">IF3141</div></div>
+        <div><div class="nav-label">IF3141 Sistem Informasi - Rangkuman Ujian</div><div class="nav-sub">IF3141</div></div>
       </a>
       <a href="/Portfolio/notes/ml_lastterm_notes.html" class="nav-item" data-abbr="ML_">
         <div><div class="nav-label">ML Last Term Notes</div><div class="nav-sub">IF3270</div></div>
       </a>
       <a href="/Portfolio/notes/if3141_tubes_uas.html" class="nav-item" data-abbr="IF3">
-        <div><div class="nav-label">IF3141 — Pertanyaan Tugas Besar (PT Berkah Melano Indonesia)</div><div class="nav-sub">IF3141</div></div>
+        <div><div class="nav-label">IF3141 - Pertanyaan Tugas Besar (PT Berkah Melano Indonesia)</div><div class="nav-sub">IF3141</div></div>
       </a>
       <a href="/Portfolio/projects/RNN_LSTM_Calculator.html" class="nav-item active" data-abbr="RNN">
         <div><div class="nav-label">RNN &amp; LSTM Calc</div><div class="nav-sub">IF3270</div></div>
@@ -517,7 +517,7 @@
         <aside class="ck-tweaks" id="tweaks">
 
           <section class="ck-card">
-            <div class="ck-card-h"><span><span class="h-num">01</span> · Model</span><span class="h-meta" id="paramTotal">— params</span></div>
+            <div class="ck-card-h"><span><span class="h-num">01</span> · Model</span><span class="h-meta" id="paramTotal">- params</span></div>
             <div class="ck-card-body">
               <div class="ck-modepick" data-knob="mode">
                 <button data-v="rnn" class="on"><span class="name">RNN</span><span class="sub">Vanilla recurrent</span></button>
@@ -683,11 +683,11 @@
           <!-- key params strip -->
           <div class="ck-strip" id="strip">
             <div><span class="k">Model</span><span class="v" id="sModel">RNN</span></div>
-            <div><span class="k">Params</span><span class="v" id="sParams">— <small>weights</small></span></div>
-            <div><span class="k">Mem · fwd</span><span class="v" id="sMem">— <small>MB</small></span></div>
-            <div><span class="k">FLOPs / step</span><span class="v" id="sFlops">— <small>M</small></span></div>
-            <div><span class="k">Sequence</span><span class="v" id="sSeq">— <small>steps</small></span></div>
-            <div><span class="k">Output</span><span class="v" id="sShape" style="font-family:'IBM Plex Mono',monospace; font-size:13px;">—</span></div>
+            <div><span class="k">Params</span><span class="v" id="sParams">- <small>weights</small></span></div>
+            <div><span class="k">Mem · fwd</span><span class="v" id="sMem">- <small>MB</small></span></div>
+            <div><span class="k">FLOPs / step</span><span class="v" id="sFlops">- <small>M</small></span></div>
+            <div><span class="k">Sequence</span><span class="v" id="sSeq">- <small>steps</small></span></div>
+            <div><span class="k">Output</span><span class="v" id="sShape" style="font-family:'IBM Plex Mono',monospace; font-size:13px;">-</span></div>
           </div>
 
           <!-- diagram -->
@@ -702,7 +702,7 @@
               </span>
             </div>
             <div class="ck-diagram" id="diagram"></div>
-            <div class="ck-cap" id="diagramCap">Figure 1.0 — RNN cell after Olah (2015), redrawn for the construction kit.</div>
+            <div class="ck-cap" id="diagramCap">Figure 1.0 - RNN cell after Olah (2015), redrawn for the construction kit.</div>
           </div>
 
           <!-- formulas + stats -->
@@ -719,7 +719,7 @@
 
           <!-- matrices -->
           <div class="ck-card" id="matricesPanel">
-            <div class="ck-card-h"><span><span class="h-num">W</span> · Weight matrices</span><span class="h-meta" id="mtxCount">— tensors</span></div>
+            <div class="ck-card-h"><span><span class="h-num">W</span> · Weight matrices</span><span class="h-meta" id="mtxCount">- tensors</span></div>
             <div class="ck-mtx-grid" id="matrices"></div>
           </div>
 
@@ -815,7 +815,7 @@ document.querySelectorAll('[data-step]').forEach(b=>{
   });
 });
 
-/* per-layer hidden dim inputs (delegated — list is rebuilt when layer count changes) */
+/* per-layer hidden dim inputs (delegated - list is rebuilt when layer count changes) */
 const HIDDEN_DIM_MAX = 20;
 document.getElementById('hiddenDimsList').addEventListener('input', (e)=>{
   const t = e.target;
@@ -847,7 +847,7 @@ function syncHiddenDimsUI(){
 
 /* helpers */
 function fmtNum(n){
-  if(!isFinite(n)) return '—';
+  if(!isFinite(n)) return '-';
   if(n >= 1e9) return (n/1e9).toFixed(2)+'B';
   if(n >= 1e6) return (n/1e6).toFixed(2)+'M';
   if(n >= 1e3) return (n/1e3).toFixed(1)+'K';
@@ -1075,13 +1075,13 @@ function diagramUnrolled(host){
     const cx = x + cellW/2;
     const y = fwdY;
     nodes.push({type:'unroll-cell', x, y, w:cellW, h:cellH, idx:t, isLSTM});
-    // x_t below — only where this sequencing mode actually feeds an input
+    // x_t below - only where this sequencing mode actually feeds an input
     const hasX = seqMode!=='o2m' || t===0;
     if(hasX){
       nodes.push({type:'io-x-sm', x: cx, y: y + cellH + 70, idx:t});
       edges.push(P([[cx, y+cellH+40],[cx, y+cellH+5]], 'arrow'));
     }
-    // y_t above — only where this sequencing mode actually emits an output
+    // y_t above - only where this sequencing mode actually emits an output
     const hasY = seqMode!=='m2o' || t===T-1;
     if(hasY){
       nodes.push({type:'io-y-sm', x: cx, y: y - 60, idx:t});
@@ -1356,7 +1356,7 @@ function renderTimeline(){
   document.getElementById('tlBadge').textContent = `T = ${T}`;
 }
 
-/* sync diagram container — maintain exact VW/VH aspect ratio so DOM nodes align with SVG */
+/* sync diagram container - maintain exact VW/VH aspect ratio so DOM nodes align with SVG */
 function syncDiagramSize(host, VW, VH) {
   const frame = host.closest('.ck-diagram-frame');
   const frameW = (frame ? frame.clientWidth : host.parentElement.clientWidth) || 400;
@@ -1427,10 +1427,10 @@ function render(){
   document.getElementById('diagramTitle').textContent = `${state.view} · ${state.mode.toUpperCase()} · ${state.density}`;
   document.getElementById('diagramCap').textContent =
     state.view==='folded'
-      ? `Figure 1.${state.mode==='lstm'?'b':'a'} — ${state.mode==='lstm'?'LSTM cell with σ/tanh gates and cell-state highway':'Vanilla RNN cell — single tanh activation, recurrent feedback'}.`
+      ? `Figure 1.${state.mode==='lstm'?'b':'a'} - ${state.mode==='lstm'?'LSTM cell with σ/tanh gates and cell-state highway':'Vanilla RNN cell - single tanh activation, recurrent feedback'}.`
       : state.view==='unrolled'
-      ? `Figure 1.c — Unrolled view across T = ${state.seqLen} timesteps; recurrent edge dashed.`
-      : `Figure 1.d — Computation as a sequential block diagram.`;
+      ? `Figure 1.c - Unrolled view across T = ${state.seqLen} timesteps; recurrent edge dashed.`
+      : `Figure 1.d - Computation as a sequential block diagram.`;
 
   document.getElementById('regularizationPanel').style.display = state.showRegularization?'':'none';
   document.getElementById('formulasPanel').style.display = state.showFormulas?'':'none';

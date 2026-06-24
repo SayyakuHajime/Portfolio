@@ -1,4 +1,4 @@
-/* Synchronous theme bootstrap — must load in <head> before CSS renders. */
+/* Synchronous theme bootstrap - must load in <head> before CSS renders. */
 (function () {
   try {
     var stored = localStorage.getItem('portfolio-theme');

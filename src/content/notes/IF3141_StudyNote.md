@@ -1,5 +1,5 @@
 ---
-title: IF3141 Sistem Informasi — Rangkuman Ujian
+title: IF3141 Sistem Informasi - Rangkuman Ujian
 course: IF3141
 subject: Sistem Informasi
 exam: UTS & UAS
@@ -11,18 +11,18 @@ date: "2025-01-01"
 
 ## 1. Konsep Dasar Sistem Informasi
 
-*Cakupan: UTS — Definisi SI, komponen, level manajemen, data vs informasi*
+*Cakupan: UTS - Definisi SI, komponen, level manajemen, data vs informasi*
 
 ### 1.a Ringkasan Cepat
 
 > [!note] Definisi
 > **Sistem Informasi (SI)** adalah kumpulan komponen yang mengelola aliran informasi sejak pemasukan, distribusi, hingga pelaporan di suatu organisasi.
 
-**Komponen SI (BIOT) — bukan "Aplikasi" atau "Organisasi" sendiri:**
-- **B**rainware — pemakai akhir, pengembang
-- **I**nfoware — data, informasi
-- **O**rganoware — kebijakan, prosedur
-- **T**echnoware — hardware, software, jaringan
+**Komponen SI (BIOT) - bukan "Aplikasi" atau "Organisasi" sendiri:**
+- **B**rainware - pemakai akhir, pengembang
+- **I**nfoware - data, informasi
+- **O**rganoware - kebijakan, prosedur
+- **T**echnoware - hardware, software, jaringan
 
 **Tujuan SI:** efektif, efisien, availability, reliability, compliance, confidentiality, integrity
 
@@ -44,7 +44,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q1 · Kuis** — Apa yang disebut Sistem Informasi?
+**Q1 · Kuis** - Apa yang disebut Sistem Informasi?
 
 | Opsi | Status |
 |------|--------|
@@ -57,7 +57,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q2 · Kuis** — Yang bukan merupakan komponen suatu sistem informasi adalah...
+**Q2 · Kuis** - Yang bukan merupakan komponen suatu sistem informasi adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -71,7 +71,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q3 · Kuis** — Pernyataan yang paling tepat mengenai data dan informasi...
+**Q3 · Kuis** - Pernyataan yang paling tepat mengenai data dan informasi...
 
 | Opsi | Status |
 |------|--------|
@@ -80,11 +80,11 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 | Data berformat dalam bentuk teks | ✗ |
 | Informasi bersifat pasti bagi semua pemakai | ✗ |
 
-> **Benar: A & B.** Data tidak harus berformat teks (bisa angka, gambar, suara). Informasi bersifat relatif — maknanya bergantung pada konteks dan penerimanya, tidak pasti bagi semua orang.
+> **Benar: A & B.** Data tidak harus berformat teks (bisa angka, gambar, suara). Informasi bersifat relatif - maknanya bergantung pada konteks dan penerimanya, tidak pasti bagi semua orang.
 
 ---
 
-**Q4 · UTS 2021** — Pernyataan yang benar mengenai manajemen taktikal adalah...
+**Q4 · UTS 2021** - Pernyataan yang benar mengenai manajemen taktikal adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -97,7 +97,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q5 · Kuis** — Proses manajemen meliputi...
+**Q5 · Kuis** - Proses manajemen meliputi...
 
 | Opsi | Status |
 |------|--------|
@@ -110,7 +110,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q6 · UTS 2021** — Peran dasar Sistem Informasi pada setiap level...
+**Q6 · UTS 2021** - Peran dasar Sistem Informasi pada setiap level...
 
 | Opsi | Status |
 |------|--------|
@@ -123,7 +123,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q7 · UTS 2021** — Pernyataan yang tidak tepat mengenai data/informasi/pengetahuan/kebijaksanaan...
+**Q7 · UTS 2021** - Pernyataan yang tidak tepat mengenai data/informasi/pengetahuan/kebijaksanaan...
 
 | Opsi | Status |
 |------|--------|
@@ -136,7 +136,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q8 · UTS 2021** — Sistem informasi akan selaras dengan bisnis jika...
+**Q8 · UTS 2021** - Sistem informasi akan selaras dengan bisnis jika...
 
 | Opsi | Status |
 |------|--------|
@@ -144,13 +144,13 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 | Dikembangkan menggunakan teknologi informasi | ✗ |
 | Berorientasi pada teknologi | ✗ |
 
-> **Jawaban: A.** SI harus driven by business needs, bukan driven by technology. Orientasi pada teknologi justru risiko — bisa jadi teknologi canggih tapi tidak relevan dengan kebutuhan bisnis.
+> **Jawaban: A.** SI harus driven by business needs, bukan driven by technology. Orientasi pada teknologi justru risiko - bisa jadi teknologi canggih tapi tidak relevan dengan kebutuhan bisnis.
 
 ---
 
 ## 2. Strategi Bisnis & Persaingan
 
-*Cakupan: UTS — Porter 5 Forces, Value Chain, Generic Strategy, Tipe Organisasi*
+*Cakupan: UTS - Porter 5 Forces, Value Chain, Generic Strategy, Tipe Organisasi*
 
 ### 2.a Ringkasan Cepat
 
@@ -171,7 +171,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q1 · Kuis** — Strategi Generik perusahaan adalah...
+**Q1 · Kuis** - Strategi Generik perusahaan adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -185,7 +185,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q2 · UTS 2021** — PT Bintang Revolusi memfokuskan 5 produknya untuk penyandang disabilitas. Strateginya adalah...
+**Q2 · UTS 2021** - PT Bintang Revolusi memfokuskan 5 produknya untuk penyandang disabilitas. Strateginya adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -199,7 +199,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q3 · UTS 2021** — Dampak dari buyer power, KECUALI...
+**Q3 · UTS 2021** - Dampak dari buyer power, KECUALI...
 
 | Opsi | Status |
 |------|--------|
@@ -213,7 +213,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q4 · UTS 2021** — Kehadiran online marketplace sebagai peluang sekaligus ancaman dari 5 Forces...
+**Q4 · UTS 2021** - Kehadiran online marketplace sebagai peluang sekaligus ancaman dari 5 Forces...
 
 | Opsi | Status |
 |------|--------|
@@ -222,11 +222,11 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 | Menurunkan ancaman produk pengganti dan meningkatkan supplier power | ✗ |
 | Melemahkan supplier power dan meningkatkan buyer power | ✗ |
 
-> **Jawaban: A.** Online marketplace menurunkan barrier to entry (semua bisa masuk platform) — tapi meningkatkan persaingan antar pemain yang sudah ada. Peluang = akses pasar lebih luas. Ancaman = kompetitor makin banyak terlihat.
+> **Jawaban: A.** Online marketplace menurunkan barrier to entry (semua bisa masuk platform) - tapi meningkatkan persaingan antar pemain yang sudah ada. Peluang = akses pasar lebih luas. Ancaman = kompetitor makin banyak terlihat.
 
 ---
 
-**Q5 · UTS 2021** — UU HAKI (paten, hak cipta) terutama berperan mengurangi dampak dari...
+**Q5 · UTS 2021** - UU HAKI (paten, hak cipta) terutama berperan mengurangi dampak dari...
 
 | Opsi | Status |
 |------|--------|
@@ -236,11 +236,11 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 | Ancaman produk pengganti | ✗ |
 | Kekuatan supplier | ✗ |
 
-> **Jawaban: Ancaman pendatang baru.** HAKI menciptakan barrier to entry — pesaing baru tidak bisa langsung meniru teknologi/produk yang sudah dipatenkan.
+> **Jawaban: Ancaman pendatang baru.** HAKI menciptakan barrier to entry - pesaing baru tidak bisa langsung meniru teknologi/produk yang sudah dipatenkan.
 
 ---
 
-**Q6 · UTS 2021** — Supply Chain Management termasuk lingkup... sistem informasi
+**Q6 · UTS 2021** - Supply Chain Management termasuk lingkup... sistem informasi
 
 | Opsi | Status |
 |------|--------|
@@ -251,7 +251,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q7 · Kuis** — Value Chain — pernyataan yang benar...
+**Q7 · Kuis** - Value Chain - pernyataan yang benar...
 
 | Opsi | Status |
 |------|--------|
@@ -265,7 +265,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q8 · Kuis** — Tipe organisasi — pernyataan yang benar...
+**Q8 · Kuis** - Tipe organisasi - pernyataan yang benar...
 
 | Opsi | Status |
 |------|--------|
@@ -278,7 +278,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ---
 
-**Q9 · UTS 2021** — Tipe Organisasi birokrasi profesional...
+**Q9 · UTS 2021** - Tipe Organisasi birokrasi profesional...
 
 | Opsi | Status |
 |------|--------|
@@ -292,16 +292,16 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 ## 3. BPMN & Pemodelan Proses Bisnis
 
-*Cakupan: UTS — Notasi BPMN 2.0, jenis gateway, task types, alur pemodelan*
+*Cakupan: UTS - Notasi BPMN 2.0, jenis gateway, task types, alur pemodelan*
 
 ### 3.a Ringkasan Cepat
 
 **Elemen BPMN 2.0:**
-- **Pool** — menggambarkan participant
-- **Lane** — role dalam pool
-- **Task** — aktivitas
-- **Gateway** — titik keputusan/percabangan
-- **Event** — start / intermediate / end
+- **Pool** - menggambarkan participant
+- **Lane** - role dalam pool
+- **Task** - aktivitas
+- **Gateway** - titik keputusan/percabangan
+- **Event** - start / intermediate / end
 
 > [!note] Intermediate Event
 > Berada di antara start & end. **Mempengaruhi** proses tapi **tidak** memulai atau menghentikan secara langsung.
@@ -316,7 +316,7 @@ $$\text{Data} \to \text{Informasi} \to \text{Pengetahuan} \to \text{Kebijaksanaa
 
 **Jenis Task:** Abstract, Service (web service/automated), Send, Receive, User (interaksi dengan sistem/aplikasi), Manual (fisik tanpa sistem), Business Rule, Script
 
-**Standar pemodelan proses bisnis:** UML, Flowchart/Flowmap, BPMN, IDEF0 — *bukan* Algoritma atau Kode Program
+**Standar pemodelan proses bisnis:** UML, Flowchart/Flowmap, BPMN, IDEF0 - *bukan* Algoritma atau Kode Program
 
 **Urutan BPM lifecycle:**
 Process Identification → Discovery → Analysis → Redesign → Implementation → Monitoring & Controlling
@@ -325,7 +325,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ---
 
-**Q1 · UTS 2021** — Pernyataan yang tidak benar mengenai BPMN 2.0...
+**Q1 · UTS 2021** - Pernyataan yang tidak benar mengenai BPMN 2.0...
 
 | Opsi | Status |
 |------|--------|
@@ -338,7 +338,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ---
 
-**Q2 · UTS 2021** — Ciri dari proses bisnis...
+**Q2 · UTS 2021** - Ciri dari proses bisnis...
 
 | Opsi | Status |
 |------|--------|
@@ -352,7 +352,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ---
 
-**Q3 · UTS 2021** — Gateway untuk proses pemesanan (kopi ATAU makanan, dan selalu dapat kupon) — yang tepat adalah...
+**Q3 · UTS 2021** - Gateway untuk proses pemesanan (kopi ATAU makanan, dan selalu dapat kupon) - yang tepat adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -360,11 +360,11 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 | XOR Gateway (X) | ✗ hanya satu jalur |
 | Inclusive Gateway (O) | ✗ satu atau lebih kondisi terpenuhi |
 
-> **Jawaban: Parallel (+).** Setelah "Pemesanan", ada 3 jalur — Membuat dalgona kopi (jika pesan kopi), Memanaskan croffle (jika pesan makanan), dan Memberi kupon (selalu). Karena kupon selalu diberikan terlepas apapun pesanannya, setidaknya ada satu jalur yang selalu aktif paralel.
+> **Jawaban: Parallel (+).** Setelah "Pemesanan", ada 3 jalur - Membuat dalgona kopi (jika pesan kopi), Memanaskan croffle (jika pesan makanan), dan Memberi kupon (selalu). Karena kupon selalu diberikan terlepas apapun pesanannya, setidaknya ada satu jalur yang selalu aktif paralel.
 
 ---
 
-**Q4 · UTS 2021** — Simbol task untuk "Perbaikan kabel internet pada rumah pelanggan"...
+**Q4 · UTS 2021** - Simbol task untuk "Perbaikan kabel internet pada rumah pelanggan"...
 
 | Opsi | Status |
 |------|--------|
@@ -377,7 +377,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ---
 
-**Q5 · Kuis** — Standar pemodelan proses bisnis (pilih yang benar)...
+**Q5 · Kuis** - Standar pemodelan proses bisnis (pilih yang benar)...
 
 | Opsi | Status |
 |------|--------|
@@ -392,7 +392,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ---
 
-**Q6 · UTS 2021** — Urutan process modeling yang benar...
+**Q6 · UTS 2021** - Urutan process modeling yang benar...
 
 | Opsi | Status |
 |------|--------|
@@ -406,7 +406,7 @@ Process Identification → Discovery → Analysis → Redesign → Implementatio
 
 ## 4. SDLC & Development Approaches
 
-*Cakupan: UTS & UAS — Siklus hidup pengembangan, metodologi, pendekatan pengadaan*
+*Cakupan: UTS & UAS - Siklus hidup pengembangan, metodologi, pendekatan pengadaan*
 
 ### 4.a Ringkasan Cepat
 
@@ -436,7 +436,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q1 · UTS 2021** — Manakah tipe SDLC yang memiliki risiko terendah mengalami Scope Creeping?
+**Q1 · UTS 2021** - Manakah tipe SDLC yang memiliki risiko terendah mengalami Scope Creeping?
 
 | Opsi | Status |
 |------|--------|
@@ -450,7 +450,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q2 · UTS 2021** — Implementation dalam SDLC adalah aktivitas...
+**Q2 · UTS 2021** - Implementation dalam SDLC adalah aktivitas...
 
 | Opsi | Status |
 |------|--------|
@@ -463,7 +463,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q3 · UTS 2021** — Keputusan build vs buy bergantung pada hasil fase SDLC...
+**Q3 · UTS 2021** - Keputusan build vs buy bergantung pada hasil fase SDLC...
 
 | Opsi | Status |
 |------|--------|
@@ -473,11 +473,11 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | Feasibility Study | ✗ |
 | Implementation | ✗ |
 
-> **Jawaban: Requirement Engineering.** Keputusan bespoke vs COTS baru bisa dibuat setelah requirements terdefinisi dan disetujui — baru bisa dicek apakah ada solusi siap pakai yang cocok atau perlu dibuat sendiri.
+> **Jawaban: Requirement Engineering.** Keputusan bespoke vs COTS baru bisa dibuat setelah requirements terdefinisi dan disetujui - baru bisa dicek apakah ada solusi siap pakai yang cocok atau perlu dibuat sendiri.
 
 ---
 
-**Q4 · UAS 2021** — Mengapa Empirical Process Model menjadi tren?
+**Q4 · UAS 2021** - Mengapa Empirical Process Model menjadi tren?
 
 | Opsi | Status |
 |------|--------|
@@ -486,11 +486,11 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | Empirical Process Model sudah sepenuhnya menggantikan Defined Process Model | ✗ |
 | Defined Process Model sudah ketinggalan zaman | ✗ |
 
-> **Jawaban: B.** Pengembangan SI lebih mirip R&D daripada proses produksi yang predictable. A salah — proses repeatable masih ada. C & D salah — Defined Process Model masih relevan untuk konteks yang tepat.
+> **Jawaban: B.** Pengembangan SI lebih mirip R&D daripada proses produksi yang predictable. A salah - proses repeatable masih ada. C & D salah - Defined Process Model masih relevan untuk konteks yang tepat.
 
 ---
 
-**Q5 · UAS 2021** — Pendekatan yang lebih menawarkan keunggulan kompetitif bagi perusahaan...
+**Q5 · UAS 2021** - Pendekatan yang lebih menawarkan keunggulan kompetitif bagi perusahaan...
 
 | Opsi | Status |
 |------|--------|
@@ -499,13 +499,13 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | **Bespoke** | ✓ |
 | Open Source | ✗ |
 
-> **Jawaban: Bespoke.** Bespoke = sistem dibuat dari awal sesuai persis kebutuhan unik perusahaan — sulit ditiru kompetitor. COTS dan Open Source tersedia untuk semua, tidak memberikan keunggulan kompetitif eksklusif.
+> **Jawaban: Bespoke.** Bespoke = sistem dibuat dari awal sesuai persis kebutuhan unik perusahaan - sulit ditiru kompetitor. COTS dan Open Source tersedia untuk semua, tidak memberikan keunggulan kompetitif eksklusif.
 
 ---
 
 ## 5. Requirement Engineering
 
-*Cakupan: UTS — Elicitation, analisis, dokumentasi, validasi, prioritisasi*
+*Cakupan: UTS - Elicitation, analisis, dokumentasi, validasi, prioritisasi*
 
 ### 5.a Ringkasan Cepat
 
@@ -514,7 +514,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 > [!warn] Common Mistake
 > **Requirement Design bukan bagian RE.** Design adalah fase SDLC terpisah setelah RE.
 
-**RE fokus pada WHAT & WHY** — hindari mendefinisikan HOW di fase ini.
+**RE fokus pada WHAT & WHY** - hindari mendefinisikan HOW di fase ini.
 
 **Karakteristik requirement yang baik:** Unambiguous, Testable, Concise, Consistent, Achievable, Unique, Atomic, Conformant
 
@@ -527,7 +527,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | Could have | Nice-to-have, tidak kritikal |
 | Won't have | Tidak untuk sekarang |
 
-**Dokumentasi:** Requirements Catalogue *(bukan data models atau functional models — itu output fase Design)*
+**Dokumentasi:** Requirements Catalogue *(bukan data models atau functional models - itu output fase Design)*
 
 **Requirements Management** (beda dari RE): Change controls, Configuration management, Requirements traceability
 
@@ -535,7 +535,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q1 · UTS 2021** — Yang bukan merupakan bagian dari aktivitas Requirements Engineering...
+**Q1 · UTS 2021** - Yang bukan merupakan bagian dari aktivitas Requirements Engineering...
 
 | Opsi | Status |
 |------|--------|
@@ -549,7 +549,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q2 · UTS 2021** — Yang sebaiknya dihindari dalam RE dari SDLC adalah mendefinisikan...
+**Q2 · UTS 2021** - Yang sebaiknya dihindari dalam RE dari SDLC adalah mendefinisikan...
 
 | Opsi | Status |
 |------|--------|
@@ -563,7 +563,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q3 · UTS 2021** — Requirements yang fundamental tapi tidak harus dipenuhi dalam waktu cepat dikategorikan...
+**Q3 · UTS 2021** - Requirements yang fundamental tapi tidak harus dipenuhi dalam waktu cepat dikategorikan...
 
 | Opsi | Status |
 |------|--------|
@@ -576,7 +576,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q4 · UTS 2021** — "Sistem harus memiliki antarmuka yang mudah digunakan" — tidak memenuhi karakteristik...
+**Q4 · UTS 2021** - "Sistem harus memiliki antarmuka yang mudah digunakan" - tidak memenuhi karakteristik...
 
 | Opsi | Status |
 |------|--------|
@@ -585,11 +585,11 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 | Consistent and achievable | ✗ |
 | Unique and atomic | ✗ |
 
-> **Jawaban: Unambiguous and testable.** "Mudah digunakan" sangat ambigu — mudah bagi siapa? Tidak bisa diuji secara objektif. Requirement yang baik harus spesifik dan dapat diverifikasi, misal "95% pengguna dapat menyelesaikan task X dalam 2 menit".
+> **Jawaban: Unambiguous and testable.** "Mudah digunakan" sangat ambigu - mudah bagi siapa? Tidak bisa diuji secara objektif. Requirement yang baik harus spesifik dan dapat diverifikasi, misal "95% pengguna dapat menyelesaikan task X dalam 2 menit".
 
 ---
 
-**Q5 · UTS 2021** — List requirement didokumentasikan pada...
+**Q5 · UTS 2021** - List requirement didokumentasikan pada...
 
 | Opsi | Status |
 |------|--------|
@@ -602,7 +602,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q6 · UTS 2021** — Yang bukan merupakan lingkup dari requirements management...
+**Q6 · UTS 2021** - Yang bukan merupakan lingkup dari requirements management...
 
 | Opsi | Status |
 |------|--------|
@@ -617,7 +617,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ## 6. Desain Sistem Informasi
 
-*Cakupan: UTS — Input/output design, process design, data design, control design*
+*Cakupan: UTS - Input/output design, process design, data design, control design*
 
 ### 6.a Ringkasan Cepat
 
@@ -641,13 +641,13 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 **Bukan output (= input):** Scanner, RFID reader
 
 > [!insight] Key Insight
-> Design patterns paling tepat digunakan ketika **masalahnya mirip dengan yang sudah pernah terjadi** — bukan karena kompleksitas atau skala masalah.
+> Design patterns paling tepat digunakan ketika **masalahnya mirip dengan yang sudah pernah terjadi** - bukan karena kompleksitas atau skala masalah.
 
 ### 6.b Soal & Jawaban
 
 ---
 
-**Q1 · UTS 2021** — Yang bukan merupakan lingkup desain menurut "Developing Information Systems"...
+**Q1 · UTS 2021** - Yang bukan merupakan lingkup desain menurut "Developing Information Systems"...
 
 | Opsi | Status |
 |------|--------|
@@ -660,7 +660,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q2 · UTS 2021** — Yang bukan merupakan model yang tepat untuk mendesain data adalah...
+**Q2 · UTS 2021** - Yang bukan merupakan model yang tepat untuk mendesain data adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -673,7 +673,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q3 · Kuis** — Fitur "required" (*) di Google Form mengontrol input dengan metode...
+**Q3 · Kuis** - Fitur "required" (*) di Google Form mengontrol input dengan metode...
 
 | Opsi | Status |
 |------|--------|
@@ -686,7 +686,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q4 · UTS 2021** — NIM ITB harus terdiri dari 8 angka. Bentuk pengontrolan ini disebut...
+**Q4 · UTS 2021** - NIM ITB harus terdiri dari 8 angka. Bentuk pengontrolan ini disebut...
 
 | Opsi | Status |
 |------|--------|
@@ -699,7 +699,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q5 · UTS 2021** — Yang bukan merupakan teknologi untuk output adalah...
+**Q5 · UTS 2021** - Yang bukan merupakan teknologi untuk output adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -712,7 +712,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ---
 
-**Q6 · UTS 2021** — Design patterns paling tepat digunakan ketika...
+**Q6 · UTS 2021** - Design patterns paling tepat digunakan ketika...
 
 | Opsi | Status |
 |------|--------|
@@ -727,7 +727,7 @@ $$\text{Feasibility Study} \to \text{RE} \to \text{Design} \to \text{Development
 
 ## 7. Arsitektur & System Modeling
 
-*Cakupan: UAS — Enterprise/Solution/Software architecture, model types, CBD, Cloud*
+*Cakupan: UAS - Enterprise/Solution/Software architecture, model types, CBD, Cloud*
 
 ### 7.a Ringkasan Cepat
 
@@ -749,7 +749,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 > **Non-functional** adalah jenis *requirement*, bukan jenis model/view sistem.
 
 **Component Based Development (CBD):**
-- Black box — tidak perlu tahu mekanisme internal
+- Black box - tidak perlu tahu mekanisme internal
 - Setiap komponen harus menyediakan interface
 - Komponen dapat bersumber dari vendor berbeda
 - Komponen dapat bersifat independent maupun assembled
@@ -769,7 +769,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ---
 
-**Q1 · UAS 2021** — Urutan tingkat arsitektur (granularitas paling tinggi ke rendah)...
+**Q1 · UAS 2021** - Urutan tingkat arsitektur (granularitas paling tinggi ke rendah)...
 
 | Opsi | Status |
 |------|--------|
@@ -782,7 +782,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ---
 
-**Q2 · UAS 2021** — Lingkup solusi pada solution architecture terdiri atas 3 dimensi yaitu...
+**Q2 · UAS 2021** - Lingkup solusi pada solution architecture terdiri atas 3 dimensi yaitu...
 
 | Opsi | Status |
 |------|--------|
@@ -795,7 +795,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ---
 
-**Q3 · UAS 2021** — Model state-transition (seperti diagram pemesanan kamar hotel) tergolong sebagai...
+**Q3 · UAS 2021** - Model state-transition (seperti diagram pemesanan kamar hotel) tergolong sebagai...
 
 | Opsi | Status |
 |------|--------|
@@ -808,7 +808,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ---
 
-**Q4 · UAS 2021** — Component Based Development — pernyataan yang TIDAK tepat...
+**Q4 · UAS 2021** - Component Based Development - pernyataan yang TIDAK tepat...
 
 | Opsi | Status |
 |------|--------|
@@ -817,11 +817,11 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 | **Komponen dibedakan menjadi dua tipe: penyedia layanan dan pengguna layanan** | ✓ ini SOA, bukan CBD |
 | Setiap komponen harus menyediakan interface | benar |
 
-> **Yang tidak tepat: C.** "Provider dan consumer" adalah konsep dari Service Oriented Architecture (SOA). Pada CBD, komponen menyediakan services kepada komponen lain DAN menggunakan services dari komponen lain — tidak dikategorikan secara kaku menjadi dua tipe.
+> **Yang tidak tepat: C.** "Provider dan consumer" adalah konsep dari Service Oriented Architecture (SOA). Pada CBD, komponen menyediakan services kepada komponen lain DAN menggunakan services dari komponen lain - tidak dikategorikan secara kaku menjadi dua tipe.
 
 ---
 
-**Q5 · UAS 2021** — Menurut Tahir Ahmed, yang bukan merupakan jenis/sudut pandang dari model adalah...
+**Q5 · UAS 2021** - Menurut Tahir Ahmed, yang bukan merupakan jenis/sudut pandang dari model adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -834,7 +834,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ---
 
-**Q6 · UAS 2021** — Organisasi tidak punya kapabilitas membangun sendiri — model cloud yang tepat...
+**Q6 · UAS 2021** - Organisasi tidak punya kapabilitas membangun sendiri - model cloud yang tepat...
 
 | Opsi | Status |
 |------|--------|
@@ -849,7 +849,7 @@ $$\text{Enterprise Architecture} \to \text{Solution Architecture} \to \text{Soft
 
 ## 8. Testing & Quality Assurance
 
-*Cakupan: UAS — Jenis testing, static vs dynamic, regression, defect/error/failure*
+*Cakupan: UAS - Jenis testing, static vs dynamic, regression, defect/error/failure*
 
 ### 8.a Ringkasan Cepat
 
@@ -866,7 +866,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 | Teknik | Walkthrough, Technical Review, Inspection, Informal Review | Black-box, White-box |
 
 > [!warn] Common Mistake
-> **Black-box testing** adalah dynamic testing (program dijalankan) — **bukan** static testing.
+> **Black-box testing** adalah dynamic testing (program dijalankan) - **bukan** static testing.
 
 **Jenis testing performa:**
 
@@ -884,7 +884,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q1 · UAS 2021** — Kesalahan yang disebabkan oleh keteledoran manusia disebut...
+**Q1 · UAS 2021** - Kesalahan yang disebabkan oleh keteledoran manusia disebut...
 
 | Opsi | Status |
 |------|--------|
@@ -896,7 +896,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q2 · UAS 2021** — Pengujian sistem akademik ITB agar bisa diakses ribuan mahasiswa bersamaan disebut...
+**Q2 · UAS 2021** - Pengujian sistem akademik ITB agar bisa diakses ribuan mahasiswa bersamaan disebut...
 
 | Opsi | Status |
 |------|--------|
@@ -909,7 +909,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q3 · UAS 2021** — Pengujian defects dilakukan dengan pendekatan...
+**Q3 · UAS 2021** - Pengujian defects dilakukan dengan pendekatan...
 
 | Opsi | Status |
 |------|--------|
@@ -922,7 +922,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q4 · UAS 2021** — Teknik yang tidak tepat digunakan dalam static testing adalah...
+**Q4 · UAS 2021** - Teknik yang tidak tepat digunakan dalam static testing adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -935,7 +935,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q5 · UAS 2021** — Tujuan dari regression testing adalah...
+**Q5 · UAS 2021** - Tujuan dari regression testing adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -950,7 +950,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ## 9. Implementasi & Changeover
 
-*Cakupan: UAS — Pendekatan changeover, migrasi data, pelatihan, konfigurasi*
+*Cakupan: UAS - Pendekatan changeover, migrasi data, pelatihan, konfigurasi*
 
 ### 9.a Ringkasan Cepat
 
@@ -964,10 +964,10 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 | Pilot Implementation | Ditest ke satu area/unit dulu | Sedang |
 
 **Migration Management:**
-- **Configuration management** — memastikan versi modul yang **benar** yang dimigrasi
-- **Release management** — memastikan hanya implementasi yang **kompatibel** dikemas bersama
-- **Timing management** — kapan migrasi dilakukan
-- **Validation management** — memvalidasi hasil konversi data
+- **Configuration management** - memastikan versi modul yang **benar** yang dimigrasi
+- **Release management** - memastikan hanya implementasi yang **kompatibel** dikemas bersama
+- **Timing management** - kapan migrasi dilakukan
+- **Validation management** - memvalidasi hasil konversi data
 
 **Data Mapping Issues:** Field Type, Field Length, Field Structures, Required Fields, Semantics, Validation
 
@@ -980,7 +980,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q1 · UAS 2021** — Mengganti total keseluruhan sistem tanpa proses transisi disebut...
+**Q1 · UAS 2021** - Mengganti total keseluruhan sistem tanpa proses transisi disebut...
 
 | Opsi | Status |
 |------|--------|
@@ -993,7 +993,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q2 · UAS 2021** — Hal-hal yang perlu dipertimbangkan saat perencanaan implementasi...
+**Q2 · UAS 2021** - Hal-hal yang perlu dipertimbangkan saat perencanaan implementasi...
 
 | Opsi | Status |
 |------|--------|
@@ -1006,7 +1006,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q3 · UAS 2021** — Memastikan hanya versi modul software yang benar yang dimigrasi dilakukan dengan...
+**Q3 · UAS 2021** - Memastikan hanya versi modul software yang benar yang dimigrasi dilakukan dengan...
 
 | Opsi | Status |
 |------|--------|
@@ -1019,7 +1019,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q4 · UAS 2021** — Hal yang perlu dipertimbangkan saat pelatihan sistem baru, KECUALI...
+**Q4 · UAS 2021** - Hal yang perlu dipertimbangkan saat pelatihan sistem baru, KECUALI...
 
 | Opsi | Status |
 |------|--------|
@@ -1032,14 +1032,14 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ---
 
-**Q5 · UAS 2021** — Isu yang mungkin terjadi pada proses data mapping sistem lama ke baru...
+**Q5 · UAS 2021** - Isu yang mungkin terjadi pada proses data mapping sistem lama ke baru...
 
 | Opsi | Status |
 |------|--------|
-| Required Fields — perbedaan atribut mandatory | ✓ |
-| Field Type — perbedaan tipe data | ✓ |
-| Semantics — perbedaan makna nilai | ✓ |
-| Field Structures — deskripsi di soal salah | ✗ "panjang maksimal" = Field Length, bukan Field Structures |
+| Required Fields - perbedaan atribut mandatory | ✓ |
+| Field Type - perbedaan tipe data | ✓ |
+| Semantics - perbedaan makna nilai | ✓ |
+| Field Structures - deskripsi di soal salah | ✗ "panjang maksimal" = Field Length, bukan Field Structures |
 
 > **Benar: A, B, C. D salah deskripsinya.** "Perbedaan panjang maksimal value" = **Field Length**, bukan Field Structures. Field Structures = perbedaan struktur kolom (misal address jadi 1 field vs 3 field).
 
@@ -1047,7 +1047,7 @@ $$\text{Error (keteledoran manusia)} \to \text{Defect (bug di kode)} \to \text{F
 
 ## 10. Enterprise Information Systems
 
-*Cakupan: UAS — TPS, MIS, DSS, ESS, ERP, SCM, CRM*
+*Cakupan: UAS - TPS, MIS, DSS, ESS, ERP, SCM, CRM*
 
 ### 10.a Ringkasan Cepat
 
@@ -1072,13 +1072,13 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 **ERP Implementation Approaches:** Vanilla (as-is), Customisation, Best Practices, BPR (Business Process Reengineering)
 
 > [!insight] Key Insight
-> Faktor sukses ERP: top management support, pelatihan pengguna, bantuan pakar luar. **Popularitas ERP tidak menjamin kecocokan** — bukan kriteria keberhasilan.
+> Faktor sukses ERP: top management support, pelatihan pengguna, bantuan pakar luar. **Popularitas ERP tidak menjamin kecocokan** - bukan kriteria keberhasilan.
 
 ### 10.b Soal & Jawaban
 
 ---
 
-**Q1 · UAS 2021** — Hubungan antar sistem informasi yang benar adalah...
+**Q1 · UAS 2021** - Hubungan antar sistem informasi yang benar adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -1091,7 +1091,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q2 · UAS 2021** — Karakteristik sistem informasi beragam yang ada di perusahaan — yang benar...
+**Q2 · UAS 2021** - Karakteristik sistem informasi beragam yang ada di perusahaan - yang benar...
 
 | Opsi | Status |
 |------|--------|
@@ -1100,11 +1100,11 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 | MIS mendapat masukan spesifikasi desain | ✗ MIS mendapat summary transaction data dari TPS |
 | TPS terkait dengan simulasi keadaan | ✗ TPS = sorting, listing, merging, updating transaksi |
 
-> **Jawaban: A.** DSS processing = interactive, simulations, analysis — bisa menggunakan AI/analytical models. ESS = aggregate data (internal & external), graphics, simulations. MIS = summary dari TPS. TPS = basic transaction processing.
+> **Jawaban: A.** DSS processing = interactive, simulations, analysis - bisa menggunakan AI/analytical models. ESS = aggregate data (internal & external), graphics, simulations. MIS = summary dari TPS. TPS = basic transaction processing.
 
 ---
 
-**Q3 · UAS 2021** — Pernyataan kurang tepat mengenai SI di level enterprise...
+**Q3 · UAS 2021** - Pernyataan kurang tepat mengenai SI di level enterprise...
 
 | Opsi | Status |
 |------|--------|
@@ -1117,7 +1117,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q4 · UAS 2021** — Pernyataan yang tepat dalam implementasi ERP...
+**Q4 · UAS 2021** - Pernyataan yang tepat dalam implementasi ERP...
 
 | Opsi | Status |
 |------|--------|
@@ -1130,7 +1130,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q5 · UAS 2021** — Yang paling tidak berpengaruh dalam kesuksesan SI enterprise adalah...
+**Q5 · UAS 2021** - Yang paling tidak berpengaruh dalam kesuksesan SI enterprise adalah...
 
 | Opsi | Status |
 |------|--------|
@@ -1145,7 +1145,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ## 11. Etika, Legal & Isu Sosial SI
 
-*Cakupan: UAS — Five moral dimensions, IP rights, dampak SI, privacy*
+*Cakupan: UAS - Five moral dimensions, IP rights, dampak SI, privacy*
 
 ### 11.a Ringkasan Cepat
 
@@ -1176,7 +1176,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q1 · UAS 2021** — Pindah perusahaan tidak boleh bekerja di perusahaan sejenis — untuk menghindari masalah...
+**Q1 · UAS 2021** - Pindah perusahaan tidak boleh bekerja di perusahaan sejenis - untuk menghindari masalah...
 
 | Opsi | Status |
 |------|--------|
@@ -1189,7 +1189,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q2 · UAS 2021** — Kejahatan baru yang bisa terjadi karena teknologi informasi, KECUALI...
+**Q2 · UAS 2021** - Kejahatan baru yang bisa terjadi karena teknologi informasi, KECUALI...
 
 | Opsi | Status |
 |------|--------|
@@ -1202,7 +1202,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q3 · UAS 2021** — Dampak positif sistem informasi, KECUALI...
+**Q3 · UAS 2021** - Dampak positif sistem informasi, KECUALI...
 
 | Opsi | Status |
 |------|--------|
@@ -1215,7 +1215,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q4 · UAS 2021** — Masalah etika dalam implementasi sistem informasi misalnya...
+**Q4 · UAS 2021** - Masalah etika dalam implementasi sistem informasi misalnya...
 
 | Opsi | Status |
 |------|--------|
@@ -1228,7 +1228,7 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ---
 
-**Q5 · UAS 2021** — Dimensi moral pada pengembangan SI TIDAK melibatkan pada saat...
+**Q5 · UAS 2021** - Dimensi moral pada pengembangan SI TIDAK melibatkan pada saat...
 
 | Opsi | Status |
 |------|--------|
@@ -1237,11 +1237,11 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 | **Pemanfaatan perangkat lunak tanpa melihat lisensi** | ✓ justru melanggar dimensi moral (Property rights) |
 | Penentuan kepemilikan atas sistem informasi | melibatkan (Property rights) |
 
-> **Jawaban: C (sedikit tricky).** Soal menanyakan kapan dimensi moral TIDAK dilibatkan. Menggunakan software tanpa lisensi justru MELANGGAR dimensi moral (Property rights) — artinya dimensi moral tidak dipertimbangkan saat itu. Opsi lain adalah contoh ketika dimensi moral DIPERTIMBANGKAN.
+> **Jawaban: C (sedikit tricky).** Soal menanyakan kapan dimensi moral TIDAK dilibatkan. Menggunakan software tanpa lisensi justru MELANGGAR dimensi moral (Property rights) - artinya dimensi moral tidak dipertimbangkan saat itu. Opsi lain adalah contoh ketika dimensi moral DIPERTIMBANGKAN.
 
 ---
 
-**Q6 · UAS 2021** — Kebocoran data bertolak belakang dengan tujuan SI yaitu...
+**Q6 · UAS 2021** - Kebocoran data bertolak belakang dengan tujuan SI yaitu...
 
 | Opsi | Status |
 |------|--------|
@@ -1257,16 +1257,16 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 ## 12. Exam Tips & Quick Reference
 
 > [!insight] Yang Paling Sering Jadi Jebakan
-> - Komponen SI = BIOT — "Aplikasi" bukan komponen tersendiri
-> - Level manajemen dan peran SI-nya sering ditukar di soal — Operational → proses; Tactical → keputusan; Strategic → kompetitif
+> - Komponen SI = BIOT - "Aplikasi" bukan komponen tersendiri
+> - Level manajemen dan peran SI-nya sering ditukar di soal - Operational → proses; Tactical → keputusan; Strategic → kompetitif
 > - Intermediate event BPMN **mempengaruhi** proses (opsi "tidak mempengaruhi" = salah)
-> - RE = Elicitation, Analysis, Documentation, Validation — **Design BUKAN bagian RE**
+> - RE = Elicitation, Analysis, Documentation, Validation - **Design BUKAN bagian RE**
 > - HOW dihindari di RE; RE fokus pada WHAT & WHY
 > - Static testing → errors; Dynamic testing → defects; Black-box = dynamic
 > - Regression testing = bagian yang **TIDAK** berubah (bukan bagian yang diubah)
 > - Big Bang = ganti total tanpa transisi; Configuration management ≠ Release management
 > - Trade secret = alasan non-compete clause saat pindah perusahaan
-> - Enterprise IS **punya** shared database — bukan tidak punya
+> - Enterprise IS **punya** shared database - bukan tidak punya
 
 **Akronim & Singkatan Penting:**
 
@@ -1293,8 +1293,8 @@ $$\text{TPS} \to \text{MIS} \to \text{DSS} \leftrightarrow \text{ESS}$$
 
 ## References
 
-- Cadle, J. et al. — *Developing Information Systems* (BCS)
-- Laudon & Laudon — *Management Information Systems*
+- Cadle, J. et al. - *Developing Information Systems* (BCS)
+- Laudon & Laudon - *Management Information Systems*
 - Soal UTS & UAS IF3141 2021
 - Slide Kuliah IF3141
 

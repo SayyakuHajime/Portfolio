@@ -1,10 +1,10 @@
 ---
-title: IF3141 — Pertanyaan Tugas Besar 
+title: IF3141 - Pertanyaan Tugas Besar 
 course: IF3141
 subject: Sistem Informasi
 exam: UAS / Tubes
 topics: [Problem Analysis, Solution Design, Input Output Process Design, Legal & Ethical, Professional Responsibility, Peer Assessment]
-references: Dokumen Tugas Besar K01 G03 — PT Berkah Melano Indonesia, UU PDP No. 27 Tahun 2022, ISO/IEC 27001
+references: Dokumen Tugas Besar K01 G03 - PT Berkah Melano Indonesia, UU PDP No. 27 Tahun 2022, ISO/IEC 27001
 order: 3
 date: "2026-03-12"
 ---
@@ -20,15 +20,15 @@ date: "2026-03-12"
 
 Tiga masalah berstatus **Urgent & Important:**
 
-**PR-01 — Pengelolaan pesanan masih semi-manual** *(Urgency: 5, Importance: 5)*
+**PR-01 - Pengelolaan pesanan masih semi-manual** *(Urgency: 5, Importance: 5)*
 
 Seluruh pencatatan pesanan tanaman dan kargo masih menggunakan Excel/Spreadsheet, membutuhkan banyak keterlibatan manual dari admin dan rawan human error.
 
-**PR-02 — Pelanggan tidak bisa melacak barangnya sendiri** *(Urgency: 3, Importance: 4)*
+**PR-02 - Pelanggan tidak bisa melacak barangnya sendiri** *(Urgency: 3, Importance: 4)*
 
 Pelanggan harus menghubungi Customer Service (via WhatsApp/Instagram) secara manual setiap kali ingin mengetahui status pesanan, membebani tim CS.
 
-**PR-06 — Alur pemrosesan gudang kurang efektif** *(Urgency: 3, Importance: 3)*
+**PR-06 - Alur pemrosesan gudang kurang efektif** *(Urgency: 3, Importance: 3)*
 
 Karyawan masih harus mencatat setiap informasi barang dan proses via Spreadsheet. Dokumentasi foto kondisi tanaman menggunakan perangkat pribadi tanpa arsip terpusat.
 
@@ -36,11 +36,11 @@ Karyawan masih harus mencatat setiap informasi barang dan proses via Spreadsheet
 
 | # | Solusi | Skor Prioritas (/75) | Status |
 |---|--------|----------------------|--------|
-| 1 | **Customer Self-Service Portal** — platform web untuk pemesanan mandiri, upload dokumen, dan pelacakan real-time | 57 | ✓ Dipilih |
-| 2 | **Digitalisasi Gudang via QR Code** — aplikasi web mobile untuk cek kelengkapan tanaman dengan scan QR | 53 | ✓ Dipilih |
-| 3 | **Pengintegrasian Database Tunggal** — migrasi dari spreadsheet ke satu database terpusat di Odoo | 47 | ✓ Dipilih |
-| 4 | **Admin Dashboard Monitoring** — dashboard analitik operasional untuk manajemen | 45 | ✓ Dipilih |
-| 5 | **WhatsApp AI Agent** — chatbot otomatis untuk customer service | 35 | ✗ Tidak dipilih |
+| 1 | **Customer Self-Service Portal** - platform web untuk pemesanan mandiri, upload dokumen, dan pelacakan real-time | 57 | ✓ Dipilih |
+| 2 | **Digitalisasi Gudang via QR Code** - aplikasi web mobile untuk cek kelengkapan tanaman dengan scan QR | 53 | ✓ Dipilih |
+| 3 | **Pengintegrasian Database Tunggal** - migrasi dari spreadsheet ke satu database terpusat di Odoo | 47 | ✓ Dipilih |
+| 4 | **Admin Dashboard Monitoring** - dashboard analitik operasional untuk manajemen | 45 | ✓ Dipilih |
+| 5 | **WhatsApp AI Agent** - chatbot otomatis untuk customer service | 35 | ✗ Tidak dipilih |
 
 > [!insight] Solusi Terpilih
 > Solusi 1, 2, 3, dan 4 diintegrasikan menjadi **satu sistem tunggal berbasis Odoo** dengan database terpusat. Solusi 5 (WhatsApp AI Agent) tidak dipilih karena **tidak feasible dan tidak urgent**.
@@ -73,10 +73,10 @@ Sistem menerima input dari empat entitas eksternal:
 
 Sistem dibagi menjadi **4 proses utama (DFD Level 1):**
 
-1. **Pengelolaan Pesanan** — validasi data → generate QR ID → assign batch → simpan ke DB → konfirmasi ke pelanggan
-2. **Operasional Gudang** — scan QR → ambil data tanaman → update status (cuci, kemas, dll.) → dokumentasi foto ke cloud storage → simpan histori tracking
-3. **Integrasi Logistik** — kirim data pengiriman ke ekspedisi → terima tracking → update status pengiriman → teruskan ke pelanggan
-4. **Pelaporan** — agregasi data pesanan + tanaman + tracking → generate laporan operasional dan dashboard visual untuk manajemen
+1. **Pengelolaan Pesanan** - validasi data → generate QR ID → assign batch → simpan ke DB → konfirmasi ke pelanggan
+2. **Operasional Gudang** - scan QR → ambil data tanaman → update status (cuci, kemas, dll.) → dokumentasi foto ke cloud storage → simpan histori tracking
+3. **Integrasi Logistik** - kirim data pengiriman ke ekspedisi → terima tracking → update status pengiriman → teruskan ke pelanggan
+4. **Pelaporan** - agregasi data pesanan + tanaman + tracking → generate laporan operasional dan dashboard visual untuk manajemen
 
 > [!insight] Arsitektur Inti
 > **Database tunggal terpusat (Odoo)** sebagai *single source of truth* yang menghubungkan Customer Portal, Admin Dashboard, dan Warehouse Mobile App secara real-time.
@@ -90,23 +90,23 @@ ERD terdiri dari **8 entitas utama** yang saling berelasi:
 | Pesanan | Data order dari pelanggan |
 | Tanaman | Data individual tanaman |
 | Batch | Kelompok tanaman per pesanan |
-| QR Tag | *Reusable* — ID fisik tetap, data di-assign ulang per batch |
+| QR Tag | *Reusable* - ID fisik tetap, data di-assign ulang per batch |
 | Tracking | Histori status perjalanan |
 | Pengiriman | Data logistik & ekspedisi |
 | Pelanggan | Profil B2B & B2C |
 | Laporan | Agregasi data untuk manajemen |
 
 > [!note] Desain QR Tag Reusable
-> QR Tag didesain *reusable* — ID fisik tetap sama tapi data yang ter-link di-assign ulang per batch baru, sehingga **tidak perlu cetak ulang tag fisik** setiap pengiriman.
+> QR Tag didesain *reusable* - ID fisik tetap sama tapi data yang ter-link di-assign ulang per batch baru, sehingga **tidak perlu cetak ulang tag fisik** setiap pengiriman.
 
 ### 2.e Security / Control Design
 
 | Aspek | Implementasi |
 |-------|-------------|
-| **Safety** | 0% akses modifikasi data tanaman tanpa autentikasi valid (RBAC — Role-Based Access Control) |
+| **Safety** | 0% akses modifikasi data tanaman tanpa autentikasi valid (RBAC - Role-Based Access Control) |
 | **Security** | Enkripsi HTTPS/TLS 1.3 untuk semua transmisi; tidak ada data sensitif plaintext di DB; lockout 15 menit setelah 5 gagal login |
 | **Compliance** | Patuh UU PDP No. 27 Tahun 2022; audit log setiap akses data pelanggan; mekanisme akses/koreksi/hapus data dalam 14 hari kerja |
-| **Standar** | ISO/IEC 27001 — backup harian, disaster recovery RTO ≤ 4 jam |
+| **Standar** | ISO/IEC 27001 - backup harian, disaster recovery RTO ≤ 4 jam |
 | **Reliability** | Availability minimal 99,5%/bulan; respons ≤ 3 detik; scan QR diproses ≤ 2 detik |
 
 ---
@@ -115,15 +115,15 @@ ERD terdiri dari **8 entitas utama** yang saling berelasi:
 
 ### 3.a Tiga Lapisan Konsiderasi
 
-**CR-1 — Etikal: Kepatuhan Prinsip Privasi Data Pelanggan**
+**CR-1 - Etikal: Kepatuhan Prinsip Privasi Data Pelanggan**
 
 Data pribadi pelanggan (nama, alamat, kontak, riwayat transaksi) hanya boleh digunakan untuk keperluan operasional bisnis yang sah. Data tidak boleh dibagikan ke pihak ketiga tanpa persetujuan eksplisit pelanggan. Setiap akses tercatat dalam **audit log** untuk memastikan akuntabilitas.
 
-**CR-2 — Legal: UU Perlindungan Data Pribadi No. 27 Tahun 2022**
+**CR-2 - Legal: UU Perlindungan Data Pribadi No. 27 Tahun 2022**
 
 Sistem dirancang mematuhi UU PDP Indonesia, termasuk menyediakan mekanisme bagi pelanggan untuk mengajukan permintaan **akses, koreksi, atau penghapusan** data pribadi dalam waktu maksimal **14 hari kerja**. Ini merupakan kewajiban hukum yang mengikat sebagai controller data.
 
-**CR-3 — Standar Internasional: ISO/IEC 27001**
+**CR-3 - Standar Internasional: ISO/IEC 27001**
 
 Pengembangan mengikuti prinsip manajemen keamanan informasi internasional: RBAC, enkripsi data sensitif, backup berkala (minimal harian), dan prosedur disaster recovery (RTO ≤ 4 jam). Relevan karena bisnis bersifat **ekspor internasional**.
 
@@ -152,11 +152,11 @@ Tanggung jawab profesional kelompok dituangkan secara formal melalui **Perjanjia
 
 Selain NDA, secara profesional kelompok juga:
 - Tidak menampilkan data sensitif perusahaan (keuangan, data mitra petani, dll.) secara publik
-- Merancang sistem dengan prinsip ***privacy by design*** — audit log, enkripsi, dan RBAC — sehingga data perusahaan yang masuk ke sistem terlindungi secara teknis
+- Merancang sistem dengan prinsip ***privacy by design*** - audit log, enkripsi, dan RBAC - sehingga data perusahaan yang masuk ke sistem terlindungi secara teknis
 - Memastikan informasi yang digunakan sebagai dasar analisis bersumber dari data yang **diizinkan perusahaan**
 
 > [!insight] Key Insight
-> NDA bukan sekadar formalitas — ia mengikat secara hukum dan mencerminkan *professional ethics* seorang praktisi SI: mengutamakan kepentingan dan kerahasiaan klien di atas segalanya.
+> NDA bukan sekadar formalitas - ia mengikat secara hukum dan mencerminkan *professional ethics* seorang praktisi SI: mengutamakan kepentingan dan kerahasiaan klien di atas segalanya.
 
 ---
 
@@ -173,11 +173,11 @@ Selain NDA, secara profesional kelompok juga:
 | 13523058 | Noumisyifa Nabila Nareswari | *(isi sendiri)* |
 
 > [!warn] Catatan
-> Soal ini bersifat **subjektif dan personal** — hanya kamu yang bisa mengisi nilainya berdasarkan pengalaman kerja sama selama pengerjaan tubes. Isi secara jujur dan adil berdasarkan kontribusi nyata masing-masing anggota.
+> Soal ini bersifat **subjektif dan personal** - hanya kamu yang bisa mengisi nilainya berdasarkan pengalaman kerja sama selama pengerjaan tubes. Isi secara jujur dan adil berdasarkan kontribusi nyata masing-masing anggota.
 
 ---
 
-## 6. Quick Reference — Ringkasan untuk Belajar
+## 6. Quick Reference - Ringkasan untuk Belajar
 
 > [!insight] Inti Tubes dalam Satu Paragraf
 > PT Berkah Melano Indonesia punya masalah utama: **semua masih manual** (Excel, WhatsApp, foto HP). Solusinya: sistem **Odoo terintegrasi** (Customer Portal + Database Terpusat + Admin Dashboard + Gudang QR Code). Desain mengikuti **UU PDP No. 27/2022** dan **ISO/IEC 27001**. Semua informasi perusahaan dijaga lewat **NDA** yang ditandatangani 12 Maret 2026.
@@ -203,9 +203,9 @@ Selain NDA, secara profesional kelompok juga:
 
 ## References
 
-- Dokumen Tugas Besar IF3141 — K01 G03, PT Berkah Melano Indonesia (2026)
+- Dokumen Tugas Besar IF3141 - K01 G03, PT Berkah Melano Indonesia (2026)
 - UU Perlindungan Data Pribadi No. 27 Tahun 2022
-- ISO/IEC 27001 — Information Security Management Systems
+- ISO/IEC 27001 - Information Security Management Systems
 
 **Class**: IF3141 Sistem Informasi  
 **Date**: 2026-03-12  
